@@ -1,0 +1,57 @@
+BODY
+{
+	color: #191970;
+	background-color: #FFFFFF;
+	font-style: normal;
+	font-family: "Lucida Grande", Helvetica, Verdana, sans-serif;
+}
+	
+H1, H2
+{
+	font-style: italic;
+}
+
+H3, H4, P, LI, UL, B, TD
+{
+	font-style: normal;
+}
+
+DD, DL
+{
+	font-style: normal;
+}
+
+ADDRESS, I
+{
+	font-style: italic;
+}
+	
+CODE
+{
+        color: #750000;
+	font-style: normal;
+	font-family: Courier, monospace;
+}
+
+PRE
+{
+        color: #750000;
+	font-style: normal;
+	font-family: Courier, monospace;
+}
+
+.FOOTER
+{        
+	color: #191970;
+	font-style: normal;
+	font-size: smaller;
+}
+
+A:link
+{
+	color: #750000;
+ }
+A:visited
+{
+	color: black;
+ }
