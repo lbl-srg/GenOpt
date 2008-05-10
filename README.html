@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Michael Wetter">
+   <TITLE>GenOpt Release Note</TITLE>
+   <LINK REL ="stylesheet" TYPE="text/css" HREF="jdoc/jstyle.css" TITLE="Style">
+</HEAD>
+<!-- ========================================================== -->
+<BODY>
+<H1>GenOpt&reg; Release Note</H1>
+<HR WIDTH=100%>
+<!-- ========================================================== -->
+<H2>Contents</H2>
+<P>
+<a href="#inst">Installation</a><br>
+<a href="#dire">Directories</a><br>
+<a href="#file">Files</a><br>
+<a href="#copyright">Copyright Notice</a><br>
+<a href="#license">License Agreement</a><br>
+</P>
+<HR WIDTH=100%>
+<!-- ========================================================== -->
+<H2><a name="inst">Installation</a></H2>
+<P>
+To run GenOpt, you need to install a Java interpreter, which may be obtained from
+<A HREF="http://java.sun.com/products/index.html" TARGET=new>Sun Microsystems</A>.
+Sun Microsystems has also Java for Microsoft Windows.<P>
+Please refer to the GenOpt manual for how to install and run GenOpt.
+The manual can be downloaded from 
+<A HREF="http://simulationresearch.lbl.gov/GO" TARGET=new>http://simulationresearch.lbl.gov/GO</A>.
+</P>
+<HR WIDTH=100%>
+
+<!-- ========================================================== -->
+<H2><a name="dire">Directories</a></H2>
+<!-- ========================================================== -->
+<H3>genopt</H3>
+<P>
+The <CODE>genopt</CODE> directory contains the binary code of GenOpt.
+The directory <CODE>genopt/algorithm</CODE> contains also the source code 
+of the optimization algorithms. 
+You do not have to compile these files. 
+They are only of interest if you want to implement your own optimization algorithms.
+</P>
+<!-- ========================================================== -->
+<H3>jdoc</H3>
+<P>
+This directory contains the code <A HREF="./jdoc/index.html">documentation</A> 
+of the package <CODE>genopt.algorithm</CODE>. 
+Please refer to it if you implement own optimization algorithms.
+</P>
+<!-- ========================================================== -->
+<H3>example</H3>
+<P>
+There are examples that use EnergyPlus to evaluate the cost function,
+and examples that minimizes a quadratic cost function.
+While the minimization of the quadratic cost function is very easy,
+it is a good starting point to learn how GenOpt works.
+</P><P>
+To run an example, make sure you set the environment variables
+as described in the GenOpt manual that can be downloaded
+from the web.
+</P><P>
+Then, open a shell (or MS-DOS window), 
+change to the directory that contains the example that you like to run, and type<P>
+<PRE>  java genopt.WinGenOpt</PRE><P>
+For example, to run the minimization of the quadratic function
+using the Hooke-Jeeves algorithm, you can type on Linux and Mac OS X<PRE>
+  cd example/quad/GPSHookeJeeves
+  java genopt.WinGenOpt</PRE>
+and on Windows 
+<PRE>
+  cd example\quad\GPSHookeJeeves
+  java genopt.WinGenOpt</PRE>
+
+Alternatively, you can open a shell (or MS-DOS window), 
+change to the directory that contains the example that you like to run, and type<P>
+<PRE>  java genopt.GenOpt optXXX.ini</PRE><P>
+where <CODE>XXX</CODE> is the name of your operating system.
+</P><P>
+For further information and how to use your simulation software
+to evaluate the cost function, please read the manual.</P>
+
+<HR WIDTH=100%>
+<!-- ========================================================== -->
+<H2><a name="file">Files</a></H2>
+<!-- ========================================================== -->
+
+<H3>cfg/*.cfg</H3>
+<P>
+The cfg files show how to configure different simulation programs on 
+various operating systems.
+</P><P>
+Please see the notes in the files for which program and operating system they were written.
+</P>
+<!-- ========================================================== -->
+<H3>*.class</H3>
+<P>
+The class files that contain the binary code. 
+They will be loaded during the execution of GenOpt.
+</P>
+<!-- ========================================================== -->
+<H3>*.java</H3>
+<P>
+The java files contain the source code.
+</P>
+<HR WIDTH=100%>
+<!-- ========================================================== -->
+<H2><a name="copyright">Copyright Notice</a></H2>
+<!-- ========================================================== -->
+ <P>
+GenOpt Copyright (c) 1998-2008, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy).  All rights reserved.
+</P><P>
+If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Technology Transfer Department at TTD@lbl.gov.
+</P><P>
+NOTICE.  This software was developed under partial funding from the U.S. Department of Energy.  As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, prepare derivative works, and perform publicly and display publicly.  Beginning five (5) years after the date permission to assert copyright is obtained from the U.S. Department of Energy, and subject to any subsequent five (5) year renewals, the U.S. Government is granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, prepare derivative works, distribute copies to the public, perform publicly and display publicly, and to permit others to do so.
+</P>
+
+<HR WIDTH=100%>
+<!-- ========================================================== -->
+<H2><a name="license">License Agreement</a></H2>
+<!-- ========================================================== -->
+ <P>
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+<ul><li>
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+</li>
+<li>
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+</li><li>
+Neither the name of the University of California, Lawrence Berkeley National Laboratory, U.S. Dept. of Energy nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+</li>
+</ul>
+</p>
+<p>
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</p><p>
+You are under no obligation whatsoever to provide any bug fixes, patches, or upgrades to the features, functionality or performance of the source code ("Enhancements") to anyone; however, if you choose to make your Enhancements available either publicly, or directly to Lawrence Berkeley National Laboratory, without imposing a separate written license agreement for such Enhancements, then you hereby grant the following license: a  non-exclusive, royalty-free perpetual license to install, use, modify, prepare derivative works, incorporate into other computer software, distribute, and sublicense such enhancements or derivative works thereof, in binary and source code form.
+</p>
+<!-- ========================================================== -->
+<DIV CLASS="FOOTER">
+<P>
+<HR WIDTH=100%>
+For more information, visit the GenOpt <A HREF="http://simulationresearch.lbl.gov/GO">web pages</A>.<P>
+Please send comments or questions to
+Michael Wetter, LBNL, <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A>
+<BR>
+January 5, 2004.
+</DIV>
+</BODY>
+</HTML>
