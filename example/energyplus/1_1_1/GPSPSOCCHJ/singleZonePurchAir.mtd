@@ -1,0 +1,92 @@
+
+ Meters for 195,ZONE ONE:Lights-Electric Consumption[J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:ZONE ONE [J]
+  OnMeter=GeneralLights:Electricity [J]
+  OnMeter=GeneralLights:Electricity:Zone:ZONE ONE [J]
+
+ Meters for 232,ZONE ONE:Cat00 Electric Eq-Consumption[J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:ZONE ONE [J]
+  OnMeter=Cat00_ZoneSource:Electricity [J]
+
+ Meters for 244,ZONE ONE:Zone/Sys Sensible Heating Energy[J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:ZONE ONE [J]
+  OnMeter=Heating:EnergyTransfer [J]
+
+ Meters for 265,ZONE ONE:Zone/Sys Sensible Cooling Energy[J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:ZONE ONE [J]
+  OnMeter=Cooling:EnergyTransfer [J]
+
+ Meters for 279,ZONE1AIR:Purchased Air Heating Energy[J]
+  OnMeter=PurchasedHeating:Facility [J]
+  OnMeter=PurchasedHeating:HVAC [J]
+  OnMeter=Heating:PurchasedHeating [J]
+
+ Meters for 298,ZONE1AIR:Purchased Air Total Cooling Energy[J]
+  OnMeter=PurchasedCooling:Facility [J]
+  OnMeter=PurchasedCooling:HVAC [J]
+  OnMeter=Cooling:PurchasedCooling [J]
+
+ For Meter=Electricity:Facility [J], contents are:
+  ZONE ONE:Lights-Electric Consumption[J]
+  ZONE ONE:Cat00 Electric Eq-Consumption[J]
+
+ For Meter=Electricity:Building [J], contents are:
+  ZONE ONE:Lights-Electric Consumption[J]
+  ZONE ONE:Cat00 Electric Eq-Consumption[J]
+
+ For Meter=Electricity:Zone:ZONE ONE [J], contents are:
+  ZONE ONE:Lights-Electric Consumption[J]
+  ZONE ONE:Cat00 Electric Eq-Consumption[J]
+
+ For Meter=GeneralLights:Electricity [J], contents are:
+  ZONE ONE:Lights-Electric Consumption[J]
+
+ For Meter=GeneralLights:Electricity:Zone:ZONE ONE [J], contents are:
+  ZONE ONE:Lights-Electric Consumption[J]
+
+ For Meter=Cat00_ZoneSource:Electricity [J], contents are:
+  ZONE ONE:Cat00 Electric Eq-Consumption[J]
+
+ For Meter=EnergyTransfer:Facility [J], contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy[J]
+  ZONE ONE:Zone/Sys Sensible Cooling Energy[J]
+
+ For Meter=EnergyTransfer:Building [J], contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy[J]
+  ZONE ONE:Zone/Sys Sensible Cooling Energy[J]
+
+ For Meter=EnergyTransfer:Zone:ZONE ONE [J], contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy[J]
+  ZONE ONE:Zone/Sys Sensible Cooling Energy[J]
+
+ For Meter=Heating:EnergyTransfer [J], contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy[J]
+
+ For Meter=Cooling:EnergyTransfer [J], contents are:
+  ZONE ONE:Zone/Sys Sensible Cooling Energy[J]
+
+ For Meter=PurchasedHeating:Facility [J], contents are:
+  ZONE1AIR:Purchased Air Heating Energy[J]
+
+ For Meter=PurchasedHeating:HVAC [J], contents are:
+  ZONE1AIR:Purchased Air Heating Energy[J]
+
+ For Meter=Heating:PurchasedHeating [J], contents are:
+  ZONE1AIR:Purchased Air Heating Energy[J]
+
+ For Meter=PurchasedCooling:Facility [J], contents are:
+  ZONE1AIR:Purchased Air Total Cooling Energy[J]
+
+ For Meter=PurchasedCooling:HVAC [J], contents are:
+  ZONE1AIR:Purchased Air Total Cooling Energy[J]
+
+ For Meter=Cooling:PurchasedCooling [J], contents are:
+  ZONE1AIR:Purchased Air Total Cooling Energy[J]

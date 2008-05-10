@@ -1,0 +1,56 @@
+Program Version,EnergyPlus, Version 1.1.1.012
+! <Version>, Version ID
+ Version, 1.1.1
+! <Time Steps per Hour>, #TimeSteps, Minutes per TimeStep
+ TimeSteps Per Hour,  4, 15
+! <Run Control>, Do Zone Sizing, Do System Sizing, Do Plant Sizing, Do Design Days, Do Weather Simulation
+ Run Control, No, No, No, Yes, Yes
+! <GroundTemperatures>, Months From Jan to Dec {Deg C}
+ GroundTemperatures,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00
+! <GroundTemperatures:Surface>, Months From Jan to Dec {Deg C}
+ GroundTemperatures:Surface,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00
+! <GroundTemperatures:Deep>, Months From Jan to Dec {Deg C}
+ GroundTemperatures:Deep,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00
+! <GroundReflectances>, Months From Jan to Dec {dimensionless}
+ GroundReflectances,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Snow Ground Reflectance Modifiers>, Normal, Daylighting {dimensionless}
+ Snow Ground Reflectance Modifiers,   1.000,   1.000
+! <Snow GroundReflectances>, Months From Jan to Dec {dimensionless}
+ Snow GroundReflectances,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Snow GroundReflectances For Daylighting>, Months From Jan to Dec {dimensionless}
+ Snow GroundReflectances For Daylighting,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Location>, Location Name, Latitude {N+/S- Deg}, Longitude {E+/W- Deg},  Time Zone Number {GMT+/-}, Elevation {m},  Standard Pressure at Elevation {Pa}
+Location,CHICAGO IL USA TMY2-94846 WMO#=725300,41.78,-87.75,-6.00,190.00,99063.
+! <Environment>,Environment Name,Environment Type, Start Date, End Date, Start DayOfWeek, Duration {#days}, Source:Start DayOfWeek,  Use Daylight Saving, Use Holidays, Apply Weekend Holiday Rule,  Use Rain Values, Use Snow Values
+! <Environment:Special Days>, Special Day Name, Special Day Type, Source, Start Date, Duration {#days}
+! <Environment:Daylight Saving>, Daylight Saving Indicator, Source, Start Date, End Date
+! <Environment:WarmupDays>, NumberofWarmupDays
+Environment,CHICAGO IL USA TMY2-94846 WMO#=725300,WeatherRunPeriod, 1/ 1,12/31,MONDAY,365,Use RunPeriod Specified Day,Yes,Yes,No ,Yes,Yes
+Environment:Daylight Saving,No,
+! <Building Information>, Building Name,North Axis {deg},Terrain,  Loads Convergence Tolerance Value, Temperature Convergence Tolerance Value,  Solar Distribution,Maximum Number of Warmup Days
+ Building, OFFICE ZONE,  86.250,Country,   0.04000,   0.00400,FullInteriorAndExterior,25
+! Inside Convection Algorithm, Value {Simple | Detailed | CeilingDiffuser | TrombeWall}
+Inside Convection Algorithm,Detailed
+! Outside Convection Algorithm, Value {Simple | Detailed}
+Outside Convection Algorithm,Detailed
+! Solution Algorithm, Value {CTF | EMPD | MTF}
+Solution Algorithm, CTF
+! Sky Radiance Distribution, Value {Anisotropic}
+Sky Radiance Distribution,Anisotropic
+! < Input Surface Geometry Information>,Starting Corner,Vertex Input Direction,Coordinate System
+ SurfaceGeometry,UpperLeftCorner,CounterClockwise,RelativeCoordinateSystem
+! <Zone Information>,Zone Name,North Axis {deg},X Origin {m},Y Origin {m},Z Origin {m},Type,Multiplier,  Ceiling Height {m},Volume {m3},Zone Inside Convection Algorithm {Simple-Detailed-CeilingDiffuser-TrombeWall}, Floor Area {m2},Exterior Gross Wall Area {m2},Exterior Net Wall Area {m2},Exterior Window Area {m2}
+ Zone Information, ZONE ONE,   0.000,   0.000,   0.000,   0.000,   1,   1,   2.700,   259.200,Detailed,    96.000,    32.400,    12.424,    18.066
+! Shadowing/Sun Position Calculations [Annual Simulations], Value {days}
+Shadowing/Sun Position Calculations, 20
+! <Overcast Sky Daylight Factors>, MonthAndDay, Zone Name, Window Name, Daylight Fac: Ref Pt #1, Daylight Fac: Ref Pt #2
+ Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 1 EAST WINDOW,  0.5629E-02,  0.1719E-01
+ Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 2 WEST WINDOW,  0.1034E-01,  0.3259E-02
+! <Zone Internal Gains/Equipment Information - Nominal>,Zone Name, Floor Area {m2}, # Occupants, Area per Occupant {m2/person}, General Lighting {w/m2}, Task Lighting {w/m2}, Electric Load {w/m2}, Gas Load {w/m2}, Other Load {w/m2}, Hot Water Eq {w/m2}, Outdoor Controlled Baseboard Heat
+ Zone Internal Gains, ZONE ONE,  96.000,   3.200,3.333E-02,17.000,0.000E+00,8.000,0.000E+00,0.000E+00,0.000E+00,No 
+! <AirFlow Model>, Simple/Comis
+ AirFlow Model, Simple
+! Zone Volume Capacitance Multiplier, Value
+Zone Volume Capacitance Multiplier,   1.200
+Environment:WarmupDays, 14
+End of Data

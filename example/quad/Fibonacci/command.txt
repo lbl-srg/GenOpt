@@ -1,0 +1,18 @@
+/* GenOpt command file
+   MWetter@lbl.gov 2003-05-28
+*/
+
+Vary{
+  Parameter{ Name = x1; Min = -1; Ini = 0.9; Max = 1; Step = 0.05; }
+}
+
+OptimizationSettings{
+  MaxIte = 2000;
+  MaxEqualResults = 100;
+  WriteStepNumber = false;
+}
+
+Algorithm{
+ Main = Fibonacci;
+ IntervalReduction = 0.001;
+}

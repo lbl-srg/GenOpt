@@ -1,0 +1,31 @@
+/* GenOpt command file
+   MWetter@lbl.gov 2003-05-28
+*/
+
+Vary{
+  Parameter{ Name = x1; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+  Parameter{ Name = x2; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+  Parameter{ Name = x3; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+  Parameter{ Name = x4; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+  Parameter{ Name = x5; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+}
+
+OptimizationSettings{
+  MaxIte = 2000;
+  MaxEqualResults = 100;
+  WriteStepNumber = false;
+}
+
+Algorithm{
+  Main = PSOCC;
+  NeighborhoodTopology = vonNeumann;
+  NeighborhoodSize = 5;
+  NumberOfParticle = 20;
+  NumberOfGeneration = 50;
+  Seed = 1;
+  CognitiveAcceleration = 2.8;
+  SocialAcceleration = 1.3;
+  MaxVelocityGainContinuous = 0.5;
+  MaxVelocityDiscrete = 4;
+  ConstrictionGain = 0.5;
+}

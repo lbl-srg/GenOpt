@@ -1,0 +1,27 @@
+/* GenOpt command file
+   MWetter@lbl.gov 2003-05-28
+*/
+
+Vary{
+  Parameter{ Name = x1; Min = -1; Ini = 0.9; Max = 1; Step = 0.05; }
+  Parameter{ Name = x2; Min = -1; Ini = 0.9; Max = 1; Step = 0.05; }
+}
+
+OptimizationSettings{
+  MaxIte = 2000;
+  MaxEqualResults = 100;
+  WriteStepNumber = false;
+}
+
+Algorithm{
+  Main = DiscreteArmijoGradient;
+  Alpha = 0.5;
+  Beta  = 0.8;
+  Gamma = 0.1;
+  K0    = 10;
+  KStar = 0;
+  LMax  = 50;
+  Kappa = 50;
+  EpsilonM = 0.05;
+  EpsilonX = 0.05;
+}
