@@ -10,7 +10,8 @@ SRC=`find genopt -name '*.java'`
 # List of class files
 CLAFIL=`find genopt -name '*.class'`
 # List of run time files
-RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' -or -name 'eplusout.*' -or -name '*.audit' \)`
+RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' \
+        -or -name 'eplusout.*' -or -name '*.audit'  \)`
 
 # List of directories with example files
 EXADIR=$(shell find example/quad -depth 1 \( -type d -not -name '.svn' \) )
@@ -47,10 +48,9 @@ doc:
 
 ### unit tests
 unitTest:
-	echo $(EXADIR)
 	@for x in $(EXADIR); do \
 	    cd $(ROODIR); \
-	    echo "++++ $(ROODIR)"; \
+	    echo "++++ $(EXADIR)"; \
 	    if [ -f $$x/optLinux.ini ]; then \
 	       	cd $$x && java -ea genopt.GenOpt optLinux.ini; \
 	        if [ "$$?" != "0" ]; then \
