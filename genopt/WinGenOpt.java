@@ -634,7 +634,9 @@ public class WinGenOpt extends JFrame
 	    // check for error during initialization
 	    if (inpForExc.getNumberOfErrors() > 0)
 		throw inpForExc;
-	    
+
+	    button[BUTTONSTART].setEnabled(false);
+	    fileMenu_Start.setEnabled(false);
 	    go.start();
 	    button[BUTTONSTOP].setEnabled(true);
 	    fileMenu_Stop.setEnabled(true);

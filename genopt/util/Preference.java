@@ -226,11 +226,3 @@ public class Preference
 		pr.write();
 	}
 }
-
-
-
-
-
-
-
-
