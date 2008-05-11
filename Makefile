@@ -12,10 +12,8 @@ CLAFIL=`find genopt -name '*.class'`
 # List of run time files
 RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' -or -name 'eplusout.*' -or -name '*.audit' \)`
 
-# List of example files used for unit test
-EXAFIL=$(shell find ./example -name optLinux.ini)
 # List of directories with example files
-EXADIR=$(shell find example -type d)
+EXADIR=$(shell find example/quad -depth 1 \( -type d -not -name '.svn' \) )
 # Root directory of GenOpt
 ROODIR=$(shell pwd)
 
