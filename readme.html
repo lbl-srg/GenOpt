@@ -15,6 +15,7 @@
 <a href="#inst">Installation</a><br>
 <a href="#dire">Directories</a><br>
 <a href="#file">Files</a><br>
+<a href="#run">Running GenOpt</a><br>
 <a href="#copyright">Copyright Notice</a><br>
 <a href="#license">License Agreement</a><br>
 </P>
@@ -54,33 +55,10 @@ Please refer to it if you implement own optimization algorithms.
 <P>
 There are examples that use EnergyPlus to evaluate the cost function,
 and examples that minimizes a quadratic cost function.
-While the minimization of the quadratic cost function is very easy,
-it is a good starting point to learn how GenOpt works.
-</P><P>
-To run an example, make sure you set the environment variables
-as described in the GenOpt manual that can be downloaded
-from the web.
-</P><P>
-Then, open a shell (or MS-DOS window), 
-change to the directory that contains the example that you like to run, and type<P>
-<PRE>  java genopt.WinGenOpt</PRE><P>
-For example, to run the minimization of the quadratic function
-using the Hooke-Jeeves algorithm, you can type on Linux and Mac OS X<PRE>
-  cd example/quad/GPSHookeJeeves
-  java genopt.WinGenOpt</PRE>
-and on Windows 
-<PRE>
-  cd example\quad\GPSHookeJeeves
-  java genopt.WinGenOpt</PRE>
-
-Alternatively, you can open a shell (or MS-DOS window), 
-change to the directory that contains the example that you like to run, and type<P>
-<PRE>  java genopt.GenOpt optXXX.ini</PRE><P>
-where <CODE>XXX</CODE> is the name of your operating system.
-</P><P>
-For further information and how to use your simulation software
-to evaluate the cost function, please read the manual.</P>
-
+For illustrating the use of GenOpt, the directory <code>example/quad</code>
+contains several examples that either minimize a simple quadratic cost function
+or use the quadratic function to do parametric runs.
+These examples are recommended as a starting point to learn how GenOpt works.
 <HR WIDTH=100%>
 <!-- ========================================================== -->
 <H2><a name="file">Files</a></H2>
@@ -104,6 +82,41 @@ They will be loaded during the execution of GenOpt.
 <P>
 The java files contain the source code.
 </P>
+<HR WIDTH=100%>
+<!-- ========================================================== -->
+<H2><a name="run">Running GenOpt</a></H2>
+<!-- ========================================================== -->
+To run an example, make sure you set the environment variables
+as described in the GenOpt manual that can be downloaded
+from the web.
+</P><P>
+Alternatively, on Mac OS X or Linux you can open a shell, go to this directory
+and type <pre>  source setenv.sh</pre> to set the environment variables. This can 
+also be done on Windows if you have <a href="http://www.cygwin.com">Cygwin</a> installed.
+</P>
+<P>
+To start GenOpt's graphical user interface, double-click the file
+<code>genopt.jar</code>.
+To start GenOpt from a command line, open a shell (on Mac OS X or Linux) or a MS-DOS window
+(on Windows), and type either<PRE>  java genopt.WinGenOpt</PRE>
+or <PRE>  java genopt.GenOpt</PRE> The second version will start GenOpt without the graphical user
+interface.
+</P><p>
+For example, to run the minimization of the quadratic function
+using the Hooke-Jeeves algorithm, you can type on Linux and Mac OS X<PRE>
+  cd example/quad/GPSHookeJeeves
+  java genopt.WinGenOpt</PRE>
+and on Windows 
+<PRE>
+  cd example\quad\GPSHookeJeeves
+  java genopt.WinGenOpt optXXX.ini</PRE>
+where <CODE>XXX</CODE> is the name of your operating system.
+</p><p>
+Alternatively, you can run GenOpt without the graphical user interface by typing<P>
+<PRE>  java genopt.GenOpt optXXX.ini</PRE><P>
+</P><P>
+For further information and how to use your simulation software
+to evaluate the cost function, please read the manual.</P>
 <HR WIDTH=100%>
 <!-- ========================================================== -->
 <H2><a name="copyright">Copyright Notice</a></H2>
