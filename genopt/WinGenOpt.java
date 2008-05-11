@@ -124,6 +124,8 @@ public class WinGenOpt extends JFrame
     protected final static int BUTTONCHART=2;
     protected final static int BUTTONSPLIT=3;
 
+    /** Constructor for WinGenOpt 
+     */
     public WinGenOpt()
     {
 	setupProperties();
@@ -590,7 +592,11 @@ public class WinGenOpt extends JFrame
 	System.out.println("selected");
     }
     
-    /** Starts GenOpt
+    /** Starts GenOpt.
+     *
+     * This method opens an file chooser to let the user select the optimization 
+     * initialization file. Then, it calls {@link #startGenOpt(File)} to start
+     * the optimization.
      */
     protected void startGenOpt() {
 	optRuns = true;
@@ -608,9 +614,17 @@ public class WinGenOpt extends JFrame
 	}
 	
 	ta.setText("");
-	InputFormatException inpForExc = new InputFormatException();
+	File iniFil = fc.getSelectedFile();
+	startGenOpt(iniFil);
+    }
+
+    /** Starts GenOpt
+     *
+     * @param iniFil optimization initialization file.
+     */
+    protected void startGenOpt(File iniFil){
 	try{
-	    File iniFil = fc.getSelectedFile();
+	    InputFormatException inpForExc = new InputFormatException();
 	    go = new GenOpt(iniFil.getPath(), inpForExc, this);
 	    // register ini file
 	    File optIniFil = go.getOptimizationIniFile();
@@ -841,7 +855,7 @@ public class WinGenOpt extends JFrame
     /** flag whether split pane is horizontal or vertical */
     protected boolean splPanHor;
 
-    /** the main routine */
+    /** The main routine */
     public static void main(String[] args)
     {
     	if (GenOpt.DEBUG) System.err.println(GenOpt.DEBUG_WARNING);
@@ -849,6 +863,13 @@ public class WinGenOpt extends JFrame
 	    {
 		WinGenOpt w = new WinGenOpt();
 		w.setVisible(true);
+		// test if first argument is a file, then assume it is 
+		// the initialization file
+		if ( args.length != 0 ){
+		    File iniFil = new File(args[0]);
+		    if (iniFil.canRead())
+			w.startGenOpt(iniFil);
+		}
 	    }
 	catch(Throwable t)
 	    {

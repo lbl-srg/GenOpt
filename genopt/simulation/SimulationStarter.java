@@ -84,11 +84,14 @@ public class SimulationStarter implements Cloneable
      *        of the inputfile must be written in the command or not.<d>
      *        (Set it <CODE>true</CODE> if the extension has to be written, 
      *        <CODE>false</CODE> otherwise.)
+     * @param workingDirectory the working directory for the process.
      */
-    public SimulationStarter(String command, boolean promptInputFileExtension)
+    public SimulationStarter(String command, boolean promptInputFileExtension,
+			     String workingDirectory)
     {
 	CommandLine          = command;
 	PrombtFileExtension  = promptInputFileExtension;
+	this.setWorkingDirectory(workingDirectory);
     }
 
     /** updates the command line. This command must be used to update the command
@@ -217,7 +220,7 @@ public class SimulationStarter implements Cloneable
     {
 	try
 	    {
-		pro = Runtime.getRuntime().exec(this.getCommandLine());
+		pro = Runtime.getRuntime().exec(this.getCommandLine(), null, worDir);
 		pro.waitFor();
 		// sleep for some milliseconds
 		//			System.err.print("Go to sleep...   ");
@@ -327,15 +330,16 @@ public class SimulationStarter implements Cloneable
 	}
     }
 
+    /** Sets the working directory.
+     *
+     * @param workingDirectory the working directory.
+     */
+    public void setWorkingDirectory(String workingDirectory){
+	worDir = new File(workingDirectory);
+    }
+
     protected String CommandLine;
     protected boolean PrombtFileExtension;
     protected Process pro;
-	
+    protected File worDir;
 }
-
-
-
-
-
-
-

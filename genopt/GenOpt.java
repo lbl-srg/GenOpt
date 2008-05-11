@@ -117,6 +117,11 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, May  10 wm Changed WinGenOpt,GenOpt and SimulationStarter so that the working directory
+                  for the simulation is set to the directory of the optimization initialization
+                  file. This allows to start GenOpt (e.g., for the examples) from directories 
+                  other than the ones where the optimization initialization file is, without
+                  providing the full path to the files.
  2004, Feb.  4 wm In GPSHJSmoothing, allowed to use zero step reduction on
                   non-smoothed cost function.
  2004, Jan.  5 wm Released GenOpt 2.0.0
@@ -372,7 +377,7 @@ public class GenOpt extends Thread
      * User directory (working directory).
      *
      */
-    public final String USERDIR = System.getProperty("user.dir", "");
+    public String USERDIR = System.getProperty("user.dir", "");
 
     ///////////////////////////////////////////////////////////////////////
     /** allocates a new GenOpt Object containing nothing
@@ -409,7 +414,6 @@ public class GenOpt extends Thread
 
 	// get optimization ini name
 	initializeOptimizationIniName(optIniFileName);
-
 	// place startDate here, otherwise we count the time
 	// it takes to choose the initalization file from the GUI
 	startDate = new Date();
@@ -566,6 +570,9 @@ public class GenOpt extends Thread
     {
 	int nErr = inpForExc.getNumberOfErrors();
 	String fn = optIniPat + File.separator + optIniFilNam;
+        USERDIR = optIniPat; // the SimulationStarter will use this directory
+                             // as the working directory
+
 	StreamTokenizer optIniStrTok = new StreamTokenizer( new FileReader(fn) );
 
 	// Entries for the OptimizationIni. This instance will not be returned.
@@ -1380,7 +1387,7 @@ public class GenOpt extends Thread
 	    return;
 
 	// Constructor SimulationStarter
-	SimSta = new SimulationStarter(comEnt, proFilExt);
+	SimSta = new SimulationStarter(comEnt, proFilExt, USERDIR);
 	SimSta.updateCommandLine(OptIni);
     }
 
