@@ -14,7 +14,7 @@ RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' \
         -or -name 'eplusout.*' -or -name '*.audit' \)`
 
 # List of directories with example files
-EXADIR=$(shell find example/quad -depth 1 \( -type d -not -name '.svn' \) )
+EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
 # Root directory of GenOpt
 ROODIR=$(shell pwd)
 
@@ -54,7 +54,7 @@ doc:
 unitTest:
 	@for x in $(EXADIR); do \
 	    cd $(ROODIR); \
-	    echo "++++ $(EXADIR)"; \
+	    echo "++++ $$x"; \
 	    if [ -f $$x/optLinux.ini ]; then \
 	       	cd $$x && java -ea genopt.GenOpt optLinux.ini; \
 	        if [ "$$?" != "0" ]; then \
