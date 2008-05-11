@@ -172,12 +172,12 @@ abstract public class Optimizer
 	funValPoi = new int[dimF];
 	
 	// delete old input, log and output save files if user specifies savePath
-	deleteRunFiles(data.OptIni.getSimInpSavPat(),
-		       data.OptIni.getSimInpFilNam());
-	deleteRunFiles(data.OptIni.getSimLogSavPat(),
-		       data.OptIni.getSimLogFilNam());
-	deleteRunFiles(data.OptIni.getSimOutSavPat(),
-		       data.OptIni.getSimOutFilNam());
+	_deleteRunFiles(data.OptIni.getSimInpSavPat(),
+			data.OptIni.getSimInpFilNam());
+	_deleteRunFiles(data.OptIni.getSimLogSavPat(),
+			data.OptIni.getSimLogFilNam());
+	_deleteRunFiles(data.OptIni.getSimOutSavPat(),
+			data.OptIni.getSimOutFilNam());
 	// Make directories specified by savePath.
 	// We do this prior to the function
 	// evaluation to make sure we have write access before spending 
@@ -237,7 +237,7 @@ abstract public class Optimizer
      // --- End of section
      </PRE>
      * and define this method as<PRE>
-     private void postProcessObjectiveFunction(int iterationNumber,
+     private void _postProcessObjectiveFunction(int iterationNumber,
      double[] f){
      f[0] = f[1] + f[2];
      if (iterationNumber == 1) 
@@ -259,7 +259,7 @@ abstract public class Optimizer
      * @param iterationNumber current iteration number
      * @param f array that contains the objective function values
      */
-    private void postProcessObjectiveFunction(final int iterationNumber,
+    private void _postProcessObjectiveFunction(final int iterationNumber,
 					      double[] f){
 	return;
     }
@@ -329,7 +329,7 @@ abstract public class Optimizer
      * @param name name of the files
      * @exception Exception if a SecurityException occured
      */
-    private void deleteRunFiles(final String[] path, final String[] name)
+    private void _deleteRunFiles(final String[] path, final String[] name)
 	throws Exception
     {
 	File dir;
@@ -911,14 +911,14 @@ abstract public class Optimizer
 
 	    if (data.ResMan.getNumberOfSimulation() > 1){
 		try{
-		    key = evaluateSimulation(r);
+		    key = _evaluateSimulation(r);
 		}
 		catch(Exception e){
-		    key = retryEvaluateSimulation(r, e);
+		    key = _retryEvaluateSimulation(r, e);
 		}
 	    }
 	    else{
-		key = evaluateSimulation(r);
+		key = _evaluateSimulation(r);
 	    }
 	    
 	    /////////////////////////////////////////////////////
@@ -976,7 +976,7 @@ abstract public class Optimizer
      * @exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an exception occurs
      */
-    private Point retryEvaluateSimulation(final Point x, final Throwable t)
+    private Point _retryEvaluateSimulation(final Point x, final Throwable t)
 	throws SimulationInputException, OptimizerException, 
 	       NoSuchMethodException, IllegalAccessException, InvocationTargetException, 
 	       Exception{
@@ -992,7 +992,7 @@ abstract public class Optimizer
 	    "   Try to evaluate simulation a second time.";
 	if (data.DEBUG) data.printStackTrace(t);
 	setInfo(infMes);
-	return evaluateSimulation(x);
+	return _evaluateSimulation(x);
     }
 
     /** Updates the settings of the current value of the continuous
@@ -1064,7 +1064,7 @@ abstract public class Optimizer
      * @exception InvocationTargetException if an invoked method throws an exception
      * @exception Exception if an exception occurs
      */
-    private Point evaluateSimulation(final Point x)
+    private Point _evaluateSimulation(final Point x)
 	throws OptimizerException, SimulationInputException, 
 	       NoSuchMethodException, IllegalAccessException, InvocationTargetException, Exception{
 	// flag used for collecting Exceptions before throwing them
@@ -1110,7 +1110,7 @@ abstract public class Optimizer
 	    found = ( _replaceInOutputFunction(repl, varVal) || found );
 	    
 	    // check for wrong input file specification
-	    if (!found){ // varialbe was not found in input file
+	    if (!found){ // variable was not found in input file
 		final String ErrMes = "Variable was not found in any simulation input template file," +
 		    LS +"or in any function objects:" +
 		    LS + "    " + "Searching for String: '%stepNumber%'. Cannot find string." +
@@ -1245,9 +1245,9 @@ abstract public class Optimizer
 	}
 	/////////////////////////////////////////////////////
 	// process function objects
-	objFunVal = processResultFunction(outFun, objFunVal);
+	objFunVal = _processResultFunction(outFun, objFunVal);
 	/////////////////////////////////////////////////////
-	postProcessObjectiveFunction(runNum, objFunVal);
+	_postProcessObjectiveFunction(runNum, objFunVal);
 	/////////////////////////////////////////////////////
 	// write result to GUI or console
 	for (int iFx = 0; iFx < dimF; iFx++)
@@ -1338,8 +1338,8 @@ abstract public class Optimizer
      * @exception InvocationTargetException if an invoked method throws an exception
      * @exception IOException if an error occurs
      */
-    private double[] processResultFunction(final String[] formula, 
-					   final double[] objFunVal)
+    private double[] _processResultFunction(final String[] formula, 
+					    final double[] objFunVal)
 	throws OptimizerException, NoSuchMethodException, 
 	       IllegalAccessException, InvocationTargetException, IOException {
 	for (int iFx = 0; iFx < dimF; iFx++){
@@ -2225,7 +2225,7 @@ abstract public class Optimizer
 	    }
 	    else{
 		//println("------- Start first smoothing.");
-		final Point base = this.evaluateSupportPoint(x);
+		final Point base = this._evaluateSupportPoint(x);
 		// don't report the support point because otherwise it would be querried
 		// in the search for the point with lowest function value
 		// second integral
@@ -2240,7 +2240,7 @@ abstract public class Optimizer
 				final double xNew = base.getX(i) + inc;
 				Point xS = (Point)base.clone();
 				xS.setX(i, xNew);
-				xS = this.evaluateSupportPoint( xS );
+				xS = this._evaluateSupportPoint( xS );
 				double[] delF = LinAlg.subtract( xS.getF(), base.getF() );
 				final double aM = ANewCot[j] / (double)M;
 				delF = LinAlg.multiply( aM, delF );
@@ -2285,7 +2285,7 @@ abstract public class Optimizer
 	 *@exception InvocationTargetException if an invoked method throws an exception
 	 *@exception Exception if an I/O error in the simulation input file occurs
 	 */
-	private Point evaluateSupportPoint(final Point p) throws
+	private Point _evaluateSupportPoint(final Point p) throws
 	    SimulationInputException, OptimizerException, NoSuchMethodException,
 	    IllegalAccessException, Exception{
 	    Point poi = (Point)p.clone();
