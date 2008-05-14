@@ -2,6 +2,7 @@
 ########################################################
 # This file sets environment variables for GenOpt
 # on Mac OS X, Linux or Windows (from a cygwin shell).
+# It is needed for development only.
 # 
 # To run it, change to the directory of this file and
 # type
@@ -23,6 +24,6 @@ fi
 
 export GenOptDir=`pwd`
 export PATH=${GenOptDir}/bin:"${PATH}"
-#export CLASSPATH=${GenOptDir}:$CLASSPATH
+# This is not needed export CLASSPATH=${GenOptDir}:$CLASSPATH
 
 export GenOptEnvSet="true" # used by Makefile
