@@ -208,8 +208,9 @@ public class WinGenOpt extends JFrame
 	mbar.add(chartMenu);
 	chartMenu_Change.setEnabled(false);
 	// Window menu
-	JMenu windowMenu = new JMenu("Window");
+	windowMenu = new JMenu("Window");
 	windowMenu.setMnemonic(KeyEvent.VK_W);
+	mbar.add(windowMenu);
 
 	JRadioButtonMenuItem[] wmi = {new JRadioButtonMenuItem("Horizontal Split View"),
 				      new JRadioButtonMenuItem("Vertical Split View")};
@@ -221,19 +222,23 @@ public class WinGenOpt extends JFrame
 	    wmi[1].setSelected(true);
 	else
 	    wmi[0].setSelected(true);
-
 	ButtonGroup wmbg = new ButtonGroup();
-	JMenuItem wma = new JMenuItem("About GenOpt", KeyEvent.VK_A);
 	for (int i = 0; i < wmi.length; i++)
 	    {
 		wmi[i].addActionListener(this);
 		windowMenu.add(wmi[i]);
 		wmbg.add(wmi[i]);
 	    }
-	windowMenu.add(new JSeparator());
+	//	windowMenu.add(new JSeparator());
+
+	// About menu
+	aboutMenu = new JMenu("About");
+	aboutMenu.setMnemonic(KeyEvent.VK_A);
+	JMenuItem wma = new JMenuItem("About GenOpt", KeyEvent.VK_A);
 	wma.addActionListener(this);
-	windowMenu.add(wma);
-	mbar.add(windowMenu);
+	aboutMenu.add(wma);
+	mbar.add(aboutMenu);
+	// Set the menu bar
 	setJMenuBar(mbar);
     }
 
@@ -735,11 +740,6 @@ public class WinGenOpt extends JFrame
     /** displays the about window
 	  */
     protected void showAboutGenOpt() {
-	/*		String message = GenOpt.VERSIONINFO + LS + GenOpt.DIVIDER + LS +
-			LS + GenOpt.COPYRIGHT + LS + LS +
-			GenOpt.ACKNOWLEDGMENT + LS + LS
-			+ "Developed by" + LS + GenOpt.AUTHOR;
-	*/
 	String message = GenOpt.RUNHEADER;
 		
 	int k = 0;
@@ -836,6 +836,10 @@ public class WinGenOpt extends JFrame
     protected JMenu chartMenu;
     /** Chart menu -> Change */
     protected JMenuItem chartMenu_Change;
+    /** Windows menu */
+    protected JMenu windowMenu;
+    /** About menu */
+    protected JMenu aboutMenu;
     /** Tabbed Pane */
     protected JTabbedPane tabPan;
     /** Split Pane */
@@ -858,25 +862,22 @@ public class WinGenOpt extends JFrame
     protected boolean splPanHor;
 
     /** The main routine */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args){
     	if (GenOpt.DEBUG) System.err.println(GenOpt.DEBUG_WARNING);
-	try
-	    {
-		WinGenOpt w = new WinGenOpt();
-		w.setVisible(true);
-		// test if first argument is a file, then assume it is 
-		// the initialization file
-		if ( args.length != 0 ){
-		    File iniFil = new File(args[0]);
-		    if (iniFil.canRead())
-			w.startGenOpt(iniFil);
-		}
+	try{
+	    WinGenOpt w = new WinGenOpt();
+	    w.setVisible(true);
+	    // test if first argument is a file, then assume it is 
+	    // the initialization file
+	    if ( args.length != 0 ){
+		File iniFil = new File(args[0]);
+		if (iniFil.canRead())
+		    w.startGenOpt(iniFil);
 	    }
-	catch(Throwable t)
-	    {
-		t.printStackTrace();
-		System.exit(1);
-	    }
+	}
+	catch(Throwable t){
+	    t.printStackTrace();
+	    System.exit(1);
+	}
     }
 }

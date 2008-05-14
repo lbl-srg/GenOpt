@@ -466,6 +466,10 @@ public class GenOpt extends Thread
      */
     public static JFileChooser getInitializationFileChooser(File IniStartUpFile)
     {
+	// Resolve relative paths. This is needed when the preference file
+	// contains only the relative path, which happens when GenOpt is called
+	// from the command line with the ini file name as argument
+	File iniFil = IniStartUpFile.getAbsoluteFile(); 
 	//construct file dialog
 	JFileChooser fc = new JFileChooser();
 	fc.setDialogTitle("Choose initialization file");
@@ -476,14 +480,13 @@ public class GenOpt extends Thread
 
 	fc.addChoosableFileFilter(filter);
 	fc.setFileFilter(filter);
-
 	// set current file and directory
 	try{
-	    if (IniStartUpFile.isFile()){
-		fc.setSelectedFile(IniStartUpFile);
+	    if (iniFil.isFile()){
+		fc.setSelectedFile(iniFil);
 	    }
-	    else if (IniStartUpFile.isDirectory()){
-		fc.setCurrentDirectory(IniStartUpFile);
+	    else if (iniFil.isDirectory()){
+		fc.setCurrentDirectory(iniFil);
 	    }
 	    else{
 		fc.setCurrentDirectory( new File(System.getProperty("user.dir"))  );
@@ -2804,54 +2807,46 @@ public class GenOpt extends Thread
     /** Main routine
      *@param args optional parameter for optimization initialization file
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args){
 	System.out.println(DIVIDER);
 	System.out.println(RUNHEADER);
 	System.out.println(DIVIDER);
-	/*	args = new String[1];
-	args[0] = "/home/mwetter/proj/genopt/3_code/2.0/runtest/parametricDisc/OptLinux.ini";
-	System.err.println("### Setting args[0] = " + args[0]);
-	*/
 	if (DEBUG) System.err.println(DEBUG_WARNING);
-
-	try
-	    {
-		int flag;
-		String optIniFilNam;
-
-		if (args.length > 0 && args[0] != null)
-		    optIniFilNam = args[0];
-		else
-		    optIniFilNam = null;
-
-		InputFormatException inpForExc = new InputFormatException();
-		// GenOpt constructor
-		GenOpt gen = new GenOpt();
-
-		int exiFla = 1; // exit flag (used in System.exit(exiFla);
-		try
-		    {
-			gen = new GenOpt(optIniFilNam, inpForExc, null);
-
-				// check for error during initialization
-			if (inpForExc.getNumberOfErrors() > 0)
-			    throw inpForExc;
-		    }
-		catch (Throwable t)
-		    {
-			if (DEBUG) printStackTrace(t);
-			String em = t.getClass().getName() + ": " + LS +
-			    t.getMessage();
-			System.err.println(em);
-			gen.writeLogFile(em);
-			System.exit(exiFla);
-		    }
-		gen.run();
-		exiFla = gen.getExitFlag();
-		System.exit(exiFla);
+	try{
+	    int flag;
+	    String optIniFilNam;
+	    
+	    if (args.length > 0 && args[0] != null)
+		optIniFilNam = args[0];
+	    else
+		optIniFilNam = null;
+	    
+	    InputFormatException inpForExc = new InputFormatException();
+	    // GenOpt constructor
+	    GenOpt gen = new GenOpt();
+	    
+	    int exiFla = 1; // exit flag, unless overwritten below
+	    try{
+		gen = new GenOpt(optIniFilNam, inpForExc, null);
+		
+		// check for error during initialization
+		if (inpForExc.getNumberOfErrors() > 0)
+		    throw inpForExc;
 	    }
-
+	    catch (Throwable t)
+		{
+		    if (DEBUG) printStackTrace(t);
+		    String em = t.getClass().getName() + ": " + LS +
+			t.getMessage();
+		    System.err.println(em);
+		    gen.writeLogFile(em);
+		    System.exit(exiFla);
+		}
+	    gen.run();
+	    exiFla = gen.getExitFlag();
+	    System.exit(exiFla);
+	}
+	
 	catch (NoClassDefFoundError e) // if it doesn't run at all
 	    {
 		printStackTrace(e); // print to Stack also if not in debug mode
@@ -2860,17 +2855,15 @@ public class GenOpt extends Thread
 		em += "Optimization terminated with error." + LS;
 		em += "Java class not found. Check the setting of your CLASSPATH variable.";
 		System.err.println( LS + LS + em + LS + DIVIDER);
-
-		try
-		    {
-			FileWriter FilWri = new FileWriter("GenOpt.log");
-			FilWri.write(em);
-			FilWri.close();
-		    }
-		catch(Throwable t)
-		    {	// print always to StackTrace
-			printStackTrace(t);
-		    }
+		
+		try{
+		    FileWriter FilWri = new FileWriter("GenOpt.log");
+		    FilWri.write(em);
+		    FilWri.close();
+		}
+		catch(Throwable t){  // print always to StackTrace
+		    printStackTrace(t);
+		}
 	    }
 	System.exit(1);
     }
