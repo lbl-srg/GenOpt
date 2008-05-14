@@ -55,7 +55,7 @@ unitTest:
 	    cd $(ROODIR); \
 	    echo "++++ $$x"; \
 	    if [ -f $$x/optLinux.ini ]; then \
-	       	cd $$x && java -ea genopt.GenOpt optLinux.ini; \
+	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/optLinux.ini; \
 	        if [ "$$?" != "0" ]; then \
 	            echo "*** Error: Unit test failed for $$x/optLinux.ini"; \
 	            exit 1; fi; \
