@@ -504,7 +504,6 @@ public class GenOpt extends Thread
      */
     protected File getIniStartUpFile()
     {
-	//	return new File((String)pref.get("file.ini.startUp"));
 	// set it to the current working directory for the console version
 	File fLast = new File((String)pref.get("file.ini.startUp"));
 	if (fLast.isFile()){ // file still exists

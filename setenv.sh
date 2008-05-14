@@ -23,6 +23,6 @@ fi
 
 export GenOptDir=`pwd`
 export PATH=${GenOptDir}/bin:"${PATH}"
-export CLASSPATH=${GenOptDir}:$CLASSPATH
+#export CLASSPATH=${GenOptDir}:$CLASSPATH
 
 export GenOptEnvSet="true" # used by Makefile
