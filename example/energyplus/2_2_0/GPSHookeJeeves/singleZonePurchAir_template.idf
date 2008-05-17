@@ -4,7 +4,7 @@
 !
 ! Author:   Michael Wetter, SRG-LBNL, MWetter@lbl.gov
 !           Input file based on BESTEST Case930 from R. H. Henninger,  GARD Analytics, Inc.
-! Date:     August 27, 2002
+! Date:     May 16, 2008
 ! Run:      Run for Chicago, IL location
 ! Building: Fictional 1 zone building + hallway with walls, windows and internal mass.  
 !           Windows on east and west walls only
@@ -27,7 +27,7 @@
 !           Solar, visible, and thermal transmittance of shading device also design parameter
 
 Version,
-    1.1.1;  !- Version Identifier
+    2.2.0;  !- Version Identifier
 
     
 Solution Algorithm, CTF; ! Heat balance solution algorithm
@@ -206,7 +206,7 @@ MATERIAL:WindowShade, ExtShade,
 
 WINDOWSHADINGCONTROL,
   WinShadingControl,   ! Name
-  ExteriorNonInsulatingShade, ! Shading type
+  ExteriorShade, ! Shading type
   Double Pane Window Shaded,         ! Name of construction with shading
   OnIfHighSolarOnWindow,   ! Shading control type
   Sch Summer,                 ! Schedule name
@@ -431,30 +431,45 @@ WINDOWSHADINGCONTROL,
 
 ! ===========================================================
 
-ELECTRIC EQUIPMENT,     ! Electr, internal loads, except lights
-       ZONE ONE      ,  ! Zone Name
-       Sch Equ       ,  ! Schedule Name
-       768.0         ,  ! Design Level {W)
-       0.000         ,  ! Fraction latent
-       0.600         ,  ! Fraction radiant
-       0.000         ,  ! Fraction lost
-       0             ;  ! End use category
+ELECTRIC EQUIPMENT,
+  ROOM ELE EQU     , !- Name
+  ZONE ONE         , !- Zone Name
+  Sch Equ          , !- SCHEDULE Name
+  equipment level  , !- Design Level calculation method
+  768              , !- Design Level {W}
+                   , !- Watts per Zone Area {watts/m2}
+                   , !- Watts per Person {watts/person}
+  0                , !- Fraction Latent
+  0.3              , !- Fraction Radiant
+  0                , !- Fraction Lost
+  Room Equi;         !- End-use Subcategory
+
+
 LIGHTS,
+       ROOM LIGHTS   ,  ! Name
        ZONE ONE      ,  ! Zone Name
        Sch Lig       ,  ! Schedule Name
-       1632.0         ,  ! Design Level {W)
+       Lighting Level,  ! Design Level Calculation Method
+       1632.0        ,  ! Design Level {W)
+       0             ,  ! Watts per Zone Area
+       0             ,  ! Watts per Person     
        0.000         ,  ! Return air fraction
        0.400         ,  ! Fraction radiant
        0.200         ,  ! Fraction visible
-       0.900         ,  ! Fraction replaceable (by daylighting)
+       1             ,  ! Fraction replaceable (by daylighting)
        GeneralLights ;  ! LightsEndUseKey
 
-PEOPLE,                  ! People
+PEOPLE,
+       ROOM PEOPLE   ,  ! Name
        ZONE ONE      ,  ! Zone Name
-       3.2           ,  ! Number of People
-       Sch Peo       ,  ! Schedule Name
-       0.580         ,  ! Fraction radiant (ASHRAE, Fund. 1997, 28.8, Tab. 3, Low veloc.)
-       Sch Act       ;  ! Activity schedule W/person
+       Sch Peo       ,  !- Number of People SCHEDULE Name
+       people        ,  !- Number of People calculation method
+       3.2           ,  !- Number of People
+                     ,  !- People per Zone Area {people/m2}
+                     ,  !- Zone area per person {m2/people}
+       0.6           ,  !- Fraction Radiant
+       Autocalculate ,  !- user specified sensible fraction
+       Sch Act;         !- Activity level SCHEDULE Name
 
  ScheduleType,Any Number;  ! Not limited
 
@@ -667,13 +682,19 @@ SCHEDULE,
 
 
 INFILTRATION,
-       ZONE ONE      , ! Zone Name
-       Sch 1         , ! Schedule name
-       0.036         , ! Design level {m3/sec} ( corresponds to AC = 0.5 h^(-1) )
-       1.0           , ! Constant term coefficient
-       0.0           , ! Temperature term coefficient
-       0.0           , ! Velocity term coefficient
-       0.0           ; ! Velocity**2 term coefficient
+  INFILTRATION 1,   !- Name
+  ZONE ONE      , !- Zone Name
+  Sch 1         , !- SCHEDULE Name
+  flow/zone     , !- Design Volume Flow Rate calculation method
+  0.036         , !- Design Volume Flow Rate {m3/s}
+                , !- Flow per Zone Area {m3/s/m2}
+                , !- Flow per Exterior Surface Area {m3/s/m2}
+                , !- Air Changes Per Hour
+  1             , !- Constant Term Coefficient
+  0             , !- Temperature Term Coefficient
+  0             , !- Velocity Term Coefficient
+  0             ; !- Velocity Squared Term Coefficient
+
 
 ! =====================================================================
 ! Daylighting
@@ -682,8 +703,8 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
        2         , ! Total daylighting reference points
         3, 3, 1  , ! (x,y,z) of first  reference point in zone coordinate system
        13, 3, 1  , ! (x,y,z) of second reference point in zone coordinate system
-       0.4       , ! fraction of zone controlled by first  reference point
-       0.4       , ! fraction of zone controlled by second reference point
+       0.5       , ! fraction of zone controlled by first  reference point
+       0.5       , ! fraction of zone controlled by second reference point
        500       , ! illuminance set point at first  reference point
        500       , ! illuminance set point at second reference point
          3       , ! lighting control type (continuous/off)
@@ -849,20 +870,21 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
         !List equipment in simulation order
       PURCHASED AIR,Zone1Air,1,1;          ! KEY--Zone Equipment Type 1, Type Name 1, Cooling Priority, Heating Priority
 
+
 ! PURCHASED AIR, (unlimited heating/cooling capacity) 
     PURCHASED AIR, 
       Zone1Air,                            ! Purchased Air Name
       NODE_1,                              ! Zone Supply Air Node Name
-      50,                                  ! Heating Supply Air Temp {C}
-      13,                                  ! Cooling Supply Air Temp {C}
+      30,                                  ! Heating Supply Air Temp {C}
+      18,                                  ! Cooling Supply Air Temp {C}
       0.010,                               ! Heating Supply Air Humidity Ratio {kg/kg}
       0.010,                               ! Cooling Supply Air Humidity Ratio {kg/kg}
       no limit,                            ! Heating limit 
-      0.2,                                 ! Maximum heating air flow rate
+         ,                                 ! Maximum heating air flow rate
       no limit,                            ! Cooling limit 
-      0.2,                                 ! Maximum cooling air flow rate
-      outside air,                         ! outside air
-      0.036,                               ! outside air flow rate
+         ,                                 ! Maximum cooling air flow rate
+      no outside air,                      ! outside air
+           ,                               ! outside air flow rate
       ,                                    ! Heating availability schedule
       ;                                    ! Cooling availability schedule
       
@@ -896,10 +918,11 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
 
 report variable,, Purchased Air Sensible Cooling Energy, environment;
 report variable,, Purchased Air Heating Energy, environment;
-report variable,, Lights-Electric Consumption, environment;
+report variable,, Lights Electric Consumption, environment;
 
 !report variable dictionary;
 !report,surfaces,dxf;
 !report,construction;
 
 End Simulation Data;
+

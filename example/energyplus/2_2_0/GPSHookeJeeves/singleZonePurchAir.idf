@@ -186,12 +186,12 @@ MATERIAL:WindowGas, KRYPTON 8MM,
     .0079  ;    !- Thickness {m}
 
 MATERIAL:WindowShade, ExtShade,
-         0.5     ,  ! Solar transmittance
+         %tau%     ,  ! Solar transmittance
          0.1       ,  ! Solar reflectance
-         0.5     ,  ! Visible transmittance
+         %tau%     ,  ! Visible transmittance
          0.1       ,  ! Visible reflectance
          0.1       ,  ! Thermal emissivity
-         0.5     ,  ! Thermal transmittance
+         %tau%     ,  ! Thermal transmittance
          0.02      ,  ! Thickness (used only for insulating shade)
          0.1       ,  ! Conductivity (used only for insulating shade) in W/(m*K)
          0.05      ,  !Shade-to-glass distance
@@ -272,7 +272,7 @@ WINDOWSHADINGCONTROL,
 
  BUILDING,
     office zone,   ! Building Name
-           0.0,   ! Building Azimuth
+           %azimuth%,   ! Building Azimuth
                    1,   ! Building Terrain {1=FlatOpenCountry | 2=RoughWoodedCountryTownsSuburbs | 3=CityCenter}
        4.0000000E-02,   ! Loads Convergence Tolerance
        4.0000002E-03,   ! Temperature Convergence Tolerance
@@ -332,8 +332,8 @@ WINDOWSHADINGCONTROL,
            4, !-RectangularDoorWindow
   16.000000    ,   0.000000    ,   2.200000    ,
   16.000000    ,   0.000000    ,  0.2000000    ,
-  16.000000    ,   3.0   ,  0.2000000    ,
-  16.000000    ,   3.0   ,   2.200000    ;
+  16.000000    ,   %w_ea_win%   ,  0.2000000    ,
+  16.000000    ,   %w_ea_win%   ,   2.200000    ;
 
   Surface:Shading:Attached,EAST WINDOW OVERHANG,  !- Surface Name
    ZONE SURFACE EAST,  !- Base Surface Name
@@ -341,8 +341,8 @@ WINDOWSHADINGCONTROL,
            4, !-RectangularOverhang
   16.000000    ,   0.000000    ,   2.700000    ,
   17.0     ,   0.000000    ,   2.700000    ,
-  17.0     ,   3.0 ,   2.700000    ,
-  16.000000    ,   3.0  ,   2.700000    ;
+  17.0     ,   %w_ea_win% ,   2.700000    ,
+  16.000000    ,   %w_ea_win%  ,   2.700000    ;
 
  Surface:HeatTransfer,ZONE SURFACE SOUTH,  !- Base Surface Name
    WALL,PARWALL,  !- Class and Construction Name
@@ -380,8 +380,8 @@ WINDOWSHADINGCONTROL,
   WinFrameAndDivider ,  !- Frame Divider
   1, ! number of identical windows
            4, !-RectangularDoorWindow
-  0.0000000E+00,   3.0    ,   2.200000    ,
-  0.0000000E+00,   3.0    ,  0.2000000    ,
+  0.0000000E+00,   %w_we_win%    ,   2.200000    ,
+  0.0000000E+00,   %w_we_win%    ,  0.2000000    ,
   0.0000000E+00,   0.000000    ,  0.2000000    ,
   0.0000000E+00,   0.000000    ,   2.200000    ;
 
@@ -389,8 +389,8 @@ WINDOWSHADINGCONTROL,
    ZONE SURFACE WEST,  !- Base Surface Name
    ,  !- Shadowing Schedule
            4, !-RectangularOverhang
-  0.0000000E+00,   3.0  ,   2.700000    ,
-  -1.0    ,   3.0  ,   2.700000    ,
+  0.0000000E+00,   %w_we_win%  ,   2.700000    ,
+  -1.0    ,   %w_we_win%  ,   2.700000    ,
   -1.0    ,   0.000000    ,   2.700000    ,
   0.0000000E+00,   0.000000    ,   2.700000    ;
 
