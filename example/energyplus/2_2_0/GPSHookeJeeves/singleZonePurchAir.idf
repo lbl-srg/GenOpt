@@ -4,7 +4,7 @@
 !
 ! Author:   Michael Wetter, SRG-LBNL, MWetter@lbl.gov
 !           Input file based on BESTEST Case930 from R. H. Henninger,  GARD Analytics, Inc.
-! Date:     August 27, 2002
+! Date:     May 16, 2008
 ! Run:      Run for Chicago, IL location
 ! Building: Fictional 1 zone building + hallway with walls, windows and internal mass.  
 !           Windows on east and west walls only
@@ -918,7 +918,7 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
 
 report variable,, Purchased Air Sensible Cooling Energy, environment;
 report variable,, Purchased Air Heating Energy, environment;
-report variable,, Lights-Electric Consumption, environment;
+report variable,, Lights Electric Consumption, environment;
 
 !report variable dictionary;
 !report,surfaces,dxf;
