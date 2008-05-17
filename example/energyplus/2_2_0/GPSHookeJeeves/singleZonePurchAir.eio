@@ -1,0 +1,76 @@
+Program Version,EnergyPlus, Linux Version 2.2.0.023
+! <Version>, Version ID
+ Version, 2.2.0
+! <Time Steps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
+ TimeSteps Per Hour,  4, 15
+! <System Convergence Limits>, Minimum System TimeStep {minutes}, Max HVAC Iterations
+ System Convergence Limits, 1, 20
+! <Run Control>, Do Zone Sizing, Do System Sizing, Do Plant Sizing, Do Design Days, Do Weather Simulation
+ Run Control, No, No, No, Yes, Yes
+! <GroundTemperatures>, Months From Jan to Dec {Deg C}
+ GroundTemperatures,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00
+! <GroundTemperatures:Surface>, Months From Jan to Dec {Deg C}
+ GroundTemperatures:Surface,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00
+! <GroundTemperatures:Deep>, Months From Jan to Dec {Deg C}
+ GroundTemperatures:Deep,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00
+! <GroundReflectances>, Months From Jan to Dec {dimensionless}
+ GroundReflectances,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Snow Ground Reflectance Modifiers>, Normal, Daylighting {dimensionless}
+ Snow Ground Reflectance Modifiers,   1.000,   1.000
+! <Snow GroundReflectances>, Months From Jan to Dec {dimensionless}
+ Snow GroundReflectances,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Snow GroundReflectances For Daylighting>, Months From Jan to Dec {dimensionless}
+ Snow GroundReflectances For Daylighting,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Environment:Weather Station>,Wind Sensor Height Above Ground {m},Wind Speed Profile Exponent {},Wind Speed Profile Boundary Layer Thickness {m},Air Temperature Sensor Height Above Ground {m},Wind Speed Modifier Coefficient [Internal],Temperature Modifier Coefficient [Internal]
+Environment:Weather Station,10.000,0.140,270.000,1.500,1.586,9.750E-03
+! <Location>, Location Name, Latitude {N+/S- Deg}, Longitude {E+/W- Deg},  Time Zone Number {GMT+/-}, Elevation {m},  Standard Pressure at Elevation {Pa}, Standard RhoAir at Elevation
+Location,CHICAGO IL USA TMY2-94846 WMO#=725300,41.78,-87.75,-6.00,190.00,99063,1.1774
+! <Environment>,Environment Name,Environment Type, Start Date, End Date, Start DayOfWeek, Duration {#days}, Source:Start DayOfWeek,  Use Daylight Saving, Use Holidays, Apply Weekend Holiday Rule,  Use Rain Values, Use Snow Values
+! <Environment:Special Days>, Special Day Name, Special Day Type, Source, Start Date, Duration {#days}
+! <Environment:Daylight Saving>, Daylight Saving Indicator, Source, Start Date, End Date
+! <Environment:WarmupDays>, NumberofWarmupDays
+Environment,CHICAGO IL USA TMY2-94846 WMO#=725300,WeatherFileRunPeriod,01/01,12/31,Monday,365,Use RunPeriod Specified Day,Yes,Yes,No ,Yes,Yes
+Environment:Daylight Saving,No,
+! <Building Information>, Building Name,North Axis {deg},Terrain,  Loads Convergence Tolerance Value,Temperature Convergence Tolerance Value,  Solar Distribution,Maximum Number of Warmup Days
+ Building Information, office zone,   0.000,Country,   0.04000,   0.00400,FullInteriorAndExterior,25
+! <Inside Convection Algorithm>, Algorithm {Simple | Detailed | CeilingDiffuser}
+Inside Convection Algorithm,Detailed
+! <Outside Convection Algorithm>, Algorithm {Simple | Detailed | TARP | MoWitt | DOE-2 | BLAST}
+Outside Convection Algorithm,Detailed
+! <Solution Algorithm>, Value {CTF | EMPD | CONDFD},Inside Surface Max Temperature Limit{C}
+Solution Algorithm, CTF,200
+! <Sky Radiance Distribution>, Value {Anisotropic}
+Sky Radiance Distribution,Anisotropic
+! <Environment:Site Atmospheric Variation>,Wind Speed Profile Exponent {},Wind Speed Profile Boundary Layer Thickness {m},Air Temperature Gradient Coefficient {K/m}
+Environment:Site Atmospheric Variation,0.140,270.000,6.500000E-03
+! <SurfaceGeometry>,Starting Corner,Vertex Input Direction,Coordinate System,Daylight Reference Point Coordinate System
+ SurfaceGeometry,UpperLeftCorner,CounterClockwise,RelativeCoordinateSystem,RelativeCoordinateSystem
+! <Number of Zones>, Number
+ Number of Zones,1
+! <Zone Information>,Zone Name,North Axis {deg},Origin X-Coordinate {m},Origin Y-Coordinate {m},Origin Z-Coordinate {m},Centroid X-Coordinate {m},Centroid Y-Coordinate {m},Centroid Z-Coordinate {m},Type,Zone Multiplier,Zone List Multiplier,Minimum X {m},Maximum X {m},Minimum Y {m},Maximum Y {m},Minimum Z {m},Maximum Z {m},Ceiling Height {m},Volume {m3},Zone Inside Convection Algorithm {Simple-Detailed-CeilingDiffuser-TrombeWall},Zone Outside Convection Algorithm {Simple-Detailed-Tarp-MoWitt-DOE-2-BLAST}, Floor Area {m2},Exterior Gross Wall Area {m2},Exterior Net Wall Area {m2},Exterior Window Area {m2}, Part of Total Building Area
+ Zone Information, ZONE ONE,0.0,0.00,0.00,0.00,8.00,3.00,1.35,1,1,1,0.00,16.00,0.00,6.00,0.00,2.70,2.70,259.20,Detailed,Detailed,96.00,32.40,19.38,11.64,Yes
+! <Zone Internal Gains/Equipment Information - Nominal>,Zone Name, Floor Area {m2},# Occupants,Area per Occupant {m2/person},Occupant per Area {person/m2},Interior Lighting {W/m2},Electric Load {W/m2},Gas Load {W/m2},Other Load {W/m2},Hot Water Eq {W/m2},Steam Equipment {W/m2},Sum Loads per Area {W/m2},Outdoor Controlled Baseboard Heat
+ Zone Internal Gains, ZONE ONE,96.00,3.2,30.000,3.333E-02,17.000,8.000,0.000,0.000,0.000,0.000,25.000,No
+! <People Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Number of People {},People/Floor Area {person/m2},Floor Area per person {m2/person},Fraction Radiant,Fraction Convected,Sensible Fraction Calculation,Activity level,ASHRAE 55 Warnings 
+ People Internal Gains, ROOM PEOPLE,SCH PEO,ZONE ONE,96.00,3.2,3.2,3.333E-02,30.000,0.600,0.400,AutoCalculate,SCH ACT,No
+! <Lights Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Lighting Level {W},Lights/Floor Area {W/m2},Lights per person {W/person},Fraction Return Air,Fraction Radiant,Fraction Short Wave,Fraction Convected,Fraction Replaceable,EndUse Category
+ Lights Internal Gains, ROOM LIGHTS,SCH LIG,ZONE ONE,96.00,3.2,1632.000,17.000,510.000,0.000,0.400,0.200,0.400,1.000,GeneralLights
+! <Electric Equipment Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Equipment Level {W},Equipment/Floor Area {W/m2},Equipment per person {W/person},Fraction Latent,Fraction Radiant,Fraction Lost,Fraction Convected,EndUse SubCategory
+ Electric Equipment Internal Gains, ROOM ELE EQU,SCH EQU,ZONE ONE,96.00,3.2,768.000,8.000,240.000,0.000,0.300,0.000,0.700,Room Equi
+! <Shadowing/Sun Position Calculations> [Annual Simulations], Value {days}, Allowable Number Figures in Shadow Overlap {}
+Shadowing/Sun Position Calculations,20,15000
+! <Overcast Sky Daylight Factors>, MonthAndDay, Zone Name, Window Name, Daylight Fac: Ref Pt #1, Daylight Fac: Ref Pt #2
+ Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 1 EAST WINDOW,  0.3202E-02,  0.9027E-02
+ Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 2 WEST WINDOW,  0.9027E-02,  0.3202E-02
+! <Infiltration Airflow Stats - Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {m2}, # Zone Occupants,Design Volume Flow Rate {m3/s},Volume Flow Rate/Floor Area {m3/s/m2},Volume Flow Rate/Exterior Surface Area {m3/s/m2},ACH - Air Changes per Hour,Equation A - Constant Term Coefficient {},Equation B - Temperature Term Coefficient {1/C},Equation C - Velocity Term Coefficient {s/m}, Equation D - Velocity Squared Term Coefficient {s2/m2}
+ Infiltration Airflow Stats, INFILTRATION 1,SCH 1,ZONE ONE,96.00,3.2,3.600E-02,3.750E-04,1.111E-03,0.500,1.000,0.000,0.000,0.000
+! <AirFlow Model>, Simple
+ AirFlow Model, Simple
+! <RoomAir Model>, Zone Name, Mixing/Mundt/UCSDDV/UCSDCV/UCSDUFI/UCSDUFE/User Defined
+RoomAir Model,ZONE ONE,Mixing/Well-Stirred
+! <AirflowNetwork Model:Control>, No Multizone or Distribution/Multizone with Distribution/Multizone without Distribution/Multizone with Distribution only during Fan Operation
+AirflowNetwork Model:Control,No Multizone or Distribution
+! <Zone Volume Capacitance Multiplier, Value>
+Zone Volume Capacitance Multiplier,   1.200
+Environment:WarmupDays, 12
+End of Data

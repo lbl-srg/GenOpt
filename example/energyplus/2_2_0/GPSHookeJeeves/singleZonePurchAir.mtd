@@ -1,0 +1,176 @@
+
+ Meters for 64,ROOM LIGHTS:Lights Electric Consumption [J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:ZONE ONE [J]
+  OnMeter=InteriorLights:Electricity [J]
+  OnMeter=InteriorLights:Electricity:Zone:ZONE ONE [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity [J]
+
+ Meters for 138,ROOM ELE EQU:Electric Equipment Electric Consumption [J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:ZONE ONE [J]
+  OnMeter=InteriorEquipment:Electricity [J]
+  OnMeter=InteriorEquipment:Electricity:Zone:ZONE ONE [J]
+  OnMeter=Room Equi:InteriorEquipment:Electricity [J]
+
+ Meters for 571,ZONE ONE:Zone/Sys Sensible Heating Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:ZONE ONE [J]
+  OnMeter=Heating:EnergyTransfer [J]
+  OnMeter=Heating:EnergyTransfer:Zone:ZONE ONE [J]
+
+ Meters for 622,ZONE ONE:Zone/Sys Sensible Cooling Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:ZONE ONE [J]
+  OnMeter=Cooling:EnergyTransfer [J]
+  OnMeter=Cooling:EnergyTransfer:Zone:ZONE ONE [J]
+
+ Meters for 658,ZONE1AIR:Purchased Air Heating Energy [J]
+  OnMeter=PurchasedHeating:Facility [J]
+  OnMeter=PurchasedHeating:HVAC [J]
+  OnMeter=Heating:PurchasedHeating [J]
+
+ Meters for 692,ZONE1AIR:Purchased Air Total Cooling Energy [J]
+  OnMeter=PurchasedCooling:Facility [J]
+  OnMeter=PurchasedCooling:HVAC [J]
+  OnMeter=Cooling:PurchasedCooling [J]
+
+ Meters for 728,Whole Building:Total Electric Energy Purchased [J]
+  OnMeter=ElectricityPurchased:Facility [J]
+  OnMeter=ElectricityPurchased:Plant [J]
+  OnMeter=Cogeneration:ElectricityPurchased [J]
+
+ Meters for 759,Whole Building:Total Electric Energy Surplus [J]
+  OnMeter=ElectricitySurplusSold:Facility [J]
+  OnMeter=ElectricitySurplusSold:Plant [J]
+  OnMeter=Cogeneration:ElectricitySurplusSold [J]
+
+ Meters for 791,Whole Building:Net Electric Energy Purchased [J]
+  OnMeter=ElectricityNet:Facility [J]
+  OnMeter=ElectricityNet:Plant [J]
+  OnMeter=Cogeneration:ElectricityNet [J]
+
+ Meters for 877,Site:Carbon Equivalent Pollution From NOx [kg]
+  OnMeter=Carbon Equivalent:Facility [kg]
+  OnMeter=CarbonEquivalentEmissions:Carbon Equivalent [kg]
+
+ Meters for 898,Site:Carbon Equivalent Pollution From CH4 [kg]
+  OnMeter=Carbon Equivalent:Facility [kg]
+  OnMeter=CarbonEquivalentEmissions:Carbon Equivalent [kg]
+
+ Meters for 899,Site:Carbon Equivalent Pollution From CO2 [kg]
+  OnMeter=Carbon Equivalent:Facility [kg]
+  OnMeter=CarbonEquivalentEmissions:Carbon Equivalent [kg]
+
+ For Meter=Electricity:Facility [J], ResourceType=Electricity, contents are:
+  ROOM LIGHTS:Lights Electric Consumption
+  ROOM ELE EQU:Electric Equipment Electric Consumption
+
+ For Meter=Electricity:Building [J], ResourceType=Electricity, Group=Building, contents are:
+  ROOM LIGHTS:Lights Electric Consumption
+  ROOM ELE EQU:Electric Equipment Electric Consumption
+
+ For Meter=Electricity:Zone:ZONE ONE [J], ResourceType=Electricity, Group=Zone, contents are:
+  ROOM LIGHTS:Lights Electric Consumption
+  ROOM ELE EQU:Electric Equipment Electric Consumption
+
+ For Meter=InteriorLights:Electricity [J], ResourceType=Electricity, EndUse=InteriorLights, contents are:
+  ROOM LIGHTS:Lights Electric Consumption
+
+ For Meter=InteriorLights:Electricity:Zone:ZONE ONE [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  ROOM LIGHTS:Lights Electric Consumption
+
+ For Meter=GeneralLights:InteriorLights:Electricity [J], ResourceType=Electricity, EndUse=InteriorLights, contents are:
+  ROOM LIGHTS:Lights Electric Consumption
+
+ For Meter=InteriorEquipment:Electricity [J], ResourceType=Electricity, EndUse=InteriorEquipment, contents are:
+  ROOM ELE EQU:Electric Equipment Electric Consumption
+
+ For Meter=InteriorEquipment:Electricity:Zone:ZONE ONE [J], ResourceType=Electricity, EndUse=InteriorEquipment, Group=Zone, contents are:
+  ROOM ELE EQU:Electric Equipment Electric Consumption
+
+ For Meter=Room Equi:InteriorEquipment:Electricity [J], ResourceType=Electricity, EndUse=InteriorEquipment, contents are:
+  ROOM ELE EQU:Electric Equipment Electric Consumption
+
+ For Meter=EnergyTransfer:Facility [J], ResourceType=EnergyTransfer, contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy
+  ZONE ONE:Zone/Sys Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Building [J], ResourceType=EnergyTransfer, Group=Building, contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy
+  ZONE ONE:Zone/Sys Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Zone:ZONE ONE [J], ResourceType=EnergyTransfer, Group=Zone, contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy
+  ZONE ONE:Zone/Sys Sensible Cooling Energy
+
+ For Meter=Heating:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Heating, contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy
+
+ For Meter=Heating:EnergyTransfer:Zone:ZONE ONE [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  ZONE ONE:Zone/Sys Sensible Heating Energy
+
+ For Meter=Cooling:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Cooling, contents are:
+  ZONE ONE:Zone/Sys Sensible Cooling Energy
+
+ For Meter=Cooling:EnergyTransfer:Zone:ZONE ONE [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  ZONE ONE:Zone/Sys Sensible Cooling Energy
+
+ For Meter=PurchasedHeating:Facility [J], ResourceType=PurchasedHeating, contents are:
+  ZONE1AIR:Purchased Air Heating Energy
+
+ For Meter=PurchasedHeating:HVAC [J], ResourceType=PurchasedHeating, Group=HVAC, contents are:
+  ZONE1AIR:Purchased Air Heating Energy
+
+ For Meter=Heating:PurchasedHeating [J], ResourceType=PurchasedHeating, EndUse=Heating, contents are:
+  ZONE1AIR:Purchased Air Heating Energy
+
+ For Meter=PurchasedCooling:Facility [J], ResourceType=PurchasedCooling, contents are:
+  ZONE1AIR:Purchased Air Total Cooling Energy
+
+ For Meter=PurchasedCooling:HVAC [J], ResourceType=PurchasedCooling, Group=HVAC, contents are:
+  ZONE1AIR:Purchased Air Total Cooling Energy
+
+ For Meter=Cooling:PurchasedCooling [J], ResourceType=PurchasedCooling, EndUse=Cooling, contents are:
+  ZONE1AIR:Purchased Air Total Cooling Energy
+
+ For Meter=ElectricityPurchased:Facility [J], ResourceType=ElectricityPurchased, contents are:
+  Whole Building:Total Electric Energy Purchased
+
+ For Meter=ElectricityPurchased:Plant [J], ResourceType=ElectricityPurchased, Group=Plant, contents are:
+  Whole Building:Total Electric Energy Purchased
+
+ For Meter=Cogeneration:ElectricityPurchased [J], ResourceType=ElectricityPurchased, EndUse=Cogeneration, contents are:
+  Whole Building:Total Electric Energy Purchased
+
+ For Meter=ElectricitySurplusSold:Facility [J], ResourceType=ElectricitySurplusSold, contents are:
+  Whole Building:Total Electric Energy Surplus
+
+ For Meter=ElectricitySurplusSold:Plant [J], ResourceType=ElectricitySurplusSold, Group=Plant, contents are:
+  Whole Building:Total Electric Energy Surplus
+
+ For Meter=Cogeneration:ElectricitySurplusSold [J], ResourceType=ElectricitySurplusSold, EndUse=Cogeneration, contents are:
+  Whole Building:Total Electric Energy Surplus
+
+ For Meter=ElectricityNet:Facility [J], ResourceType=ElectricityNet, contents are:
+  Whole Building:Net Electric Energy Purchased
+
+ For Meter=ElectricityNet:Plant [J], ResourceType=ElectricityNet, Group=Plant, contents are:
+  Whole Building:Net Electric Energy Purchased
+
+ For Meter=Cogeneration:ElectricityNet [J], ResourceType=ElectricityNet, EndUse=Cogeneration, contents are:
+  Whole Building:Net Electric Energy Purchased
+
+ For Meter=Carbon Equivalent:Facility [kg], ResourceType=Carbon Equivalent, contents are:
+  Site:Carbon Equivalent Pollution From NOx
+  Site:Carbon Equivalent Pollution From CH4
+  Site:Carbon Equivalent Pollution From CO2
+
+ For Meter=CarbonEquivalentEmissions:Carbon Equivalent [kg], ResourceType=Carbon Equivalent, EndUse=CarbonEquivalentEmissions, contents are:
+  Site:Carbon Equivalent Pollution From NOx
+  Site:Carbon Equivalent Pollution From CH4
+  Site:Carbon Equivalent Pollution From CO2
