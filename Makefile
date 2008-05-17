@@ -11,7 +11,8 @@ SRC=`find genopt -name '*.java'`
 CLAFIL=`find genopt -name '*.class'`
 # List of run time files
 RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' \
-        -or -name 'eplusout.*' -or -name '*.audit' \)`
+        -or -name 'eplusout.*' -or -name '*.eso' -or -name '*.audit' -or -name 'Output' \)`
+RUNDIR=`find example \( -name 'Output' \)`
 
 # List of directories with example files
 EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
@@ -35,6 +36,7 @@ jar: prog
 clean:
 	@if [ "$(CLAFIL)" != "" ]; then rm -v $(CLAFIL); fi
 	@if [ "$(RUNFIL)" != "" ]; then rm -v $(RUNFIL); fi
+	@if [ "$(RUNDIR)" != "" ]; then rm -r $(RUNDIR); fi
 
 ### generates JavaDoc html files
 doc:
