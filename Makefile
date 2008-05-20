@@ -42,14 +42,14 @@ clean:
 doc:
 	rm -f jdoc/*.html jdoc/package-list
 	rm -rf jdoc/genopt/*
-	javadoc -breakiterator -private -author -version \
+	(cd src; javadoc -breakiterator -private -author -version \
 	-windowtitle "GenOpt Code Documentation" \
-	-stylesheetfile jdoc/jstyle.css \
+	-stylesheetfile ../jdoc/jstyle.css \
 	-bottom "<DIV CLASS="FOOTER"> <P> <CENTER> <A HREF="index.html" \
 	TARGET=_top>GenOpt</A> | <A HREF="http://simulationresearch.lbl.gov" \
 	TARGET=_top>LBL SRG</A> | <A HREF="http://www.lbl.gov" \
 	TARGET=_top>LBL</A> </CENTER> <HR WIDTH="100%"> \
-	<BR> Contact: <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A> </DIV>" -d jdoc $(SRC)
+	<BR> Contact: <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A> </DIV>" -d ../jdoc $(SRC))
 
 ### unit tests
 unitTest:
