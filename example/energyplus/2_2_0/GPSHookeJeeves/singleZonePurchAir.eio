@@ -32,7 +32,7 @@ Location,CHICAGO IL USA TMY2-94846 WMO#=725300,41.78,-87.75,-6.00,190.00,99063,1
 Environment,CHICAGO IL USA TMY2-94846 WMO#=725300,WeatherFileRunPeriod,01/01,12/31,Monday,365,Use RunPeriod Specified Day,Yes,Yes,No ,Yes,Yes
 Environment:Daylight Saving,No,
 ! <Building Information>, Building Name,North Axis {deg},Terrain,  Loads Convergence Tolerance Value,Temperature Convergence Tolerance Value,  Solar Distribution,Maximum Number of Warmup Days
- Building Information, office zone,   0.000,Country,   0.04000,   0.00400,FullInteriorAndExterior,25
+ Building Information, office zone,  87.500,Country,   0.04000,   0.00400,FullInteriorAndExterior,25
 ! <Inside Convection Algorithm>, Algorithm {Simple | Detailed | CeilingDiffuser}
 Inside Convection Algorithm,Detailed
 ! <Outside Convection Algorithm>, Algorithm {Simple | Detailed | TARP | MoWitt | DOE-2 | BLAST}
@@ -48,7 +48,7 @@ Environment:Site Atmospheric Variation,0.140,270.000,6.500000E-03
 ! <Number of Zones>, Number
  Number of Zones,1
 ! <Zone Information>,Zone Name,North Axis {deg},Origin X-Coordinate {m},Origin Y-Coordinate {m},Origin Z-Coordinate {m},Centroid X-Coordinate {m},Centroid Y-Coordinate {m},Centroid Z-Coordinate {m},Type,Zone Multiplier,Zone List Multiplier,Minimum X {m},Maximum X {m},Minimum Y {m},Maximum Y {m},Minimum Z {m},Maximum Z {m},Ceiling Height {m},Volume {m3},Zone Inside Convection Algorithm {Simple-Detailed-CeilingDiffuser-TrombeWall},Zone Outside Convection Algorithm {Simple-Detailed-Tarp-MoWitt-DOE-2-BLAST}, Floor Area {m2},Exterior Gross Wall Area {m2},Exterior Net Wall Area {m2},Exterior Window Area {m2}, Part of Total Building Area
- Zone Information, ZONE ONE,0.0,0.00,0.00,0.00,8.00,3.00,1.35,1,1,1,0.00,16.00,0.00,6.00,0.00,2.70,2.70,259.20,Detailed,Detailed,96.00,32.40,19.38,11.64,Yes
+ Zone Information, ZONE ONE,0.0,0.00,0.00,0.00,3.35,-7.86,1.35,1,1,1,0.00,6.69,-15.98,0.26,0.00,2.70,2.70,259.20,Detailed,Detailed,96.00,32.40,10.77,19.59,Yes
 ! <Zone Internal Gains/Equipment Information - Nominal>,Zone Name, Floor Area {m2},# Occupants,Area per Occupant {m2/person},Occupant per Area {person/m2},Interior Lighting {W/m2},Electric Load {W/m2},Gas Load {W/m2},Other Load {W/m2},Hot Water Eq {W/m2},Steam Equipment {W/m2},Sum Loads per Area {W/m2},Outdoor Controlled Baseboard Heat
  Zone Internal Gains, ZONE ONE,96.00,3.2,30.000,3.333E-02,17.000,8.000,0.000,0.000,0.000,0.000,25.000,No
 ! <People Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Number of People {},People/Floor Area {person/m2},Floor Area per person {m2/person},Fraction Radiant,Fraction Convected,Sensible Fraction Calculation,Activity level,ASHRAE 55 Warnings 
@@ -60,8 +60,8 @@ Environment:Site Atmospheric Variation,0.140,270.000,6.500000E-03
 ! <Shadowing/Sun Position Calculations> [Annual Simulations], Value {days}, Allowable Number Figures in Shadow Overlap {}
 Shadowing/Sun Position Calculations,20,15000
 ! <Overcast Sky Daylight Factors>, MonthAndDay, Zone Name, Window Name, Daylight Fac: Ref Pt #1, Daylight Fac: Ref Pt #2
- Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 1 EAST WINDOW,  0.3202E-02,  0.9027E-02
- Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 2 WEST WINDOW,  0.9027E-02,  0.3202E-02
+ Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 1 EAST WINDOW,  0.6159E-02,  0.1774E-01
+ Overcast Sky Daylight Factors, 01/01, ZONE ONE, ZONE SUBSURFACE 2 WEST WINDOW,  0.1359E-01,  0.4407E-02
 ! <Infiltration Airflow Stats - Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {m2}, # Zone Occupants,Design Volume Flow Rate {m3/s},Volume Flow Rate/Floor Area {m3/s/m2},Volume Flow Rate/Exterior Surface Area {m3/s/m2},ACH - Air Changes per Hour,Equation A - Constant Term Coefficient {},Equation B - Temperature Term Coefficient {1/C},Equation C - Velocity Term Coefficient {s/m}, Equation D - Velocity Squared Term Coefficient {s2/m2}
  Infiltration Airflow Stats, INFILTRATION 1,SCH 1,ZONE ONE,96.00,3.2,3.600E-02,3.750E-04,1.111E-03,0.500,1.000,0.000,0.000,0.000
 ! <AirFlow Model>, Simple
