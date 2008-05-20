@@ -29,7 +29,7 @@
       <variable name="desktopshortcutcheckboxenabled" value="true"/>
     </variables>    
 
-<guiprefs width="640" height="600" resizable="no">
+<guiprefs width="640" height="640" resizable="no">
 	<laf name="looks">
             <os family="unix" />
 	    <param name="variant" value="plastic3D" />
