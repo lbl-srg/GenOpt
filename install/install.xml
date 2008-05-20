@@ -57,9 +57,8 @@
         The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
     -->
     <resources>
-        <res id="LicencePanel.licence" src="../legal.txt"/>
+        <res id="HTMLLicencePanel.licence" src="../legal.html"/>
         <res id="HTMLInfoPanel.info" src="info.html"/>
-        <res id="InstallPanel.info" src="InstallInstruction.txt"/><!-- does not work yet -->
 	<res id="Heading.image" src="lbl_logo.png" />
     </resources>
     
@@ -70,9 +69,9 @@
     <panels>
         <panel classname="HelloPanel"/>
         <panel classname="HTMLInfoPanel"/>
-        <panel classname="LicencePanel"/>
+        <panel classname="HTMLLicencePanel"/>
         <panel classname="TargetPanel"/> 
-        <panel classname="PacksPanel"/>
+   <!--     <panel classname="PacksPanel"/> -->
         <panel classname="InstallPanel"/>
         <panel classname="SimpleFinishPanel"/>
     </panels>
@@ -85,15 +84,21 @@
 
     <!-- Software packs to be installed -->
     <packs>
-    <!-- Basic files for BCVTB -->
+    <!-- Basic files for GenOpt -->
         <pack name="Base" required="yes">
             <description>Binary and example files.</description>
             <file src="../legal.txt" targetdir="$INSTALL_PATH"/>
-            <file src="../jdoc"      targetdir="$INSTALL_PATH"/>
-            <file src="../genopt.jar"   targetdir="$INSTALL_PATH"/>
-
+	    <!-- Javadoc -->
+	    <fileset dir="../jdoc" targetdir="$INSTALL_PATH/jdoc">
+	      <exclude name="**/.svn"/>
+	    </fileset>
+	    <!-- Source -->
+	    <fileset dir="../src" targetdir="$INSTALL_PATH/src">
+	      <exclude name="**/.svn"/>
+	    </fileset>
             <file src="../Makefile"  targetdir="$INSTALL_PATH"/>
-            <exclude name="**/.svn"/>
+	    <!-- Binary -->
+            <file src="../genopt.jar"   targetdir="$INSTALL_PATH"/>
 	    <!-- Examples -->
 	    <fileset dir="../example" targetdir="$INSTALL_PATH/example">
 	      <exclude name="**/eplusou*"/>
@@ -101,12 +106,6 @@
 	      <exclude name="**/readvars.audit"/>
 	      <exclude name="**/.svn"/>
 	    </fileset>
-        </pack>
-        <pack name="Source code" required="no">
-            <description>Source code and Makefile.</description>
-            <file src="../Makefile"  targetdir="$INSTALL_PATH"/>
-            <file src="../src"  targetdir="$INSTALL_PATH"/>
-            <exclude name="**/.svn"/>
         </pack>
     </packs>
 </installation>

@@ -4,6 +4,7 @@ SHELL=/bin/sh
 #
 # MWetter@lbl.gov                                           2008-05-08
 ######################################################################
+UNAME = $(shell uname)
 
 # List of source code files
 SRC=`find genopt -name '*.java'`
