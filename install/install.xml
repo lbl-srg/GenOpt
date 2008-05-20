@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- 
+    GenOpt installation file.
+    To compile it, run 
+    cd xyz/genopt
+    make dist
+
+    To manually run this file, 
+    call "[path to IzPack/]compile install.xml -b . -o genopt-install.jar"
+-->
+
+<installation version="1.0">
+    <!-- 
+        The info section.
+    -->
+    <info>
+        <appname>GenOpt</appname>
+        <appversion>2.1.0</appversion>
+	<appsubpath>genopt</appsubpath>
+	<javaversion>1.5</javaversion>
+        <authors>
+            <author name="Michael Wetter" email="MWetter@lbl.gov"/>
+        </authors>
+        <url>https://simulationresearch.lbl.gov/GO</url>
+        <summarylogfilepath>$INSTALL_PATH/installinfo/Summary.htm</summarylogfilepath>
+    </info>
+
+    <variables>
+      <variable name="desktopshortcutcheckboxenabled" value="true"/>
+    </variables>    
+
+    <guiprefs width="640" height="480" resizable="yes">
+	<laf name="looks">
+            <os family="unix" />
+	    <param name="variant" value="plastic3D" />
+	</laf>
+        <!-- GUI addaption for more informations see "Modifying the GUI" in the documentation -->
+    	<modifier key="layoutAnchor" value="CENTER"/>
+    	<modifier key="headingPanelCounter" value="progressbar"/>
+
+	<modifier key="useHeadingPanel" value="yes"/>
+	<modifier key="useHeadingForSummary" value="yes"/>
+	<modifier key="headingLineCount" value="2"/>
+	<modifier key="headingFontSize" value="1.5"/>
+	<modifier key="headingBackgroundColor" value="0x00ffffff"/>
+	<modifier key="headingPanelCounter" value="text"/>
+	<modifier key="headingPanelCounterPos" value="inHeading"/>
+
+    </guiprefs>
+
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+
+    <!-- 
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="LicencePanel.licence" src="../legal.txt"/>
+        <res id="HTMLInfoPanel.info" src="info.html"/>
+        <res id="InstallPanel.info" src="InstallInstruction.txt"/><!-- does not work yet -->
+	<res id="Heading.image" src="lbl_logo.png" />
+    </resources>
+    
+    <!-- 
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="HTMLInfoPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/> 
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+
+  <listeners>
+      <listener installer="SummaryLoggerInstallerListener">
+          <os family="windows"/>
+      </listener>
+  </listeners>
+
+    <!-- Software packs to be installed -->
+    <packs>
+    <!-- Basic files for BCVTB -->
+        <pack name="Base" required="yes">
+            <description>Binary and example files.</description>
+            <file src="../legal.txt" targetdir="$INSTALL_PATH"/>
+            <file src="../jdoc"      targetdir="$INSTALL_PATH"/>
+            <file src="../genopt.jar"   targetdir="$INSTALL_PATH"/>
+
+            <file src="../Makefile"  targetdir="$INSTALL_PATH"/>
+            <exclude name="**/.svn"/>
+	    <!-- Examples -->
+	    <fileset dir="../example" targetdir="$INSTALL_PATH/example">
+	      <exclude name="**/eplusou*"/>
+	      <exclude name="**/.csv"/>
+	      <exclude name="**/readvars.audit"/>
+	      <exclude name="**/.svn"/>
+	    </fileset>
+        </pack>
+        <pack name="Source code" required="no">
+            <description>Source code and Makefile.</description>
+            <file src="../Makefile"  targetdir="$INSTALL_PATH"/>
+            <file src="../src"  targetdir="$INSTALL_PATH"/>
+            <exclude name="**/.svn"/>
+        </pack>
+    </packs>
+</installation>
