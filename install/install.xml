@@ -29,12 +29,28 @@
       <variable name="desktopshortcutcheckboxenabled" value="true"/>
     </variables>    
 
-    <guiprefs width="640" height="480" resizable="yes">
+<guiprefs width="640" height="600" resizable="no">
 	<laf name="looks">
             <os family="unix" />
 	    <param name="variant" value="plastic3D" />
 	</laf>
-        <!-- GUI addaption for more informations see "Modifying the GUI" in the documentation -->
+  <modifier key="useButtonIcons" value="yes"/>
+  <modifier key="useLabelIcons" value="yes"/>
+  <modifier key="labelGap" value="2"/>
+  <modifier key="layoutAnchor" value="NORTHWEST"/>
+  <modifier key="useHeadingPanel" value="yes"/>
+  <modifier key="headingLineCount" value="1"/>
+  <modifier key="headingFontSize" value="1.5"/>
+  <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+  <modifier key="headingPanelCounter" value="progressbar"/>
+  <modifier key="headingPanelCounterPos" value="inNavigationPanel"/>
+</guiprefs>
+
+<!--    <guiprefs width="640" height="640" resizable="yes">
+	<laf name="looks">
+            <os family="unix" />
+	    <param name="variant" value="plastic3D" />
+	</laf>
     	<modifier key="layoutAnchor" value="CENTER"/>
     	<modifier key="headingPanelCounter" value="progressbar"/>
 
@@ -47,7 +63,7 @@
 	<modifier key="headingPanelCounterPos" value="inHeading"/>
 
     </guiprefs>
-
+.-->
     <locale>
         <langpack iso3="eng"/>
     </locale>
@@ -67,10 +83,10 @@
         We indicate here which panels we want to use. The order will be respected.
     -->
     <panels>
-        <panel classname="HelloPanel"/>
-        <panel classname="HTMLInfoPanel"/>
+   <!--        <panel classname="HelloPanel"/> -->
+   -   <panel classname="HTMLInfoPanel"/>
         <panel classname="HTMLLicencePanel"/>
-        <panel classname="TargetPanel"/> 
+        <panel classname="TargetPanel"/>
    <!--     <panel classname="PacksPanel"/> -->
         <panel classname="InstallPanel"/>
         <panel classname="SimpleFinishPanel"/>
@@ -87,9 +103,13 @@
     <!-- Basic files for GenOpt -->
         <pack name="Base" required="yes">
             <description>Binary and example files.</description>
-            <file src="../legal.txt" targetdir="$INSTALL_PATH"/>
+            <file src="../legal.html" targetdir="$INSTALL_PATH"/>
 	    <!-- Javadoc -->
 	    <fileset dir="../jdoc" targetdir="$INSTALL_PATH/jdoc">
+	      <exclude name="**/.svn"/>
+	    </fileset>
+	    <!-- Configuration -->
+	    <fileset dir="../cfg" targetdir="$INSTALL_PATH/cfg">
 	      <exclude name="**/.svn"/>
 	    </fileset>
 	    <!-- Source -->

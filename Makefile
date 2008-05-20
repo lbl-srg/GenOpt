@@ -1,6 +1,9 @@
 SHELL=/bin/sh
 ######################################################################
-# GenOpt makefile to compile, document and run unit tests.
+# GenOpt Makefile.
+# This file is only needed by developers. 
+# It can be used to compile, document and run unit tests
+# from a bash shell.
 #
 # MWetter@lbl.gov                                           2008-05-08
 ######################################################################
@@ -24,15 +27,16 @@ EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
 ROODIR=$(shell pwd)
 
 
-# executable for izpack 
+# Executable for izpack. IzPack is used
+# to create the GenOpt installation software
 ifeq ($(UNAME), Darwin)
 IZPACK=/Applications/IzPack/bin/compile
 else
 IZPACK=izpack
 endif
 
-
-
+export genopt-version=2.1.0
+### Targets of Makefile ###########################
 ### Compiles the GenOpt source code and the JavaDoc 
 all: doc jar
 
