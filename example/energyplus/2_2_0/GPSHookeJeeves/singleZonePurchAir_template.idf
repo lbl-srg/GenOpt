@@ -884,26 +884,25 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
     
 ! ===============================================================
 
-!  These are report variables Linda uses to trace changes
 !report variable,,outdoor dry bulb,hourly;
 !report variable,,mean air temperature,hourly;
-   !report variable,,zone latent load,hourly;
-   !report variable,,lights return air load,hourly;
-   !report variable,,electric load,hourly;
-   !report variable,,Electric Load,hourly;
-   !report variable,,Mean Radiant Temperature,hourly;
-   !report variable,,Surface Inside Temperature,hourly;
-   !report variable,,Surface Outside Temperature,hourly;
-   !report variable,,Zone/Sys Sensible Heating Energy,hourly;
-   !report variable,,Zone/Sys Sensible Cooling Energy,hourly;
+!report variable,,zone latent load,hourly;
+!report variable,,lights return air load,hourly;
+!report variable,,electric load,hourly;
+!report variable,,Electric Load,hourly;
+!report variable,,Mean Radiant Temperature,hourly;
+!report variable,,Surface Inside Temperature,hourly;
+!report variable,,Surface Outside Temperature,hourly;
+!report variable,,Zone/Sys Sensible Heating Energy,hourly;
+!report variable,,Zone/Sys Sensible Cooling Energy,hourly;
 !report variable,,Zone/Sys Sensible Heating Rate,hourly;
 !report variable,,Zone/Sys Sensible Cooling Rate,hourly;
-   !report variable,,Zone/Sys Air Temp,hourly;
-   !report variable,,Zone Air Humidity Ratio,hourly;
-   !report variable,,System Node Temp,hourly;
-   !report variable,,System Node MassFlowRate,hourly;
-   !report variable,,System Node Humidity Ratio,hourly;
-   !report variable,,SimAir Iterations,hourly;
+!report variable,,Zone/Sys Air Temp,hourly;
+!report variable,,Zone Air Humidity Ratio,hourly;
+!report variable,,System Node Temp,hourly;
+!report variable,,System Node MassFlowRate,hourly;
+!report variable,,System Node Humidity Ratio,hourly;
+!report variable,,SimAir Iterations,hourly;
 
 report variable,, Purchased Air Sensible Cooling Energy, environment;
 report variable,, Purchased Air Heating Energy, environment;
