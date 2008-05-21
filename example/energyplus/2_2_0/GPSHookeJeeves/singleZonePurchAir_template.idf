@@ -723,9 +723,7 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
         ZONE ONE,                          ! Zone Name
         Zone Control Type Sched,           ! Control Type SCHEDULE Name
         DUAL SETPOINT WITH DEADBAND,       ! Control Type
-        Heating Cooling Setpoints,         ! Control Type Name
-        SINGLE HEATING COOLING SETPOINT,
-        Constant Setpoints;
+        Heating Cooling Setpoints;         ! Control Type Name
 
 
 
@@ -734,19 +732,10 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
         Heating Setpoints,         ! Heating Setpoint Temperature SCHEDULE Name
         Cooling Setpoints;         ! Cooling Setpoint Temperature SCHEDULE Name
 
-
-
-     SINGLE HEATING COOLING SETPOINT,
-         Constant Setpoints,
-         Heating Setpoints;
-
      SCHEDULETYPE,
          Temperature,
          -60:200,
          CONTINUOUS;
-
-
-
 
     DAYSCHEDULE, 
         Zone Heating Setpoint All Days,    ! Name
