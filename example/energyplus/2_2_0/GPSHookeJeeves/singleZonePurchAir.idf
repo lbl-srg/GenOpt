@@ -272,7 +272,7 @@ WINDOWSHADINGCONTROL,
 
  BUILDING,
     office zone,   ! Building Name
-           0.0,   ! Building Azimuth
+           10.0,   ! Building Azimuth
                    1,   ! Building Terrain {1=FlatOpenCountry | 2=RoughWoodedCountryTownsSuburbs | 3=CityCenter}
        4.0000000E-02,   ! Loads Convergence Tolerance
        4.0000002E-03,   ! Temperature Convergence Tolerance
@@ -380,8 +380,8 @@ WINDOWSHADINGCONTROL,
   WinFrameAndDivider ,  !- Frame Divider
   1, ! number of identical windows
            4, !-RectangularDoorWindow
-  0.0000000E+00,   3.0    ,   2.200000    ,
-  0.0000000E+00,   3.0    ,  0.2000000    ,
+  0.0000000E+00,   3.2    ,   2.200000    ,
+  0.0000000E+00,   3.2    ,  0.2000000    ,
   0.0000000E+00,   0.000000    ,  0.2000000    ,
   0.0000000E+00,   0.000000    ,   2.200000    ;
 
@@ -389,8 +389,8 @@ WINDOWSHADINGCONTROL,
    ZONE SURFACE WEST,  !- Base Surface Name
    ,  !- Shadowing Schedule
            4, !-RectangularOverhang
-  0.0000000E+00,   3.0  ,   2.700000    ,
-  -1.0    ,   3.0  ,   2.700000    ,
+  0.0000000E+00,   3.2  ,   2.700000    ,
+  -1.0    ,   3.2  ,   2.700000    ,
   -1.0    ,   0.000000    ,   2.700000    ,
   0.0000000E+00,   0.000000    ,   2.700000    ;
 
@@ -723,9 +723,7 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
         ZONE ONE,                          ! Zone Name
         Zone Control Type Sched,           ! Control Type SCHEDULE Name
         DUAL SETPOINT WITH DEADBAND,       ! Control Type
-        Heating Cooling Setpoints,         ! Control Type Name
-        SINGLE HEATING COOLING SETPOINT,
-        Constant Setpoints;
+        Heating Cooling Setpoints;         ! Control Type Name
 
 
 
@@ -734,19 +732,10 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
         Heating Setpoints,         ! Heating Setpoint Temperature SCHEDULE Name
         Cooling Setpoints;         ! Cooling Setpoint Temperature SCHEDULE Name
 
-
-
-     SINGLE HEATING COOLING SETPOINT,
-         Constant Setpoints,
-         Heating Setpoints;
-
      SCHEDULETYPE,
          Temperature,
          -60:200,
          CONTINUOUS;
-
-
-
 
     DAYSCHEDULE, 
         Zone Heating Setpoint All Days,    ! Name
