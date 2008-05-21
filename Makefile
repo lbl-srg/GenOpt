@@ -25,7 +25,7 @@ RUNDIR=`find example \( -name 'Output' \)`
 DISDIR=dist
 
 # List of directories with example files
-EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
+EXADIR=$(shell find example -maxdepth 1 \( -type d -not -name '.svn' \) )
 # Root directory of GenOpt
 ROODIR=$(shell pwd)
 
