@@ -12,10 +12,13 @@ UNAME = $(shell uname)
 # List of source code files
 SRC=`find genopt -name '*.java'`
 # List of class files
-CLAFIL=`find genopt -name '*.class'`
+CLAFIL=`find src -name '*.class'`
 # List of run time files
 RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' \
-        -or -name 'eplusout.*' -or -name '*.eso' -or -name '*.audit' -or -name 'Output' \)`
+        -or -name 'eplusout.*' -or -name '*.eso' -or -name '*.audit' \
+        -or -name '*.err' -or -name '*.eio' -or -name '*.end' -or -name '*.csv' \
+        -or -name '*.svg' -or -name '*.bnd' -or -name '*.mtd' \
+        -or -name '*.audit' \)`
 RUNDIR=`find example \( -name 'Output' \)`
 
 # Directory where distributable will be copied
