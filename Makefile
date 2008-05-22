@@ -12,7 +12,7 @@ UNAME = $(shell uname)
 # List of source code files
 SRC=`find genopt -name '*.java'`
 # List of class files
-CLAFIL=`find src -name '*.class'`
+CLAFIL=`find genopt -name '*.class'`
 # List of run time files
 RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' \
         -or -name 'eplusout.*' -or -name '*.eso' -or -name '*.audit' \
@@ -25,7 +25,7 @@ RUNDIR=`find example \( -name 'Output' \)`
 DISDIR=dist
 
 # List of directories with example files
-EXADIR=$(shell find example -maxdepth 1 \( -type d -not -name '.svn' \) )
+EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
 # Root directory of GenOpt
 ROODIR=$(shell pwd)
 
@@ -78,6 +78,9 @@ unitTest:
 	    echo "++++ $$x"; \
 	    if [ -f $$x/optLinux.ini ]; then \
 	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/optLinux.ini; \
+		# Create md5sum of test results	\
+		tesNam=`echo $$x | sed 's|/|-|g'`; \
+		sed 1,19d $$x/OutputListingAll.txt | md5sum > unitTestResults/$$tesNam.md5sum; \
 	        if [ "$$?" != "0" ]; then \
 	            echo "*** Error: Unit test failed for $$x/optLinux.ini"; \
 	            exit 1; fi; \
