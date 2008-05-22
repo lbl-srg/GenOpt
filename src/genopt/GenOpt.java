@@ -301,9 +301,11 @@ public class GenOpt extends Thread
      *
      */
     public final static String COPYRIGHT =
-	"GenOpt Copyright (c) 1998-2008, The Regents of the University of California, " + LS +
-	"through Lawrence Berkeley National Laboratory (subject to receipt of any " + LS +
-	"required approvals from the U.S. Dept. of Energy).  All rights reserved.";
+	"GenOpt Copyright (c) 1998-2008, The Regents of the" + LS +
+        "University of California, through Lawrence Berkeley" + LS +
+        "National Laboratory (subject to receipt of any " + LS +
+	"required approvals from the U.S. Dept. of Energy)." + LS +
+        "All rights reserved.";
 
     /**
      * Describe constant <code>AUTHOR</code> here.
