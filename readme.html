@@ -3,7 +3,7 @@
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
    <META NAME="Author" CONTENT="Michael Wetter">
    <TITLE>GenOpt Release Note</TITLE>
-   <LINK REL ="stylesheet" TYPE="text/css" HREF="jdoc/jstyle.css" TITLE="Style">
+   <LINK REL ="stylesheet" TYPE="text/css" HREF="documentation/jdoc/jstyle.css" TITLE="Style">
 </HEAD>
 <!-- ========================================================== -->
 <BODY>
@@ -30,7 +30,9 @@ For more details, please consult the GenOpt manual which can be downloaded from
 <!-- ========================================================== -->
 <p>
 The easiest way to run GenOpt is to double-click on the file <code>genopt.jar</code>.
-This will start the graphical user interface.
+This will start the graphical user interface. 
+From the graphical user interface, select <code>File</code>, 
+<code>Start...</code> and select a GenOpt initialization file.
 <!-- ========================================================== -->
 <H3>Running GenOpt from the command line</H3>
 <p>
@@ -38,11 +40,11 @@ GenOpt can also be run as a console application, either with or without the
 graphical user interface.
 To run GenOpt as a console application with graphical user interface, 
 open a shell, go to this directory and type
-<PRE>  java -jar genopt.jar [initializatonFile]</PRE>
-where <code>[initializatonFile]</code> is an optional argument that can be
+<PRE>  java -jar genopt.jar [initializationFile]</PRE>
+where <code>[initializationFile]</code> is an optional argument that can be
 replaced with the initialization file (see example below).
 To start GenOpt without the graphical user interface, type
-<PRE>  java -classpath genopt.jar genopt.GenOpt [initializatonFile]</PRE> 
+<PRE>  java -classpath genopt.jar genopt.GenOpt [initializationFile]</PRE> 
 </P><p>
 For example, to run the minimization of the quadratic function that is provided
 with the example files using the Hooke-Jeeves algorithm, 
@@ -60,8 +62,8 @@ to evaluate the cost function, please read the manual.</P>
 <!-- ========================================================== -->
 <H3>example</H3>
 <P>
-This directory contains examples that use EnergyPlus to evaluate the cost function,
-and examples that minimizes a quadratic cost function.
+This directory contains examples that use EnergyPlus to evaluate the cost function 
+and examples that minimize a quadratic cost function.
 For illustrating the use of GenOpt, the directory <code>example/quad</code>
 contains several examples that either minimize a simple quadratic cost function
 or use the quadratic function to do parametric runs.
@@ -82,11 +84,12 @@ can be found in the directory <CODE>src/genopt/algorithm</CODE>.
 You do not have to compile these files. They are only of interest if you want to implement your own optimization algorithms.
 </P>
 <!-- ========================================================== -->
-<H3>jdoc</H3>
+<H3>documentation</H3>
 <P>
-This directory contains the code <A HREF="./jdoc/index.html">documentation</A> 
-of the package <CODE>genopt.algorithm</CODE>. 
-Please refer to it if you implement your own optimization algorithms.
+This directory contains the 
+<A HREF="./documentation/manual.pdf">manual</A> and the
+<A HREF="./documentation/jdoc/index.html">code documentation</A>.
+The code documentation is only needed by developers.
 </P>
 <!-- ========================================================== -->
 <HR WIDTH=100%>
