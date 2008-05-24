@@ -104,6 +104,7 @@
         <pack name="Base" required="yes">
             <description>Binary and example files.</description>
             <file src="../legal.html" targetdir="$INSTALL_PATH"/>
+            <file src="../readme.html" targetdir="$INSTALL_PATH"/>
 	    <!-- Manual -->
             <file src="../../../../1_report/1_manual/2.1.0/manual.pdf"  
                   targetdir="$INSTALL_PATH/documentation"/>
