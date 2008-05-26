@@ -29,7 +29,8 @@ For more details, please consult the GenOpt manual which can be downloaded from
 <H3>Running GenOpt from the file explorer</H3>
 <!-- ========================================================== -->
 <p>
-The easiest way to run GenOpt is to double-click on the file <code>genopt.jar</code>.
+To run GenOpt from the file explorer,
+double-click on the file <code>genopt.jar</code>.
 This will start the graphical user interface. 
 From the graphical user interface, select <code>File</code>, 
 <code>Start...</code> and select a GenOpt initialization file.
@@ -42,13 +43,14 @@ To run GenOpt as a console application with graphical user interface,
 open a shell, go to this directory and type
 <PRE>  java -jar genopt.jar [initializationFile]</PRE>
 where <code>[initializationFile]</code> is an optional argument that can be
-replaced with the initialization file (see example below).
+replaced with the GenOpt initialization file (see example below).
 To start GenOpt without the graphical user interface, type
 <PRE>  java -classpath genopt.jar genopt.GenOpt [initializationFile]</PRE> 
 </P><p>
-For example, to run the minimization of the quadratic function that is provided
-with the example files using the Hooke-Jeeves algorithm, 
-you can type on Linux and Mac OS X<PRE>
+For example, to run the example file provided with GenOpt that minimizes a quadratic function using the Hooke-Jeeves algorithm, 
+type on Mac OSX<PRE>
+  java -jar genopt.jar example/quad/GPSHookeJeeves/optMacOSX.ini</PRE>
+on Linux<PRE>
   java -jar genopt.jar example/quad/GPSHookeJeeves/optLinux.ini</PRE>
 and on Windows 
 <PRE>

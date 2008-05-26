@@ -30,6 +30,15 @@ EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
 # Root directory of GenOpt
 ROODIR=$(shell pwd)
 
+# Initialization file for examples
+ifeq ($(UNAME), Darwin)
+INIFIL=optMacOSX.ini
+else ifeq ($(UNAME), Linux)
+INIFIL=optLinux.ini
+else
+INIFIL=optWinXP.ini
+endif
+
 
 # Executable for izpack. IzPack is used
 # to create the GenOpt installation software
@@ -81,13 +90,13 @@ unitTest:
 	@for x in $(EXADIR); do \
 	    cd $(ROODIR); \
 	    echo "++++ $$x"; \
-	    if [ -f $$x/optLinux.ini ]; then \
-	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/optLinux.ini; \
+	    if [ -f $$x/$$INIFIL ]; then \
+	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/$$INIFIL; \
 		# Create md5sum of test results	\
 		tesNam=`echo $$x | sed 's|/|-|g'`; \
 		sed 1,19d $$x/OutputListingAll.txt | md5sum > unitTestResults/$$tesNam.md5sum; \
 	        if [ "$$?" != "0" ]; then \
-	            echo "*** Error: Unit test failed for $$x/optLinux.ini"; \
+	            echo "*** Error: Unit test failed for $$x/$$INIFIL"; \
 	            exit 1; fi; \
 	    else \
 	          echo "*** Nothing to run in $$x"; \
