@@ -33,7 +33,7 @@ ROODIR=$(shell pwd)
 # Initialization file for examples
 ifeq ($(UNAME), Darwin)
 INIFIL=optMacOSX.ini
-else ifeq ($(UNAME), Linux)
+else if ($(UNAME), Linux)
 INIFIL=optLinux.ini
 else
 INIFIL=optWinXP.ini
@@ -90,13 +90,12 @@ unitTest:
 	@for x in $(EXADIR); do \
 	    cd $(ROODIR); \
 	    echo "++++ $$x"; \
-	    if [ -f $$x/$$INIFIL ]; then \
-	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/$$INIFIL; \
-		# Create md5sum of test results	\
+	    if [ -f $$x/${INIFIL} ]; then \
+	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/${INIFIL}; \
 		tesNam=`echo $$x | sed 's|/|-|g'`; \
 		sed 1,19d $$x/OutputListingAll.txt | md5sum > unitTestResults/$$tesNam.md5sum; \
 	        if [ "$$?" != "0" ]; then \
-	            echo "*** Error: Unit test failed for $$x/$$INIFIL"; \
+	            echo "*** Error: Unit test failed for $$x/${INIFIL}"; \
 	            exit 1; fi; \
 	    else \
 	          echo "*** Nothing to run in $$x"; \
