@@ -31,11 +31,15 @@ EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
 ROODIR=$(shell pwd)
 
 # Initialization file for examples
+
+
 ifeq ($(UNAME), Darwin)
 INIFIL=optMacOSX.ini
-else if ($(UNAME), Linux)
+endif
+ifeq ($(UNAME), Linux)
 INIFIL=optLinux.ini
-else
+endif
+ifeq ($(UNAME), CYGWIN*)
 INIFIL=optWinXP.ini
 endif
 
