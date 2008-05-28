@@ -95,7 +95,11 @@ unitTest:
 	    cd $(ROODIR); \
 	    echo "++++ $$x"; \
 	    if [ -f $$x/${INIFIL} ]; then \
-	       	java -ea -classpath genopt.jar genopt.GenOpt $$x/${INIFIL}; \
+		if [ ${UNAME} != CYGWIN* ]; then \
+		       	java -ea -classpath genopt.jar genopt.GenOpt $$x/${INIFIL}; \
+		else \
+		       	java -ea -classpath genopt.jar genopt.GenOpt `cygpath -w $$x/${INIFIL}`; \
+		fi;\
 		tesNam=`echo $$x | sed 's|/|-|g'`; \
 		sed 1,19d $$x/OutputListingAll.txt | md5sum > unitTestResults/$$tesNam.md5sum; \
 	        if [ "$$?" != "0" ]; then \
