@@ -91,6 +91,12 @@ doc:
 
 ### unit tests
 unitTest:
+	@if [ ! -d unitTestResults ]; then \
+	  echo "Error. Directory unitTestResults does not exist."; \
+	  echo "Check out directory from version control before"; \
+	  echo "running 'make unitTest'"; \
+	  exit 1;\
+	fi; 
 	@for x in $(EXADIR); do \
 	    cd "$(ROODIR)"; \
 	    echo "++++ $$x"; \
@@ -109,8 +115,10 @@ unitTest:
 	          echo "*** Nothing to run in $$x"; \
 	    fi; \
 	done; \
+	svn status unitTestResults
+	@echo "==== Finished unit tests";
 
-dist:   prog doc jar 
+dist:   clean prog doc jar 
 	mkdir -p $(DISDIR)
 	rm -f $(DISDIR)/genopt-install.jar
 	cd install; \
