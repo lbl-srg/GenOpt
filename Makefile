@@ -39,7 +39,7 @@ endif
 ifeq ($(UNAME), Linux)
 INIFIL=optLinux.ini
 endif
-ifeq ($(UNAME), CYGWIN*)
+ifeq ($(UNAME), CYGWIN_NT-5.1)
 INIFIL=optWinXP.ini
 endif
 
@@ -92,10 +92,10 @@ doc:
 ### unit tests
 unitTest:
 	@for x in $(EXADIR); do \
-	    cd $(ROODIR); \
+	    cd "$(ROODIR)"; \
 	    echo "++++ $$x"; \
 	    if [ -f $$x/${INIFIL} ]; then \
-		if [ ${UNAME} != CYGWIN* ]; then \
+		if [ ${UNAME} != CYGWIN_NT-5.1 ]; then \
 		       	java -ea -classpath genopt.jar genopt.GenOpt $$x/${INIFIL}; \
 		else \
 		       	java -ea -classpath genopt.jar genopt.GenOpt `cygpath -w $$x/${INIFIL}`; \
@@ -111,6 +111,7 @@ unitTest:
 	done; \
 
 dist:   prog doc jar 
+	mkdir -p $(DISDIR)
 	rm -f $(DISDIR)/genopt-install.jar
 	cd install; \
 	$(IZPACK) install.xml -b . -o genopt-install.jar -k standard; \
