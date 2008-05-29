@@ -78,9 +78,7 @@ public class ResultManager
 {
     /** System dependent line separator */
     private final static String LS = System.getProperty("line.separator");
-    /** number of Lists with results (currently 2, #0 for main iterations,
-	#1 for sub iterations) */
-    private final static int NLIST = 2;
+
     /** Name of output file with main iteration steps only */
     private static final String OUTFILNAM[] =
     {"OutputListingMain.txt", "OutputListingAll.txt"};
@@ -115,15 +113,16 @@ public class ResultManager
 	    nameF[i] = new String(functionNames[i]);
 
 	outFilNam = new String[OUTFILNAM.length];
-	pts = new LinkedList[NLIST];
+
+	// make instance of lists containing the results
+	ptsMai = new LinkedList<ResultPoint>();
+	ptsSub = new LinkedList<ResultPoint>();
+
 	simNum = 0;
 	subIteNum = 1;
 	maiIteNum = 0;
 	resNum = 0;
 
-	// make instance of lists containing the results
-	for (int i = 0; i < NLIST; i++)
-	    pts[i] = new LinkedList<ResultPoint>();
 	increaseResultNumber(0);
 
 	// check and instanciate output file
@@ -210,8 +209,18 @@ public class ResultManager
     public void setNewTrial(Point x, int runIde) throws IOException{
 	ResultPoint rp = new ResultPoint(x);
 	rp.setSimulationNumber(simNum, maiIteNum, subIteNum);
-	pts[runIde].add(rp);
 	
+	// Add point to stored results
+	switch (runIde) {
+	case 0:
+	    ptsMai.add(rp);
+	    break;
+	case 1: 
+	    ptsSub.add(rp);
+        break;
+	default:
+	    throw new IOException("Program error: Wrong value for parameter runIde.");
+	}
 	printPoint(rp, runIde);
 	
 	increaseResultNumber(runIde);
@@ -249,7 +258,7 @@ public class ResultManager
 	Point[] r = new Point[numberOfValues];
 	
 	for (int i = resNum - numberOfValues; i < resNum; i++, j++){
-	    r[j] = (Point)(pts[1].get(i));
+	    r[j] = (Point)(ptsSub.get(i));
 	}
 
 	return r;
@@ -318,12 +327,12 @@ public class ResultManager
      * @return the ResultPoint with the lowest objective function value of the main iterations
      */
     protected ResultPoint getMinimumResultPoint(){
-	ResultPoint r = new ResultPoint((ResultPoint)pts[0].get(pts[0].size()-1));
+	ResultPoint r = new ResultPoint((ResultPoint)ptsMai.get(ptsMai.size()-1));
 	int step = r.getStepNumber();
 	double fMin = r.getF(0);
 	
-	for (int j = pts[0].size()-1; j > -1; j--) {
-	    ResultPoint pt = (ResultPoint)(pts[0].get(j));
+	for (int j = ptsMai.size()-1; j > -1; j--) {
+	    ResultPoint pt = (ResultPoint)(ptsMai.get(j));
 	    if (step == pt.getStepNumber()) {
 		if (fMin > pt.getF(0)) {
 		    r = (ResultPoint)pt.clone();
@@ -345,10 +354,10 @@ public class ResultManager
 	  */
     public double getAbsDifMaiObjFunVal()
     {
-	int n = pts[0].size();
+	int n = ptsMai.size();
 	if (n > 2){
-	    double f1 = ((Point)(pts[0].get(n-1))).getF(0);
-	    double f2 = ((Point)(pts[0].get(n-2))).getF(0);
+	    double f1 = ((Point)(ptsMai.get(n-1))).getF(0);
+	    double f2 = ((Point)(ptsMai.get(n-2))).getF(0);
 	    return f1-f2;
 	}
 	else
@@ -364,10 +373,10 @@ public class ResultManager
     public double getRelDifMaiObjFunVal()
     {
 	if (maiIteNum > 1) {
-	    int nMax = pts[0].size();
-	    double fk =  Math.abs(((ResultPoint)pts[0].get(nMax-2)).getF(0));
+	    int nMax = ptsMai.size();
+	    double fk =  Math.abs(((ResultPoint)ptsMai.get(nMax-2)).getF(0));
 	    return (fk > 1E-10) ? 
-		Math.abs(((ResultPoint)pts[0].get(nMax-1)).getF(0) - fk ) / fk :
+		Math.abs(((ResultPoint)ptsMai.get(nMax-1)).getF(0) - fk ) / fk :
 		1E-10;  // used to be 1E+10, 01/19/00
 	}
 	else
@@ -419,10 +428,12 @@ public class ResultManager
     /** array with all discrete, free parameters */
     protected DiscreteParameter[] disPar;
 
-    /** list with all results. <BR>
-     * the 0-th element are the main iterations,
-     * the 1-st element the sub iterations */
-    protected LinkedList<ResultPoint>[] pts;
+    /** list with results of the main interation */
+    protected LinkedList<ResultPoint> ptsMai;
+
+    /** list with results of the main interation */
+    protected LinkedList<ResultPoint> ptsSub;
+
     /** number of continuous, free parameters */
     protected int dimCon;
     /** number of discrete, free parameters */
