@@ -235,21 +235,7 @@ public class ResultManager
      */
     public int getNumberOfMaiIteration()  { return maiIteNum; }
 
-    /** Gets the point of the last simulation
-     * @return the point of the last simulation
-     */
-    public Point getAllLastPoint(){
-	ResultPoint[] rp = new ResultPoint[NLIST];
-	for (int i = 0; i < NLIST; i++)
-	    rp[i] = (ResultPoint)pts[i].getLast();
-	int laPo = 0;
-	for (int i = 1; i < NLIST; i++){
-	    if (rp[laPo].getSimulationNumber() < rp[i].getSimulationNumber())
-		    laPo = i;
-	}
-	return (Point)rp[laPo].clone();
-    }
-    
+   
     /** Gets an array with the points of all iteration steps
      * <B>(including subiterations)</B>.<BR>
      * @param numberOfValues number of iteration steps of which the datas
@@ -332,13 +318,12 @@ public class ResultManager
      * @return the ResultPoint with the lowest objective function value of the main iterations
      */
     protected ResultPoint getMinimumResultPoint(){
-	final int MAIITE = 0;
-	ResultPoint r = new ResultPoint((ResultPoint)pts[MAIITE].get(pts[MAIITE].size()-1));
+	ResultPoint r = new ResultPoint((ResultPoint)pts[0].get(pts[0].size()-1));
 	int step = r.getStepNumber();
 	double fMin = r.getF(0);
 	
-	for (int j = pts[MAIITE].size()-1; j > -1; j--) {
-	    ResultPoint pt = (ResultPoint)(pts[MAIITE].get(j));
+	for (int j = pts[0].size()-1; j > -1; j--) {
+	    ResultPoint pt = (ResultPoint)(pts[0].get(j));
 	    if (step == pt.getStepNumber()) {
 		if (fMin > pt.getF(0)) {
 		    r = (ResultPoint)pt.clone();
