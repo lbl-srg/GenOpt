@@ -23,7 +23,7 @@ package genopt.util;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 2.1.0 (May 23, 2008)<P>
+  * @version GenOpt(R) 2.1.0 (May 29, 2008)<P>
   */
 
 /*
