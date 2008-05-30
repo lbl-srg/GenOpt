@@ -1,0 +1,108 @@
+Vary{
+  Parameter{   // 
+    Name    = dxfloorthick;
+    Min     =     0.0;
+    Ini     =     0.0;
+    Max     =     1.0;
+    Step    =     0.05;
+  }
+ Function {
+  Name = FloorThick; Function = "add(0.165,%dxfloorthick%)";
+ }
+
+ Function {
+  Name = fcfloor; Function = "multiply(%dxfloorthick%,39455)";
+ }
+
+  Parameter{   // 
+    Name    = dxroofthick;
+    Min     =     0.0;
+    Ini     =     0.0;
+    Max     =     1.0;
+    Step    =     0.05;
+  }
+ Function {
+  Name = RoofThick; Function = "add(0.299,%dxroofthick%)";
+ }
+
+ Function {
+  Name = fcroof; Function = "multiply(%dxroofthick%,4782)";
+ }
+
+  Parameter{   // 
+    Name    = dxwallthick;
+    Min     =     0.0;
+    Ini     =     0.0;
+    Max     =     1.0;
+    Step    =     0.05;
+  }
+ Function {
+  Name = WallThick; Function = "add(0.122,%dxwallthick%)";
+ }
+
+ Function {
+  Name = fcwall; Function = "multiply(%dxwallthick%,6553)";
+ }
+
+
+ Parameter{
+  Name = etaLTO;
+  Ini = 1;
+  Values = "0.7, 0.8";
+}
+
+Function {
+  Name = detalto; Function = "subtract(%etaLTO%,0.70)";
+ }
+
+
+ Function {
+  Name = fclto; Function = "multiply(%detalto%,7300)";
+ }
+
+ Parameter{
+  Name = uGlass;
+  Ini = 1;
+  Values = "1.4, 1.0";
+}
+
+Function {
+  Name = dUglass; Function = "subtract(1.4,%uGlass%)";
+ }
+
+ Function {
+  Name = fcuGlass; Function = "multiply(%dUglass%,992.5)";
+ }
+
+ Function {
+  Name = firstcost; Function = "add(%fcfloor%,%fcroof%,%fcwall%,%fclto%,%fcuGlass%)";
+ }
+
+}
+
+OptimizationSettings
+{
+	MaxIte = 500;
+	MaxEqualResults = 10;
+	WriteStepNumber = false;
+}
+
+Algorithm{
+  Main = GPSPSOCCHJ;
+  NeighborhoodTopology = vonNeumann;
+  NeighborhoodSize = 5;
+  NumberOfParticle = 10;
+  NumberOfGeneration = 10;
+  Seed = 1;
+  CognitiveAcceleration = 2.8;
+  SocialAcceleration = 1.3;
+  MaxVelocityGainContinuous = 0.5;
+  MaxVelocityDiscrete = 4;
+  ConstrictionGain = 0.5;
+  MeshSizeDivider = 2;
+  InitialMeshSizeExponent = 0;
+  MeshSizeExponentIncrement = 1;
+  NumberOfStepReduction = 4;
+}
+
+

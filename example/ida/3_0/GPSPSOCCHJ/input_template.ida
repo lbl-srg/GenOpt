@@ -1,0 +1,5103 @@
+ABSTRACT
+"RESP_ENG:  Mika Vuolle
+Created by IDA Modeler February 7, 2006; 09:17:30
+ Source: C:\files\busy\laskenta\matalaenergiakonsepti\matalaenergiaomakotitalo.idm
+"
+
+FILES
+  INPUT CLIMATE_
+    PATH C:\Program Files\IDA\Climate\jyvtesti.prn
+END_FILES
+
+CONSTANTS
+END_CONSTANTS
+
+TABLES
+
+END_TABLES
+
+MODULES
+  MODULE DHW_Sched
+    TYPE SCHEDULE
+      NDPW 7
+      N 1
+      LEN 25
+      DST_START 84
+      DST_END 301
+      SAMPLE_WIDTH 0.2
+      SMOOTHING_FANOUT 0.0
+      END_DAY -1 
+      START_DAY -1 
+      END_MONTH -1 
+      START_MONTH -1 
+      END_YEAR -1 
+      START_YEAR -1 
+      IN_PAR 1.0 
+      WD_CODE 1 1 1 1 1 1 1 
+      VALUE_COL 0.012 0.0016 0.0012 0.0012 0.0012 0.0064 0.0156 0.0308 0.048
+0.0792 0.0856 0.086 0.0752 0.0756 0.0784 0.0928 0.0888
+0.1068 0.1256 0.1668 0.2516 0.2416 0.1208 0.0476 0.0112 
+      TIME_COL 0.0 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0
+14.0 15.0 16.0 17.0 18.0 19.0 20.0 21.0 22.0 23.0 24.0 
+
+  MODULE Schedule_1
+    TYPE SCHEDULE
+      NDPW 7
+      N 1
+      LEN 2
+      DST_START 84
+      DST_END 301
+      SAMPLE_WIDTH 0.2
+      SMOOTHING_FANOUT 0.0
+      END_DAY -1 
+      START_DAY -1 
+      END_MONTH -1 
+      START_MONTH -1 
+      END_YEAR -1 
+      START_YEAR -1 
+      IN_PAR 1.0 
+      WD_CODE 1 1 1 1 1 1 1 
+      VALUE_COL 1 1 
+      TIME_COL 0.0 24.0 
+
+  MODULE CLIMATE
+    TYPE CLIMATE
+      LAT 62.24
+      LONG -25.41
+      LONGTIMEZONE -30
+      HEIGHTREF 10
+      HEIGHT 2.5
+      A_EXP 0.25
+      A0_COEFF 0.67
+
+  MODULE SupSetpoint
+    TYPE PLINSEGM
+      NPOINT 2
+      NOUTLINK 1
+      OUTCOORD 16.0 16.0 
+      INCOORD -20.0 40.0 
+
+  MODULE Setp_Boil
+    TYPE PLINSEGM
+      NPOINT 4
+      NOUTLINK 1
+      OUTCOORD 70.0 70.0 20.0 20.0 
+      INCOORD -30.0 -26.0 20.0 30.0 
+
+  MODULE f1
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 0.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f2
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 90.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f3
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 0.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f4
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 90.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f5
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 180.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f6
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 90.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f7
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 180.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f8
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 270.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f9
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 180.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE f10
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 270.0
+      SLOPEFACE 90.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE Crawl_space
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 0.0
+      SLOPEFACE 180.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE Roof
+    TYPE FACE
+      NWDIR 8
+      DIFFUSEMODEL 0
+      AZIMUTFACE 0.0
+      SLOPEFACE 0.0
+      HEIGHTABOVESEA 0.0
+      PCOEFF 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+
+  MODULE Winshade_5
+    TYPE SHADE
+      NSHADES 3
+      NPOINTS 12
+      NCTRL 0
+      SLOPEFACE 90.0
+      WLIMIT 3000
+      RLIMIT -1
+      TRANS 0.0 0.0 0.0 
+      COORDS 1.019 0.119 2.5      1.019 3.619 2.5      1.019 3.619 0.0   
+1.019 0.119 0.0      1.019 3.619 2.5      5.881 3.619 2.5   
+5.881 3.619 0.0      1.019 3.619 0.0      5.881 3.619 2.5   
+5.881 -4.781 2.5      5.881 -4.781 0.0      5.881 3.619 0.0 
+      WINDOW 0.25 0.0 0.5      0.25 0.0 2.1      -0.25 0.0 0.5      -0.25
+0.0 2.1 
+
+  MODULE Winshade_7
+    TYPE SHADE
+      NSHADES 3
+      NPOINTS 12
+      NCTRL 0
+      SLOPEFACE 90.0
+      WLIMIT 3000
+      RLIMIT -1
+      TRANS 0.0 0.0 0.0 
+      COORDS 3.544 0.119 2.5      3.544 1.219 2.5      3.544 1.219 0.0   
+3.544 0.119 0.0      3.544 1.219 2.5      7.306 1.219 2.5   
+7.306 1.219 0.0      3.544 1.219 0.0      7.306 1.219 2.5   
+7.306 0.119 2.5      7.306 0.119 0.0      7.306 1.219 0.0 
+      WINDOW 2.225 0.0 1.569      2.225 0.0 1.8971      -2.225 0.0 1.569 
+-2.225 0.0 1.8971 
+
+  MODULE Winshade_8
+    TYPE SHADE
+      NSHADES 5
+      NPOINTS 20
+      NCTRL 0
+      SLOPEFACE 90.0
+      WLIMIT 3000
+      RLIMIT -1
+      TRANS 0.0 0.0 0.0 0.0 0.0 
+      COORDS -9.381 -10.243 2.5      -9.381 5.019 2.5      -9.381 5.019
+0.0      -9.381 -10.243 0.0      -9.381 5.019 2.5     
+-5.381 5.019 2.5      -5.381 5.019 0.0      -9.381 5.019 0.0
+-5.381 5.019 2.5      -5.381 8.519 2.5      -5.381 8.519 0.0
+-5.381 5.019 0.0      -5.381 8.519 2.5      -0.519 8.519 2.5
+-0.519 8.519 0.0      -5.381 8.519 0.0      -0.519 8.519 2.5
+-0.519 0.119 2.5      -0.519 0.119 0.0      -0.519 8.519 0.0
+
+      WINDOW 0.25 0.0 0.5      0.25 0.0 2.1      -0.25 0.0 0.5      -0.25
+0.0 2.1 
+
+  MODULE Winshade_10
+    TYPE SHADE
+      NSHADES 3
+      NPOINTS 12
+      NCTRL 0
+      SLOPEFACE 90.0
+      WLIMIT 3000
+      RLIMIT -1
+      TRANS 0.0 0.0 0.0 
+      COORDS 9.478 6.5721 2.5      9.2514 -8.6882 2.5      9.2514 -8.6882
+0.0      9.478 6.5721 0.0      0.51894 0.10442 2.5     
+0.61693 6.7037 2.5      0.61693 6.7037 0.0      0.51894
+0.10442 0.0      0.61693 6.7037 2.5      9.478 6.5721 2.5   
+9.478 6.5721 0.0      0.61693 6.7037 0.0 
+      WINDOW 0.24997 0.0 0.5      0.24997 0.0 2.1      -0.24997 0.0 0.5  
+-0.24997 0.0 2.1 
+
+  MODULE Winshade_11
+    TYPE SHADE
+      NSHADES 3
+      NPOINTS 12
+      NCTRL 0
+      SLOPEFACE 90.0
+      WLIMIT 3000
+      RLIMIT -1
+      TRANS 0.0 0.0 0.0 
+      COORDS -8.481 0.119 2.5      -8.481 1.219 2.5      -8.481 1.219 0.0
+-8.481 0.119 0.0      -8.481 1.219 2.5      -4.719 1.219 2.5
+-4.719 1.219 0.0      -8.481 1.219 0.0      -4.719 1.219 2.5
+-4.719 0.119 2.5      -4.719 0.119 0.0      -4.719 1.219 0.0
+
+      WINDOW 0.7 0.0 0.9      0.7 0.0 2.1      -0.7 0.0 0.9      -0.7 0.0
+2.1 
+
+  MODULE hx
+    TYPE HXSIMCTR
+      ETA %etaLTO%
+      TEXHOUTMIN 1.0
+
+  MODULE SupSwitch
+    TYPE SWITCH
+      N_OUT 3
+      N_IN 3
+
+  MODULE cc
+    TYPE CCSIMCTR
+      CPLIQ 4187.0
+      ETAAIR 0
+      DTLIQ 5.0
+      MMIN 1.0E-4
+      DP0 200.0
+
+  MODULE sf
+    TYPE CEFAN
+      DPMAX 600.0
+      DPMIN 0.1
+      TRISE 1.0
+      ETA 0.6
+
+  MODULE rf
+    TYPE CEFAN
+      DPMAX 400.0
+      DPMIN 0.1
+      TRISE 1.0
+      ETA 0.6
+
+  MODULE HCEL
+    TYPE HCEL
+      QMAX 3000.0
+
+  MODULE boil
+    TYPE SIMBOIL
+      NIN 2
+      NOUT 2
+      ETAPRIMARY 1
+      ETAPUMP 0.5
+      QMAX 99999.0
+      PSETMAX 30000
+      PSETMIN 1.0
+      CPLIQ 4187.0
+      MASS 10.0
+      TDOMWATOUT 55
+      DOMWATF 0.02777
+
+  MODULE chil
+    TYPE SIMCHIL
+      COP 2.0
+      ETAPUMP 0.5
+      QMAX 99999.0
+      PSETMAX 30000
+      PSETMIN 1.0
+      MASS 10.0
+      CPLIQ 4187.0
+      RHOLIQ 1000.0
+
+  MODULE ADDER
+    TYPE ADDER
+      N_OUT 1
+      N_IN 2
+      OFFSET 0.0
+      COEFF 1.0 1.0 
+
+  MODULE NMFZONE
+    TYPE CESIMZON
+      NSURF 70
+      NWALL 56
+      NEXTWALL 14
+      NINTWALL 42
+      NLITE 1
+      NWIND 12
+      NHCSURF 1
+      NCVDEV 0
+      NUNIT 1
+      NOP 0
+      NTERMINAL 2
+      NSENSOR 0
+      NMAXLAYR 5
+      NLOCUNIT 0
+      NMISC 0
+      LITERATEDINPUT 0.0
+      LITEFRACTVISIBLE 0.1017
+      LITEFRACTLW 0.5983
+      NUMAIRMASS 10
+      HLW 5.0
+      HINTWALLS 1.0
+      HEIGHT 2.5
+      NFLOOR 1
+      LOSTWORKPERC 0.02
+      ASURF 149.688858925019 149.688858925019 22.9028 3.7972 9.125
+8.75032142266786 10.6 19.54 1.6525 4.97 1.65231787713567
+12.5791685226429 2.2 21.31 0.2975 0.298073403573587 29.94
+2.2575 9.75 6.095 9.6975 4.75 4.75 7.405 16.5 2.5 4.905
+4.905 9.405 16.5 11.845 9.06 3.25 2.5 8.75 21.56 29.94
+2.2575 9.75 6.095 9.6975 4.75 4.75 7.405 16.5 2.5 4.905
+4.905 9.405 16.5 11.845 9.06 3.25 2.5 8.75 21.56 2.06 2.72
+2.72 1.68 1.68 0.8 0.96 1.46 0.8 3.84 0.799911831593669 1.68
+0.25 1.0E-8 
+      SLOPESURF 0.0 180.0 90.0 90.0 90.0 90.0 90.0 90.0 90.0 90.0 90.0 90.0
+90.0 90.0 90.0 90.0 90 90 90 90 90 90 90 90 90 90 90 90 90
+90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+90 90 90 90 90 90 90 90.0 90.0 90.0 90.0 90.0 90.0 90.0 90.0
+90.0 90.0 90.0 90.0 90.0 180.0 
+      HCONV -1 -1 6.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0
+-1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 6.0 -1.0 -1.0
+-1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0
+-1.0 -1.0 -1.0 -1.0 -1.0 
+      NLAYERS 5 5 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2
+2 2 2 2 2 2 2 2 2 2 2 2 
+      CO2FSRCEQUIP 0.0 
+      EVAPVAPFSRCEQUIP 0.0 
+      VAPFSRCEQUIP 0.0 
+      QSRCRADEQUIP 0.0 
+      QSRCCVEQUIP 748.4 
+      CP 1090 750 1300 1006 1360      1090 750 1300 1006 1360     
+1300 1.0 1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750
+1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0
+1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0     
+1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750
+1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0
+1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0     
+1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750
+1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0
+1.0      1090 750 1.0 1.0 1.0      1300 1.0 1.0 1.0 1.0     
+1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750
+1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0
+1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0     
+1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750
+1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0
+1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0     
+1090 750 1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750
+1.0 1.0 1.0      1090 750 1.0 1.0 1.0      1090 750 1.0 1.0
+1.0 
+      LAMBDA 0.22 0.045 0.13 0.4 0.14      0.22 0.045 0.13 0.4 0.14     
+0.13 1.0 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.13 1.0
+1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22 0.045 1.0
+1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0
+1.0      0.22 0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0 
+0.22 0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0      0.22 0.045 1.0 1.0 1.0      0.22
+0.045 1.0 1.0 1.0 
+      RHO 970 20 1000 1.2 460      970 20 1000 1.2 460      1000 1.0
+1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0 
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      1000 1.0 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0
+1.0 1.0      970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0     
+970 20 1.0 1.0 1.0      970 20 1.0 1.0 1.0 
+      L 0.01 0.29 0.015 0.02 0.02      0.01 0.29 0.015 0.02 0.02    
+0.005 0.1 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.005 0.1 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1     
+0.013 0.025 0.1 0.1 0.1      0.013 0.025 0.1 0.1 0.1 
+
+  MODULE ExtFloor
+    TYPE BDFWALL
+      N 3
+      NCELLS 3
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 149.688858925019
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 1 1 
+      CP 2300 920 750 
+      RHO 460 2400 32 
+      LAMBDA 0.14 1.7 0.026 
+      L 0.015 0.08 %FloorThick% 
+
+  MODULE ExtCeiling
+    TYPE BDFWALL
+      N 3
+      NCELLS 4
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 149.688858925019
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 1 2 
+      CP 1090 1006 750 
+      RHO 970 1.2 20 
+      LAMBDA 0.22 0.4 0.05 
+      L 0.012 0.022 %RoofThick% 
+
+  MODULE ExtWall_1
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 22.9028
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_2
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 9.125
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_3
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 8.75032142266786
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_4
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 10.6
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_5
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 19.54
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_7
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 4.97
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_9
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 12.5791685226429
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_10
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 21.31
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_1_1
+    TYPE BDFWALL
+      N 5
+      NCELLS 5
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 3.7972
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 1 1 1 1 
+      CP 2300 750 1006 750 2300 
+      RHO 460 32 1.2 32 460 
+      LAMBDA 0.14 0.028 0.4 0.028 0.14 
+      L 0.01 0.035 0.02 0.035 0.01 
+
+  MODULE ExtWall_6
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 1.6525
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_8
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 1.65231787713567
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtWall_9_1
+    TYPE BDFWALL
+      N 5
+      NCELLS 5
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 2.2
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 1 1 1 1 
+      CP 2300 750 1006 750 2300 
+      RHO 460 32 1.2 32 460 
+      LAMBDA 0.14 0.028 0.4 0.028 0.14 
+      L 0.01 0.035 0.02 0.035 0.01 
+
+  MODULE HCBackWall_1
+    TYPE BDFWALL
+      N 5
+      NCELLS 6
+      SUBMODE 1
+      MULT1 1
+      MULT2 1
+      A 2.06
+      TOL 0.1
+      THETA 0.0
+      JAC_APPROX 0.0
+      NSUBLAY 1 2 1 1 1 
+      CP 1090 750 1300 1006 1360 
+      RHO 970 20 1000 1.2 460 
+      LAMBDA 0.22 0.035 0.13 0.4 0.14 
+      L 0.01 %WallThick% 0.015 0.02 0.02 
+
+  MODULE ExtFloorTQFace
+    TYPE TQFACE
+      AWALL 149.688858925019
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 180.0
+
+  MODULE ExtCeilingTQFac
+    TYPE TQFACE
+      AWALL 149.688858925019
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 0.0
+
+  MODULE ExtWall_1TQFace
+    TYPE TQFACE
+      AWALL 22.9028
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_2TQFace
+    TYPE TQFACE
+      AWALL 9.125
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_3TQFace
+    TYPE TQFACE
+      AWALL 8.75032142266786
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_4TQFace
+    TYPE TQFACE
+      AWALL 10.6
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_5TQFace
+    TYPE TQFACE
+      AWALL 19.54
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_7TQFace
+    TYPE TQFACE
+      AWALL 4.97
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_9TQFace
+    TYPE TQFACE
+      AWALL 12.5791685226429
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_10TQFac
+    TYPE TQFACE
+      AWALL 21.31
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_1_1TQFa
+    TYPE TQFACE
+      AWALL 3.7972
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_6TQFace
+    TYPE TQFACE
+      AWALL 1.6525
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_8TQFace
+    TYPE TQFACE
+      AWALL 1.65231787713567
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE ExtWall_9_1TQFa
+    TYPE TQFACE
+      AWALL 2.2
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE HCBackWall_1TQF
+    TYPE TQFACE
+      AWALL 2.06
+      ABSFACE 0.5
+      EPSFACE 0.9
+      SLOPEWALL 90.0
+
+  MODULE SUPPLY
+    TYPE CESUPT
+      DP0 5.0
+      MMAX 1.155
+      MMIN 0.07388
+      CLOW 1.354E-4
+
+  MODULE EXHAUST
+    TYPE CEEXHT
+      DP0 5.0
+      MMAX 1.257
+      MMIN 0.08039
+      CLOW 0.1778
+
+  MODULE LEAK
+    TYPE CELEAK
+      INPAR 0.0
+      C_T 1.0
+      N 0.6
+      ELA 0.0069
+      UABRIDGE 14.52
+      DZ 0
+      ZR1 1.0
+      ZA1 0.0
+      ZA2 0.0
+      DP0 5.0
+
+  MODULE Window_1
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 2.72
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_2
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 2.72
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_3
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 1.68
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_4
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 1.68
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_5
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 0.8
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_6
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 0.96
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_7
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 1.46
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_8
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 0.8
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_9
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 3.84
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_10
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 0.7999
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_11
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 1.68
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE Window_12
+    TYPE CEWIND
+      SC_0 0.5747
+      SSC_0 0.4828
+      H_0 %uGlass%
+      M_SC 1.0
+      M_SSC 1.0
+      M_H 1.0
+      A 0.25
+      FRAMERAT 0.001
+      H_FRAME 0.15
+      ABSFRAME 0.5
+      EMITFRAME 0.9
+      EMITWIND 0.9
+      SLOPEWIND 90.0
+      SOLARCTRL 0
+      CTRLANGLE 90
+      CTRLLEVEL 100
+
+  MODULE El_Radctrl_1
+    TYPE PSMOOTH
+      N 1
+      HI 20.0
+      LO 22.0
+
+  MODULE El_Rad_1
+    TYPE ELRAD
+      RADHEIGHT 0.4
+      RADWIDTH 5.15
+      DSPACE 0.05
+      ELWRAD 0.9
+      ELWWALL 0.9
+      PMAX 8000
+
+  MODULE Supairsplit_1
+    TYPE AIRSPLIT
+      NOUT 1
+      MULT 1 
+
+  MODULE Rtnairmerge_1
+    TYPE AIRMERGE
+      NIN 1
+      MULT 1 
+
+  MODULE EmeterFans
+    TYPE EMETER
+      N_IN 2
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterRecycle
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterLocalBoil
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterLocalChil
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterCentBoil
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterCentChil
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterPump
+    TYPE EMETER
+      N_IN 2
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EmeterWater
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE AIRFLRPT
+    TYPE AIRFLOWREP
+      N_IN1 0
+      N_IN2 0
+      N_IN3 1
+      N_IN4 1
+
+  MODULE HEATFLRPT
+    TYPE FLOWREP
+      N_IN1 0
+      N_IN2 1
+      N_IN3 2
+      N_IN4 0
+      MULT2 1.0 
+      MULT3 1.0 1.0 
+
+  MODULE EMETERQ_WACOBRI
+    TYPE EMETER
+      N_IN 16
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0
+1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETERQ_EXTWIND
+    TYPE EMETER
+      N_IN 12
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETER_VENTIL
+    TYPE EMETER
+      N_IN 2
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETERLEAKAIRIN
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETERQ_SUTHRWI
+    TYPE EMETER
+      N_IN 12
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETERQ_OCC
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETERQLITE
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE EMETEREQUIP2ZON
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1 
+      PRICE 1.0 1.0 1.0 1.0 
+
+  MODULE Emeter_1
+    TYPE EMETER
+      N_IN 4
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1 1 1 1 
+      PRICE 0.0 0.0 0.0 0.0 
+
+  MODULE Emeter_2
+    TYPE EMETER
+      N_IN 6
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 1.0 1.0 1.0 1.0 
+      PRICE 0.0 0.0 0.0 0.0 
+
+  MODULE Emeter_3
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 
+      PRICE 0.0 0.0 0.0 0.0 
+
+  MODULE EMETER_TOTWORKH
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1 
+      PRICE 1000 0 0 0 
+
+  MODULE EMETER_LOSTWORK
+    TYPE EMETER
+      N_IN 1
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1 
+      PRICE 1000 0 0 0 
+
+  MODULE lammityssahko
+    TYPE EMETER
+      N_IN 2
+      N_MONTH 12
+      FIXEDPRICE 0.0
+      MULT 1.0 1.0 
+      PRICE 1.0 1.0 1.0 1.0 
+
+END_MODULES
+
+CONNECTIONS
+  lammityssahko.INPOWER(2) = HCEL.QELACT
+  lammityssahko.INPOWER(1) = El_Rad_1.PRAD
+  EMETER_LOSTWORK.INPOWER(1) = NMFZONE.LOSTWORKHOUR
+  EMETER_TOTWORKH.INPOWER(1) = NMFZONE.TOTWORKHOUR
+  Emeter_3.INPOWER(1) = boil.QSUP
+  Emeter_2.INPOWER(6) = chil.PPUMP
+  Emeter_2.INPOWER(5) = chil.QSUP
+  Emeter_2.INPOWER(4) = boil.PPUMP
+  Emeter_2.INPOWER(3) = HCEL.QELACT
+  Emeter_2.INPOWER(2) = rf.QSUP
+  Emeter_2.INPOWER(1) = sf.QSUP
+  Emeter_1.INPOWER(4) = El_Rad_1.PRAD
+  Emeter_1.INPOWER(3) = NMFZONE.QLWEQUIP2ZONE
+  Emeter_1.INPOWER(2) = NMFZONE.QCVEQUIP2ZONE
+  Emeter_1.INPOWER(1) = NMFZONE.QLITE
+  EMETEREQUIP2ZON.INPOWER(1) = NMFZONE.QEQUIP2ZONE
+  EMETERQLITE.INPOWER(1) = NMFZONE.QLITE
+  EMETERQ_OCC.INPOWER(1) = NMFZONE.QOCC2ZONE
+  EMETERQ_SUTHRWI.INPOWER(12) = Window_12.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(11) = Window_11.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(10) = Window_10.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(9) = Window_9.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(8) = Window_8.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(7) = Window_7.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(6) = Window_6.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(5) = Window_5.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(4) = Window_4.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(3) = Window_3.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(2) = Window_2.QSOLAR
+  EMETERQ_SUTHRWI.INPOWER(1) = Window_1.QSOLAR
+  EMETERLEAKAIRIN.INPOWER(1) = LEAK.QN21
+  EMETER_VENTIL.INPOWER(2) = EXHAUST.QN21
+  EMETER_VENTIL.INPOWER(1) = SUPPLY.QN12
+  EMETERQ_EXTWIND.INPOWER(12) = Window_12.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(11) = Window_11.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(10) = Window_10.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(9) = Window_9.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(8) = Window_8.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(7) = Window_7.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(6) = Window_6.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(5) = Window_5.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(4) = Window_4.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(3) = Window_3.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(2) = Window_2.QTRANSM
+  EMETERQ_EXTWIND.INPOWER(1) = Window_1.QTRANSM
+  EMETERQ_WACOBRI.INPOWER(16) = LEAK.QBRIDGE
+  EMETERQ_WACOBRI.INPOWER(15) = HCBackWall_1.QB
+  EMETERQ_WACOBRI.INPOWER(14) = ExtWall_9_1.QB
+  EMETERQ_WACOBRI.INPOWER(13) = ExtWall_8.QB
+  EMETERQ_WACOBRI.INPOWER(12) = ExtWall_6.QB
+  EMETERQ_WACOBRI.INPOWER(11) = ExtWall_1_1.QB
+  EMETERQ_WACOBRI.INPOWER(10) = ExtWall_10.QB
+  EMETERQ_WACOBRI.INPOWER(9) = ExtWall_9.QB
+  EMETERQ_WACOBRI.INPOWER(8) = ExtWall_7.QB
+  EMETERQ_WACOBRI.INPOWER(7) = ExtWall_5.QB
+  EMETERQ_WACOBRI.INPOWER(6) = ExtWall_4.QB
+  EMETERQ_WACOBRI.INPOWER(5) = ExtWall_3.QB
+  EMETERQ_WACOBRI.INPOWER(4) = ExtWall_2.QB
+  EMETERQ_WACOBRI.INPOWER(3) = ExtWall_1.QB
+  EMETERQ_WACOBRI.INPOWER(2) = ExtCeiling.QB
+  EMETERQ_WACOBRI.INPOWER(1) = ExtFloor.QB
+  HEATFLRPT.FLOW3(2) = EXHAUST.QN21
+  HEATFLRPT.FLOW3(1) = SUPPLY.QN12
+  HEATFLRPT.FLOW2(1) = LEAK.QN21
+  AIRFLRPT.EXTWOUTV(1) = LEAK.FI12
+  AIRFLRPT.EXTWINV(1) = LEAK.FI21
+  EmeterWater.INPOWER(1) = boil.QDOMWAT
+  EmeterPump.INPOWER(2) = boil.PPUMP
+  EmeterPump.INPOWER(1) = chil.PPUMP
+  EmeterCentChil.INPOWER(1) = chil.Q1
+  EmeterCentBoil.INPOWER(1) = boil.Q(1)
+  EmeterLocalChil.INPOWER(1) = chil.Q2
+  EmeterLocalBoil.INPOWER(1) = boil.Q(2)
+  EmeterRecycle.INPOWER(1) = hx.QACTUAL
+  EmeterFans.INPOWER(2) = rf.QSUP
+  EmeterFans.INPOWER(1) = sf.QSUP
+  Rtnairmerge_1.INLET(1) = EXHAUST.OUTLET
+  Rtnairmerge_1.OUTLET = hx.EXHIN
+  Supairsplit_1.OUTLET(1) = SUPPLY.INLET
+  Supairsplit_1.INLET = sf.FANOUT
+  El_Rad_1.CONTROL_IN = El_Radctrl_1.OUTSIGNALLINK(1)
+  El_Rad_1.AIRTEMP = El_Radctrl_1.MEASURELINK
+  El_Rad_1.BACKWALL = HCBackWall_1.TERM_A
+  El_Rad_1.BACKCONV = NMFZONE.TQHCBACK(1)
+  El_Rad_1.FRONT = NMFZONE.TQHCFRONT(1)
+  Window_12.RADINSIDE = NMFZONE.RADWIND(12)
+  Window_12.TQINSIDE = NMFZONE.TQWIND(12)
+  Window_12.OUTSIDE = f10.OUT2WIND
+  Window_11.RADINSIDE = NMFZONE.RADWIND(11)
+  Window_11.TQINSIDE = NMFZONE.TQWIND(11)
+  Window_11.OUTSIDE = Winshade_11.WINSIDE
+  Window_10.RADINSIDE = NMFZONE.RADWIND(10)
+  Window_10.TQINSIDE = NMFZONE.TQWIND(10)
+  Window_10.OUTSIDE = Winshade_10.WINSIDE
+  Window_9.RADINSIDE = NMFZONE.RADWIND(9)
+  Window_9.TQINSIDE = NMFZONE.TQWIND(9)
+  Window_9.OUTSIDE = f7.OUT2WIND
+  Window_8.RADINSIDE = NMFZONE.RADWIND(8)
+  Window_8.TQINSIDE = NMFZONE.TQWIND(8)
+  Window_8.OUTSIDE = Winshade_8.WINSIDE
+  Window_7.RADINSIDE = NMFZONE.RADWIND(7)
+  Window_7.TQINSIDE = NMFZONE.TQWIND(7)
+  Window_7.OUTSIDE = Winshade_7.WINSIDE
+  Window_6.RADINSIDE = NMFZONE.RADWIND(6)
+  Window_6.TQINSIDE = NMFZONE.TQWIND(6)
+  Window_6.OUTSIDE = f4.OUT2WIND
+  Window_5.RADINSIDE = NMFZONE.RADWIND(5)
+  Window_5.TQINSIDE = NMFZONE.TQWIND(5)
+  Window_5.OUTSIDE = Winshade_5.WINSIDE
+  Window_4.RADINSIDE = NMFZONE.RADWIND(4)
+  Window_4.TQINSIDE = NMFZONE.TQWIND(4)
+  Window_4.OUTSIDE = f1.OUT2WIND
+  Window_3.RADINSIDE = NMFZONE.RADWIND(3)
+  Window_3.TQINSIDE = NMFZONE.TQWIND(3)
+  Window_3.OUTSIDE = f1.OUT2WIND
+  Window_2.RADINSIDE = NMFZONE.RADWIND(2)
+  Window_2.TQINSIDE = NMFZONE.TQWIND(2)
+  Window_2.OUTSIDE = f1.OUT2WIND
+  Window_1.RADINSIDE = NMFZONE.RADWIND(1)
+  Window_1.TQINSIDE = NMFZONE.TQWIND(1)
+  Window_1.OUTSIDE = f1.OUT2WIND
+  LEAK.P2 = f1.PGROUND
+  LEAK.T2 = f1.TAIRLEAK
+  LEAK.X2 = f1.XAIRLEAK
+  LEAK.HUM2 = f1.HUMAIRLEAK
+  LEAK.TERMINAL_1 = NMFZONE.TERM(2)
+  EXHAUST.ZONE = NMFZONE.TERM(1)
+  SUPPLY.ZONE = NMFZONE.TERM_0
+  HCBackWall_1TQF.AMBIENT = f1.OUT2WALL
+  HCBackWall_1TQF.WALLSIDE = HCBackWall_1.TERM_B
+  ExtWall_9_1TQFa.AMBIENT = f9.OUT2WALL
+  ExtWall_9_1TQFa.WALLSIDE = ExtWall_9_1.TERM_B
+  ExtWall_8TQFace.AMBIENT = f8.OUT2WALL
+  ExtWall_8TQFace.WALLSIDE = ExtWall_8.TERM_B
+  ExtWall_6TQFace.AMBIENT = f6.OUT2WALL
+  ExtWall_6TQFace.WALLSIDE = ExtWall_6.TERM_B
+  ExtWall_1_1TQFa.AMBIENT = f1.OUT2WALL
+  ExtWall_1_1TQFa.WALLSIDE = ExtWall_1_1.TERM_B
+  ExtWall_10TQFac.AMBIENT = f10.OUT2WALL
+  ExtWall_10TQFac.WALLSIDE = ExtWall_10.TERM_B
+  ExtWall_9TQFace.AMBIENT = f9.OUT2WALL
+  ExtWall_9TQFace.WALLSIDE = ExtWall_9.TERM_B
+  ExtWall_7TQFace.AMBIENT = f7.OUT2WALL
+  ExtWall_7TQFace.WALLSIDE = ExtWall_7.TERM_B
+  ExtWall_5TQFace.AMBIENT = f5.OUT2WALL
+  ExtWall_5TQFace.WALLSIDE = ExtWall_5.TERM_B
+  ExtWall_4TQFace.AMBIENT = f4.OUT2WALL
+  ExtWall_4TQFace.WALLSIDE = ExtWall_4.TERM_B
+  ExtWall_3TQFace.AMBIENT = f3.OUT2WALL
+  ExtWall_3TQFace.WALLSIDE = ExtWall_3.TERM_B
+  ExtWall_2TQFace.AMBIENT = f2.OUT2WALL
+  ExtWall_2TQFace.WALLSIDE = ExtWall_2.TERM_B
+  ExtWall_1TQFace.AMBIENT = f1.OUT2WALL
+  ExtWall_1TQFace.WALLSIDE = ExtWall_1.TERM_B
+  ExtCeilingTQFac.AMBIENT = Roof.OUT2WALL
+  ExtCeilingTQFac.WALLSIDE = ExtCeiling.TERM_B
+  ExtFloorTQFace.AMBIENT = Crawl_space.OUT2WALL
+  ExtFloorTQFace.WALLSIDE = ExtFloor.TERM_B
+  ExtWall_9_1.TERM_A = NMFZONE.TQWALL(13)
+  ExtWall_8.TERM_A = NMFZONE.TQWALL(11)
+  ExtWall_6.TERM_A = NMFZONE.TQWALL(9)
+  ExtWall_1_1.TERM_A = NMFZONE.TQWALL(4)
+  ExtWall_10.TERM_A = NMFZONE.TQWALL(14)
+  ExtWall_9.TERM_A = NMFZONE.TQWALL(12)
+  ExtWall_7.TERM_A = NMFZONE.TQWALL(10)
+  ExtWall_5.TERM_A = NMFZONE.TQWALL(8)
+  ExtWall_4.TERM_A = NMFZONE.TQWALL(7)
+  ExtWall_3.TERM_A = NMFZONE.TQWALL(6)
+  ExtWall_2.TERM_A = NMFZONE.TQWALL(5)
+  ExtWall_1.TERM_A = NMFZONE.TQWALL(3)
+  ExtCeiling.TERM_A = NMFZONE.TQWALL(2)
+  ExtFloor.TERM_A = NMFZONE.TQWALL(1)
+  NMFZONE.SETEQUIP(1) = Schedule_1.OUT_LINK
+  ADDER.INSIGNAL(2) = Setp_Boil.OUTSIGNAL
+  ADDER.OUTSIGNALLINK(1) = boil.TEMPSETPOINT
+  chil.OUTLET1 = cc.LIQFLOWIN
+  chil.INLET1 = cc.LIQFLOWOUT
+  boil.DOMWATCONTROL = DHW_Sched.OUT_LINK
+  HCEL.TEMPSETPOINT = SupSwitch.OUTSIGNALLINK(2)
+  HCEL.AIRFLOWOUT = cc.AIRFLOWIN
+  HCEL.AIRFLOWIN = hx.SUPOUT
+  rf.PAIROUT = CLIMATE.PAIR2
+  rf.FANIN = hx.EXHOUT
+  sf.FANIN = cc.AIRFLOWOUT
+  cc.TEMPSETPOINT = SupSwitch.OUTSIGNALLINK(3)
+  SupSwitch.OUTSIGNALLINK(1) = hx.TEMPSETPOINT
+  SupSwitch.INSIGNALLINK(3) = SupSetpoint.OUTSIGNALLINK
+  hx.PSUP = CLIMATE.PAIR2
+  hx.TSUPIN = CLIMATE.TAIR2
+  hx.XSUP = CLIMATE.XAIR2
+  hx.WSUPIN = CLIMATE.HUMAIR
+  Winshade_11.VELLINK = f9.VELLINK
+  Winshade_11.AMBIENT = f9.OUT2WIND
+  Winshade_10.VELLINK = f8.VELLINK
+  Winshade_10.AMBIENT = f8.OUT2WIND
+  Winshade_8.VELLINK = f6.VELLINK
+  Winshade_8.AMBIENT = f6.OUT2WIND
+  Winshade_7.VELLINK = f5.VELLINK
+  Winshade_7.AMBIENT = f5.OUT2WIND
+  Winshade_5.VELLINK = f2.VELLINK
+  Winshade_5.AMBIENT = f2.OUT2WIND
+  Roof.CLIMIN = CLIMATE.DATAOUT
+  Crawl_space.PAIR = CLIMATE.PAIR2
+  Crawl_space.TAIR = CLIMATE.TAIR2
+  Crawl_space.XAIR = CLIMATE.XAIR2
+  Crawl_space.HUMAIR = CLIMATE.HUMAIR
+  Crawl_space.TGROUND = CLIMATE.TGROUND
+  Crawl_space.TSKY = CLIMATE.TSKY
+  Crawl_space.WINDDIR = CLIMATE.WINDDIR2
+  Crawl_space.ELEVSUN = CLIMATE.ELEVSUN
+  Crawl_space.AZIMUTSUN = CLIMATE.AZIMUTSUN
+  f10.CLIMIN = CLIMATE.DATAOUT
+  f9.CLIMIN = CLIMATE.DATAOUT
+  f8.CLIMIN = CLIMATE.DATAOUT
+  f7.CLIMIN = CLIMATE.DATAOUT
+  f6.CLIMIN = CLIMATE.DATAOUT
+  f5.CLIMIN = CLIMATE.DATAOUT
+  f4.CLIMIN = CLIMATE.DATAOUT
+  f3.CLIMIN = CLIMATE.DATAOUT
+  f2.CLIMIN = CLIMATE.DATAOUT
+  f1.CLIMIN = CLIMATE.DATAOUT
+  Setp_Boil.INSIGNAL = CLIMATE.TAIR2
+  SupSetpoint.INSIGNAL = CLIMATE.TAIR2
+END_CONNECTIONS
+
+BOUNDARIES
+  CLIMATE.PAIR  1325
+  CLIMATE.TAIR  FILE CLIMATE_ 2
+  CLIMATE.XAIR  720.0
+  CLIMATE.RELHUM  FILE CLIMATE_ 3
+  CLIMATE.WINDDIR  FILE CLIMATE_ 4
+  CLIMATE.WINDVELREF  FILE CLIMATE_ 5
+  CLIMATE.IDIRNORM  FILE CLIMATE_ 6
+  CLIMATE.IDIFFHOR  FILE CLIMATE_ 7
+  f1.REFLGROUND  0.2
+  f2.REFLGROUND  0.2
+  f3.REFLGROUND  0.2
+  f4.REFLGROUND  0.2
+  f5.REFLGROUND  0.2
+  f6.REFLGROUND  0.2
+  f7.REFLGROUND  0.2
+  f8.REFLGROUND  0.2
+  f9.REFLGROUND  0.2
+  f10.REFLGROUND  0.2
+  Crawl_space.WINDVEL  0.0
+  Crawl_space.IDIRNORM  0.0
+  Crawl_space.IDIFFHOR  0.0
+  Crawl_space.REFLGROUND  0.2
+  Roof.REFLGROUND  0.2
+  hx.CTRL  1.0
+  SupSwitch.SELECTOR  1
+  SupSwitch.INSIGNAL(1)  17.0
+  SupSwitch.INSIGNAL(2)  1.0
+  sf.FANON  1.0
+  rf.FANON  1.0
+  boil.PUMPON  1.0
+  boil.TDOMWATIN  5.0
+  boil.M_IN(1)  0.0
+  boil.M_IN(2)  0.0
+  boil.TIN(1)  16.0
+  boil.TIN(2)  16.0
+  boil.M_OUT(1)  0.0
+  boil.M_OUT(2)  0.0
+  chil.MOUT2  0.0
+  chil.MIN2  0.0
+  chil.TIN2  16.0
+  chil.TOUTREQ1  5.0
+  chil.TOUTREQ2  15.0
+  chil.PUMPON  0.0
+  ADDER.INSIGNAL(1)  0.0
+  NMFZONE.LITEON  0
+  SUPPLY.CONTR  0.0
+  SUPPLY.CENTRALMODE  1.0
+  EXHAUST.CONTR  0
+  EXHAUST.CENTRALMODE  1.0
+  Window_1.SCHEDSHADING  0
+  Window_2.SCHEDSHADING  0
+  Window_3.SCHEDSHADING  0
+  Window_4.SCHEDSHADING  0
+  Window_5.SCHEDSHADING  0
+  Window_6.SCHEDSHADING  0
+  Window_7.SCHEDSHADING  0
+  Window_8.SCHEDSHADING  0
+  Window_9.SCHEDSHADING  0
+  Window_10.SCHEDSHADING  0
+  Window_11.SCHEDSHADING  0
+  Window_12.SCHEDSHADING  0
+  El_Radctrl_1.OVERRIDE  1
+  EmeterFans.PRICENO  0.0
+  EmeterFans.EXTRAPOWER  0.0
+  EmeterRecycle.PRICENO  0.0
+  EmeterRecycle.EXTRAPOWER  0.0
+  EmeterLocalBoil.PRICENO  0.0
+  EmeterLocalBoil.EXTRAPOWER  0.0
+  EmeterLocalChil.PRICENO  0.0
+  EmeterLocalChil.EXTRAPOWER  0.0
+  EmeterCentBoil.PRICENO  0.0
+  EmeterCentBoil.EXTRAPOWER  0.0
+  EmeterCentChil.PRICENO  0.0
+  EmeterCentChil.EXTRAPOWER  0.0
+  EmeterPump.PRICENO  0.0
+  EmeterPump.EXTRAPOWER  0.0
+  EmeterWater.PRICENO  0.0
+  EmeterWater.EXTRAPOWER  0.0
+  EMETERQ_WACOBRI.PRICENO  0
+  EMETERQ_WACOBRI.EXTRAPOWER  0
+  EMETERQ_EXTWIND.PRICENO  0
+  EMETERQ_EXTWIND.EXTRAPOWER  0
+  EMETER_VENTIL.PRICENO  0
+  EMETER_VENTIL.EXTRAPOWER  0
+  EMETERLEAKAIRIN.PRICENO  0
+  EMETERLEAKAIRIN.EXTRAPOWER  0
+  EMETERQ_SUTHRWI.PRICENO  0
+  EMETERQ_SUTHRWI.EXTRAPOWER  0
+  EMETERQ_OCC.PRICENO  0
+  EMETERQ_OCC.EXTRAPOWER  0
+  EMETERQLITE.PRICENO  0
+  EMETERQLITE.EXTRAPOWER  0
+  EMETEREQUIP2ZON.PRICENO  0
+  EMETEREQUIP2ZON.EXTRAPOWER  0
+  Emeter_1.PRICENO  0
+  Emeter_1.EXTRAPOWER  0
+  Emeter_2.PRICENO  0
+  Emeter_2.EXTRAPOWER  0
+  Emeter_3.PRICENO  0
+  Emeter_3.EXTRAPOWER  0
+  EMETER_TOTWORKH.PRICENO  1
+  EMETER_TOTWORKH.EXTRAPOWER  0
+  EMETER_LOSTWORK.PRICENO  1
+  EMETER_LOSTWORK.EXTRAPOWER  0
+  lammityssahko.PRICENO  1
+  lammityssahko.EXTRAPOWER  0.0
+END_BOUNDARIES
+
+START_VALUES
+  default 24.0
+     DHW_Sched.OUT_VAR 0.0
+     DHW_Sched.PREV_HR1_IN_YR 9999.0
+     DHW_Sched.PREV_RULE_NO 0.0
+     DHW_Sched.PREV_HOUR 0.0
+     DHW_Sched.PREV_TAB_PTR 1.0
+     DHW_Sched.SECONDS 0.0
+     DHW_Sched.DISC_TIME 0.0
+     DHW_Sched.WEEKDAY 0.0
+     DHW_Sched.YEAR_NO 0.0
+     DHW_Sched.MONTH 0.0
+     DHW_Sched.DAY 0.0
+     DHW_Sched.HOUR1_IN_YEAR 0.0
+     DHW_Sched.HOUR1 0.0
+     DHW_Sched.DAY_IN_YEAR 0.0
+     DHW_Sched.RULE_NO 0.0
+     DHW_Sched.CURR_VAL 0.0
+     DHW_Sched.VAL_0 0.0
+     DHW_Sched.VAL_24 0.0
+     DHW_Sched.TAB_PTR 0.0
+     Schedule_1.OUT_VAR 0.0
+     Schedule_1.PREV_HR1_IN_YR 9999.0
+     Schedule_1.PREV_RULE_NO 0.0
+     Schedule_1.PREV_HOUR 0.0
+     Schedule_1.PREV_TAB_PTR 1.0
+     Schedule_1.SECONDS 0.0
+     Schedule_1.DISC_TIME 0.0
+     Schedule_1.WEEKDAY 0.0
+     Schedule_1.YEAR_NO 0.0
+     Schedule_1.MONTH 0.0
+     Schedule_1.DAY 0.0
+     Schedule_1.HOUR1_IN_YEAR 0.0
+     Schedule_1.HOUR1 0.0
+     Schedule_1.DAY_IN_YEAR 0.0
+     Schedule_1.RULE_NO 0.0
+     Schedule_1.CURR_VAL 0.0
+     Schedule_1.VAL_0 0.0
+     Schedule_1.VAL_24 0.0
+     Schedule_1.TAB_PTR 0.0
+     CLIMATE.PAIR2 1325.0
+     CLIMATE.TAIR2 20.0
+     CLIMATE.XAIR2 594.0
+     CLIMATE.HUMAIR 0.073
+     CLIMATE.TGROUND 20.0
+     CLIMATE.TSKY 15.0
+     CLIMATE.WINDDIR2 0.0
+     CLIMATE.WINDVEL 1.0
+     CLIMATE.IDIRNORM2 0.0
+     CLIMATE.IDIFFHOR2 0.0
+     CLIMATE.ELEVSUN 27.0
+     CLIMATE.AZIMUTSUN 26.05
+     CLIMATE.PAIR 1325
+     CLIMATE.TAIR 20.0
+     CLIMATE.XAIR 720.0
+     CLIMATE.RELHUM 50.0
+     CLIMATE.WINDDIR 0.0
+     CLIMATE.WINDVELREF 1.0
+     CLIMATE.IDIRNORM 0.0
+     CLIMATE.IDIFFHOR 0.0
+     CLIMATE.DUMMY2 13.54
+     CLIMATE.PSAT 2365.0
+     CLIMATE.PVAP 1182.0
+     CLIMATE.DAYNR 80.0
+     CLIMATE.DAYINYEAR 80.0
+     CLIMATE.DAYINFOURYEARS 80.0
+     CLIMATE.DAYFROM1901 80.0
+     CLIMATE.HOUR 14.0
+     CLIMATE.SECONDS 86400.0
+     CLIMATE.TIMEHR 0.0
+     CLIMATE.DECLINATION -0.007
+     CLIMATE.B -0.017
+     CLIMATE.E -7.84
+     CLIMATE.OMEGA 0.402
+     CLIMATE.SOLTIME 13.54
+     CLIMATE.SOLARTIME 13.54
+     CLIMATE.DUMMY1 13.54
+     CLIMATE.SINELEVSUN 0.454
+     CLIMATE.COSAZIMSUN 0.898
+     SupSetpoint.OUTSIGNAL 1.0
+     SupSetpoint.INSIGNAL 20.0
+     SupSetpoint.I_OLD 1.0
+     SupSetpoint.G0 1.0
+     Setp_Boil.OUTSIGNAL 1.0
+     Setp_Boil.INSIGNAL 20.0
+     Setp_Boil.I_OLD 1.0
+     Setp_Boil.G0 1.0
+     f1.TAIRWAL 20.0
+     f1.TGROUNDWAL 20.0
+     f1.TSKYWAL 15.0
+     f1.TAIRWDW 20.0
+     f1.TGROUNDWDW 20.0
+     f1.TSKYWDW 15.0
+     f1.TAIRARB 20.0
+     f1.TGROUNDARB 20.0
+     f1.TSKYARB 15.0
+     f1.HOUTSIDE 9.0
+     f1.PGROUND 1325.0
+     f1.TAIRLEAK 20.0
+     f1.XAIRLEAK 594.0
+     f1.HUMAIRLEAK 0.073
+     f1.WINDVELLOC 1.0
+     f1.IDIRWAL 0.0
+     f1.IDIFSKYWAL 0.0
+     f1.IDIFGRDWAL 0.0
+     f1.IDIRWDW 0.0
+     f1.IDIFSKYWDW 0.0
+     f1.IDIFGRDWDW 0.0
+     f1.IDIRARB 0.0
+     f1.IDIFSKYARB 0.0
+     f1.IDIFGRDARB 0.0
+     f1.AZSUN2FACE 0.0
+     f1.ANGLEINCFACE 0.0
+     f1.ELEVSUNWDW 27.0
+     f1.ELEVSUNARB 27.0
+     f1.AZSUN2ARB 0.0
+     f1.ANGLEINCARB 0.0
+     f1.PAIR 1325.0
+     f1.TAIR 20.0
+     f1.TGROUND 20.0
+     f1.TSKY 15.0
+     f1.XAIR 594.0
+     f1.HUMAIR 0.073
+     f1.WINDDIR 0.0
+     f1.WINDVEL 1.0
+     f1.IDIRNORM 0.0
+     f1.IDIFFHOR 0.0
+     f1.ELEVSUN 27.0
+     f1.AZIMUTSUN 26.05
+     f1.REFLGROUND 0.2
+     f1.IDIRHOR 0.0
+     f1.IDIFFSKY 0.0
+     f1.IDIFFREFL 0.0
+     f1.IDIFFGRD 0.0
+     f1.PRESSCOEFF 0.0
+     f2.TAIRWAL 20.0
+     f2.TGROUNDWAL 20.0
+     f2.TSKYWAL 15.0
+     f2.TAIRWDW 20.0
+     f2.TGROUNDWDW 20.0
+     f2.TSKYWDW 15.0
+     f2.TAIRARB 20.0
+     f2.TGROUNDARB 20.0
+     f2.TSKYARB 15.0
+     f2.HOUTSIDE 9.0
+     f2.PGROUND 1325.0
+     f2.TAIRLEAK 20.0
+     f2.XAIRLEAK 594.0
+     f2.HUMAIRLEAK 0.073
+     f2.WINDVELLOC 1.0
+     f2.IDIRWAL 0.0
+     f2.IDIFSKYWAL 0.0
+     f2.IDIFGRDWAL 0.0
+     f2.IDIRWDW 0.0
+     f2.IDIFSKYWDW 0.0
+     f2.IDIFGRDWDW 0.0
+     f2.IDIRARB 0.0
+     f2.IDIFSKYARB 0.0
+     f2.IDIFGRDARB 0.0
+     f2.AZSUN2FACE 0.0
+     f2.ANGLEINCFACE 0.0
+     f2.ELEVSUNWDW 27.0
+     f2.ELEVSUNARB 27.0
+     f2.AZSUN2ARB 0.0
+     f2.ANGLEINCARB 0.0
+     f2.PAIR 1325.0
+     f2.TAIR 20.0
+     f2.TGROUND 20.0
+     f2.TSKY 15.0
+     f2.XAIR 594.0
+     f2.HUMAIR 0.073
+     f2.WINDDIR 0.0
+     f2.WINDVEL 1.0
+     f2.IDIRNORM 0.0
+     f2.IDIFFHOR 0.0
+     f2.ELEVSUN 27.0
+     f2.AZIMUTSUN 26.05
+     f2.REFLGROUND 0.2
+     f2.IDIRHOR 0.0
+     f2.IDIFFSKY 0.0
+     f2.IDIFFREFL 0.0
+     f2.IDIFFGRD 0.0
+     f2.PRESSCOEFF 0.0
+     f3.TAIRWAL 20.0
+     f3.TGROUNDWAL 20.0
+     f3.TSKYWAL 15.0
+     f3.TAIRWDW 20.0
+     f3.TGROUNDWDW 20.0
+     f3.TSKYWDW 15.0
+     f3.TAIRARB 20.0
+     f3.TGROUNDARB 20.0
+     f3.TSKYARB 15.0
+     f3.HOUTSIDE 9.0
+     f3.PGROUND 1325.0
+     f3.TAIRLEAK 20.0
+     f3.XAIRLEAK 594.0
+     f3.HUMAIRLEAK 0.073
+     f3.WINDVELLOC 1.0
+     f3.IDIRWAL 0.0
+     f3.IDIFSKYWAL 0.0
+     f3.IDIFGRDWAL 0.0
+     f3.IDIRWDW 0.0
+     f3.IDIFSKYWDW 0.0
+     f3.IDIFGRDWDW 0.0
+     f3.IDIRARB 0.0
+     f3.IDIFSKYARB 0.0
+     f3.IDIFGRDARB 0.0
+     f3.AZSUN2FACE 0.0
+     f3.ANGLEINCFACE 0.0
+     f3.ELEVSUNWDW 27.0
+     f3.ELEVSUNARB 27.0
+     f3.AZSUN2ARB 0.0
+     f3.ANGLEINCARB 0.0
+     f3.PAIR 1325.0
+     f3.TAIR 20.0
+     f3.TGROUND 20.0
+     f3.TSKY 15.0
+     f3.XAIR 594.0
+     f3.HUMAIR 0.073
+     f3.WINDDIR 0.0
+     f3.WINDVEL 1.0
+     f3.IDIRNORM 0.0
+     f3.IDIFFHOR 0.0
+     f3.ELEVSUN 27.0
+     f3.AZIMUTSUN 26.05
+     f3.REFLGROUND 0.2
+     f3.IDIRHOR 0.0
+     f3.IDIFFSKY 0.0
+     f3.IDIFFREFL 0.0
+     f3.IDIFFGRD 0.0
+     f3.PRESSCOEFF 0.0
+     f4.TAIRWAL 20.0
+     f4.TGROUNDWAL 20.0
+     f4.TSKYWAL 15.0
+     f4.TAIRWDW 20.0
+     f4.TGROUNDWDW 20.0
+     f4.TSKYWDW 15.0
+     f4.TAIRARB 20.0
+     f4.TGROUNDARB 20.0
+     f4.TSKYARB 15.0
+     f4.HOUTSIDE 9.0
+     f4.PGROUND 1325.0
+     f4.TAIRLEAK 20.0
+     f4.XAIRLEAK 594.0
+     f4.HUMAIRLEAK 0.073
+     f4.WINDVELLOC 1.0
+     f4.IDIRWAL 0.0
+     f4.IDIFSKYWAL 0.0
+     f4.IDIFGRDWAL 0.0
+     f4.IDIRWDW 0.0
+     f4.IDIFSKYWDW 0.0
+     f4.IDIFGRDWDW 0.0
+     f4.IDIRARB 0.0
+     f4.IDIFSKYARB 0.0
+     f4.IDIFGRDARB 0.0
+     f4.AZSUN2FACE 0.0
+     f4.ANGLEINCFACE 0.0
+     f4.ELEVSUNWDW 27.0
+     f4.ELEVSUNARB 27.0
+     f4.AZSUN2ARB 0.0
+     f4.ANGLEINCARB 0.0
+     f4.PAIR 1325.0
+     f4.TAIR 20.0
+     f4.TGROUND 20.0
+     f4.TSKY 15.0
+     f4.XAIR 594.0
+     f4.HUMAIR 0.073
+     f4.WINDDIR 0.0
+     f4.WINDVEL 1.0
+     f4.IDIRNORM 0.0
+     f4.IDIFFHOR 0.0
+     f4.ELEVSUN 27.0
+     f4.AZIMUTSUN 26.05
+     f4.REFLGROUND 0.2
+     f4.IDIRHOR 0.0
+     f4.IDIFFSKY 0.0
+     f4.IDIFFREFL 0.0
+     f4.IDIFFGRD 0.0
+     f4.PRESSCOEFF 0.0
+     f5.TAIRWAL 20.0
+     f5.TGROUNDWAL 20.0
+     f5.TSKYWAL 15.0
+     f5.TAIRWDW 20.0
+     f5.TGROUNDWDW 20.0
+     f5.TSKYWDW 15.0
+     f5.TAIRARB 20.0
+     f5.TGROUNDARB 20.0
+     f5.TSKYARB 15.0
+     f5.HOUTSIDE 9.0
+     f5.PGROUND 1325.0
+     f5.TAIRLEAK 20.0
+     f5.XAIRLEAK 594.0
+     f5.HUMAIRLEAK 0.073
+     f5.WINDVELLOC 1.0
+     f5.IDIRWAL 0.0
+     f5.IDIFSKYWAL 0.0
+     f5.IDIFGRDWAL 0.0
+     f5.IDIRWDW 0.0
+     f5.IDIFSKYWDW 0.0
+     f5.IDIFGRDWDW 0.0
+     f5.IDIRARB 0.0
+     f5.IDIFSKYARB 0.0
+     f5.IDIFGRDARB 0.0
+     f5.AZSUN2FACE 0.0
+     f5.ANGLEINCFACE 0.0
+     f5.ELEVSUNWDW 27.0
+     f5.ELEVSUNARB 27.0
+     f5.AZSUN2ARB 0.0
+     f5.ANGLEINCARB 0.0
+     f5.PAIR 1325.0
+     f5.TAIR 20.0
+     f5.TGROUND 20.0
+     f5.TSKY 15.0
+     f5.XAIR 594.0
+     f5.HUMAIR 0.073
+     f5.WINDDIR 0.0
+     f5.WINDVEL 1.0
+     f5.IDIRNORM 0.0
+     f5.IDIFFHOR 0.0
+     f5.ELEVSUN 27.0
+     f5.AZIMUTSUN 26.05
+     f5.REFLGROUND 0.2
+     f5.IDIRHOR 0.0
+     f5.IDIFFSKY 0.0
+     f5.IDIFFREFL 0.0
+     f5.IDIFFGRD 0.0
+     f5.PRESSCOEFF 0.0
+     f6.TAIRWAL 20.0
+     f6.TGROUNDWAL 20.0
+     f6.TSKYWAL 15.0
+     f6.TAIRWDW 20.0
+     f6.TGROUNDWDW 20.0
+     f6.TSKYWDW 15.0
+     f6.TAIRARB 20.0
+     f6.TGROUNDARB 20.0
+     f6.TSKYARB 15.0
+     f6.HOUTSIDE 9.0
+     f6.PGROUND 1325.0
+     f6.TAIRLEAK 20.0
+     f6.XAIRLEAK 594.0
+     f6.HUMAIRLEAK 0.073
+     f6.WINDVELLOC 1.0
+     f6.IDIRWAL 0.0
+     f6.IDIFSKYWAL 0.0
+     f6.IDIFGRDWAL 0.0
+     f6.IDIRWDW 0.0
+     f6.IDIFSKYWDW 0.0
+     f6.IDIFGRDWDW 0.0
+     f6.IDIRARB 0.0
+     f6.IDIFSKYARB 0.0
+     f6.IDIFGRDARB 0.0
+     f6.AZSUN2FACE 0.0
+     f6.ANGLEINCFACE 0.0
+     f6.ELEVSUNWDW 27.0
+     f6.ELEVSUNARB 27.0
+     f6.AZSUN2ARB 0.0
+     f6.ANGLEINCARB 0.0
+     f6.PAIR 1325.0
+     f6.TAIR 20.0
+     f6.TGROUND 20.0
+     f6.TSKY 15.0
+     f6.XAIR 594.0
+     f6.HUMAIR 0.073
+     f6.WINDDIR 0.0
+     f6.WINDVEL 1.0
+     f6.IDIRNORM 0.0
+     f6.IDIFFHOR 0.0
+     f6.ELEVSUN 27.0
+     f6.AZIMUTSUN 26.05
+     f6.REFLGROUND 0.2
+     f6.IDIRHOR 0.0
+     f6.IDIFFSKY 0.0
+     f6.IDIFFREFL 0.0
+     f6.IDIFFGRD 0.0
+     f6.PRESSCOEFF 0.0
+     f7.TAIRWAL 20.0
+     f7.TGROUNDWAL 20.0
+     f7.TSKYWAL 15.0
+     f7.TAIRWDW 20.0
+     f7.TGROUNDWDW 20.0
+     f7.TSKYWDW 15.0
+     f7.TAIRARB 20.0
+     f7.TGROUNDARB 20.0
+     f7.TSKYARB 15.0
+     f7.HOUTSIDE 9.0
+     f7.PGROUND 1325.0
+     f7.TAIRLEAK 20.0
+     f7.XAIRLEAK 594.0
+     f7.HUMAIRLEAK 0.073
+     f7.WINDVELLOC 1.0
+     f7.IDIRWAL 0.0
+     f7.IDIFSKYWAL 0.0
+     f7.IDIFGRDWAL 0.0
+     f7.IDIRWDW 0.0
+     f7.IDIFSKYWDW 0.0
+     f7.IDIFGRDWDW 0.0
+     f7.IDIRARB 0.0
+     f7.IDIFSKYARB 0.0
+     f7.IDIFGRDARB 0.0
+     f7.AZSUN2FACE 0.0
+     f7.ANGLEINCFACE 0.0
+     f7.ELEVSUNWDW 27.0
+     f7.ELEVSUNARB 27.0
+     f7.AZSUN2ARB 0.0
+     f7.ANGLEINCARB 0.0
+     f7.PAIR 1325.0
+     f7.TAIR 20.0
+     f7.TGROUND 20.0
+     f7.TSKY 15.0
+     f7.XAIR 594.0
+     f7.HUMAIR 0.073
+     f7.WINDDIR 0.0
+     f7.WINDVEL 1.0
+     f7.IDIRNORM 0.0
+     f7.IDIFFHOR 0.0
+     f7.ELEVSUN 27.0
+     f7.AZIMUTSUN 26.05
+     f7.REFLGROUND 0.2
+     f7.IDIRHOR 0.0
+     f7.IDIFFSKY 0.0
+     f7.IDIFFREFL 0.0
+     f7.IDIFFGRD 0.0
+     f7.PRESSCOEFF 0.0
+     f8.TAIRWAL 20.0
+     f8.TGROUNDWAL 20.0
+     f8.TSKYWAL 15.0
+     f8.TAIRWDW 20.0
+     f8.TGROUNDWDW 20.0
+     f8.TSKYWDW 15.0
+     f8.TAIRARB 20.0
+     f8.TGROUNDARB 20.0
+     f8.TSKYARB 15.0
+     f8.HOUTSIDE 9.0
+     f8.PGROUND 1325.0
+     f8.TAIRLEAK 20.0
+     f8.XAIRLEAK 594.0
+     f8.HUMAIRLEAK 0.073
+     f8.WINDVELLOC 1.0
+     f8.IDIRWAL 0.0
+     f8.IDIFSKYWAL 0.0
+     f8.IDIFGRDWAL 0.0
+     f8.IDIRWDW 0.0
+     f8.IDIFSKYWDW 0.0
+     f8.IDIFGRDWDW 0.0
+     f8.IDIRARB 0.0
+     f8.IDIFSKYARB 0.0
+     f8.IDIFGRDARB 0.0
+     f8.AZSUN2FACE 0.0
+     f8.ANGLEINCFACE 0.0
+     f8.ELEVSUNWDW 27.0
+     f8.ELEVSUNARB 27.0
+     f8.AZSUN2ARB 0.0
+     f8.ANGLEINCARB 0.0
+     f8.PAIR 1325.0
+     f8.TAIR 20.0
+     f8.TGROUND 20.0
+     f8.TSKY 15.0
+     f8.XAIR 594.0
+     f8.HUMAIR 0.073
+     f8.WINDDIR 0.0
+     f8.WINDVEL 1.0
+     f8.IDIRNORM 0.0
+     f8.IDIFFHOR 0.0
+     f8.ELEVSUN 27.0
+     f8.AZIMUTSUN 26.05
+     f8.REFLGROUND 0.2
+     f8.IDIRHOR 0.0
+     f8.IDIFFSKY 0.0
+     f8.IDIFFREFL 0.0
+     f8.IDIFFGRD 0.0
+     f8.PRESSCOEFF 0.0
+     f9.TAIRWAL 20.0
+     f9.TGROUNDWAL 20.0
+     f9.TSKYWAL 15.0
+     f9.TAIRWDW 20.0
+     f9.TGROUNDWDW 20.0
+     f9.TSKYWDW 15.0
+     f9.TAIRARB 20.0
+     f9.TGROUNDARB 20.0
+     f9.TSKYARB 15.0
+     f9.HOUTSIDE 9.0
+     f9.PGROUND 1325.0
+     f9.TAIRLEAK 20.0
+     f9.XAIRLEAK 594.0
+     f9.HUMAIRLEAK 0.073
+     f9.WINDVELLOC 1.0
+     f9.IDIRWAL 0.0
+     f9.IDIFSKYWAL 0.0
+     f9.IDIFGRDWAL 0.0
+     f9.IDIRWDW 0.0
+     f9.IDIFSKYWDW 0.0
+     f9.IDIFGRDWDW 0.0
+     f9.IDIRARB 0.0
+     f9.IDIFSKYARB 0.0
+     f9.IDIFGRDARB 0.0
+     f9.AZSUN2FACE 0.0
+     f9.ANGLEINCFACE 0.0
+     f9.ELEVSUNWDW 27.0
+     f9.ELEVSUNARB 27.0
+     f9.AZSUN2ARB 0.0
+     f9.ANGLEINCARB 0.0
+     f9.PAIR 1325.0
+     f9.TAIR 20.0
+     f9.TGROUND 20.0
+     f9.TSKY 15.0
+     f9.XAIR 594.0
+     f9.HUMAIR 0.073
+     f9.WINDDIR 0.0
+     f9.WINDVEL 1.0
+     f9.IDIRNORM 0.0
+     f9.IDIFFHOR 0.0
+     f9.ELEVSUN 27.0
+     f9.AZIMUTSUN 26.05
+     f9.REFLGROUND 0.2
+     f9.IDIRHOR 0.0
+     f9.IDIFFSKY 0.0
+     f9.IDIFFREFL 0.0
+     f9.IDIFFGRD 0.0
+     f9.PRESSCOEFF 0.0
+     f10.TAIRWAL 20.0
+     f10.TGROUNDWAL 20.0
+     f10.TSKYWAL 15.0
+     f10.TAIRWDW 20.0
+     f10.TGROUNDWDW 20.0
+     f10.TSKYWDW 15.0
+     f10.TAIRARB 20.0
+     f10.TGROUNDARB 20.0
+     f10.TSKYARB 15.0
+     f10.HOUTSIDE 9.0
+     f10.PGROUND 1325.0
+     f10.TAIRLEAK 20.0
+     f10.XAIRLEAK 594.0
+     f10.HUMAIRLEAK 0.073
+     f10.WINDVELLOC 1.0
+     f10.IDIRWAL 0.0
+     f10.IDIFSKYWAL 0.0
+     f10.IDIFGRDWAL 0.0
+     f10.IDIRWDW 0.0
+     f10.IDIFSKYWDW 0.0
+     f10.IDIFGRDWDW 0.0
+     f10.IDIRARB 0.0
+     f10.IDIFSKYARB 0.0
+     f10.IDIFGRDARB 0.0
+     f10.AZSUN2FACE 0.0
+     f10.ANGLEINCFACE 0.0
+     f10.ELEVSUNWDW 27.0
+     f10.ELEVSUNARB 27.0
+     f10.AZSUN2ARB 0.0
+     f10.ANGLEINCARB 0.0
+     f10.PAIR 1325.0
+     f10.TAIR 20.0
+     f10.TGROUND 20.0
+     f10.TSKY 15.0
+     f10.XAIR 594.0
+     f10.HUMAIR 0.073
+     f10.WINDDIR 0.0
+     f10.WINDVEL 1.0
+     f10.IDIRNORM 0.0
+     f10.IDIFFHOR 0.0
+     f10.ELEVSUN 27.0
+     f10.AZIMUTSUN 26.05
+     f10.REFLGROUND 0.2
+     f10.IDIRHOR 0.0
+     f10.IDIFFSKY 0.0
+     f10.IDIFFREFL 0.0
+     f10.IDIFFGRD 0.0
+     f10.PRESSCOEFF 0.0
+     Crawl_space.TAIRWAL 20.0
+     Crawl_space.TGROUNDWAL 20.0
+     Crawl_space.TSKYWAL 15.0
+     Crawl_space.TAIRWDW 20.0
+     Crawl_space.TGROUNDWDW 20.0
+     Crawl_space.TSKYWDW 15.0
+     Crawl_space.TAIRARB 20.0
+     Crawl_space.TGROUNDARB 20.0
+     Crawl_space.TSKYARB 15.0
+     Crawl_space.HOUTSIDE 9.0
+     Crawl_space.PGROUND 1325.0
+     Crawl_space.TAIRLEAK 20.0
+     Crawl_space.XAIRLEAK 594.0
+     Crawl_space.HUMAIRLEAK 0.073
+     Crawl_space.WINDVELLOC 1.0
+     Crawl_space.IDIRWAL 0.0
+     Crawl_space.IDIFSKYWAL 0.0
+     Crawl_space.IDIFGRDWAL 0.0
+     Crawl_space.IDIRWDW 0.0
+     Crawl_space.IDIFSKYWDW 0.0
+     Crawl_space.IDIFGRDWDW 0.0
+     Crawl_space.IDIRARB 0.0
+     Crawl_space.IDIFSKYARB 0.0
+     Crawl_space.IDIFGRDARB 0.0
+     Crawl_space.AZSUN2FACE 0.0
+     Crawl_space.ANGLEINCFACE 0.0
+     Crawl_space.ELEVSUNWDW 27.0
+     Crawl_space.ELEVSUNARB 27.0
+     Crawl_space.AZSUN2ARB 0.0
+     Crawl_space.ANGLEINCARB 0.0
+     Crawl_space.PAIR 1325.0
+     Crawl_space.TAIR 20.0
+     Crawl_space.TGROUND 20.0
+     Crawl_space.TSKY 15.0
+     Crawl_space.XAIR 594.0
+     Crawl_space.HUMAIR 0.073
+     Crawl_space.WINDDIR 0.0
+     Crawl_space.WINDVEL 0.0
+     Crawl_space.IDIRNORM 0.0
+     Crawl_space.IDIFFHOR 0.0
+     Crawl_space.ELEVSUN 27.0
+     Crawl_space.AZIMUTSUN 26.05
+     Crawl_space.REFLGROUND 0.2
+     Crawl_space.IDIRHOR 0.0
+     Crawl_space.IDIFFSKY 0.0
+     Crawl_space.IDIFFREFL 0.0
+     Crawl_space.IDIFFGRD 0.0
+     Crawl_space.PRESSCOEFF 0.0
+     Roof.TAIRWAL 20.0
+     Roof.TGROUNDWAL 20.0
+     Roof.TSKYWAL 15.0
+     Roof.TAIRWDW 20.0
+     Roof.TGROUNDWDW 20.0
+     Roof.TSKYWDW 15.0
+     Roof.TAIRARB 20.0
+     Roof.TGROUNDARB 20.0
+     Roof.TSKYARB 15.0
+     Roof.HOUTSIDE 9.0
+     Roof.PGROUND 1325.0
+     Roof.TAIRLEAK 20.0
+     Roof.XAIRLEAK 594.0
+     Roof.HUMAIRLEAK 0.073
+     Roof.WINDVELLOC 1.0
+     Roof.IDIRWAL 0.0
+     Roof.IDIFSKYWAL 0.0
+     Roof.IDIFGRDWAL 0.0
+     Roof.IDIRWDW 0.0
+     Roof.IDIFSKYWDW 0.0
+     Roof.IDIFGRDWDW 0.0
+     Roof.IDIRARB 0.0
+     Roof.IDIFSKYARB 0.0
+     Roof.IDIFGRDARB 0.0
+     Roof.AZSUN2FACE 0.0
+     Roof.ANGLEINCFACE 0.0
+     Roof.ELEVSUNWDW 27.0
+     Roof.ELEVSUNARB 27.0
+     Roof.AZSUN2ARB 0.0
+     Roof.ANGLEINCARB 0.0
+     Roof.PAIR 1325.0
+     Roof.TAIR 20.0
+     Roof.TGROUND 20.0
+     Roof.TSKY 15.0
+     Roof.XAIR 594.0
+     Roof.HUMAIR 0.073
+     Roof.WINDDIR 0.0
+     Roof.WINDVEL 1.0
+     Roof.IDIRNORM 0.0
+     Roof.IDIFFHOR 0.0
+     Roof.ELEVSUN 27.0
+     Roof.AZIMUTSUN 26.05
+     Roof.REFLGROUND 0.2
+     Roof.IDIRHOR 0.0
+     Roof.IDIFFSKY 0.0
+     Roof.IDIFFREFL 0.0
+     Roof.IDIFFGRD 0.0
+     Roof.PRESSCOEFF 0.0
+     Winshade_5.TAMB_OUT 0.0
+     Winshade_5.TGROUND_OUT 0.0
+     Winshade_5.TSKY_OUT 0.0
+     Winshade_5.HEXT_OUT 1.0
+     Winshade_5.IDIFSKYOUT 0.0
+     Winshade_5.IDIFGRDOUT 0.0
+     Winshade_5.IDIR_OUT 0.0
+     Winshade_5.AZIMUT_OUT 0.0
+     Winshade_5.ELEV_OUT 0.0
+     Winshade_5.ANGLE_OUT 0.0
+     Winshade_5.TAMB_IN 0.0
+     Winshade_5.TGROUND_IN 0.0
+     Winshade_5.TSKY_IN 0.0
+     Winshade_5.HEXT_IN 1.0
+     Winshade_5.IDIFSKYIN 0.0
+     Winshade_5.IDIFGRDIN 0.0
+     Winshade_5.IDIR_IN 0.0
+     Winshade_5.AZIMUT_IN 0.0
+     Winshade_5.ELEV_IN 0.0
+     Winshade_5.ANGLE_IN 0.0
+     Winshade_5.WINDVEL 1.0
+     Winshade_5.DIRECTSHAD 0.0
+     Winshade_5.CTRL 1.0
+     Winshade_5.RAD 0.0
+     Winshade_7.TAMB_OUT 0.0
+     Winshade_7.TGROUND_OUT 0.0
+     Winshade_7.TSKY_OUT 0.0
+     Winshade_7.HEXT_OUT 1.0
+     Winshade_7.IDIFSKYOUT 0.0
+     Winshade_7.IDIFGRDOUT 0.0
+     Winshade_7.IDIR_OUT 0.0
+     Winshade_7.AZIMUT_OUT 0.0
+     Winshade_7.ELEV_OUT 0.0
+     Winshade_7.ANGLE_OUT 0.0
+     Winshade_7.TAMB_IN 0.0
+     Winshade_7.TGROUND_IN 0.0
+     Winshade_7.TSKY_IN 0.0
+     Winshade_7.HEXT_IN 1.0
+     Winshade_7.IDIFSKYIN 0.0
+     Winshade_7.IDIFGRDIN 0.0
+     Winshade_7.IDIR_IN 0.0
+     Winshade_7.AZIMUT_IN 0.0
+     Winshade_7.ELEV_IN 0.0
+     Winshade_7.ANGLE_IN 0.0
+     Winshade_7.WINDVEL 1.0
+     Winshade_7.DIRECTSHAD 0.0
+     Winshade_7.CTRL 1.0
+     Winshade_7.RAD 0.0
+     Winshade_8.TAMB_OUT 0.0
+     Winshade_8.TGROUND_OUT 0.0
+     Winshade_8.TSKY_OUT 0.0
+     Winshade_8.HEXT_OUT 1.0
+     Winshade_8.IDIFSKYOUT 0.0
+     Winshade_8.IDIFGRDOUT 0.0
+     Winshade_8.IDIR_OUT 0.0
+     Winshade_8.AZIMUT_OUT 0.0
+     Winshade_8.ELEV_OUT 0.0
+     Winshade_8.ANGLE_OUT 0.0
+     Winshade_8.TAMB_IN 0.0
+     Winshade_8.TGROUND_IN 0.0
+     Winshade_8.TSKY_IN 0.0
+     Winshade_8.HEXT_IN 1.0
+     Winshade_8.IDIFSKYIN 0.0
+     Winshade_8.IDIFGRDIN 0.0
+     Winshade_8.IDIR_IN 0.0
+     Winshade_8.AZIMUT_IN 0.0
+     Winshade_8.ELEV_IN 0.0
+     Winshade_8.ANGLE_IN 0.0
+     Winshade_8.WINDVEL 1.0
+     Winshade_8.DIRECTSHAD 0.0
+     Winshade_8.CTRL 1.0
+     Winshade_8.RAD 0.0
+     Winshade_10.TAMB_OUT 0.0
+     Winshade_10.TGROUND_OUT 0.0
+     Winshade_10.TSKY_OUT 0.0
+     Winshade_10.HEXT_OUT 1.0
+     Winshade_10.IDIFSKYOUT 0.0
+     Winshade_10.IDIFGRDOUT 0.0
+     Winshade_10.IDIR_OUT 0.0
+     Winshade_10.AZIMUT_OUT 0.0
+     Winshade_10.ELEV_OUT 0.0
+     Winshade_10.ANGLE_OUT 0.0
+     Winshade_10.TAMB_IN 0.0
+     Winshade_10.TGROUND_IN 0.0
+     Winshade_10.TSKY_IN 0.0
+     Winshade_10.HEXT_IN 1.0
+     Winshade_10.IDIFSKYIN 0.0
+     Winshade_10.IDIFGRDIN 0.0
+     Winshade_10.IDIR_IN 0.0
+     Winshade_10.AZIMUT_IN 0.0
+     Winshade_10.ELEV_IN 0.0
+     Winshade_10.ANGLE_IN 0.0
+     Winshade_10.WINDVEL 1.0
+     Winshade_10.DIRECTSHAD 0.0
+     Winshade_10.CTRL 1.0
+     Winshade_10.RAD 0.0
+     Winshade_11.TAMB_OUT 0.0
+     Winshade_11.TGROUND_OUT 0.0
+     Winshade_11.TSKY_OUT 0.0
+     Winshade_11.HEXT_OUT 1.0
+     Winshade_11.IDIFSKYOUT 0.0
+     Winshade_11.IDIFGRDOUT 0.0
+     Winshade_11.IDIR_OUT 0.0
+     Winshade_11.AZIMUT_OUT 0.0
+     Winshade_11.ELEV_OUT 0.0
+     Winshade_11.ANGLE_OUT 0.0
+     Winshade_11.TAMB_IN 0.0
+     Winshade_11.TGROUND_IN 0.0
+     Winshade_11.TSKY_IN 0.0
+     Winshade_11.HEXT_IN 1.0
+     Winshade_11.IDIFSKYIN 0.0
+     Winshade_11.IDIFGRDIN 0.0
+     Winshade_11.IDIR_IN 0.0
+     Winshade_11.AZIMUT_IN 0.0
+     Winshade_11.ELEV_IN 0.0
+     Winshade_11.ANGLE_IN 0.0
+     Winshade_11.WINDVEL 1.0
+     Winshade_11.DIRECTSHAD 0.0
+     Winshade_11.CTRL 1.0
+     Winshade_11.RAD 0.0
+     hx.TSUPOUT 15.0
+     hx.TEXHOUT 20.0
+     hx.WSUPOUT 0.01
+     hx.WEXHOUTMIN 0.01
+     hx.WEXHOUT 0.01
+     hx.PSUP 1325.0
+     hx.PEXH 1325.0
+     hx.MSUP 3.2
+     hx.MEXH 3.2
+     hx.TSUPIN 10.0
+     hx.TEXHIN 25.0
+     hx.TSET 18.0
+     hx.WSUPIN 0.01
+     hx.WEXHIN 0.01
+     hx.XSUP 594.0
+     hx.XEXH 594.0
+     hx.CTRL 1.0
+     hx.ON 1.0
+     hx.CAP 0.0
+     hx.WETSUP 0.0
+     hx.WETEXH 0.0
+     hx.POSHEAT 0.0
+     hx.G0 1.0
+     hx.G1 1.0
+     hx.G2 1.0
+     hx.G3 -1.0
+     hx.G4 -1.0
+     hx.TSUPADP 25.0
+     hx.TEXHADP 10.0
+     hx.TATTAIN 14.0
+     hx.WSUPADP 0.01
+     hx.WEXHADP 0.01
+     hx.HSUPIN 20.0
+     hx.HSUPHEATED 20.0
+     hx.HSUPADP 20.0
+     hx.HSUPOUT 20.0
+     hx.HEXHIN 20.0
+     hx.HEXHHEATED 20.0
+     hx.HEXHADP 20.0
+     hx.HEXHOUT 20.0
+     hx.HEXHMIN 20.0
+     hx.QAVAIL 100.0
+     hx.QACTUAL 100.0
+     hx.QMAX 100.0
+     hx.QMAXEXH 100.0
+     hx.ETA_ 0.6
+     SupSwitch.OUTSIGNAL 0.0
+     SupSwitch.SELECTOR 1
+     SupSwitch.INSIGNAL(1) 17.0
+     SupSwitch.INSIGNAL(2) 0.0
+     SupSwitch.INSIGNAL(3) 0.0
+     cc.MLIQ 0.06
+     cc.TAIROUT 19.0
+     cc.TLIQOUT 9.0
+     cc.WAIROUT 0.007
+     cc.PAIR 1325.0
+     cc.PLIQIN 1000.0
+     cc.PLIQOUT 900.0
+     cc.MAIR 0.36
+     cc.TAIRIN 25.0
+     cc.TLIQIN 5.0
+     cc.TSET 18.0
+     cc.WAIRIN 0.007
+     cc.XAIR 594.0
+     cc.ON 1.0
+     cc.CAP 0.0
+     cc.WET 1.0
+     cc.SAT 1.0
+     cc.G0 1.0
+     cc.G1 1.0
+     cc.G2 1.0
+     cc.G3 1.0
+     cc.G4 1.0
+     cc.ENTHIN 0.0
+     cc.ENTHOUT 0.0
+     cc.ENTHWAT 0.0
+     cc.MLIQBAL 0.06
+     cc.QCOOL 0.0
+     cc.TADP 7.0
+     cc.TMIN 9.0
+     cc.DTLIQACT 5.0
+     cc.WADP 0.006
+     cc.DP 3000.0
+     cc.COILON 1.0
+     cc.COILOFF 1.0
+     sf.PAIROUT 1425.0
+     sf.TAIROUT 20.0
+     sf.FANON 1.0
+     sf.PAIRIN 1325.0
+     sf.MAIR 3.2
+     sf.TAIRIN 18.0
+     sf.WAIR 0.01
+     sf.XAIR 594.0
+     sf.DP 100.0
+     sf.QSUP 296.0
+     sf.VOLFLOW 2666.0
+     rf.PAIROUT 1425.0
+     rf.TAIROUT 20.0
+     rf.FANON 1.0
+     rf.PAIRIN 1325.0
+     rf.MAIR 3.2
+     rf.TAIRIN 18.0
+     rf.WAIR 0.01
+     rf.XAIR 594.0
+     rf.DP 100.0
+     rf.QSUP 296.0
+     rf.VOLFLOW 2666.0
+     HCEL.TAIROUT 25.0
+     HCEL.PAIR 1325.0
+     HCEL.MAIR 0.36
+     HCEL.TAIRIN 20.0
+     HCEL.TSET 20.0
+     HCEL.WAIR 0.007
+     HCEL.XAIR 594.0
+     HCEL.ON 1.0
+     HCEL.CAP 0.0
+     HCEL.G0 -1.0
+     HCEL.G1 1.0
+     HCEL.TAIRMAX 25.0
+     HCEL.QELACT 0.0
+     boil.TOUT 60.0
+     boil.POUT 10000.0
+     boil.PIN 0.0
+     boil.TOUTREQ 70.0
+     boil.PUMPON 1.0
+     boil.TDOMWATIN 5.0
+     boil.DOMWATSCH 0.0
+     boil.MODE 1.0
+     boil.G0 0.0
+     boil.MTOT 0.002
+     boil.QSUP 1186.0
+     boil.PPUMP 0.6
+     boil.TEMP -40.0
+     boil.QTEMP 0.0
+     boil.QDOMWAT 0.0
+     boil.M_IN(1) 0.002
+     boil.M_IN(2) 0.002
+     boil.TIN(1) 50.0
+     boil.TIN(2) 50.0
+     boil.M_OUT(1) 0.002
+     boil.M_OUT(2) 0.002
+     boil.Q(1) -40.0
+     boil.Q(2) -40.0
+     chil.TCHIL 4.3
+     chil.POUT 600.0
+     chil.PIN 0.0
+     chil.TOUT1 15.0
+     chil.TOUT2 9.0
+     chil.MOUT1 0.75
+     chil.MOUT2 0.05
+     chil.MIN1 0.75
+     chil.MIN2 0.05
+     chil.TIN1 15.0
+     chil.TIN2 9.0
+     chil.TOUTREQ1 5.0
+     chil.TOUTREQ2 15.0
+     chil.PUMPON 1.0
+     chil.MODE 1.0
+     chil.G0 0.0
+     chil.MTOT 0.8
+     chil.TLIQENT 14.0
+     chil.QSUP 1100.0
+     chil.PPUMP 0.6
+     chil.QCOND 3500.0
+     chil.TEMP 2373.0
+     chil.Q 2373.0
+     chil.Q1 2373.0
+     chil.Q2 2373.0
+     ADDER.OUTSIGNAL 0.0
+     ADDER.INSIGNAL(1) 0.0
+     ADDER.INSIGNAL(2) 0.0
+     NMFZONE.TAIRMEAN 23.2
+     NMFZONE.TINTWALL 25.23
+     NMFZONE.XCO2 594.0
+     NMFZONE.XHUMLOC 0.002
+     NMFZONE.TMRT 24.95
+     NMFZONE.MF_0 0.03
+     NMFZONE.XHUM 0.005
+     NMFZONE.RELATIVEHUM 0.3
+     NMFZONE.LITEON 1.0
+     NMFZONE.Q_0 100.0
+     NMFZONE.XF_0 17.0
+     NMFZONE.VAPF_0 1.7E-4
+     NMFZONE.P 1324.0
+     NMFZONE.HUMAS -0.1
+     NMFZONE.SATURATED 0.0
+     NMFZONE.QSWWIND2ZONE 108.9
+     NMFZONE.QDAYLITE 0.0
+     NMFZONE.QLITE 0.0
+     NMFZONE.QSWLITE 0.0
+     NMFZONE.QLWLITE 0.0
+     NMFZONE.QCVLITE 0.0
+     NMFZONE.QCDEXT2ZONE -5.0
+     NMFZONE.QCDINT2ZONE 216.0
+     NMFZONE.QCDWALLS2ZONE 212.0
+     NMFZONE.QLCWINDS2ZONE 0.0
+     NMFZONE.QHC2ZONE 1.5
+     NMFZONE.QRAD2ZONE 0.0
+     NMFZONE.QCVHC2ZONE 7.0
+     NMFZONE.QCVDEV2ZONE 0.0
+     NMFZONE.QCVEQUIP2ZONE 0.0
+     NMFZONE.QLWEQUIP2ZONE 0.0
+     NMFZONE.QEQUIP2ZONE 0.0
+     NMFZONE.QCVOCC2ZONE 0.0
+     NMFZONE.QLWOCC2ZONE 0.0
+     NMFZONE.QOCC2ZONE 0.0
+     NMFZONE.QFURN2ZONE 2.0
+     NMFZONE.TOP 24.0
+     NMFZONE.TOTWORKHOUR 0.0
+     NMFZONE.LOSTWORKHOUR 0.0
+     NMFZONE.QTERM2ZONE -100.0
+     NMFZONE.MEXHTOT -0.03
+     NMFZONE.ACH 1.7
+     NMFZONE.XCO2VOL 330.0
+     NMFZONE.VAPFOCC2ZONE 0.0
+     NMFZONE.HUMSAT 0.005
+     NMFZONE.PVAP 956.0
+     NMFZONE.PVAPSAT 2876.0
+     NMFZONE.HAIR 20000.0
+     NMFZONE.QLOCUNIT 0.0
+     NMFZONE.QCDEXT2SURF(1) 7.0
+     NMFZONE.QCDEXT2SURF(2) 7.0
+     NMFZONE.QCDEXT2SURF(3) 7.0
+     NMFZONE.QCDEXT2SURF(4) 7.0
+     NMFZONE.QCDEXT2SURF(5) 7.0
+     NMFZONE.QCDEXT2SURF(6) 7.0
+     NMFZONE.QCDEXT2SURF(7) 7.0
+     NMFZONE.QCDEXT2SURF(8) 7.0
+     NMFZONE.QCDEXT2SURF(9) 7.0
+     NMFZONE.QCDEXT2SURF(10) 7.0
+     NMFZONE.QCDEXT2SURF(11) 7.0
+     NMFZONE.QCDEXT2SURF(12) 7.0
+     NMFZONE.QCDEXT2SURF(13) 7.0
+     NMFZONE.QCDEXT2SURF(14) 7.0
+     NMFZONE.TEXTWALL(1) 24.12
+     NMFZONE.TEXTWALL(2) 24.12
+     NMFZONE.TEXTWALL(3) 24.12
+     NMFZONE.TEXTWALL(4) 24.12
+     NMFZONE.TEXTWALL(5) 24.12
+     NMFZONE.TEXTWALL(6) 24.12
+     NMFZONE.TEXTWALL(7) 24.12
+     NMFZONE.TEXTWALL(8) 24.12
+     NMFZONE.TEXTWALL(9) 24.12
+     NMFZONE.TEXTWALL(10) 24.12
+     NMFZONE.TEXTWALL(11) 24.12
+     NMFZONE.TEXTWALL(12) 24.12
+     NMFZONE.TEXTWALL(13) 24.12
+     NMFZONE.TEXTWALL(14) 24.12
+     NMFZONE.HEXTWALL(1) 1.8
+     NMFZONE.HEXTWALL(2) 1.8
+     NMFZONE.HEXTWALL(3) 1.8
+     NMFZONE.HEXTWALL(4) 1.8
+     NMFZONE.HEXTWALL(5) 1.8
+     NMFZONE.HEXTWALL(6) 1.8
+     NMFZONE.HEXTWALL(7) 1.8
+     NMFZONE.HEXTWALL(8) 1.8
+     NMFZONE.HEXTWALL(9) 1.8
+     NMFZONE.HEXTWALL(10) 1.8
+     NMFZONE.HEXTWALL(11) 1.8
+     NMFZONE.HEXTWALL(12) 1.8
+     NMFZONE.HEXTWALL(13) 1.8
+     NMFZONE.HEXTWALL(14) 1.8
+     NMFZONE.QSWWIND2AMB(1) 0.0
+     NMFZONE.QSWWIND2AMB(2) 0.0
+     NMFZONE.QSWWIND2AMB(3) 0.0
+     NMFZONE.QSWWIND2AMB(4) 0.0
+     NMFZONE.QSWWIND2AMB(5) 0.0
+     NMFZONE.QSWWIND2AMB(6) 0.0
+     NMFZONE.QSWWIND2AMB(7) 0.0
+     NMFZONE.QSWWIND2AMB(8) 0.0
+     NMFZONE.QSWWIND2AMB(9) 0.0
+     NMFZONE.QSWWIND2AMB(10) 0.0
+     NMFZONE.QSWWIND2AMB(11) 0.0
+     NMFZONE.QSWWIND2AMB(12) 0.0
+     NMFZONE.QLCWIND2ZONE(1) -64.0
+     NMFZONE.QLCWIND2ZONE(2) -64.0
+     NMFZONE.QLCWIND2ZONE(3) -64.0
+     NMFZONE.QLCWIND2ZONE(4) -64.0
+     NMFZONE.QLCWIND2ZONE(5) -64.0
+     NMFZONE.QLCWIND2ZONE(6) -64.0
+     NMFZONE.QLCWIND2ZONE(7) -64.0
+     NMFZONE.QLCWIND2ZONE(8) -64.0
+     NMFZONE.QLCWIND2ZONE(9) -64.0
+     NMFZONE.QLCWIND2ZONE(10) -64.0
+     NMFZONE.QLCWIND2ZONE(11) -64.0
+     NMFZONE.QLCWIND2ZONE(12) -64.0
+     NMFZONE.AZIMUTIN(1) 97.2
+     NMFZONE.AZIMUTIN(2) 97.2
+     NMFZONE.AZIMUTIN(3) 97.2
+     NMFZONE.AZIMUTIN(4) 97.2
+     NMFZONE.AZIMUTIN(5) 97.2
+     NMFZONE.AZIMUTIN(6) 97.2
+     NMFZONE.AZIMUTIN(7) 97.2
+     NMFZONE.AZIMUTIN(8) 97.2
+     NMFZONE.AZIMUTIN(9) 97.2
+     NMFZONE.AZIMUTIN(10) 97.2
+     NMFZONE.AZIMUTIN(11) 97.2
+     NMFZONE.AZIMUTIN(12) 97.2
+     NMFZONE.ELEVIN(1) 19.9
+     NMFZONE.ELEVIN(2) 19.9
+     NMFZONE.ELEVIN(3) 19.9
+     NMFZONE.ELEVIN(4) 19.9
+     NMFZONE.ELEVIN(5) 19.9
+     NMFZONE.ELEVIN(6) 19.9
+     NMFZONE.ELEVIN(7) 19.9
+     NMFZONE.ELEVIN(8) 19.9
+     NMFZONE.ELEVIN(9) 19.9
+     NMFZONE.ELEVIN(10) 19.9
+     NMFZONE.ELEVIN(11) 19.9
+     NMFZONE.ELEVIN(12) 19.9
+     NMFZONE.QDFWIND2ZONE(1) 0.0
+     NMFZONE.QDFWIND2ZONE(2) 0.0
+     NMFZONE.QDFWIND2ZONE(3) 0.0
+     NMFZONE.QDFWIND2ZONE(4) 0.0
+     NMFZONE.QDFWIND2ZONE(5) 0.0
+     NMFZONE.QDFWIND2ZONE(6) 0.0
+     NMFZONE.QDFWIND2ZONE(7) 0.0
+     NMFZONE.QDFWIND2ZONE(8) 0.0
+     NMFZONE.QDFWIND2ZONE(9) 0.0
+     NMFZONE.QDFWIND2ZONE(10) 0.0
+     NMFZONE.QDFWIND2ZONE(11) 0.0
+     NMFZONE.QDFWIND2ZONE(12) 0.0
+     NMFZONE.QDRWIND2ZONE(1) 0.0
+     NMFZONE.QDRWIND2ZONE(2) 0.0
+     NMFZONE.QDRWIND2ZONE(3) 0.0
+     NMFZONE.QDRWIND2ZONE(4) 0.0
+     NMFZONE.QDRWIND2ZONE(5) 0.0
+     NMFZONE.QDRWIND2ZONE(6) 0.0
+     NMFZONE.QDRWIND2ZONE(7) 0.0
+     NMFZONE.QDRWIND2ZONE(8) 0.0
+     NMFZONE.QDRWIND2ZONE(9) 0.0
+     NMFZONE.QDRWIND2ZONE(10) 0.0
+     NMFZONE.QDRWIND2ZONE(11) 0.0
+     NMFZONE.QDRWIND2ZONE(12) 0.0
+     NMFZONE.TWIND(1) 19.6
+     NMFZONE.TWIND(2) 19.6
+     NMFZONE.TWIND(3) 19.6
+     NMFZONE.TWIND(4) 19.6
+     NMFZONE.TWIND(5) 19.6
+     NMFZONE.TWIND(6) 19.6
+     NMFZONE.TWIND(7) 19.6
+     NMFZONE.TWIND(8) 19.6
+     NMFZONE.TWIND(9) 19.6
+     NMFZONE.TWIND(10) 19.6
+     NMFZONE.TWIND(11) 19.6
+     NMFZONE.TWIND(12) 19.6
+     NMFZONE.QSWWIND(1) 0.0
+     NMFZONE.QSWWIND(2) 0.0
+     NMFZONE.QSWWIND(3) 0.0
+     NMFZONE.QSWWIND(4) 0.0
+     NMFZONE.QSWWIND(5) 0.0
+     NMFZONE.QSWWIND(6) 0.0
+     NMFZONE.QSWWIND(7) 0.0
+     NMFZONE.QSWWIND(8) 0.0
+     NMFZONE.QSWWIND(9) 0.0
+     NMFZONE.QSWWIND(10) 0.0
+     NMFZONE.QSWWIND(11) 0.0
+     NMFZONE.QSWWIND(12) 0.0
+     NMFZONE.QSWOTHERWINDS(1) 0.0
+     NMFZONE.QSWOTHERWINDS(2) 0.0
+     NMFZONE.QSWOTHERWINDS(3) 0.0
+     NMFZONE.QSWOTHERWINDS(4) 0.0
+     NMFZONE.QSWOTHERWINDS(5) 0.0
+     NMFZONE.QSWOTHERWINDS(6) 0.0
+     NMFZONE.QSWOTHERWINDS(7) 0.0
+     NMFZONE.QSWOTHERWINDS(8) 0.0
+     NMFZONE.QSWOTHERWINDS(9) 0.0
+     NMFZONE.QSWOTHERWINDS(10) 0.0
+     NMFZONE.QSWOTHERWINDS(11) 0.0
+     NMFZONE.QSWOTHERWINDS(12) 0.0
+     NMFZONE.HWIND(1) 2.8
+     NMFZONE.HWIND(2) 2.8
+     NMFZONE.HWIND(3) 2.8
+     NMFZONE.HWIND(4) 2.8
+     NMFZONE.HWIND(5) 2.8
+     NMFZONE.HWIND(6) 2.8
+     NMFZONE.HWIND(7) 2.8
+     NMFZONE.HWIND(8) 2.8
+     NMFZONE.HWIND(9) 2.8
+     NMFZONE.HWIND(10) 2.8
+     NMFZONE.HWIND(11) 2.8
+     NMFZONE.HWIND(12) 2.8
+     NMFZONE.QHCSURFFRONT(1) 0.3
+     NMFZONE.QHCSURFBACK(1) 7.0
+     NMFZONE.THCSURF(1) 23.45
+     NMFZONE.QCVHCFRONT(1) 0.4
+     NMFZONE.HHC(1) 1.1
+     NMFZONE.SCHEDEQUIP(1) 0.0
+     NMFZONE.MF(1) -0.03
+     NMFZONE.MF(2) -0.03
+     NMFZONE.Q(1) -100.0
+     NMFZONE.Q(2) -100.0
+     NMFZONE.XF(1) -17.0
+     NMFZONE.XF(2) -17.0
+     NMFZONE.VAPF(1) -1.7E-4
+     NMFZONE.VAPF(2) -1.7E-4
+     ExtFloor.QA 0.0
+     ExtFloor.QB 0.0
+     ExtFloor.TPA 20.0
+     ExtFloor.TPB 20.0
+     ExtFloor.TAOLD 20.0
+     ExtFloor.TBOLD 20.0
+     ExtFloor.TAOLDOLD 20.0
+     ExtFloor.TBOLDOLD 20.0
+     ExtFloor.TOLDOLD 0.0
+     ExtFloor.DTSTART 0.0
+     ExtFloor.QANEW 0.0
+     ExtFloor.QBNEW 0.0
+     ExtFloor.T0 0.0
+     ExtFloor.T1 0.0
+     ExtFloor.T(1) 20.0
+     ExtFloor.T(2) 20.0
+     ExtFloor.T(3) 20.0
+     ExtFloor.Q(1) 0.0
+     ExtFloor.Q(2) 0.0
+     ExtFloor.WORK(1) 0.0
+     ExtFloor.WORK(2) 0.0
+     ExtFloor.WORK(3) 0.0
+     ExtFloor.WORK(4) 0.0
+     ExtFloor.WORK(5) 0.0
+     ExtFloor.WORK(6) 0.0
+     ExtFloor.WORK(7) 0.0
+     ExtFloor.WORK(8) 0.0
+     ExtFloor.WORK(9) 0.0
+     ExtFloor.WORK(10) 0.0
+     ExtFloor.WORK(11) 0.0
+     ExtFloor.WORK(12) 0.0
+     ExtCeiling.QA 0.0
+     ExtCeiling.QB 0.0
+     ExtCeiling.TPA 20.0
+     ExtCeiling.TPB 20.0
+     ExtCeiling.TAOLD 20.0
+     ExtCeiling.TBOLD 20.0
+     ExtCeiling.TAOLDOLD 20.0
+     ExtCeiling.TBOLDOLD 20.0
+     ExtCeiling.TOLDOLD 0.0
+     ExtCeiling.DTSTART 0.0
+     ExtCeiling.QANEW 0.0
+     ExtCeiling.QBNEW 0.0
+     ExtCeiling.T0 0.0
+     ExtCeiling.T1 0.0
+     ExtCeiling.T(1) 20.0
+     ExtCeiling.T(2) 20.0
+     ExtCeiling.T(3) 20.0
+     ExtCeiling.T(4) 20.0
+     ExtCeiling.Q(1) 0.0
+     ExtCeiling.Q(2) 0.0
+     ExtCeiling.Q(3) 0.0
+     ExtCeiling.WORK(1) 0.0
+     ExtCeiling.WORK(2) 0.0
+     ExtCeiling.WORK(3) 0.0
+     ExtCeiling.WORK(4) 0.0
+     ExtCeiling.WORK(5) 0.0
+     ExtCeiling.WORK(6) 0.0
+     ExtCeiling.WORK(7) 0.0
+     ExtCeiling.WORK(8) 0.0
+     ExtCeiling.WORK(9) 0.0
+     ExtCeiling.WORK(10) 0.0
+     ExtCeiling.WORK(11) 0.0
+     ExtCeiling.WORK(12) 0.0
+     ExtCeiling.WORK(13) 0.0
+     ExtCeiling.WORK(14) 0.0
+     ExtCeiling.WORK(15) 0.0
+     ExtCeiling.WORK(16) 0.0
+     ExtWall_1.QA 0.0
+     ExtWall_1.QB 0.0
+     ExtWall_1.TPA 20.0
+     ExtWall_1.TPB 20.0
+     ExtWall_1.TAOLD 20.0
+     ExtWall_1.TBOLD 20.0
+     ExtWall_1.TAOLDOLD 20.0
+     ExtWall_1.TBOLDOLD 20.0
+     ExtWall_1.TOLDOLD 0.0
+     ExtWall_1.DTSTART 0.0
+     ExtWall_1.QANEW 0.0
+     ExtWall_1.QBNEW 0.0
+     ExtWall_1.T0 0.0
+     ExtWall_1.T1 0.0
+     ExtWall_1.T(1) 20.0
+     ExtWall_1.T(2) 20.0
+     ExtWall_1.T(3) 20.0
+     ExtWall_1.T(4) 20.0
+     ExtWall_1.T(5) 20.0
+     ExtWall_1.T(6) 20.0
+     ExtWall_1.Q(1) 0.0
+     ExtWall_1.Q(2) 0.0
+     ExtWall_1.Q(3) 0.0
+     ExtWall_1.Q(4) 0.0
+     ExtWall_1.Q(5) 0.0
+     ExtWall_1.WORK(1) 0.0
+     ExtWall_1.WORK(2) 0.0
+     ExtWall_1.WORK(3) 0.0
+     ExtWall_1.WORK(4) 0.0
+     ExtWall_1.WORK(5) 0.0
+     ExtWall_1.WORK(6) 0.0
+     ExtWall_1.WORK(7) 0.0
+     ExtWall_1.WORK(8) 0.0
+     ExtWall_1.WORK(9) 0.0
+     ExtWall_1.WORK(10) 0.0
+     ExtWall_1.WORK(11) 0.0
+     ExtWall_1.WORK(12) 0.0
+     ExtWall_1.WORK(13) 0.0
+     ExtWall_1.WORK(14) 0.0
+     ExtWall_1.WORK(15) 0.0
+     ExtWall_1.WORK(16) 0.0
+     ExtWall_1.WORK(17) 0.0
+     ExtWall_1.WORK(18) 0.0
+     ExtWall_1.WORK(19) 0.0
+     ExtWall_1.WORK(20) 0.0
+     ExtWall_1.WORK(21) 0.0
+     ExtWall_1.WORK(22) 0.0
+     ExtWall_1.WORK(23) 0.0
+     ExtWall_1.WORK(24) 0.0
+     ExtWall_2.QA 0.0
+     ExtWall_2.QB 0.0
+     ExtWall_2.TPA 20.0
+     ExtWall_2.TPB 20.0
+     ExtWall_2.TAOLD 20.0
+     ExtWall_2.TBOLD 20.0
+     ExtWall_2.TAOLDOLD 20.0
+     ExtWall_2.TBOLDOLD 20.0
+     ExtWall_2.TOLDOLD 0.0
+     ExtWall_2.DTSTART 0.0
+     ExtWall_2.QANEW 0.0
+     ExtWall_2.QBNEW 0.0
+     ExtWall_2.T0 0.0
+     ExtWall_2.T1 0.0
+     ExtWall_2.T(1) 20.0
+     ExtWall_2.T(2) 20.0
+     ExtWall_2.T(3) 20.0
+     ExtWall_2.T(4) 20.0
+     ExtWall_2.T(5) 20.0
+     ExtWall_2.T(6) 20.0
+     ExtWall_2.Q(1) 0.0
+     ExtWall_2.Q(2) 0.0
+     ExtWall_2.Q(3) 0.0
+     ExtWall_2.Q(4) 0.0
+     ExtWall_2.Q(5) 0.0
+     ExtWall_2.WORK(1) 0.0
+     ExtWall_2.WORK(2) 0.0
+     ExtWall_2.WORK(3) 0.0
+     ExtWall_2.WORK(4) 0.0
+     ExtWall_2.WORK(5) 0.0
+     ExtWall_2.WORK(6) 0.0
+     ExtWall_2.WORK(7) 0.0
+     ExtWall_2.WORK(8) 0.0
+     ExtWall_2.WORK(9) 0.0
+     ExtWall_2.WORK(10) 0.0
+     ExtWall_2.WORK(11) 0.0
+     ExtWall_2.WORK(12) 0.0
+     ExtWall_2.WORK(13) 0.0
+     ExtWall_2.WORK(14) 0.0
+     ExtWall_2.WORK(15) 0.0
+     ExtWall_2.WORK(16) 0.0
+     ExtWall_2.WORK(17) 0.0
+     ExtWall_2.WORK(18) 0.0
+     ExtWall_2.WORK(19) 0.0
+     ExtWall_2.WORK(20) 0.0
+     ExtWall_2.WORK(21) 0.0
+     ExtWall_2.WORK(22) 0.0
+     ExtWall_2.WORK(23) 0.0
+     ExtWall_2.WORK(24) 0.0
+     ExtWall_3.QA 0.0
+     ExtWall_3.QB 0.0
+     ExtWall_3.TPA 20.0
+     ExtWall_3.TPB 20.0
+     ExtWall_3.TAOLD 20.0
+     ExtWall_3.TBOLD 20.0
+     ExtWall_3.TAOLDOLD 20.0
+     ExtWall_3.TBOLDOLD 20.0
+     ExtWall_3.TOLDOLD 0.0
+     ExtWall_3.DTSTART 0.0
+     ExtWall_3.QANEW 0.0
+     ExtWall_3.QBNEW 0.0
+     ExtWall_3.T0 0.0
+     ExtWall_3.T1 0.0
+     ExtWall_3.T(1) 20.0
+     ExtWall_3.T(2) 20.0
+     ExtWall_3.T(3) 20.0
+     ExtWall_3.T(4) 20.0
+     ExtWall_3.T(5) 20.0
+     ExtWall_3.T(6) 20.0
+     ExtWall_3.Q(1) 0.0
+     ExtWall_3.Q(2) 0.0
+     ExtWall_3.Q(3) 0.0
+     ExtWall_3.Q(4) 0.0
+     ExtWall_3.Q(5) 0.0
+     ExtWall_3.WORK(1) 0.0
+     ExtWall_3.WORK(2) 0.0
+     ExtWall_3.WORK(3) 0.0
+     ExtWall_3.WORK(4) 0.0
+     ExtWall_3.WORK(5) 0.0
+     ExtWall_3.WORK(6) 0.0
+     ExtWall_3.WORK(7) 0.0
+     ExtWall_3.WORK(8) 0.0
+     ExtWall_3.WORK(9) 0.0
+     ExtWall_3.WORK(10) 0.0
+     ExtWall_3.WORK(11) 0.0
+     ExtWall_3.WORK(12) 0.0
+     ExtWall_3.WORK(13) 0.0
+     ExtWall_3.WORK(14) 0.0
+     ExtWall_3.WORK(15) 0.0
+     ExtWall_3.WORK(16) 0.0
+     ExtWall_3.WORK(17) 0.0
+     ExtWall_3.WORK(18) 0.0
+     ExtWall_3.WORK(19) 0.0
+     ExtWall_3.WORK(20) 0.0
+     ExtWall_3.WORK(21) 0.0
+     ExtWall_3.WORK(22) 0.0
+     ExtWall_3.WORK(23) 0.0
+     ExtWall_3.WORK(24) 0.0
+     ExtWall_4.QA 0.0
+     ExtWall_4.QB 0.0
+     ExtWall_4.TPA 20.0
+     ExtWall_4.TPB 20.0
+     ExtWall_4.TAOLD 20.0
+     ExtWall_4.TBOLD 20.0
+     ExtWall_4.TAOLDOLD 20.0
+     ExtWall_4.TBOLDOLD 20.0
+     ExtWall_4.TOLDOLD 0.0
+     ExtWall_4.DTSTART 0.0
+     ExtWall_4.QANEW 0.0
+     ExtWall_4.QBNEW 0.0
+     ExtWall_4.T0 0.0
+     ExtWall_4.T1 0.0
+     ExtWall_4.T(1) 20.0
+     ExtWall_4.T(2) 20.0
+     ExtWall_4.T(3) 20.0
+     ExtWall_4.T(4) 20.0
+     ExtWall_4.T(5) 20.0
+     ExtWall_4.T(6) 20.0
+     ExtWall_4.Q(1) 0.0
+     ExtWall_4.Q(2) 0.0
+     ExtWall_4.Q(3) 0.0
+     ExtWall_4.Q(4) 0.0
+     ExtWall_4.Q(5) 0.0
+     ExtWall_4.WORK(1) 0.0
+     ExtWall_4.WORK(2) 0.0
+     ExtWall_4.WORK(3) 0.0
+     ExtWall_4.WORK(4) 0.0
+     ExtWall_4.WORK(5) 0.0
+     ExtWall_4.WORK(6) 0.0
+     ExtWall_4.WORK(7) 0.0
+     ExtWall_4.WORK(8) 0.0
+     ExtWall_4.WORK(9) 0.0
+     ExtWall_4.WORK(10) 0.0
+     ExtWall_4.WORK(11) 0.0
+     ExtWall_4.WORK(12) 0.0
+     ExtWall_4.WORK(13) 0.0
+     ExtWall_4.WORK(14) 0.0
+     ExtWall_4.WORK(15) 0.0
+     ExtWall_4.WORK(16) 0.0
+     ExtWall_4.WORK(17) 0.0
+     ExtWall_4.WORK(18) 0.0
+     ExtWall_4.WORK(19) 0.0
+     ExtWall_4.WORK(20) 0.0
+     ExtWall_4.WORK(21) 0.0
+     ExtWall_4.WORK(22) 0.0
+     ExtWall_4.WORK(23) 0.0
+     ExtWall_4.WORK(24) 0.0
+     ExtWall_5.QA 0.0
+     ExtWall_5.QB 0.0
+     ExtWall_5.TPA 20.0
+     ExtWall_5.TPB 20.0
+     ExtWall_5.TAOLD 20.0
+     ExtWall_5.TBOLD 20.0
+     ExtWall_5.TAOLDOLD 20.0
+     ExtWall_5.TBOLDOLD 20.0
+     ExtWall_5.TOLDOLD 0.0
+     ExtWall_5.DTSTART 0.0
+     ExtWall_5.QANEW 0.0
+     ExtWall_5.QBNEW 0.0
+     ExtWall_5.T0 0.0
+     ExtWall_5.T1 0.0
+     ExtWall_5.T(1) 20.0
+     ExtWall_5.T(2) 20.0
+     ExtWall_5.T(3) 20.0
+     ExtWall_5.T(4) 20.0
+     ExtWall_5.T(5) 20.0
+     ExtWall_5.T(6) 20.0
+     ExtWall_5.Q(1) 0.0
+     ExtWall_5.Q(2) 0.0
+     ExtWall_5.Q(3) 0.0
+     ExtWall_5.Q(4) 0.0
+     ExtWall_5.Q(5) 0.0
+     ExtWall_5.WORK(1) 0.0
+     ExtWall_5.WORK(2) 0.0
+     ExtWall_5.WORK(3) 0.0
+     ExtWall_5.WORK(4) 0.0
+     ExtWall_5.WORK(5) 0.0
+     ExtWall_5.WORK(6) 0.0
+     ExtWall_5.WORK(7) 0.0
+     ExtWall_5.WORK(8) 0.0
+     ExtWall_5.WORK(9) 0.0
+     ExtWall_5.WORK(10) 0.0
+     ExtWall_5.WORK(11) 0.0
+     ExtWall_5.WORK(12) 0.0
+     ExtWall_5.WORK(13) 0.0
+     ExtWall_5.WORK(14) 0.0
+     ExtWall_5.WORK(15) 0.0
+     ExtWall_5.WORK(16) 0.0
+     ExtWall_5.WORK(17) 0.0
+     ExtWall_5.WORK(18) 0.0
+     ExtWall_5.WORK(19) 0.0
+     ExtWall_5.WORK(20) 0.0
+     ExtWall_5.WORK(21) 0.0
+     ExtWall_5.WORK(22) 0.0
+     ExtWall_5.WORK(23) 0.0
+     ExtWall_5.WORK(24) 0.0
+     ExtWall_7.QA 0.0
+     ExtWall_7.QB 0.0
+     ExtWall_7.TPA 20.0
+     ExtWall_7.TPB 20.0
+     ExtWall_7.TAOLD 20.0
+     ExtWall_7.TBOLD 20.0
+     ExtWall_7.TAOLDOLD 20.0
+     ExtWall_7.TBOLDOLD 20.0
+     ExtWall_7.TOLDOLD 0.0
+     ExtWall_7.DTSTART 0.0
+     ExtWall_7.QANEW 0.0
+     ExtWall_7.QBNEW 0.0
+     ExtWall_7.T0 0.0
+     ExtWall_7.T1 0.0
+     ExtWall_7.T(1) 20.0
+     ExtWall_7.T(2) 20.0
+     ExtWall_7.T(3) 20.0
+     ExtWall_7.T(4) 20.0
+     ExtWall_7.T(5) 20.0
+     ExtWall_7.T(6) 20.0
+     ExtWall_7.Q(1) 0.0
+     ExtWall_7.Q(2) 0.0
+     ExtWall_7.Q(3) 0.0
+     ExtWall_7.Q(4) 0.0
+     ExtWall_7.Q(5) 0.0
+     ExtWall_7.WORK(1) 0.0
+     ExtWall_7.WORK(2) 0.0
+     ExtWall_7.WORK(3) 0.0
+     ExtWall_7.WORK(4) 0.0
+     ExtWall_7.WORK(5) 0.0
+     ExtWall_7.WORK(6) 0.0
+     ExtWall_7.WORK(7) 0.0
+     ExtWall_7.WORK(8) 0.0
+     ExtWall_7.WORK(9) 0.0
+     ExtWall_7.WORK(10) 0.0
+     ExtWall_7.WORK(11) 0.0
+     ExtWall_7.WORK(12) 0.0
+     ExtWall_7.WORK(13) 0.0
+     ExtWall_7.WORK(14) 0.0
+     ExtWall_7.WORK(15) 0.0
+     ExtWall_7.WORK(16) 0.0
+     ExtWall_7.WORK(17) 0.0
+     ExtWall_7.WORK(18) 0.0
+     ExtWall_7.WORK(19) 0.0
+     ExtWall_7.WORK(20) 0.0
+     ExtWall_7.WORK(21) 0.0
+     ExtWall_7.WORK(22) 0.0
+     ExtWall_7.WORK(23) 0.0
+     ExtWall_7.WORK(24) 0.0
+     ExtWall_9.QA 0.0
+     ExtWall_9.QB 0.0
+     ExtWall_9.TPA 20.0
+     ExtWall_9.TPB 20.0
+     ExtWall_9.TAOLD 20.0
+     ExtWall_9.TBOLD 20.0
+     ExtWall_9.TAOLDOLD 20.0
+     ExtWall_9.TBOLDOLD 20.0
+     ExtWall_9.TOLDOLD 0.0
+     ExtWall_9.DTSTART 0.0
+     ExtWall_9.QANEW 0.0
+     ExtWall_9.QBNEW 0.0
+     ExtWall_9.T0 0.0
+     ExtWall_9.T1 0.0
+     ExtWall_9.T(1) 20.0
+     ExtWall_9.T(2) 20.0
+     ExtWall_9.T(3) 20.0
+     ExtWall_9.T(4) 20.0
+     ExtWall_9.T(5) 20.0
+     ExtWall_9.T(6) 20.0
+     ExtWall_9.Q(1) 0.0
+     ExtWall_9.Q(2) 0.0
+     ExtWall_9.Q(3) 0.0
+     ExtWall_9.Q(4) 0.0
+     ExtWall_9.Q(5) 0.0
+     ExtWall_9.WORK(1) 0.0
+     ExtWall_9.WORK(2) 0.0
+     ExtWall_9.WORK(3) 0.0
+     ExtWall_9.WORK(4) 0.0
+     ExtWall_9.WORK(5) 0.0
+     ExtWall_9.WORK(6) 0.0
+     ExtWall_9.WORK(7) 0.0
+     ExtWall_9.WORK(8) 0.0
+     ExtWall_9.WORK(9) 0.0
+     ExtWall_9.WORK(10) 0.0
+     ExtWall_9.WORK(11) 0.0
+     ExtWall_9.WORK(12) 0.0
+     ExtWall_9.WORK(13) 0.0
+     ExtWall_9.WORK(14) 0.0
+     ExtWall_9.WORK(15) 0.0
+     ExtWall_9.WORK(16) 0.0
+     ExtWall_9.WORK(17) 0.0
+     ExtWall_9.WORK(18) 0.0
+     ExtWall_9.WORK(19) 0.0
+     ExtWall_9.WORK(20) 0.0
+     ExtWall_9.WORK(21) 0.0
+     ExtWall_9.WORK(22) 0.0
+     ExtWall_9.WORK(23) 0.0
+     ExtWall_9.WORK(24) 0.0
+     ExtWall_10.QA 0.0
+     ExtWall_10.QB 0.0
+     ExtWall_10.TPA 20.0
+     ExtWall_10.TPB 20.0
+     ExtWall_10.TAOLD 20.0
+     ExtWall_10.TBOLD 20.0
+     ExtWall_10.TAOLDOLD 20.0
+     ExtWall_10.TBOLDOLD 20.0
+     ExtWall_10.TOLDOLD 0.0
+     ExtWall_10.DTSTART 0.0
+     ExtWall_10.QANEW 0.0
+     ExtWall_10.QBNEW 0.0
+     ExtWall_10.T0 0.0
+     ExtWall_10.T1 0.0
+     ExtWall_10.T(1) 20.0
+     ExtWall_10.T(2) 20.0
+     ExtWall_10.T(3) 20.0
+     ExtWall_10.T(4) 20.0
+     ExtWall_10.T(5) 20.0
+     ExtWall_10.T(6) 20.0
+     ExtWall_10.Q(1) 0.0
+     ExtWall_10.Q(2) 0.0
+     ExtWall_10.Q(3) 0.0
+     ExtWall_10.Q(4) 0.0
+     ExtWall_10.Q(5) 0.0
+     ExtWall_10.WORK(1) 0.0
+     ExtWall_10.WORK(2) 0.0
+     ExtWall_10.WORK(3) 0.0
+     ExtWall_10.WORK(4) 0.0
+     ExtWall_10.WORK(5) 0.0
+     ExtWall_10.WORK(6) 0.0
+     ExtWall_10.WORK(7) 0.0
+     ExtWall_10.WORK(8) 0.0
+     ExtWall_10.WORK(9) 0.0
+     ExtWall_10.WORK(10) 0.0
+     ExtWall_10.WORK(11) 0.0
+     ExtWall_10.WORK(12) 0.0
+     ExtWall_10.WORK(13) 0.0
+     ExtWall_10.WORK(14) 0.0
+     ExtWall_10.WORK(15) 0.0
+     ExtWall_10.WORK(16) 0.0
+     ExtWall_10.WORK(17) 0.0
+     ExtWall_10.WORK(18) 0.0
+     ExtWall_10.WORK(19) 0.0
+     ExtWall_10.WORK(20) 0.0
+     ExtWall_10.WORK(21) 0.0
+     ExtWall_10.WORK(22) 0.0
+     ExtWall_10.WORK(23) 0.0
+     ExtWall_10.WORK(24) 0.0
+     ExtWall_1_1.QA 0.0
+     ExtWall_1_1.QB 0.0
+     ExtWall_1_1.TPA 20.0
+     ExtWall_1_1.TPB 20.0
+     ExtWall_1_1.TAOLD 20.0
+     ExtWall_1_1.TBOLD 20.0
+     ExtWall_1_1.TAOLDOLD 20.0
+     ExtWall_1_1.TBOLDOLD 20.0
+     ExtWall_1_1.TOLDOLD 0.0
+     ExtWall_1_1.DTSTART 0.0
+     ExtWall_1_1.QANEW 0.0
+     ExtWall_1_1.QBNEW 0.0
+     ExtWall_1_1.T0 0.0
+     ExtWall_1_1.T1 0.0
+     ExtWall_1_1.T(1) 20.0
+     ExtWall_1_1.T(2) 20.0
+     ExtWall_1_1.T(3) 20.0
+     ExtWall_1_1.T(4) 20.0
+     ExtWall_1_1.T(5) 20.0
+     ExtWall_1_1.Q(1) 0.0
+     ExtWall_1_1.Q(2) 0.0
+     ExtWall_1_1.Q(3) 0.0
+     ExtWall_1_1.Q(4) 0.0
+     ExtWall_1_1.WORK(1) 0.0
+     ExtWall_1_1.WORK(2) 0.0
+     ExtWall_1_1.WORK(3) 0.0
+     ExtWall_1_1.WORK(4) 0.0
+     ExtWall_1_1.WORK(5) 0.0
+     ExtWall_1_1.WORK(6) 0.0
+     ExtWall_1_1.WORK(7) 0.0
+     ExtWall_1_1.WORK(8) 0.0
+     ExtWall_1_1.WORK(9) 0.0
+     ExtWall_1_1.WORK(10) 0.0
+     ExtWall_1_1.WORK(11) 0.0
+     ExtWall_1_1.WORK(12) 0.0
+     ExtWall_1_1.WORK(13) 0.0
+     ExtWall_1_1.WORK(14) 0.0
+     ExtWall_1_1.WORK(15) 0.0
+     ExtWall_1_1.WORK(16) 0.0
+     ExtWall_1_1.WORK(17) 0.0
+     ExtWall_1_1.WORK(18) 0.0
+     ExtWall_1_1.WORK(19) 0.0
+     ExtWall_1_1.WORK(20) 0.0
+     ExtWall_6.QA 0.0
+     ExtWall_6.QB 0.0
+     ExtWall_6.TPA 20.0
+     ExtWall_6.TPB 20.0
+     ExtWall_6.TAOLD 20.0
+     ExtWall_6.TBOLD 20.0
+     ExtWall_6.TAOLDOLD 20.0
+     ExtWall_6.TBOLDOLD 20.0
+     ExtWall_6.TOLDOLD 0.0
+     ExtWall_6.DTSTART 0.0
+     ExtWall_6.QANEW 0.0
+     ExtWall_6.QBNEW 0.0
+     ExtWall_6.T0 0.0
+     ExtWall_6.T1 0.0
+     ExtWall_6.T(1) 20.0
+     ExtWall_6.T(2) 20.0
+     ExtWall_6.T(3) 20.0
+     ExtWall_6.T(4) 20.0
+     ExtWall_6.T(5) 20.0
+     ExtWall_6.T(6) 20.0
+     ExtWall_6.Q(1) 0.0
+     ExtWall_6.Q(2) 0.0
+     ExtWall_6.Q(3) 0.0
+     ExtWall_6.Q(4) 0.0
+     ExtWall_6.Q(5) 0.0
+     ExtWall_6.WORK(1) 0.0
+     ExtWall_6.WORK(2) 0.0
+     ExtWall_6.WORK(3) 0.0
+     ExtWall_6.WORK(4) 0.0
+     ExtWall_6.WORK(5) 0.0
+     ExtWall_6.WORK(6) 0.0
+     ExtWall_6.WORK(7) 0.0
+     ExtWall_6.WORK(8) 0.0
+     ExtWall_6.WORK(9) 0.0
+     ExtWall_6.WORK(10) 0.0
+     ExtWall_6.WORK(11) 0.0
+     ExtWall_6.WORK(12) 0.0
+     ExtWall_6.WORK(13) 0.0
+     ExtWall_6.WORK(14) 0.0
+     ExtWall_6.WORK(15) 0.0
+     ExtWall_6.WORK(16) 0.0
+     ExtWall_6.WORK(17) 0.0
+     ExtWall_6.WORK(18) 0.0
+     ExtWall_6.WORK(19) 0.0
+     ExtWall_6.WORK(20) 0.0
+     ExtWall_6.WORK(21) 0.0
+     ExtWall_6.WORK(22) 0.0
+     ExtWall_6.WORK(23) 0.0
+     ExtWall_6.WORK(24) 0.0
+     ExtWall_8.QA 0.0
+     ExtWall_8.QB 0.0
+     ExtWall_8.TPA 20.0
+     ExtWall_8.TPB 20.0
+     ExtWall_8.TAOLD 20.0
+     ExtWall_8.TBOLD 20.0
+     ExtWall_8.TAOLDOLD 20.0
+     ExtWall_8.TBOLDOLD 20.0
+     ExtWall_8.TOLDOLD 0.0
+     ExtWall_8.DTSTART 0.0
+     ExtWall_8.QANEW 0.0
+     ExtWall_8.QBNEW 0.0
+     ExtWall_8.T0 0.0
+     ExtWall_8.T1 0.0
+     ExtWall_8.T(1) 20.0
+     ExtWall_8.T(2) 20.0
+     ExtWall_8.T(3) 20.0
+     ExtWall_8.T(4) 20.0
+     ExtWall_8.T(5) 20.0
+     ExtWall_8.T(6) 20.0
+     ExtWall_8.Q(1) 0.0
+     ExtWall_8.Q(2) 0.0
+     ExtWall_8.Q(3) 0.0
+     ExtWall_8.Q(4) 0.0
+     ExtWall_8.Q(5) 0.0
+     ExtWall_8.WORK(1) 0.0
+     ExtWall_8.WORK(2) 0.0
+     ExtWall_8.WORK(3) 0.0
+     ExtWall_8.WORK(4) 0.0
+     ExtWall_8.WORK(5) 0.0
+     ExtWall_8.WORK(6) 0.0
+     ExtWall_8.WORK(7) 0.0
+     ExtWall_8.WORK(8) 0.0
+     ExtWall_8.WORK(9) 0.0
+     ExtWall_8.WORK(10) 0.0
+     ExtWall_8.WORK(11) 0.0
+     ExtWall_8.WORK(12) 0.0
+     ExtWall_8.WORK(13) 0.0
+     ExtWall_8.WORK(14) 0.0
+     ExtWall_8.WORK(15) 0.0
+     ExtWall_8.WORK(16) 0.0
+     ExtWall_8.WORK(17) 0.0
+     ExtWall_8.WORK(18) 0.0
+     ExtWall_8.WORK(19) 0.0
+     ExtWall_8.WORK(20) 0.0
+     ExtWall_8.WORK(21) 0.0
+     ExtWall_8.WORK(22) 0.0
+     ExtWall_8.WORK(23) 0.0
+     ExtWall_8.WORK(24) 0.0
+     ExtWall_9_1.QA 0.0
+     ExtWall_9_1.QB 0.0
+     ExtWall_9_1.TPA 20.0
+     ExtWall_9_1.TPB 20.0
+     ExtWall_9_1.TAOLD 20.0
+     ExtWall_9_1.TBOLD 20.0
+     ExtWall_9_1.TAOLDOLD 20.0
+     ExtWall_9_1.TBOLDOLD 20.0
+     ExtWall_9_1.TOLDOLD 0.0
+     ExtWall_9_1.DTSTART 0.0
+     ExtWall_9_1.QANEW 0.0
+     ExtWall_9_1.QBNEW 0.0
+     ExtWall_9_1.T0 0.0
+     ExtWall_9_1.T1 0.0
+     ExtWall_9_1.T(1) 20.0
+     ExtWall_9_1.T(2) 20.0
+     ExtWall_9_1.T(3) 20.0
+     ExtWall_9_1.T(4) 20.0
+     ExtWall_9_1.T(5) 20.0
+     ExtWall_9_1.Q(1) 0.0
+     ExtWall_9_1.Q(2) 0.0
+     ExtWall_9_1.Q(3) 0.0
+     ExtWall_9_1.Q(4) 0.0
+     ExtWall_9_1.WORK(1) 0.0
+     ExtWall_9_1.WORK(2) 0.0
+     ExtWall_9_1.WORK(3) 0.0
+     ExtWall_9_1.WORK(4) 0.0
+     ExtWall_9_1.WORK(5) 0.0
+     ExtWall_9_1.WORK(6) 0.0
+     ExtWall_9_1.WORK(7) 0.0
+     ExtWall_9_1.WORK(8) 0.0
+     ExtWall_9_1.WORK(9) 0.0
+     ExtWall_9_1.WORK(10) 0.0
+     ExtWall_9_1.WORK(11) 0.0
+     ExtWall_9_1.WORK(12) 0.0
+     ExtWall_9_1.WORK(13) 0.0
+     ExtWall_9_1.WORK(14) 0.0
+     ExtWall_9_1.WORK(15) 0.0
+     ExtWall_9_1.WORK(16) 0.0
+     ExtWall_9_1.WORK(17) 0.0
+     ExtWall_9_1.WORK(18) 0.0
+     ExtWall_9_1.WORK(19) 0.0
+     ExtWall_9_1.WORK(20) 0.0
+     HCBackWall_1.QA 0.0
+     HCBackWall_1.QB 0.0
+     HCBackWall_1.TPA 20.0
+     HCBackWall_1.TPB 20.0
+     HCBackWall_1.TAOLD 20.0
+     HCBackWall_1.TBOLD 20.0
+     HCBackWall_1.TAOLDOLD 20.0
+     HCBackWall_1.TBOLDOLD 20.0
+     HCBackWall_1.TOLDOLD 0.0
+     HCBackWall_1.DTSTART 0.0
+     HCBackWall_1.QANEW 0.0
+     HCBackWall_1.QBNEW 0.0
+     HCBackWall_1.T0 0.0
+     HCBackWall_1.T1 0.0
+     HCBackWall_1.T(1) 20.0
+     HCBackWall_1.T(2) 20.0
+     HCBackWall_1.T(3) 20.0
+     HCBackWall_1.T(4) 20.0
+     HCBackWall_1.T(5) 20.0
+     HCBackWall_1.T(6) 20.0
+     HCBackWall_1.Q(1) 0.0
+     HCBackWall_1.Q(2) 0.0
+     HCBackWall_1.Q(3) 0.0
+     HCBackWall_1.Q(4) 0.0
+     HCBackWall_1.Q(5) 0.0
+     HCBackWall_1.WORK(1) 0.0
+     HCBackWall_1.WORK(2) 0.0
+     HCBackWall_1.WORK(3) 0.0
+     HCBackWall_1.WORK(4) 0.0
+     HCBackWall_1.WORK(5) 0.0
+     HCBackWall_1.WORK(6) 0.0
+     HCBackWall_1.WORK(7) 0.0
+     HCBackWall_1.WORK(8) 0.0
+     HCBackWall_1.WORK(9) 0.0
+     HCBackWall_1.WORK(10) 0.0
+     HCBackWall_1.WORK(11) 0.0
+     HCBackWall_1.WORK(12) 0.0
+     HCBackWall_1.WORK(13) 0.0
+     HCBackWall_1.WORK(14) 0.0
+     HCBackWall_1.WORK(15) 0.0
+     HCBackWall_1.WORK(16) 0.0
+     HCBackWall_1.WORK(17) 0.0
+     HCBackWall_1.WORK(18) 0.0
+     HCBackWall_1.WORK(19) 0.0
+     HCBackWall_1.WORK(20) 0.0
+     HCBackWall_1.WORK(21) 0.0
+     HCBackWall_1.WORK(22) 0.0
+     HCBackWall_1.WORK(23) 0.0
+     HCBackWall_1.WORK(24) 0.0
+     ExtFloorTQFace.TWALL 24.0
+     ExtFloorTQFace.QWALL 146.0
+     ExtFloorTQFace.TAMBIENT 21.0
+     ExtFloorTQFace.PDIR 0.0
+     ExtFloorTQFace.PDIFSKY 85.0
+     ExtFloorTQFace.PDIFGRD 85.0
+     ExtFloorTQFace.TSKY 16.0
+     ExtFloorTQFace.TGROUND 21.0
+     ExtFloorTQFace.UFACE 13.9
+     ExtCeilingTQFac.TWALL 24.0
+     ExtCeilingTQFac.QWALL 146.0
+     ExtCeilingTQFac.TAMBIENT 21.0
+     ExtCeilingTQFac.PDIR 0.0
+     ExtCeilingTQFac.PDIFSKY 85.0
+     ExtCeilingTQFac.PDIFGRD 85.0
+     ExtCeilingTQFac.TSKY 16.0
+     ExtCeilingTQFac.TGROUND 21.0
+     ExtCeilingTQFac.UFACE 13.9
+     ExtWall_1TQFace.TWALL 24.0
+     ExtWall_1TQFace.QWALL 146.0
+     ExtWall_1TQFace.TAMBIENT 21.0
+     ExtWall_1TQFace.PDIR 0.0
+     ExtWall_1TQFace.PDIFSKY 85.0
+     ExtWall_1TQFace.PDIFGRD 85.0
+     ExtWall_1TQFace.TSKY 16.0
+     ExtWall_1TQFace.TGROUND 21.0
+     ExtWall_1TQFace.UFACE 13.9
+     ExtWall_2TQFace.TWALL 24.0
+     ExtWall_2TQFace.QWALL 146.0
+     ExtWall_2TQFace.TAMBIENT 21.0
+     ExtWall_2TQFace.PDIR 0.0
+     ExtWall_2TQFace.PDIFSKY 85.0
+     ExtWall_2TQFace.PDIFGRD 85.0
+     ExtWall_2TQFace.TSKY 16.0
+     ExtWall_2TQFace.TGROUND 21.0
+     ExtWall_2TQFace.UFACE 13.9
+     ExtWall_3TQFace.TWALL 24.0
+     ExtWall_3TQFace.QWALL 146.0
+     ExtWall_3TQFace.TAMBIENT 21.0
+     ExtWall_3TQFace.PDIR 0.0
+     ExtWall_3TQFace.PDIFSKY 85.0
+     ExtWall_3TQFace.PDIFGRD 85.0
+     ExtWall_3TQFace.TSKY 16.0
+     ExtWall_3TQFace.TGROUND 21.0
+     ExtWall_3TQFace.UFACE 13.9
+     ExtWall_4TQFace.TWALL 24.0
+     ExtWall_4TQFace.QWALL 146.0
+     ExtWall_4TQFace.TAMBIENT 21.0
+     ExtWall_4TQFace.PDIR 0.0
+     ExtWall_4TQFace.PDIFSKY 85.0
+     ExtWall_4TQFace.PDIFGRD 85.0
+     ExtWall_4TQFace.TSKY 16.0
+     ExtWall_4TQFace.TGROUND 21.0
+     ExtWall_4TQFace.UFACE 13.9
+     ExtWall_5TQFace.TWALL 24.0
+     ExtWall_5TQFace.QWALL 146.0
+     ExtWall_5TQFace.TAMBIENT 21.0
+     ExtWall_5TQFace.PDIR 0.0
+     ExtWall_5TQFace.PDIFSKY 85.0
+     ExtWall_5TQFace.PDIFGRD 85.0
+     ExtWall_5TQFace.TSKY 16.0
+     ExtWall_5TQFace.TGROUND 21.0
+     ExtWall_5TQFace.UFACE 13.9
+     ExtWall_7TQFace.TWALL 24.0
+     ExtWall_7TQFace.QWALL 146.0
+     ExtWall_7TQFace.TAMBIENT 21.0
+     ExtWall_7TQFace.PDIR 0.0
+     ExtWall_7TQFace.PDIFSKY 85.0
+     ExtWall_7TQFace.PDIFGRD 85.0
+     ExtWall_7TQFace.TSKY 16.0
+     ExtWall_7TQFace.TGROUND 21.0
+     ExtWall_7TQFace.UFACE 13.9
+     ExtWall_9TQFace.TWALL 24.0
+     ExtWall_9TQFace.QWALL 146.0
+     ExtWall_9TQFace.TAMBIENT 21.0
+     ExtWall_9TQFace.PDIR 0.0
+     ExtWall_9TQFace.PDIFSKY 85.0
+     ExtWall_9TQFace.PDIFGRD 85.0
+     ExtWall_9TQFace.TSKY 16.0
+     ExtWall_9TQFace.TGROUND 21.0
+     ExtWall_9TQFace.UFACE 13.9
+     ExtWall_10TQFac.TWALL 24.0
+     ExtWall_10TQFac.QWALL 146.0
+     ExtWall_10TQFac.TAMBIENT 21.0
+     ExtWall_10TQFac.PDIR 0.0
+     ExtWall_10TQFac.PDIFSKY 85.0
+     ExtWall_10TQFac.PDIFGRD 85.0
+     ExtWall_10TQFac.TSKY 16.0
+     ExtWall_10TQFac.TGROUND 21.0
+     ExtWall_10TQFac.UFACE 13.9
+     ExtWall_1_1TQFa.TWALL 24.0
+     ExtWall_1_1TQFa.QWALL 146.0
+     ExtWall_1_1TQFa.TAMBIENT 21.0
+     ExtWall_1_1TQFa.PDIR 0.0
+     ExtWall_1_1TQFa.PDIFSKY 85.0
+     ExtWall_1_1TQFa.PDIFGRD 85.0
+     ExtWall_1_1TQFa.TSKY 16.0
+     ExtWall_1_1TQFa.TGROUND 21.0
+     ExtWall_1_1TQFa.UFACE 13.9
+     ExtWall_6TQFace.TWALL 24.0
+     ExtWall_6TQFace.QWALL 146.0
+     ExtWall_6TQFace.TAMBIENT 21.0
+     ExtWall_6TQFace.PDIR 0.0
+     ExtWall_6TQFace.PDIFSKY 85.0
+     ExtWall_6TQFace.PDIFGRD 85.0
+     ExtWall_6TQFace.TSKY 16.0
+     ExtWall_6TQFace.TGROUND 21.0
+     ExtWall_6TQFace.UFACE 13.9
+     ExtWall_8TQFace.TWALL 24.0
+     ExtWall_8TQFace.QWALL 146.0
+     ExtWall_8TQFace.TAMBIENT 21.0
+     ExtWall_8TQFace.PDIR 0.0
+     ExtWall_8TQFace.PDIFSKY 85.0
+     ExtWall_8TQFace.PDIFGRD 85.0
+     ExtWall_8TQFace.TSKY 16.0
+     ExtWall_8TQFace.TGROUND 21.0
+     ExtWall_8TQFace.UFACE 13.9
+     ExtWall_9_1TQFa.TWALL 24.0
+     ExtWall_9_1TQFa.QWALL 146.0
+     ExtWall_9_1TQFa.TAMBIENT 21.0
+     ExtWall_9_1TQFa.PDIR 0.0
+     ExtWall_9_1TQFa.PDIFSKY 85.0
+     ExtWall_9_1TQFa.PDIFGRD 85.0
+     ExtWall_9_1TQFa.TSKY 16.0
+     ExtWall_9_1TQFa.TGROUND 21.0
+     ExtWall_9_1TQFa.UFACE 13.9
+     HCBackWall_1TQF.TWALL 24.0
+     HCBackWall_1TQF.QWALL 146.0
+     HCBackWall_1TQF.TAMBIENT 21.0
+     HCBackWall_1TQF.PDIR 0.0
+     HCBackWall_1TQF.PDIFSKY 85.0
+     HCBackWall_1TQF.PDIFGRD 85.0
+     HCBackWall_1TQF.TSKY 16.0
+     HCBackWall_1TQF.TGROUND 21.0
+     HCBackWall_1TQF.UFACE 13.9
+     SUPPLY.M 0.024
+     SUPPLY.Q 0.0
+     SUPPLY.XF 0.0
+     SUPPLY.HUMF 0.0
+     SUPPLY.P1 1375.0
+     SUPPLY.P2 1325.0
+     SUPPLY.T1 20.0
+     SUPPLY.T2 25.0
+     SUPPLY.X1 594.0
+     SUPPLY.X2 594.0
+     SUPPLY.HUM1 0.006
+     SUPPLY.HUM2 0.006
+     SUPPLY.CONTR 0.0
+     SUPPLY.CENTRALMODE 1.0
+     SUPPLY.DP 50.0
+     SUPPLY.HSUPT 40000.0
+     SUPPLY.QN12 0.0
+     SUPPLY.FI12 0.0
+     EXHAUST.M 0.026
+     EXHAUST.Q 1111.0
+     EXHAUST.XF 15.0
+     EXHAUST.HUMF 1.0E-4
+     EXHAUST.P1 1321.0
+     EXHAUST.P2 1275.0
+     EXHAUST.T 15.0
+     EXHAUST.X 594.0
+     EXHAUST.HUM 0.006
+     EXHAUST.CONTR 0
+     EXHAUST.CENTRALMODE 1.0
+     EXHAUST.DP 45.0
+     EXHAUST.HEXHT 42700.0
+     EXHAUST.QN21 0.0
+     EXHAUST.FI12 0.0
+     LEAK.M 0.001
+     LEAK.Q 0.0
+     LEAK.XF 0.001
+     LEAK.HUMF 0.001
+     LEAK.P1 1.0
+     LEAK.P2 2.0
+     LEAK.T1 20.0
+     LEAK.T2 20.0
+     LEAK.X1 594.0
+     LEAK.X2 0.1
+     LEAK.HUM1 0.005
+     LEAK.HUM2 0.005
+     LEAK.RHO 1.2
+     LEAK.RHO1 1.2
+     LEAK.RHO2 1.2
+     LEAK.DP 0.0
+     LEAK.DELTA 1.0
+     LEAK.QN12 0.0
+     LEAK.QN21 0.0
+     LEAK.QBRIDGE 0.0
+     LEAK.FI12 0.0
+     LEAK.FI21 0.0
+     Window_1.QINSIDE 18.0
+     Window_1.QLWOUT 0.0
+     Window_1.QCONVOUT 0.0
+     Window_1.QSWOUT 0.0
+     Window_1.RDIFFTHRU 108.0
+     Window_1.RDIRTHRU 0.0
+     Window_1.TWINDOUT 21.0
+     Window_1.TFRAMEOUT 23.0
+     Window_1.AZIMUTTHRU 97.0
+     Window_1.ELEVTHRU 19.0
+     Window_1.ANGLEINC 45.0
+     Window_1.IDIFSKYINC 84.0
+     Window_1.IDIFGRDINC 84.0
+     Window_1.IDIRINC 0.0
+     Window_1.RBACK 4.0
+     Window_1.SCHEDSHADING 1.0
+     Window_1.TAMB 20.0
+     Window_1.TIN 25.0
+     Window_1.TGROUND 20.0
+     Window_1.TSKY 15.0
+     Window_1.HEXT 13.0
+     Window_1.SC 0.87
+     Window_1.SSC 0.81
+     Window_1.HPANES 3.1
+     Window_1.COSINC 0.0
+     Window_1.FTHRUDIR 0.0
+     Window_1.QSOLAR 1.0
+     Window_1.QTRANSM 1.0
+     Window_1.QABSFROUT 19.0
+     Window_1.QABSORB 19.0
+     Window_1.QGLASSINSIDE 17.0
+     Window_1.QFRAMEINSIDE 1.0
+     Window_1.QGLASSTRANSM -36.0
+     Window_1.QFRAMETRANSM -1.0
+     Window_1.QLWOUTPANE 0.0
+     Window_1.QLWOUTFRAME 0.0
+     Window_1.QCONVPANE 0.0
+     Window_1.QCONVFRAME 0.0
+     Window_1.RBACKTHRU 0.0
+     Window_1.IDIFFINC 84.0
+     Window_1.RTHRUREF 156.0
+     Window_1.RTHRUCURRA 136.0
+     Window_1.SHADINGON 0.0
+     Window_2.QINSIDE 18.0
+     Window_2.QLWOUT 0.0
+     Window_2.QCONVOUT 0.0
+     Window_2.QSWOUT 0.0
+     Window_2.RDIFFTHRU 108.0
+     Window_2.RDIRTHRU 0.0
+     Window_2.TWINDOUT 21.0
+     Window_2.TFRAMEOUT 23.0
+     Window_2.AZIMUTTHRU 97.0
+     Window_2.ELEVTHRU 19.0
+     Window_2.ANGLEINC 45.0
+     Window_2.IDIFSKYINC 84.0
+     Window_2.IDIFGRDINC 84.0
+     Window_2.IDIRINC 0.0
+     Window_2.RBACK 4.0
+     Window_2.SCHEDSHADING 1.0
+     Window_2.TAMB 20.0
+     Window_2.TIN 25.0
+     Window_2.TGROUND 20.0
+     Window_2.TSKY 15.0
+     Window_2.HEXT 13.0
+     Window_2.SC 0.87
+     Window_2.SSC 0.81
+     Window_2.HPANES 3.1
+     Window_2.COSINC 0.0
+     Window_2.FTHRUDIR 0.0
+     Window_2.QSOLAR 1.0
+     Window_2.QTRANSM 1.0
+     Window_2.QABSFROUT 19.0
+     Window_2.QABSORB 19.0
+     Window_2.QGLASSINSIDE 17.0
+     Window_2.QFRAMEINSIDE 1.0
+     Window_2.QGLASSTRANSM -36.0
+     Window_2.QFRAMETRANSM -1.0
+     Window_2.QLWOUTPANE 0.0
+     Window_2.QLWOUTFRAME 0.0
+     Window_2.QCONVPANE 0.0
+     Window_2.QCONVFRAME 0.0
+     Window_2.RBACKTHRU 0.0
+     Window_2.IDIFFINC 84.0
+     Window_2.RTHRUREF 156.0
+     Window_2.RTHRUCURRA 136.0
+     Window_2.SHADINGON 0.0
+     Window_3.QINSIDE 18.0
+     Window_3.QLWOUT 0.0
+     Window_3.QCONVOUT 0.0
+     Window_3.QSWOUT 0.0
+     Window_3.RDIFFTHRU 108.0
+     Window_3.RDIRTHRU 0.0
+     Window_3.TWINDOUT 21.0
+     Window_3.TFRAMEOUT 23.0
+     Window_3.AZIMUTTHRU 97.0
+     Window_3.ELEVTHRU 19.0
+     Window_3.ANGLEINC 45.0
+     Window_3.IDIFSKYINC 84.0
+     Window_3.IDIFGRDINC 84.0
+     Window_3.IDIRINC 0.0
+     Window_3.RBACK 4.0
+     Window_3.SCHEDSHADING 1.0
+     Window_3.TAMB 20.0
+     Window_3.TIN 25.0
+     Window_3.TGROUND 20.0
+     Window_3.TSKY 15.0
+     Window_3.HEXT 13.0
+     Window_3.SC 0.87
+     Window_3.SSC 0.81
+     Window_3.HPANES 3.1
+     Window_3.COSINC 0.0
+     Window_3.FTHRUDIR 0.0
+     Window_3.QSOLAR 1.0
+     Window_3.QTRANSM 1.0
+     Window_3.QABSFROUT 19.0
+     Window_3.QABSORB 19.0
+     Window_3.QGLASSINSIDE 17.0
+     Window_3.QFRAMEINSIDE 1.0
+     Window_3.QGLASSTRANSM -36.0
+     Window_3.QFRAMETRANSM -1.0
+     Window_3.QLWOUTPANE 0.0
+     Window_3.QLWOUTFRAME 0.0
+     Window_3.QCONVPANE 0.0
+     Window_3.QCONVFRAME 0.0
+     Window_3.RBACKTHRU 0.0
+     Window_3.IDIFFINC 84.0
+     Window_3.RTHRUREF 156.0
+     Window_3.RTHRUCURRA 136.0
+     Window_3.SHADINGON 0.0
+     Window_4.QINSIDE 18.0
+     Window_4.QLWOUT 0.0
+     Window_4.QCONVOUT 0.0
+     Window_4.QSWOUT 0.0
+     Window_4.RDIFFTHRU 108.0
+     Window_4.RDIRTHRU 0.0
+     Window_4.TWINDOUT 21.0
+     Window_4.TFRAMEOUT 23.0
+     Window_4.AZIMUTTHRU 97.0
+     Window_4.ELEVTHRU 19.0
+     Window_4.ANGLEINC 45.0
+     Window_4.IDIFSKYINC 84.0
+     Window_4.IDIFGRDINC 84.0
+     Window_4.IDIRINC 0.0
+     Window_4.RBACK 4.0
+     Window_4.SCHEDSHADING 1.0
+     Window_4.TAMB 20.0
+     Window_4.TIN 25.0
+     Window_4.TGROUND 20.0
+     Window_4.TSKY 15.0
+     Window_4.HEXT 13.0
+     Window_4.SC 0.87
+     Window_4.SSC 0.81
+     Window_4.HPANES 3.1
+     Window_4.COSINC 0.0
+     Window_4.FTHRUDIR 0.0
+     Window_4.QSOLAR 1.0
+     Window_4.QTRANSM 1.0
+     Window_4.QABSFROUT 19.0
+     Window_4.QABSORB 19.0
+     Window_4.QGLASSINSIDE 17.0
+     Window_4.QFRAMEINSIDE 1.0
+     Window_4.QGLASSTRANSM -36.0
+     Window_4.QFRAMETRANSM -1.0
+     Window_4.QLWOUTPANE 0.0
+     Window_4.QLWOUTFRAME 0.0
+     Window_4.QCONVPANE 0.0
+     Window_4.QCONVFRAME 0.0
+     Window_4.RBACKTHRU 0.0
+     Window_4.IDIFFINC 84.0
+     Window_4.RTHRUREF 156.0
+     Window_4.RTHRUCURRA 136.0
+     Window_4.SHADINGON 0.0
+     Window_5.QINSIDE 18.0
+     Window_5.QLWOUT 0.0
+     Window_5.QCONVOUT 0.0
+     Window_5.QSWOUT 0.0
+     Window_5.RDIFFTHRU 108.0
+     Window_5.RDIRTHRU 0.0
+     Window_5.TWINDOUT 21.0
+     Window_5.TFRAMEOUT 23.0
+     Window_5.AZIMUTTHRU 97.0
+     Window_5.ELEVTHRU 19.0
+     Window_5.ANGLEINC 45.0
+     Window_5.IDIFSKYINC 84.0
+     Window_5.IDIFGRDINC 84.0
+     Window_5.IDIRINC 0.0
+     Window_5.RBACK 4.0
+     Window_5.SCHEDSHADING 1.0
+     Window_5.TAMB 20.0
+     Window_5.TIN 25.0
+     Window_5.TGROUND 20.0
+     Window_5.TSKY 15.0
+     Window_5.HEXT 13.0
+     Window_5.SC 0.87
+     Window_5.SSC 0.81
+     Window_5.HPANES 3.1
+     Window_5.COSINC 0.0
+     Window_5.FTHRUDIR 0.0
+     Window_5.QSOLAR 1.0
+     Window_5.QTRANSM 1.0
+     Window_5.QABSFROUT 19.0
+     Window_5.QABSORB 19.0
+     Window_5.QGLASSINSIDE 17.0
+     Window_5.QFRAMEINSIDE 1.0
+     Window_5.QGLASSTRANSM -36.0
+     Window_5.QFRAMETRANSM -1.0
+     Window_5.QLWOUTPANE 0.0
+     Window_5.QLWOUTFRAME 0.0
+     Window_5.QCONVPANE 0.0
+     Window_5.QCONVFRAME 0.0
+     Window_5.RBACKTHRU 0.0
+     Window_5.IDIFFINC 84.0
+     Window_5.RTHRUREF 156.0
+     Window_5.RTHRUCURRA 136.0
+     Window_5.SHADINGON 0.0
+     Window_6.QINSIDE 18.0
+     Window_6.QLWOUT 0.0
+     Window_6.QCONVOUT 0.0
+     Window_6.QSWOUT 0.0
+     Window_6.RDIFFTHRU 108.0
+     Window_6.RDIRTHRU 0.0
+     Window_6.TWINDOUT 21.0
+     Window_6.TFRAMEOUT 23.0
+     Window_6.AZIMUTTHRU 97.0
+     Window_6.ELEVTHRU 19.0
+     Window_6.ANGLEINC 45.0
+     Window_6.IDIFSKYINC 84.0
+     Window_6.IDIFGRDINC 84.0
+     Window_6.IDIRINC 0.0
+     Window_6.RBACK 4.0
+     Window_6.SCHEDSHADING 1.0
+     Window_6.TAMB 20.0
+     Window_6.TIN 25.0
+     Window_6.TGROUND 20.0
+     Window_6.TSKY 15.0
+     Window_6.HEXT 13.0
+     Window_6.SC 0.87
+     Window_6.SSC 0.81
+     Window_6.HPANES 3.1
+     Window_6.COSINC 0.0
+     Window_6.FTHRUDIR 0.0
+     Window_6.QSOLAR 1.0
+     Window_6.QTRANSM 1.0
+     Window_6.QABSFROUT 19.0
+     Window_6.QABSORB 19.0
+     Window_6.QGLASSINSIDE 17.0
+     Window_6.QFRAMEINSIDE 1.0
+     Window_6.QGLASSTRANSM -36.0
+     Window_6.QFRAMETRANSM -1.0
+     Window_6.QLWOUTPANE 0.0
+     Window_6.QLWOUTFRAME 0.0
+     Window_6.QCONVPANE 0.0
+     Window_6.QCONVFRAME 0.0
+     Window_6.RBACKTHRU 0.0
+     Window_6.IDIFFINC 84.0
+     Window_6.RTHRUREF 156.0
+     Window_6.RTHRUCURRA 136.0
+     Window_6.SHADINGON 0.0
+     Window_7.QINSIDE 18.0
+     Window_7.QLWOUT 0.0
+     Window_7.QCONVOUT 0.0
+     Window_7.QSWOUT 0.0
+     Window_7.RDIFFTHRU 108.0
+     Window_7.RDIRTHRU 0.0
+     Window_7.TWINDOUT 21.0
+     Window_7.TFRAMEOUT 23.0
+     Window_7.AZIMUTTHRU 97.0
+     Window_7.ELEVTHRU 19.0
+     Window_7.ANGLEINC 45.0
+     Window_7.IDIFSKYINC 84.0
+     Window_7.IDIFGRDINC 84.0
+     Window_7.IDIRINC 0.0
+     Window_7.RBACK 4.0
+     Window_7.SCHEDSHADING 1.0
+     Window_7.TAMB 20.0
+     Window_7.TIN 25.0
+     Window_7.TGROUND 20.0
+     Window_7.TSKY 15.0
+     Window_7.HEXT 13.0
+     Window_7.SC 0.87
+     Window_7.SSC 0.81
+     Window_7.HPANES 3.1
+     Window_7.COSINC 0.0
+     Window_7.FTHRUDIR 0.0
+     Window_7.QSOLAR 1.0
+     Window_7.QTRANSM 1.0
+     Window_7.QABSFROUT 19.0
+     Window_7.QABSORB 19.0
+     Window_7.QGLASSINSIDE 17.0
+     Window_7.QFRAMEINSIDE 1.0
+     Window_7.QGLASSTRANSM -36.0
+     Window_7.QFRAMETRANSM -1.0
+     Window_7.QLWOUTPANE 0.0
+     Window_7.QLWOUTFRAME 0.0
+     Window_7.QCONVPANE 0.0
+     Window_7.QCONVFRAME 0.0
+     Window_7.RBACKTHRU 0.0
+     Window_7.IDIFFINC 84.0
+     Window_7.RTHRUREF 156.0
+     Window_7.RTHRUCURRA 136.0
+     Window_7.SHADINGON 0.0
+     Window_8.QINSIDE 18.0
+     Window_8.QLWOUT 0.0
+     Window_8.QCONVOUT 0.0
+     Window_8.QSWOUT 0.0
+     Window_8.RDIFFTHRU 108.0
+     Window_8.RDIRTHRU 0.0
+     Window_8.TWINDOUT 21.0
+     Window_8.TFRAMEOUT 23.0
+     Window_8.AZIMUTTHRU 97.0
+     Window_8.ELEVTHRU 19.0
+     Window_8.ANGLEINC 45.0
+     Window_8.IDIFSKYINC 84.0
+     Window_8.IDIFGRDINC 84.0
+     Window_8.IDIRINC 0.0
+     Window_8.RBACK 4.0
+     Window_8.SCHEDSHADING 1.0
+     Window_8.TAMB 20.0
+     Window_8.TIN 25.0
+     Window_8.TGROUND 20.0
+     Window_8.TSKY 15.0
+     Window_8.HEXT 13.0
+     Window_8.SC 0.87
+     Window_8.SSC 0.81
+     Window_8.HPANES 3.1
+     Window_8.COSINC 0.0
+     Window_8.FTHRUDIR 0.0
+     Window_8.QSOLAR 1.0
+     Window_8.QTRANSM 1.0
+     Window_8.QABSFROUT 19.0
+     Window_8.QABSORB 19.0
+     Window_8.QGLASSINSIDE 17.0
+     Window_8.QFRAMEINSIDE 1.0
+     Window_8.QGLASSTRANSM -36.0
+     Window_8.QFRAMETRANSM -1.0
+     Window_8.QLWOUTPANE 0.0
+     Window_8.QLWOUTFRAME 0.0
+     Window_8.QCONVPANE 0.0
+     Window_8.QCONVFRAME 0.0
+     Window_8.RBACKTHRU 0.0
+     Window_8.IDIFFINC 84.0
+     Window_8.RTHRUREF 156.0
+     Window_8.RTHRUCURRA 136.0
+     Window_8.SHADINGON 0.0
+     Window_9.QINSIDE 18.0
+     Window_9.QLWOUT 0.0
+     Window_9.QCONVOUT 0.0
+     Window_9.QSWOUT 0.0
+     Window_9.RDIFFTHRU 108.0
+     Window_9.RDIRTHRU 0.0
+     Window_9.TWINDOUT 21.0
+     Window_9.TFRAMEOUT 23.0
+     Window_9.AZIMUTTHRU 97.0
+     Window_9.ELEVTHRU 19.0
+     Window_9.ANGLEINC 45.0
+     Window_9.IDIFSKYINC 84.0
+     Window_9.IDIFGRDINC 84.0
+     Window_9.IDIRINC 0.0
+     Window_9.RBACK 4.0
+     Window_9.SCHEDSHADING 1.0
+     Window_9.TAMB 20.0
+     Window_9.TIN 25.0
+     Window_9.TGROUND 20.0
+     Window_9.TSKY 15.0
+     Window_9.HEXT 13.0
+     Window_9.SC 0.87
+     Window_9.SSC 0.81
+     Window_9.HPANES 3.1
+     Window_9.COSINC 0.0
+     Window_9.FTHRUDIR 0.0
+     Window_9.QSOLAR 1.0
+     Window_9.QTRANSM 1.0
+     Window_9.QABSFROUT 19.0
+     Window_9.QABSORB 19.0
+     Window_9.QGLASSINSIDE 17.0
+     Window_9.QFRAMEINSIDE 1.0
+     Window_9.QGLASSTRANSM -36.0
+     Window_9.QFRAMETRANSM -1.0
+     Window_9.QLWOUTPANE 0.0
+     Window_9.QLWOUTFRAME 0.0
+     Window_9.QCONVPANE 0.0
+     Window_9.QCONVFRAME 0.0
+     Window_9.RBACKTHRU 0.0
+     Window_9.IDIFFINC 84.0
+     Window_9.RTHRUREF 156.0
+     Window_9.RTHRUCURRA 136.0
+     Window_9.SHADINGON 0.0
+     Window_10.QINSIDE 18.0
+     Window_10.QLWOUT 0.0
+     Window_10.QCONVOUT 0.0
+     Window_10.QSWOUT 0.0
+     Window_10.RDIFFTHRU 108.0
+     Window_10.RDIRTHRU 0.0
+     Window_10.TWINDOUT 21.0
+     Window_10.TFRAMEOUT 23.0
+     Window_10.AZIMUTTHRU 97.0
+     Window_10.ELEVTHRU 19.0
+     Window_10.ANGLEINC 45.0
+     Window_10.IDIFSKYINC 84.0
+     Window_10.IDIFGRDINC 84.0
+     Window_10.IDIRINC 0.0
+     Window_10.RBACK 4.0
+     Window_10.SCHEDSHADING 1.0
+     Window_10.TAMB 20.0
+     Window_10.TIN 25.0
+     Window_10.TGROUND 20.0
+     Window_10.TSKY 15.0
+     Window_10.HEXT 13.0
+     Window_10.SC 0.87
+     Window_10.SSC 0.81
+     Window_10.HPANES 3.1
+     Window_10.COSINC 0.0
+     Window_10.FTHRUDIR 0.0
+     Window_10.QSOLAR 1.0
+     Window_10.QTRANSM 1.0
+     Window_10.QABSFROUT 19.0
+     Window_10.QABSORB 19.0
+     Window_10.QGLASSINSIDE 17.0
+     Window_10.QFRAMEINSIDE 1.0
+     Window_10.QGLASSTRANSM -36.0
+     Window_10.QFRAMETRANSM -1.0
+     Window_10.QLWOUTPANE 0.0
+     Window_10.QLWOUTFRAME 0.0
+     Window_10.QCONVPANE 0.0
+     Window_10.QCONVFRAME 0.0
+     Window_10.RBACKTHRU 0.0
+     Window_10.IDIFFINC 84.0
+     Window_10.RTHRUREF 156.0
+     Window_10.RTHRUCURRA 136.0
+     Window_10.SHADINGON 0.0
+     Window_11.QINSIDE 18.0
+     Window_11.QLWOUT 0.0
+     Window_11.QCONVOUT 0.0
+     Window_11.QSWOUT 0.0
+     Window_11.RDIFFTHRU 108.0
+     Window_11.RDIRTHRU 0.0
+     Window_11.TWINDOUT 21.0
+     Window_11.TFRAMEOUT 23.0
+     Window_11.AZIMUTTHRU 97.0
+     Window_11.ELEVTHRU 19.0
+     Window_11.ANGLEINC 45.0
+     Window_11.IDIFSKYINC 84.0
+     Window_11.IDIFGRDINC 84.0
+     Window_11.IDIRINC 0.0
+     Window_11.RBACK 4.0
+     Window_11.SCHEDSHADING 1.0
+     Window_11.TAMB 20.0
+     Window_11.TIN 25.0
+     Window_11.TGROUND 20.0
+     Window_11.TSKY 15.0
+     Window_11.HEXT 13.0
+     Window_11.SC 0.87
+     Window_11.SSC 0.81
+     Window_11.HPANES 3.1
+     Window_11.COSINC 0.0
+     Window_11.FTHRUDIR 0.0
+     Window_11.QSOLAR 1.0
+     Window_11.QTRANSM 1.0
+     Window_11.QABSFROUT 19.0
+     Window_11.QABSORB 19.0
+     Window_11.QGLASSINSIDE 17.0
+     Window_11.QFRAMEINSIDE 1.0
+     Window_11.QGLASSTRANSM -36.0
+     Window_11.QFRAMETRANSM -1.0
+     Window_11.QLWOUTPANE 0.0
+     Window_11.QLWOUTFRAME 0.0
+     Window_11.QCONVPANE 0.0
+     Window_11.QCONVFRAME 0.0
+     Window_11.RBACKTHRU 0.0
+     Window_11.IDIFFINC 84.0
+     Window_11.RTHRUREF 156.0
+     Window_11.RTHRUCURRA 136.0
+     Window_11.SHADINGON 0.0
+     Window_12.QINSIDE 18.0
+     Window_12.QLWOUT 0.0
+     Window_12.QCONVOUT 0.0
+     Window_12.QSWOUT 0.0
+     Window_12.RDIFFTHRU 108.0
+     Window_12.RDIRTHRU 0.0
+     Window_12.TWINDOUT 21.0
+     Window_12.TFRAMEOUT 23.0
+     Window_12.AZIMUTTHRU 97.0
+     Window_12.ELEVTHRU 19.0
+     Window_12.ANGLEINC 45.0
+     Window_12.IDIFSKYINC 84.0
+     Window_12.IDIFGRDINC 84.0
+     Window_12.IDIRINC 0.0
+     Window_12.RBACK 4.0
+     Window_12.SCHEDSHADING 1.0
+     Window_12.TAMB 20.0
+     Window_12.TIN 25.0
+     Window_12.TGROUND 20.0
+     Window_12.TSKY 15.0
+     Window_12.HEXT 13.0
+     Window_12.SC 0.87
+     Window_12.SSC 0.81
+     Window_12.HPANES 3.1
+     Window_12.COSINC 0.0
+     Window_12.FTHRUDIR 0.0
+     Window_12.QSOLAR 1.0
+     Window_12.QTRANSM 1.0
+     Window_12.QABSFROUT 19.0
+     Window_12.QABSORB 19.0
+     Window_12.QGLASSINSIDE 17.0
+     Window_12.QFRAMEINSIDE 1.0
+     Window_12.QGLASSTRANSM -36.0
+     Window_12.QFRAMETRANSM -1.0
+     Window_12.QLWOUTPANE 0.0
+     Window_12.QLWOUTFRAME 0.0
+     Window_12.QCONVPANE 0.0
+     Window_12.QCONVFRAME 0.0
+     Window_12.RBACKTHRU 0.0
+     Window_12.IDIFFINC 84.0
+     Window_12.RTHRUREF 156.0
+     Window_12.RTHRUCURRA 136.0
+     Window_12.SHADINGON 0.0
+     El_Radctrl_1.OUTSIGNAL 0.5
+     El_Radctrl_1.MEASURE 20.0
+     El_Radctrl_1.OVERRIDE 1
+     El_Radctrl_1.RAMPPOS 2.0
+     El_Rad_1.QRADFRONT 0.0
+     El_Rad_1.QA 0.0
+     El_Rad_1.QLWBACK 0.0
+     El_Rad_1.QCONVBACK 0.0
+     El_Rad_1.QCONVWALL 0.0
+     El_Rad_1.QRADCONV 0.0
+     El_Rad_1.CONTR 1.0
+     El_Rad_1.TRAD 25.0
+     El_Rad_1.TPA 25.0
+     El_Rad_1.TZONE 25.0
+     El_Rad_1.PRAD 0.0
+     El_Rad_1.HTCRADBACK 5.0
+     El_Rad_1.HTCWALL 5.0
+     Supairsplit_1.M_IN 0.024
+     Supairsplit_1.P 1375.0
+     Supairsplit_1.T 16.0
+     Supairsplit_1.W 0.01
+     Supairsplit_1.X 594.0
+     Supairsplit_1.MOUT(1) 0.024
+     Rtnairmerge_1.MOUT 0.026
+     Rtnairmerge_1.TOUT 16.0
+     Rtnairmerge_1.WOUT 0.006
+     Rtnairmerge_1.XOUT 594.0
+     Rtnairmerge_1.P 1375.0
+     Rtnairmerge_1.M_IN_SUM 0.026
+     Rtnairmerge_1.M_IN(1) 0.026
+     Rtnairmerge_1.T(1) 16.0
+     Rtnairmerge_1.W(1) 0.006
+     Rtnairmerge_1.X(1) 594.0
+     EmeterFans.OUTPOWER 0.0
+     EmeterFans.COST 0.0
+     EmeterFans.PRICENO 1.0
+     EmeterFans.EXTRAPOWER 0.0
+     EmeterFans.PREVTIME -1.0
+     EmeterFans.PREVPOWER 0.0
+     EmeterFans.PREVCOST 0.0
+     EmeterFans.CPRICE 0.0
+     EmeterFans.INPOWER(1) 0.0
+     EmeterFans.INPOWER(2) 0.0
+     EmeterFans.MONPOWER(1) 0.0
+     EmeterFans.MONPOWER(2) 0.0
+     EmeterFans.MONPOWER(3) 0.0
+     EmeterFans.MONPOWER(4) 0.0
+     EmeterFans.MONPOWER(5) 0.0
+     EmeterFans.MONPOWER(6) 0.0
+     EmeterFans.MONPOWER(7) 0.0
+     EmeterFans.MONPOWER(8) 0.0
+     EmeterFans.MONPOWER(9) 0.0
+     EmeterFans.MONPOWER(10) 0.0
+     EmeterFans.MONPOWER(11) 0.0
+     EmeterFans.MONPOWER(12) 0.0
+     EmeterFans.MONPRICE(1) 0.0
+     EmeterFans.MONPRICE(2) 0.0
+     EmeterFans.MONPRICE(3) 0.0
+     EmeterFans.MONPRICE(4) 0.0
+     EmeterFans.MONPRICE(5) 0.0
+     EmeterFans.MONPRICE(6) 0.0
+     EmeterFans.MONPRICE(7) 0.0
+     EmeterFans.MONPRICE(8) 0.0
+     EmeterFans.MONPRICE(9) 0.0
+     EmeterFans.MONPRICE(10) 0.0
+     EmeterFans.MONPRICE(11) 0.0
+     EmeterFans.MONPRICE(12) 0.0
+     EmeterRecycle.OUTPOWER 0.0
+     EmeterRecycle.COST 0.0
+     EmeterRecycle.PRICENO 1.0
+     EmeterRecycle.EXTRAPOWER 0.0
+     EmeterRecycle.PREVTIME -1.0
+     EmeterRecycle.PREVPOWER 0.0
+     EmeterRecycle.PREVCOST 0.0
+     EmeterRecycle.CPRICE 0.0
+     EmeterRecycle.INPOWER(1) 0.0
+     EmeterRecycle.MONPOWER(1) 0.0
+     EmeterRecycle.MONPOWER(2) 0.0
+     EmeterRecycle.MONPOWER(3) 0.0
+     EmeterRecycle.MONPOWER(4) 0.0
+     EmeterRecycle.MONPOWER(5) 0.0
+     EmeterRecycle.MONPOWER(6) 0.0
+     EmeterRecycle.MONPOWER(7) 0.0
+     EmeterRecycle.MONPOWER(8) 0.0
+     EmeterRecycle.MONPOWER(9) 0.0
+     EmeterRecycle.MONPOWER(10) 0.0
+     EmeterRecycle.MONPOWER(11) 0.0
+     EmeterRecycle.MONPOWER(12) 0.0
+     EmeterRecycle.MONPRICE(1) 0.0
+     EmeterRecycle.MONPRICE(2) 0.0
+     EmeterRecycle.MONPRICE(3) 0.0
+     EmeterRecycle.MONPRICE(4) 0.0
+     EmeterRecycle.MONPRICE(5) 0.0
+     EmeterRecycle.MONPRICE(6) 0.0
+     EmeterRecycle.MONPRICE(7) 0.0
+     EmeterRecycle.MONPRICE(8) 0.0
+     EmeterRecycle.MONPRICE(9) 0.0
+     EmeterRecycle.MONPRICE(10) 0.0
+     EmeterRecycle.MONPRICE(11) 0.0
+     EmeterRecycle.MONPRICE(12) 0.0
+     EmeterLocalBoil.OUTPOWER 0.0
+     EmeterLocalBoil.COST 0.0
+     EmeterLocalBoil.PRICENO 1.0
+     EmeterLocalBoil.EXTRAPOWER 0.0
+     EmeterLocalBoil.PREVTIME -1.0
+     EmeterLocalBoil.PREVPOWER 0.0
+     EmeterLocalBoil.PREVCOST 0.0
+     EmeterLocalBoil.CPRICE 0.0
+     EmeterLocalBoil.INPOWER(1) 0.0
+     EmeterLocalBoil.MONPOWER(1) 0.0
+     EmeterLocalBoil.MONPOWER(2) 0.0
+     EmeterLocalBoil.MONPOWER(3) 0.0
+     EmeterLocalBoil.MONPOWER(4) 0.0
+     EmeterLocalBoil.MONPOWER(5) 0.0
+     EmeterLocalBoil.MONPOWER(6) 0.0
+     EmeterLocalBoil.MONPOWER(7) 0.0
+     EmeterLocalBoil.MONPOWER(8) 0.0
+     EmeterLocalBoil.MONPOWER(9) 0.0
+     EmeterLocalBoil.MONPOWER(10) 0.0
+     EmeterLocalBoil.MONPOWER(11) 0.0
+     EmeterLocalBoil.MONPOWER(12) 0.0
+     EmeterLocalBoil.MONPRICE(1) 0.0
+     EmeterLocalBoil.MONPRICE(2) 0.0
+     EmeterLocalBoil.MONPRICE(3) 0.0
+     EmeterLocalBoil.MONPRICE(4) 0.0
+     EmeterLocalBoil.MONPRICE(5) 0.0
+     EmeterLocalBoil.MONPRICE(6) 0.0
+     EmeterLocalBoil.MONPRICE(7) 0.0
+     EmeterLocalBoil.MONPRICE(8) 0.0
+     EmeterLocalBoil.MONPRICE(9) 0.0
+     EmeterLocalBoil.MONPRICE(10) 0.0
+     EmeterLocalBoil.MONPRICE(11) 0.0
+     EmeterLocalBoil.MONPRICE(12) 0.0
+     EmeterLocalChil.OUTPOWER 0.0
+     EmeterLocalChil.COST 0.0
+     EmeterLocalChil.PRICENO 1.0
+     EmeterLocalChil.EXTRAPOWER 0.0
+     EmeterLocalChil.PREVTIME -1.0
+     EmeterLocalChil.PREVPOWER 0.0
+     EmeterLocalChil.PREVCOST 0.0
+     EmeterLocalChil.CPRICE 0.0
+     EmeterLocalChil.INPOWER(1) 0.0
+     EmeterLocalChil.MONPOWER(1) 0.0
+     EmeterLocalChil.MONPOWER(2) 0.0
+     EmeterLocalChil.MONPOWER(3) 0.0
+     EmeterLocalChil.MONPOWER(4) 0.0
+     EmeterLocalChil.MONPOWER(5) 0.0
+     EmeterLocalChil.MONPOWER(6) 0.0
+     EmeterLocalChil.MONPOWER(7) 0.0
+     EmeterLocalChil.MONPOWER(8) 0.0
+     EmeterLocalChil.MONPOWER(9) 0.0
+     EmeterLocalChil.MONPOWER(10) 0.0
+     EmeterLocalChil.MONPOWER(11) 0.0
+     EmeterLocalChil.MONPOWER(12) 0.0
+     EmeterLocalChil.MONPRICE(1) 0.0
+     EmeterLocalChil.MONPRICE(2) 0.0
+     EmeterLocalChil.MONPRICE(3) 0.0
+     EmeterLocalChil.MONPRICE(4) 0.0
+     EmeterLocalChil.MONPRICE(5) 0.0
+     EmeterLocalChil.MONPRICE(6) 0.0
+     EmeterLocalChil.MONPRICE(7) 0.0
+     EmeterLocalChil.MONPRICE(8) 0.0
+     EmeterLocalChil.MONPRICE(9) 0.0
+     EmeterLocalChil.MONPRICE(10) 0.0
+     EmeterLocalChil.MONPRICE(11) 0.0
+     EmeterLocalChil.MONPRICE(12) 0.0
+     EmeterCentBoil.OUTPOWER 0.0
+     EmeterCentBoil.COST 0.0
+     EmeterCentBoil.PRICENO 1.0
+     EmeterCentBoil.EXTRAPOWER 0.0
+     EmeterCentBoil.PREVTIME -1.0
+     EmeterCentBoil.PREVPOWER 0.0
+     EmeterCentBoil.PREVCOST 0.0
+     EmeterCentBoil.CPRICE 0.0
+     EmeterCentBoil.INPOWER(1) 0.0
+     EmeterCentBoil.MONPOWER(1) 0.0
+     EmeterCentBoil.MONPOWER(2) 0.0
+     EmeterCentBoil.MONPOWER(3) 0.0
+     EmeterCentBoil.MONPOWER(4) 0.0
+     EmeterCentBoil.MONPOWER(5) 0.0
+     EmeterCentBoil.MONPOWER(6) 0.0
+     EmeterCentBoil.MONPOWER(7) 0.0
+     EmeterCentBoil.MONPOWER(8) 0.0
+     EmeterCentBoil.MONPOWER(9) 0.0
+     EmeterCentBoil.MONPOWER(10) 0.0
+     EmeterCentBoil.MONPOWER(11) 0.0
+     EmeterCentBoil.MONPOWER(12) 0.0
+     EmeterCentBoil.MONPRICE(1) 0.0
+     EmeterCentBoil.MONPRICE(2) 0.0
+     EmeterCentBoil.MONPRICE(3) 0.0
+     EmeterCentBoil.MONPRICE(4) 0.0
+     EmeterCentBoil.MONPRICE(5) 0.0
+     EmeterCentBoil.MONPRICE(6) 0.0
+     EmeterCentBoil.MONPRICE(7) 0.0
+     EmeterCentBoil.MONPRICE(8) 0.0
+     EmeterCentBoil.MONPRICE(9) 0.0
+     EmeterCentBoil.MONPRICE(10) 0.0
+     EmeterCentBoil.MONPRICE(11) 0.0
+     EmeterCentBoil.MONPRICE(12) 0.0
+     EmeterCentChil.OUTPOWER 0.0
+     EmeterCentChil.COST 0.0
+     EmeterCentChil.PRICENO 1.0
+     EmeterCentChil.EXTRAPOWER 0.0
+     EmeterCentChil.PREVTIME -1.0
+     EmeterCentChil.PREVPOWER 0.0
+     EmeterCentChil.PREVCOST 0.0
+     EmeterCentChil.CPRICE 0.0
+     EmeterCentChil.INPOWER(1) 0.0
+     EmeterCentChil.MONPOWER(1) 0.0
+     EmeterCentChil.MONPOWER(2) 0.0
+     EmeterCentChil.MONPOWER(3) 0.0
+     EmeterCentChil.MONPOWER(4) 0.0
+     EmeterCentChil.MONPOWER(5) 0.0
+     EmeterCentChil.MONPOWER(6) 0.0
+     EmeterCentChil.MONPOWER(7) 0.0
+     EmeterCentChil.MONPOWER(8) 0.0
+     EmeterCentChil.MONPOWER(9) 0.0
+     EmeterCentChil.MONPOWER(10) 0.0
+     EmeterCentChil.MONPOWER(11) 0.0
+     EmeterCentChil.MONPOWER(12) 0.0
+     EmeterCentChil.MONPRICE(1) 0.0
+     EmeterCentChil.MONPRICE(2) 0.0
+     EmeterCentChil.MONPRICE(3) 0.0
+     EmeterCentChil.MONPRICE(4) 0.0
+     EmeterCentChil.MONPRICE(5) 0.0
+     EmeterCentChil.MONPRICE(6) 0.0
+     EmeterCentChil.MONPRICE(7) 0.0
+     EmeterCentChil.MONPRICE(8) 0.0
+     EmeterCentChil.MONPRICE(9) 0.0
+     EmeterCentChil.MONPRICE(10) 0.0
+     EmeterCentChil.MONPRICE(11) 0.0
+     EmeterCentChil.MONPRICE(12) 0.0
+     EmeterPump.OUTPOWER 0.0
+     EmeterPump.COST 0.0
+     EmeterPump.PRICENO 1.0
+     EmeterPump.EXTRAPOWER 0.0
+     EmeterPump.PREVTIME -1.0
+     EmeterPump.PREVPOWER 0.0
+     EmeterPump.PREVCOST 0.0
+     EmeterPump.CPRICE 0.0
+     EmeterPump.INPOWER(1) 0.0
+     EmeterPump.INPOWER(2) 0.0
+     EmeterPump.MONPOWER(1) 0.0
+     EmeterPump.MONPOWER(2) 0.0
+     EmeterPump.MONPOWER(3) 0.0
+     EmeterPump.MONPOWER(4) 0.0
+     EmeterPump.MONPOWER(5) 0.0
+     EmeterPump.MONPOWER(6) 0.0
+     EmeterPump.MONPOWER(7) 0.0
+     EmeterPump.MONPOWER(8) 0.0
+     EmeterPump.MONPOWER(9) 0.0
+     EmeterPump.MONPOWER(10) 0.0
+     EmeterPump.MONPOWER(11) 0.0
+     EmeterPump.MONPOWER(12) 0.0
+     EmeterPump.MONPRICE(1) 0.0
+     EmeterPump.MONPRICE(2) 0.0
+     EmeterPump.MONPRICE(3) 0.0
+     EmeterPump.MONPRICE(4) 0.0
+     EmeterPump.MONPRICE(5) 0.0
+     EmeterPump.MONPRICE(6) 0.0
+     EmeterPump.MONPRICE(7) 0.0
+     EmeterPump.MONPRICE(8) 0.0
+     EmeterPump.MONPRICE(9) 0.0
+     EmeterPump.MONPRICE(10) 0.0
+     EmeterPump.MONPRICE(11) 0.0
+     EmeterPump.MONPRICE(12) 0.0
+     EmeterWater.OUTPOWER 0.0
+     EmeterWater.COST 0.0
+     EmeterWater.PRICENO 1.0
+     EmeterWater.EXTRAPOWER 0.0
+     EmeterWater.PREVTIME -1.0
+     EmeterWater.PREVPOWER 0.0
+     EmeterWater.PREVCOST 0.0
+     EmeterWater.CPRICE 0.0
+     EmeterWater.INPOWER(1) 0.0
+     EmeterWater.MONPOWER(1) 0.0
+     EmeterWater.MONPOWER(2) 0.0
+     EmeterWater.MONPOWER(3) 0.0
+     EmeterWater.MONPOWER(4) 0.0
+     EmeterWater.MONPOWER(5) 0.0
+     EmeterWater.MONPOWER(6) 0.0
+     EmeterWater.MONPOWER(7) 0.0
+     EmeterWater.MONPOWER(8) 0.0
+     EmeterWater.MONPOWER(9) 0.0
+     EmeterWater.MONPOWER(10) 0.0
+     EmeterWater.MONPOWER(11) 0.0
+     EmeterWater.MONPOWER(12) 0.0
+     EmeterWater.MONPRICE(1) 0.0
+     EmeterWater.MONPRICE(2) 0.0
+     EmeterWater.MONPRICE(3) 0.0
+     EmeterWater.MONPRICE(4) 0.0
+     EmeterWater.MONPRICE(5) 0.0
+     EmeterWater.MONPRICE(6) 0.0
+     EmeterWater.MONPRICE(7) 0.0
+     EmeterWater.MONPRICE(8) 0.0
+     EmeterWater.MONPRICE(9) 0.0
+     EmeterWater.MONPRICE(10) 0.0
+     EmeterWater.MONPRICE(11) 0.0
+     EmeterWater.MONPRICE(12) 0.0
+     AIRFLRPT.INTWIN 0.0
+     AIRFLRPT.INTWOUT 0.0
+     AIRFLRPT.EXTWIN 0.0
+     AIRFLRPT.EXTWOUT 0.0
+     AIRFLRPT.EXTWINV(1) 0.0
+     AIRFLRPT.EXTWOUTV(1) 0.0
+     HEATFLRPT.SUM1 0.0
+     HEATFLRPT.SUM2 0.0
+     HEATFLRPT.SUM3 0.0
+     HEATFLRPT.SUM4 0.0
+     HEATFLRPT.FLOW2(1) 0.0
+     HEATFLRPT.FLOW3(1) 0.0
+     HEATFLRPT.FLOW3(2) 0.0
+     EMETERQ_WACOBRI.OUTPOWER 0.0
+     EMETERQ_WACOBRI.COST 0.0
+     EMETERQ_WACOBRI.PRICENO 0
+     EMETERQ_WACOBRI.EXTRAPOWER 0
+     EMETERQ_WACOBRI.PREVTIME -1.0
+     EMETERQ_WACOBRI.PREVPOWER 0.0
+     EMETERQ_WACOBRI.PREVCOST 0.0
+     EMETERQ_WACOBRI.CPRICE 0.0
+     EMETERQ_WACOBRI.INPOWER(1) 0.0
+     EMETERQ_WACOBRI.INPOWER(2) 0.0
+     EMETERQ_WACOBRI.INPOWER(3) 0.0
+     EMETERQ_WACOBRI.INPOWER(4) 0.0
+     EMETERQ_WACOBRI.INPOWER(5) 0.0
+     EMETERQ_WACOBRI.INPOWER(6) 0.0
+     EMETERQ_WACOBRI.INPOWER(7) 0.0
+     EMETERQ_WACOBRI.INPOWER(8) 0.0
+     EMETERQ_WACOBRI.INPOWER(9) 0.0
+     EMETERQ_WACOBRI.INPOWER(10) 0.0
+     EMETERQ_WACOBRI.INPOWER(11) 0.0
+     EMETERQ_WACOBRI.INPOWER(12) 0.0
+     EMETERQ_WACOBRI.INPOWER(13) 0.0
+     EMETERQ_WACOBRI.INPOWER(14) 0.0
+     EMETERQ_WACOBRI.INPOWER(15) 0.0
+     EMETERQ_WACOBRI.INPOWER(16) 0.0
+     EMETERQ_WACOBRI.MONPOWER(1) 0.0
+     EMETERQ_WACOBRI.MONPOWER(2) 0.0
+     EMETERQ_WACOBRI.MONPOWER(3) 0.0
+     EMETERQ_WACOBRI.MONPOWER(4) 0.0
+     EMETERQ_WACOBRI.MONPOWER(5) 0.0
+     EMETERQ_WACOBRI.MONPOWER(6) 0.0
+     EMETERQ_WACOBRI.MONPOWER(7) 0.0
+     EMETERQ_WACOBRI.MONPOWER(8) 0.0
+     EMETERQ_WACOBRI.MONPOWER(9) 0.0
+     EMETERQ_WACOBRI.MONPOWER(10) 0.0
+     EMETERQ_WACOBRI.MONPOWER(11) 0.0
+     EMETERQ_WACOBRI.MONPOWER(12) 0.0
+     EMETERQ_WACOBRI.MONPRICE(1) 0.0
+     EMETERQ_WACOBRI.MONPRICE(2) 0.0
+     EMETERQ_WACOBRI.MONPRICE(3) 0.0
+     EMETERQ_WACOBRI.MONPRICE(4) 0.0
+     EMETERQ_WACOBRI.MONPRICE(5) 0.0
+     EMETERQ_WACOBRI.MONPRICE(6) 0.0
+     EMETERQ_WACOBRI.MONPRICE(7) 0.0
+     EMETERQ_WACOBRI.MONPRICE(8) 0.0
+     EMETERQ_WACOBRI.MONPRICE(9) 0.0
+     EMETERQ_WACOBRI.MONPRICE(10) 0.0
+     EMETERQ_WACOBRI.MONPRICE(11) 0.0
+     EMETERQ_WACOBRI.MONPRICE(12) 0.0
+     EMETERQ_EXTWIND.OUTPOWER 0.0
+     EMETERQ_EXTWIND.COST 0.0
+     EMETERQ_EXTWIND.PRICENO 0
+     EMETERQ_EXTWIND.EXTRAPOWER 0
+     EMETERQ_EXTWIND.PREVTIME -1.0
+     EMETERQ_EXTWIND.PREVPOWER 0.0
+     EMETERQ_EXTWIND.PREVCOST 0.0
+     EMETERQ_EXTWIND.CPRICE 0.0
+     EMETERQ_EXTWIND.INPOWER(1) 0.0
+     EMETERQ_EXTWIND.INPOWER(2) 0.0
+     EMETERQ_EXTWIND.INPOWER(3) 0.0
+     EMETERQ_EXTWIND.INPOWER(4) 0.0
+     EMETERQ_EXTWIND.INPOWER(5) 0.0
+     EMETERQ_EXTWIND.INPOWER(6) 0.0
+     EMETERQ_EXTWIND.INPOWER(7) 0.0
+     EMETERQ_EXTWIND.INPOWER(8) 0.0
+     EMETERQ_EXTWIND.INPOWER(9) 0.0
+     EMETERQ_EXTWIND.INPOWER(10) 0.0
+     EMETERQ_EXTWIND.INPOWER(11) 0.0
+     EMETERQ_EXTWIND.INPOWER(12) 0.0
+     EMETERQ_EXTWIND.MONPOWER(1) 0.0
+     EMETERQ_EXTWIND.MONPOWER(2) 0.0
+     EMETERQ_EXTWIND.MONPOWER(3) 0.0
+     EMETERQ_EXTWIND.MONPOWER(4) 0.0
+     EMETERQ_EXTWIND.MONPOWER(5) 0.0
+     EMETERQ_EXTWIND.MONPOWER(6) 0.0
+     EMETERQ_EXTWIND.MONPOWER(7) 0.0
+     EMETERQ_EXTWIND.MONPOWER(8) 0.0
+     EMETERQ_EXTWIND.MONPOWER(9) 0.0
+     EMETERQ_EXTWIND.MONPOWER(10) 0.0
+     EMETERQ_EXTWIND.MONPOWER(11) 0.0
+     EMETERQ_EXTWIND.MONPOWER(12) 0.0
+     EMETERQ_EXTWIND.MONPRICE(1) 0.0
+     EMETERQ_EXTWIND.MONPRICE(2) 0.0
+     EMETERQ_EXTWIND.MONPRICE(3) 0.0
+     EMETERQ_EXTWIND.MONPRICE(4) 0.0
+     EMETERQ_EXTWIND.MONPRICE(5) 0.0
+     EMETERQ_EXTWIND.MONPRICE(6) 0.0
+     EMETERQ_EXTWIND.MONPRICE(7) 0.0
+     EMETERQ_EXTWIND.MONPRICE(8) 0.0
+     EMETERQ_EXTWIND.MONPRICE(9) 0.0
+     EMETERQ_EXTWIND.MONPRICE(10) 0.0
+     EMETERQ_EXTWIND.MONPRICE(11) 0.0
+     EMETERQ_EXTWIND.MONPRICE(12) 0.0
+     EMETER_VENTIL.OUTPOWER 0.0
+     EMETER_VENTIL.COST 0.0
+     EMETER_VENTIL.PRICENO 0
+     EMETER_VENTIL.EXTRAPOWER 0
+     EMETER_VENTIL.PREVTIME -1.0
+     EMETER_VENTIL.PREVPOWER 0.0
+     EMETER_VENTIL.PREVCOST 0.0
+     EMETER_VENTIL.CPRICE 0.0
+     EMETER_VENTIL.INPOWER(1) 0.0
+     EMETER_VENTIL.INPOWER(2) 0.0
+     EMETER_VENTIL.MONPOWER(1) 0.0
+     EMETER_VENTIL.MONPOWER(2) 0.0
+     EMETER_VENTIL.MONPOWER(3) 0.0
+     EMETER_VENTIL.MONPOWER(4) 0.0
+     EMETER_VENTIL.MONPOWER(5) 0.0
+     EMETER_VENTIL.MONPOWER(6) 0.0
+     EMETER_VENTIL.MONPOWER(7) 0.0
+     EMETER_VENTIL.MONPOWER(8) 0.0
+     EMETER_VENTIL.MONPOWER(9) 0.0
+     EMETER_VENTIL.MONPOWER(10) 0.0
+     EMETER_VENTIL.MONPOWER(11) 0.0
+     EMETER_VENTIL.MONPOWER(12) 0.0
+     EMETER_VENTIL.MONPRICE(1) 0.0
+     EMETER_VENTIL.MONPRICE(2) 0.0
+     EMETER_VENTIL.MONPRICE(3) 0.0
+     EMETER_VENTIL.MONPRICE(4) 0.0
+     EMETER_VENTIL.MONPRICE(5) 0.0
+     EMETER_VENTIL.MONPRICE(6) 0.0
+     EMETER_VENTIL.MONPRICE(7) 0.0
+     EMETER_VENTIL.MONPRICE(8) 0.0
+     EMETER_VENTIL.MONPRICE(9) 0.0
+     EMETER_VENTIL.MONPRICE(10) 0.0
+     EMETER_VENTIL.MONPRICE(11) 0.0
+     EMETER_VENTIL.MONPRICE(12) 0.0
+     EMETERLEAKAIRIN.OUTPOWER 0.0
+     EMETERLEAKAIRIN.COST 0.0
+     EMETERLEAKAIRIN.PRICENO 0
+     EMETERLEAKAIRIN.EXTRAPOWER 0
+     EMETERLEAKAIRIN.PREVTIME -1.0
+     EMETERLEAKAIRIN.PREVPOWER 0.0
+     EMETERLEAKAIRIN.PREVCOST 0.0
+     EMETERLEAKAIRIN.CPRICE 0.0
+     EMETERLEAKAIRIN.INPOWER(1) 0.0
+     EMETERLEAKAIRIN.MONPOWER(1) 0.0
+     EMETERLEAKAIRIN.MONPOWER(2) 0.0
+     EMETERLEAKAIRIN.MONPOWER(3) 0.0
+     EMETERLEAKAIRIN.MONPOWER(4) 0.0
+     EMETERLEAKAIRIN.MONPOWER(5) 0.0
+     EMETERLEAKAIRIN.MONPOWER(6) 0.0
+     EMETERLEAKAIRIN.MONPOWER(7) 0.0
+     EMETERLEAKAIRIN.MONPOWER(8) 0.0
+     EMETERLEAKAIRIN.MONPOWER(9) 0.0
+     EMETERLEAKAIRIN.MONPOWER(10) 0.0
+     EMETERLEAKAIRIN.MONPOWER(11) 0.0
+     EMETERLEAKAIRIN.MONPOWER(12) 0.0
+     EMETERLEAKAIRIN.MONPRICE(1) 0.0
+     EMETERLEAKAIRIN.MONPRICE(2) 0.0
+     EMETERLEAKAIRIN.MONPRICE(3) 0.0
+     EMETERLEAKAIRIN.MONPRICE(4) 0.0
+     EMETERLEAKAIRIN.MONPRICE(5) 0.0
+     EMETERLEAKAIRIN.MONPRICE(6) 0.0
+     EMETERLEAKAIRIN.MONPRICE(7) 0.0
+     EMETERLEAKAIRIN.MONPRICE(8) 0.0
+     EMETERLEAKAIRIN.MONPRICE(9) 0.0
+     EMETERLEAKAIRIN.MONPRICE(10) 0.0
+     EMETERLEAKAIRIN.MONPRICE(11) 0.0
+     EMETERLEAKAIRIN.MONPRICE(12) 0.0
+     EMETERQ_SUTHRWI.OUTPOWER 0.0
+     EMETERQ_SUTHRWI.COST 0.0
+     EMETERQ_SUTHRWI.PRICENO 0
+     EMETERQ_SUTHRWI.EXTRAPOWER 0
+     EMETERQ_SUTHRWI.PREVTIME -1.0
+     EMETERQ_SUTHRWI.PREVPOWER 0.0
+     EMETERQ_SUTHRWI.PREVCOST 0.0
+     EMETERQ_SUTHRWI.CPRICE 0.0
+     EMETERQ_SUTHRWI.INPOWER(1) 0.0
+     EMETERQ_SUTHRWI.INPOWER(2) 0.0
+     EMETERQ_SUTHRWI.INPOWER(3) 0.0
+     EMETERQ_SUTHRWI.INPOWER(4) 0.0
+     EMETERQ_SUTHRWI.INPOWER(5) 0.0
+     EMETERQ_SUTHRWI.INPOWER(6) 0.0
+     EMETERQ_SUTHRWI.INPOWER(7) 0.0
+     EMETERQ_SUTHRWI.INPOWER(8) 0.0
+     EMETERQ_SUTHRWI.INPOWER(9) 0.0
+     EMETERQ_SUTHRWI.INPOWER(10) 0.0
+     EMETERQ_SUTHRWI.INPOWER(11) 0.0
+     EMETERQ_SUTHRWI.INPOWER(12) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(1) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(2) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(3) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(4) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(5) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(6) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(7) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(8) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(9) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(10) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(11) 0.0
+     EMETERQ_SUTHRWI.MONPOWER(12) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(1) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(2) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(3) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(4) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(5) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(6) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(7) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(8) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(9) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(10) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(11) 0.0
+     EMETERQ_SUTHRWI.MONPRICE(12) 0.0
+     EMETERQ_OCC.OUTPOWER 0.0
+     EMETERQ_OCC.COST 0.0
+     EMETERQ_OCC.PRICENO 0
+     EMETERQ_OCC.EXTRAPOWER 0
+     EMETERQ_OCC.PREVTIME -1.0
+     EMETERQ_OCC.PREVPOWER 0.0
+     EMETERQ_OCC.PREVCOST 0.0
+     EMETERQ_OCC.CPRICE 0.0
+     EMETERQ_OCC.INPOWER(1) 0.0
+     EMETERQ_OCC.MONPOWER(1) 0.0
+     EMETERQ_OCC.MONPOWER(2) 0.0
+     EMETERQ_OCC.MONPOWER(3) 0.0
+     EMETERQ_OCC.MONPOWER(4) 0.0
+     EMETERQ_OCC.MONPOWER(5) 0.0
+     EMETERQ_OCC.MONPOWER(6) 0.0
+     EMETERQ_OCC.MONPOWER(7) 0.0
+     EMETERQ_OCC.MONPOWER(8) 0.0
+     EMETERQ_OCC.MONPOWER(9) 0.0
+     EMETERQ_OCC.MONPOWER(10) 0.0
+     EMETERQ_OCC.MONPOWER(11) 0.0
+     EMETERQ_OCC.MONPOWER(12) 0.0
+     EMETERQ_OCC.MONPRICE(1) 0.0
+     EMETERQ_OCC.MONPRICE(2) 0.0
+     EMETERQ_OCC.MONPRICE(3) 0.0
+     EMETERQ_OCC.MONPRICE(4) 0.0
+     EMETERQ_OCC.MONPRICE(5) 0.0
+     EMETERQ_OCC.MONPRICE(6) 0.0
+     EMETERQ_OCC.MONPRICE(7) 0.0
+     EMETERQ_OCC.MONPRICE(8) 0.0
+     EMETERQ_OCC.MONPRICE(9) 0.0
+     EMETERQ_OCC.MONPRICE(10) 0.0
+     EMETERQ_OCC.MONPRICE(11) 0.0
+     EMETERQ_OCC.MONPRICE(12) 0.0
+     EMETERQLITE.OUTPOWER 0.0
+     EMETERQLITE.COST 0.0
+     EMETERQLITE.PRICENO 0
+     EMETERQLITE.EXTRAPOWER 0
+     EMETERQLITE.PREVTIME -1.0
+     EMETERQLITE.PREVPOWER 0.0
+     EMETERQLITE.PREVCOST 0.0
+     EMETERQLITE.CPRICE 0.0
+     EMETERQLITE.INPOWER(1) 0.0
+     EMETERQLITE.MONPOWER(1) 0.0
+     EMETERQLITE.MONPOWER(2) 0.0
+     EMETERQLITE.MONPOWER(3) 0.0
+     EMETERQLITE.MONPOWER(4) 0.0
+     EMETERQLITE.MONPOWER(5) 0.0
+     EMETERQLITE.MONPOWER(6) 0.0
+     EMETERQLITE.MONPOWER(7) 0.0
+     EMETERQLITE.MONPOWER(8) 0.0
+     EMETERQLITE.MONPOWER(9) 0.0
+     EMETERQLITE.MONPOWER(10) 0.0
+     EMETERQLITE.MONPOWER(11) 0.0
+     EMETERQLITE.MONPOWER(12) 0.0
+     EMETERQLITE.MONPRICE(1) 0.0
+     EMETERQLITE.MONPRICE(2) 0.0
+     EMETERQLITE.MONPRICE(3) 0.0
+     EMETERQLITE.MONPRICE(4) 0.0
+     EMETERQLITE.MONPRICE(5) 0.0
+     EMETERQLITE.MONPRICE(6) 0.0
+     EMETERQLITE.MONPRICE(7) 0.0
+     EMETERQLITE.MONPRICE(8) 0.0
+     EMETERQLITE.MONPRICE(9) 0.0
+     EMETERQLITE.MONPRICE(10) 0.0
+     EMETERQLITE.MONPRICE(11) 0.0
+     EMETERQLITE.MONPRICE(12) 0.0
+     EMETEREQUIP2ZON.OUTPOWER 0.0
+     EMETEREQUIP2ZON.COST 0.0
+     EMETEREQUIP2ZON.PRICENO 0
+     EMETEREQUIP2ZON.EXTRAPOWER 0
+     EMETEREQUIP2ZON.PREVTIME -1.0
+     EMETEREQUIP2ZON.PREVPOWER 0.0
+     EMETEREQUIP2ZON.PREVCOST 0.0
+     EMETEREQUIP2ZON.CPRICE 0.0
+     EMETEREQUIP2ZON.INPOWER(1) 0.0
+     EMETEREQUIP2ZON.MONPOWER(1) 0.0
+     EMETEREQUIP2ZON.MONPOWER(2) 0.0
+     EMETEREQUIP2ZON.MONPOWER(3) 0.0
+     EMETEREQUIP2ZON.MONPOWER(4) 0.0
+     EMETEREQUIP2ZON.MONPOWER(5) 0.0
+     EMETEREQUIP2ZON.MONPOWER(6) 0.0
+     EMETEREQUIP2ZON.MONPOWER(7) 0.0
+     EMETEREQUIP2ZON.MONPOWER(8) 0.0
+     EMETEREQUIP2ZON.MONPOWER(9) 0.0
+     EMETEREQUIP2ZON.MONPOWER(10) 0.0
+     EMETEREQUIP2ZON.MONPOWER(11) 0.0
+     EMETEREQUIP2ZON.MONPOWER(12) 0.0
+     EMETEREQUIP2ZON.MONPRICE(1) 0.0
+     EMETEREQUIP2ZON.MONPRICE(2) 0.0
+     EMETEREQUIP2ZON.MONPRICE(3) 0.0
+     EMETEREQUIP2ZON.MONPRICE(4) 0.0
+     EMETEREQUIP2ZON.MONPRICE(5) 0.0
+     EMETEREQUIP2ZON.MONPRICE(6) 0.0
+     EMETEREQUIP2ZON.MONPRICE(7) 0.0
+     EMETEREQUIP2ZON.MONPRICE(8) 0.0
+     EMETEREQUIP2ZON.MONPRICE(9) 0.0
+     EMETEREQUIP2ZON.MONPRICE(10) 0.0
+     EMETEREQUIP2ZON.MONPRICE(11) 0.0
+     EMETEREQUIP2ZON.MONPRICE(12) 0.0
+     Emeter_1.OUTPOWER 0.0
+     Emeter_1.COST 0.0
+     Emeter_1.PRICENO 1.0
+     Emeter_1.EXTRAPOWER 1.0
+     Emeter_1.PREVTIME -1.0
+     Emeter_1.PREVPOWER 0.0
+     Emeter_1.PREVCOST 0.0
+     Emeter_1.CPRICE 0.0
+     Emeter_1.INPOWER(1) 0.0
+     Emeter_1.INPOWER(2) 0.0
+     Emeter_1.INPOWER(3) 0.0
+     Emeter_1.INPOWER(4) 0.0
+     Emeter_1.MONPOWER(1) 0.0
+     Emeter_1.MONPOWER(2) 0.0
+     Emeter_1.MONPOWER(3) 0.0
+     Emeter_1.MONPOWER(4) 0.0
+     Emeter_1.MONPOWER(5) 0.0
+     Emeter_1.MONPOWER(6) 0.0
+     Emeter_1.MONPOWER(7) 0.0
+     Emeter_1.MONPOWER(8) 0.0
+     Emeter_1.MONPOWER(9) 0.0
+     Emeter_1.MONPOWER(10) 0.0
+     Emeter_1.MONPOWER(11) 0.0
+     Emeter_1.MONPOWER(12) 0.0
+     Emeter_1.MONPRICE(1) 0.0
+     Emeter_1.MONPRICE(2) 0.0
+     Emeter_1.MONPRICE(3) 0.0
+     Emeter_1.MONPRICE(4) 0.0
+     Emeter_1.MONPRICE(5) 0.0
+     Emeter_1.MONPRICE(6) 0.0
+     Emeter_1.MONPRICE(7) 0.0
+     Emeter_1.MONPRICE(8) 0.0
+     Emeter_1.MONPRICE(9) 0.0
+     Emeter_1.MONPRICE(10) 0.0
+     Emeter_1.MONPRICE(11) 0.0
+     Emeter_1.MONPRICE(12) 0.0
+     Emeter_2.OUTPOWER 0.0
+     Emeter_2.COST 0.0
+     Emeter_2.PRICENO 1.0
+     Emeter_2.EXTRAPOWER 1.0
+     Emeter_2.PREVTIME -1.0
+     Emeter_2.PREVPOWER 0.0
+     Emeter_2.PREVCOST 0.0
+     Emeter_2.CPRICE 0.0
+     Emeter_2.INPOWER(1) 0.0
+     Emeter_2.INPOWER(2) 0.0
+     Emeter_2.INPOWER(3) 0.0
+     Emeter_2.INPOWER(4) 0.0
+     Emeter_2.INPOWER(5) 0.0
+     Emeter_2.INPOWER(6) 0.0
+     Emeter_2.MONPOWER(1) 0.0
+     Emeter_2.MONPOWER(2) 0.0
+     Emeter_2.MONPOWER(3) 0.0
+     Emeter_2.MONPOWER(4) 0.0
+     Emeter_2.MONPOWER(5) 0.0
+     Emeter_2.MONPOWER(6) 0.0
+     Emeter_2.MONPOWER(7) 0.0
+     Emeter_2.MONPOWER(8) 0.0
+     Emeter_2.MONPOWER(9) 0.0
+     Emeter_2.MONPOWER(10) 0.0
+     Emeter_2.MONPOWER(11) 0.0
+     Emeter_2.MONPOWER(12) 0.0
+     Emeter_2.MONPRICE(1) 0.0
+     Emeter_2.MONPRICE(2) 0.0
+     Emeter_2.MONPRICE(3) 0.0
+     Emeter_2.MONPRICE(4) 0.0
+     Emeter_2.MONPRICE(5) 0.0
+     Emeter_2.MONPRICE(6) 0.0
+     Emeter_2.MONPRICE(7) 0.0
+     Emeter_2.MONPRICE(8) 0.0
+     Emeter_2.MONPRICE(9) 0.0
+     Emeter_2.MONPRICE(10) 0.0
+     Emeter_2.MONPRICE(11) 0.0
+     Emeter_2.MONPRICE(12) 0.0
+     Emeter_3.OUTPOWER 0.0
+     Emeter_3.COST 0.0
+     Emeter_3.PRICENO 1.0
+     Emeter_3.EXTRAPOWER 1.0
+     Emeter_3.PREVTIME -1.0
+     Emeter_3.PREVPOWER 0.0
+     Emeter_3.PREVCOST 0.0
+     Emeter_3.CPRICE 0.0
+     Emeter_3.INPOWER(1) 0.0
+     Emeter_3.MONPOWER(1) 0.0
+     Emeter_3.MONPOWER(2) 0.0
+     Emeter_3.MONPOWER(3) 0.0
+     Emeter_3.MONPOWER(4) 0.0
+     Emeter_3.MONPOWER(5) 0.0
+     Emeter_3.MONPOWER(6) 0.0
+     Emeter_3.MONPOWER(7) 0.0
+     Emeter_3.MONPOWER(8) 0.0
+     Emeter_3.MONPOWER(9) 0.0
+     Emeter_3.MONPOWER(10) 0.0
+     Emeter_3.MONPOWER(11) 0.0
+     Emeter_3.MONPOWER(12) 0.0
+     Emeter_3.MONPRICE(1) 0.0
+     Emeter_3.MONPRICE(2) 0.0
+     Emeter_3.MONPRICE(3) 0.0
+     Emeter_3.MONPRICE(4) 0.0
+     Emeter_3.MONPRICE(5) 0.0
+     Emeter_3.MONPRICE(6) 0.0
+     Emeter_3.MONPRICE(7) 0.0
+     Emeter_3.MONPRICE(8) 0.0
+     Emeter_3.MONPRICE(9) 0.0
+     Emeter_3.MONPRICE(10) 0.0
+     Emeter_3.MONPRICE(11) 0.0
+     Emeter_3.MONPRICE(12) 0.0
+     EMETER_TOTWORKH.OUTPOWER 0.0
+     EMETER_TOTWORKH.COST 0.0
+     EMETER_TOTWORKH.PRICENO 1
+     EMETER_TOTWORKH.EXTRAPOWER 0
+     EMETER_TOTWORKH.PREVTIME -1.0
+     EMETER_TOTWORKH.PREVPOWER 0.0
+     EMETER_TOTWORKH.PREVCOST 0.0
+     EMETER_TOTWORKH.CPRICE 0.0
+     EMETER_TOTWORKH.INPOWER(1) 0.0
+     EMETER_TOTWORKH.MONPOWER(1) 0.0
+     EMETER_TOTWORKH.MONPOWER(2) 0.0
+     EMETER_TOTWORKH.MONPOWER(3) 0.0
+     EMETER_TOTWORKH.MONPOWER(4) 0.0
+     EMETER_TOTWORKH.MONPOWER(5) 0.0
+     EMETER_TOTWORKH.MONPOWER(6) 0.0
+     EMETER_TOTWORKH.MONPOWER(7) 0.0
+     EMETER_TOTWORKH.MONPOWER(8) 0.0
+     EMETER_TOTWORKH.MONPOWER(9) 0.0
+     EMETER_TOTWORKH.MONPOWER(10) 0.0
+     EMETER_TOTWORKH.MONPOWER(11) 0.0
+     EMETER_TOTWORKH.MONPOWER(12) 0.0
+     EMETER_TOTWORKH.MONPRICE(1) 0.0
+     EMETER_TOTWORKH.MONPRICE(2) 0.0
+     EMETER_TOTWORKH.MONPRICE(3) 0.0
+     EMETER_TOTWORKH.MONPRICE(4) 0.0
+     EMETER_TOTWORKH.MONPRICE(5) 0.0
+     EMETER_TOTWORKH.MONPRICE(6) 0.0
+     EMETER_TOTWORKH.MONPRICE(7) 0.0
+     EMETER_TOTWORKH.MONPRICE(8) 0.0
+     EMETER_TOTWORKH.MONPRICE(9) 0.0
+     EMETER_TOTWORKH.MONPRICE(10) 0.0
+     EMETER_TOTWORKH.MONPRICE(11) 0.0
+     EMETER_TOTWORKH.MONPRICE(12) 0.0
+     EMETER_LOSTWORK.OUTPOWER 0.0
+     EMETER_LOSTWORK.COST 0.0
+     EMETER_LOSTWORK.PRICENO 1
+     EMETER_LOSTWORK.EXTRAPOWER 0
+     EMETER_LOSTWORK.PREVTIME -1.0
+     EMETER_LOSTWORK.PREVPOWER 0.0
+     EMETER_LOSTWORK.PREVCOST 0.0
+     EMETER_LOSTWORK.CPRICE 0.0
+     EMETER_LOSTWORK.INPOWER(1) 0.0
+     EMETER_LOSTWORK.MONPOWER(1) 0.0
+     EMETER_LOSTWORK.MONPOWER(2) 0.0
+     EMETER_LOSTWORK.MONPOWER(3) 0.0
+     EMETER_LOSTWORK.MONPOWER(4) 0.0
+     EMETER_LOSTWORK.MONPOWER(5) 0.0
+     EMETER_LOSTWORK.MONPOWER(6) 0.0
+     EMETER_LOSTWORK.MONPOWER(7) 0.0
+     EMETER_LOSTWORK.MONPOWER(8) 0.0
+     EMETER_LOSTWORK.MONPOWER(9) 0.0
+     EMETER_LOSTWORK.MONPOWER(10) 0.0
+     EMETER_LOSTWORK.MONPOWER(11) 0.0
+     EMETER_LOSTWORK.MONPOWER(12) 0.0
+     EMETER_LOSTWORK.MONPRICE(1) 0.0
+     EMETER_LOSTWORK.MONPRICE(2) 0.0
+     EMETER_LOSTWORK.MONPRICE(3) 0.0
+     EMETER_LOSTWORK.MONPRICE(4) 0.0
+     EMETER_LOSTWORK.MONPRICE(5) 0.0
+     EMETER_LOSTWORK.MONPRICE(6) 0.0
+     EMETER_LOSTWORK.MONPRICE(7) 0.0
+     EMETER_LOSTWORK.MONPRICE(8) 0.0
+     EMETER_LOSTWORK.MONPRICE(9) 0.0
+     EMETER_LOSTWORK.MONPRICE(10) 0.0
+     EMETER_LOSTWORK.MONPRICE(11) 0.0
+     EMETER_LOSTWORK.MONPRICE(12) 0.0
+     lammityssahko.OUTPOWER 0.0
+     lammityssahko.COST 0.0
+     lammityssahko.PRICENO 1.0
+     lammityssahko.EXTRAPOWER 0.0
+     lammityssahko.PREVTIME -1.0
+     lammityssahko.PREVPOWER 0.0
+     lammityssahko.PREVCOST 0.0
+     lammityssahko.CPRICE 0.0
+     lammityssahko.INPOWER(1) 0.0
+     lammityssahko.INPOWER(2) 0.0
+     lammityssahko.MONPOWER(1) 0.0
+     lammityssahko.MONPOWER(2) 0.0
+     lammityssahko.MONPOWER(3) 0.0
+     lammityssahko.MONPOWER(4) 0.0
+     lammityssahko.MONPOWER(5) 0.0
+     lammityssahko.MONPOWER(6) 0.0
+     lammityssahko.MONPOWER(7) 0.0
+     lammityssahko.MONPOWER(8) 0.0
+     lammityssahko.MONPOWER(9) 0.0
+     lammityssahko.MONPOWER(10) 0.0
+     lammityssahko.MONPOWER(11) 0.0
+     lammityssahko.MONPOWER(12) 0.0
+     lammityssahko.MONPRICE(1) 0.0
+     lammityssahko.MONPRICE(2) 0.0
+     lammityssahko.MONPRICE(3) 0.0
+     lammityssahko.MONPRICE(4) 0.0
+     lammityssahko.MONPRICE(5) 0.0
+     lammityssahko.MONPRICE(6) 0.0
+     lammityssahko.MONPRICE(7) 0.0
+     lammityssahko.MONPRICE(8) 0.0
+     lammityssahko.MONPRICE(9) 0.0
+     lammityssahko.MONPRICE(10) 0.0
+     lammityssahko.MONPRICE(11) 0.0
+     lammityssahko.MONPRICE(12) 0.0
+END_START_VALUES
+
+
+INTEGRATION
+  TIME_SCALE 3600
+  FROM 1979 1 1
+  TO 1979 1 1
+  DST_START 84
+  DST_END 301
+  STEP 0.1
+  TOL 0.02
+  TOL_LIM 10.0
+  HMIN 0
+  HMAX 1.5
+  PERIOD_TOL 0.01
+  PERIODS 14
+
+  LIST
+    OUT_TIMES
+    0 8760 1
+    END_TIMES
+      CLIMATE.TAIR Ulkoilman_l_mp_tila
+      Rtnairmerge_1.TOUT Poistoilman_l_mp_tila
+      Supairsplit_1.T Tuloilman_l_mp_tila
+  END
+
+END_INTEGRATION
+
+INTEGRATION
+  TIME_SCALE 3600
+  FROM 1979 1 1
+  TO 1979 12 31
+  DST_START 84
+  DST_END 301
+  STEP 0.1
+  TOL 0.02
+  TOL_LIM 10.0
+  HMIN 0
+  HMAX 1.5
+
+  LIST
+    OUT_TIMES
+    0 8760 1
+    END_TIMES
+      CLIMATE.TAIR Ulkoilman_l_mp_tila
+      Rtnairmerge_1.TOUT Poistoilman_l_mp_tila
+      Supairsplit_1.T Tuloilman_l_mp_tila
+  END
+
+
+  LOG
+
+
+  END
+
+END_INTEGRATION
