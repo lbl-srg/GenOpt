@@ -288,14 +288,14 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "-rc2";
+    public final static String VERSION_ID     = "-rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", May 29, 2008";
+	VERSION_NUMBER + VERSION_ID + ", May 30, 2008";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
