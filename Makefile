@@ -125,3 +125,5 @@ dist:   clean prog doc jar
 	$(IZPACK) install.xml -b . -o genopt-install.jar -k standard; \
 	mv genopt-install.jar ../$(DISDIR); 
 	@echo "==== Made distribution in $(DISDIR)/genopt-install.jar";
+	@echo "==== Todo:";
+	@echo "     Copy manual.pdf, genopt-install.jar and jdoc to www";
