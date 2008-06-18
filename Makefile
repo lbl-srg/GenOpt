@@ -82,12 +82,26 @@ doc:
 	(cd src; javadoc -breakiterator -private -author -version \
 	-windowtitle "GenOpt Code Documentation" \
 	-stylesheetfile ../documentation/jdoc/jstyle.css \
-	-bottom "<DIV CLASS="FOOTER"> <P> <CENTER> <A HREF="index.html" \
+	-bottom "<DIV CLASS="FOOTER"> <P> <CENTER> <A HREF="http://simulationresearch.lbl.gov/GO" \
 	TARGET=_top>GenOpt</A> | <A HREF="http://simulationresearch.lbl.gov" \
 	TARGET=_top>LBL SRG</A> | <A HREF="http://www.lbl.gov" \
 	TARGET=_top>LBL</A> </CENTER> <HR WIDTH="100%"> \
 	<BR> Contact: <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A> </DIV>" -d ../documentation/jdoc $(SRC))
+	cp -v ../../../1_report/1_manual/2.1.0/manual.pdf documentation
 	@echo "==== Made documentation"
+
+### Copies the files to the web directory
+www:
+	cp documentation/manual.pdf ~/proj/www/genopt/GO/download
+	cp $(DISDIR)/genopt-install.jar ~/proj/www/genopt/GO/download
+	rm -rf ~/proj/www/genopt/GO/jdoc
+	mkdir ~/proj/www/genopt/GO/jdoc
+	cp documentation/jdoc/*.html ~/proj/www/genopt/GO/jdoc/
+	cp documentation/jdoc/package-list ~/proj/www/genopt/GO/jdoc/
+	cp -r documentation/jdoc/resources ~/proj/www/genopt/GO/jdoc/
+	cp -r documentation/jdoc/genopt ~/proj/www/genopt/GO/jdoc/
+	cp -r documentation/jdoc/jstyle.css ~/proj/www/genopt/GO/jdoc/
+	@echo "==== Copied files to web directory ~/proj/www/genopt/GO"
 
 ### unit tests
 unitTest:
@@ -118,12 +132,15 @@ unitTest:
 	svn status unitTestResults
 	@echo "==== Finished unit tests";
 
-dist:   clean prog doc jar 
+### install program
+inst:
 	mkdir -p $(DISDIR)
 	rm -f $(DISDIR)/genopt-install.jar
 	cd install; \
 	$(IZPACK) install.xml -b . -o genopt-install.jar -k standard; \
 	mv genopt-install.jar ../$(DISDIR); 
-	@echo "==== Made distribution in $(DISDIR)/genopt-install.jar";
-	@echo "==== Todo:";
-	@echo "     Copy manual.pdf, genopt-install.jar and jdoc to www";
+	@echo "==== Made installation program in $(DISDIR)/genopt-install.jar";
+
+### distribution, including web pages
+dist:   clean prog doc jar inst www
+	@echo "==== Made distribution";
