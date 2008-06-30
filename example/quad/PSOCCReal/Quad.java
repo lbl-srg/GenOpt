@@ -1,4 +1,5 @@
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 /** Class for evaluating an N-dimensional quadratic function.
@@ -41,7 +42,7 @@ public class Quad
 	}
 	catch(Exception e)  { }
 	
-	Vector vec = new Vector(0);
+	Vector<Double> vec = new Vector<Double>(0);
 	int end;
 	do{
 	    s = new String(s.trim());
@@ -79,8 +80,10 @@ public class Quad
 	    double f = 0;
 	    for(int i = 0; i < x.length; i++)
 		f += x[i] * x[i];
-	    f = StrictMath.sqrt( f );
-	    String s = "f(x) = \t " + String.valueOf(f);
+	    // The DecimalFormat below suppress rounding errors that would
+            // lead to outputs in the form 0.8450000000000001
+	    DecimalFormat numFor = new DecimalFormat("0.##############E0");
+	    String s = "f(x) = \t " + numFor.format(f);
 	    writeFile(s, fnOut);
 	    writeFile("Simulation completed successfully." + LS, fnLog);
 	    System.exit(0);
