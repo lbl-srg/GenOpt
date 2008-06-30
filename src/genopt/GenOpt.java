@@ -117,6 +117,7 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, June 30 wm In GPSPSOCCHJ, added code to report mininum point to output files.
  2008, May  10 wm Changed WinGenOpt,GenOpt and SimulationStarter so that the working directory
                   for the simulation is set to the directory of the optimization initialization
                   file. This allows to start GenOpt (e.g., for the examples) from directories 

@@ -132,7 +132,10 @@ public class GPSPSOCCHJ extends PSOCCMesh
 	println("Finished search for initial point. Start second algorithm.");
 	println("");
 	updateParameterSetting(xMinIni);
-	return FinAlg.run();
+	retFla = FinAlg.run();
+	if ( retFla == 1 )  // required accuracy is reached
+	    super.reportMinimum();
+	return retFla;
     }
 
     /** Class for finishing the optimization */
