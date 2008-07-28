@@ -121,63 +121,21 @@ public class FileHandler implements Cloneable{
 	throws IOException, FileNotFoundException, SecurityException
     {
 	nLines = 0;
-	String FilNam = theFile.getAbsolutePath();
 	FileContents = new String[30];
-	int bytVal = 0;
-	String linStr = "";
-	int chaLen = 80;
-	int chaInc = chaLen;
-	int chaNum; // the 0-based number of the current character
-	char[] cha = new char[chaLen];
-	boolean endOfLine = false;
-	boolean newLine   = false;
-	boolean skip      = false;
-	FileInputStream is = null;
-
-	is = new FileInputStream(FilNam); 
-			
-	do 
-	    {
-		chaNum = 0;
-		do	// loop over line
-		    {
-			if (newLine)
-			    {
-				newLine = false;
-				if ((char)bytVal == '\r')
-				    { // check for immediately following line feed
-					bytVal = is.read();
-					skip = ((char)bytVal == '\n') ? false : true ;
-				    }
-			    }
-			if (skip)
-			    skip = false;
-			else
-			    bytVal = is.read();
-
-			if (isEndOfLine(bytVal) || bytVal == -1)
-			    {
-				endOfLine = true;
-				linStr = new String( new String(cha, 0, chaNum) + LS);					
-			    }
-			else
-			    {
-				if (chaNum == chaLen-1)
-				    { // increase field for cha
-					char[] temCha = new char[chaLen+chaInc];
-					System.arraycopy(cha, 0, temCha, 0, chaLen);
-					cha = new char[chaLen+chaInc];
-					System.arraycopy(temCha, 0, cha, 0, chaLen);
-					chaLen += chaInc;
-				    }
-				cha[chaNum++] = (char)bytVal;						
-			    }
-		    } while(!endOfLine);
-		addElement(linStr);
-		endOfLine = false;
-		newLine = true;
-	    } while (bytVal != -1);
-	is.close();
+	String filNam = theFile.getAbsolutePath();
+	FileInputStream fis = new FileInputStream(filNam); 
+	DataInputStream din = new DataInputStream(fis);
+        BufferedReader br = new BufferedReader(new InputStreamReader(din));
+	String linStr; // the line to be read
+	//Read File Line By Line
+	while ((linStr = br.readLine()) != null){
+	    linStr += LS;
+	    // Print the content on the console
+	    addElement(linStr);
+	}
+	//Close the input stream
+	din.close();
+	fis.close();
     }
 
 

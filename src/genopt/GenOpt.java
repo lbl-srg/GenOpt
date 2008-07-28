@@ -117,6 +117,12 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, July 28 wm In FileHandler.java, rewrote constructor FileHandler(File).
+                  The previous version added a new line at the end of the 
+                  simulation input file, which caused problems in ESP-r. 
+                  See email from Leen Peeters
+                  In GenOpt.java, added System.out.flush() to ensure that
+                  buffer is flushed.
  2008, June 30 wm In GPSPSOCCHJ, added code to report mininum point to output files.
  2008, May  10 wm Changed WinGenOpt,GenOpt and SimulationStarter so that the working directory
                   for the simulation is set to the directory of the optimization initialization
@@ -284,7 +290,7 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_NUMBER</code> here.
      *
      */
-    public final static String VERSION_NUMBER = "2.1.0";
+    public final static String VERSION_NUMBER = "2.1.1";
     /**
      * Describe constant <code>VERSION_ID</code> here.
      *
@@ -296,7 +302,7 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", June 18, 2008";
+	VERSION_NUMBER + VERSION_ID + ", July 28, 2008";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
@@ -2512,8 +2518,10 @@ public class GenOpt extends Thread
     {
 	if (wgo != null)
 	    wgo.append(text);
-	else
+	else{
 	    System.out.print(text);
+	    System.out.flush(); // added 2008-07-28 to ensure buffer is flushed
+	}
 	return;
     }
 
