@@ -186,12 +186,12 @@ MATERIAL:WindowGas, KRYPTON 8MM,
     .0079  ;    !- Thickness {m}
 
 MATERIAL:WindowShade, ExtShade,
-         0.6     ,  ! Solar transmittance
+         0.30625     ,  ! Solar transmittance
          0.1       ,  ! Solar reflectance
-         0.6     ,  ! Visible transmittance
+         0.30625     ,  ! Visible transmittance
          0.1       ,  ! Visible reflectance
          0.1       ,  ! Thermal emissivity
-         0.6     ,  ! Thermal transmittance
+         0.30625     ,  ! Thermal transmittance
          0.02      ,  ! Thickness (used only for insulating shade)
          0.1       ,  ! Conductivity (used only for insulating shade) in W/(m*K)
          0.05      ,  !Shade-to-glass distance
@@ -272,7 +272,7 @@ WINDOWSHADINGCONTROL,
 
  BUILDING,
     office zone,   ! Building Name
-           60.0,   ! Building Azimuth
+           87.5,   ! Building Azimuth
                    1,   ! Building Terrain {1=FlatOpenCountry | 2=RoughWoodedCountryTownsSuburbs | 3=CityCenter}
        4.0000000E-02,   ! Loads Convergence Tolerance
        4.0000002E-03,   ! Temperature Convergence Tolerance
@@ -332,8 +332,8 @@ WINDOWSHADINGCONTROL,
            4, !-RectangularDoorWindow
   16.000000    ,   0.000000    ,   2.200000    ,
   16.000000    ,   0.000000    ,  0.2000000    ,
-  16.000000    ,   4.2   ,  0.2000000    ,
-  16.000000    ,   4.2   ,   2.200000    ;
+  16.000000    ,   5.9   ,  0.2000000    ,
+  16.000000    ,   5.9   ,   2.200000    ;
 
   Surface:Shading:Attached,EAST WINDOW OVERHANG,  !- Surface Name
    ZONE SURFACE EAST,  !- Base Surface Name
@@ -341,8 +341,8 @@ WINDOWSHADINGCONTROL,
            4, !-RectangularOverhang
   16.000000    ,   0.000000    ,   2.700000    ,
   17.0     ,   0.000000    ,   2.700000    ,
-  17.0     ,   4.2 ,   2.700000    ,
-  16.000000    ,   4.2  ,   2.700000    ;
+  17.0     ,   5.9 ,   2.700000    ,
+  16.000000    ,   5.9  ,   2.700000    ;
 
  Surface:HeatTransfer,ZONE SURFACE SOUTH,  !- Base Surface Name
    WALL,PARWALL,  !- Class and Construction Name
@@ -884,26 +884,25 @@ DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
     
 ! ===============================================================
 
-!  These are report variables Linda uses to trace changes
 !report variable,,outdoor dry bulb,hourly;
 !report variable,,mean air temperature,hourly;
-   !report variable,,zone latent load,hourly;
-   !report variable,,lights return air load,hourly;
-   !report variable,,electric load,hourly;
-   !report variable,,Electric Load,hourly;
-   !report variable,,Mean Radiant Temperature,hourly;
-   !report variable,,Surface Inside Temperature,hourly;
-   !report variable,,Surface Outside Temperature,hourly;
-   !report variable,,Zone/Sys Sensible Heating Energy,hourly;
-   !report variable,,Zone/Sys Sensible Cooling Energy,hourly;
+!report variable,,zone latent load,hourly;
+!report variable,,lights return air load,hourly;
+!report variable,,electric load,hourly;
+!report variable,,Electric Load,hourly;
+!report variable,,Mean Radiant Temperature,hourly;
+!report variable,,Surface Inside Temperature,hourly;
+!report variable,,Surface Outside Temperature,hourly;
+!report variable,,Zone/Sys Sensible Heating Energy,hourly;
+!report variable,,Zone/Sys Sensible Cooling Energy,hourly;
 !report variable,,Zone/Sys Sensible Heating Rate,hourly;
 !report variable,,Zone/Sys Sensible Cooling Rate,hourly;
-   !report variable,,Zone/Sys Air Temp,hourly;
-   !report variable,,Zone Air Humidity Ratio,hourly;
-   !report variable,,System Node Temp,hourly;
-   !report variable,,System Node MassFlowRate,hourly;
-   !report variable,,System Node Humidity Ratio,hourly;
-   !report variable,,SimAir Iterations,hourly;
+!report variable,,Zone/Sys Air Temp,hourly;
+!report variable,,Zone Air Humidity Ratio,hourly;
+!report variable,,System Node Temp,hourly;
+!report variable,,System Node MassFlowRate,hourly;
+!report variable,,System Node Humidity Ratio,hourly;
+!report variable,,SimAir Iterations,hourly;
 
 report variable,, Purchased Air Sensible Cooling Energy, environment;
 report variable,, Purchased Air Heating Energy, environment;
@@ -914,5 +913,4 @@ report variable,, Lights Electric Consumption, environment;
 !report,construction;
 
 End Simulation Data;
-
 
