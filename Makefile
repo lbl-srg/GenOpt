@@ -27,6 +27,8 @@ DISDIR=dist
 
 # List of directories with example files
 EXADIR=$(shell find example/quad -maxdepth 1 \( -type d -not -name '.svn' \) )
+EXADIRCON=$(shell find example/quad/constraints -maxdepth 1 \( -type d -not -name '.svn' \) )
+
 # Root directory of GenOpt
 ROODIR=$(shell pwd)
 
@@ -111,7 +113,7 @@ unitTest:
 	  echo "running 'make unitTest'"; \
 	  exit 1;\
 	fi; 
-	@for x in $(EXADIR); do \
+	@for x in $(EXADIR) $(EXADIRCON); do \
 	    cd "$(ROODIR)"; \
 	    echo "++++ $$x"; \
 	    if [ -f $$x/${INIFIL} ]; then \
