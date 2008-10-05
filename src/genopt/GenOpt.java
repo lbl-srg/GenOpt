@@ -117,6 +117,8 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Oct  04 wm Deleted the experimental feature for smoothing in Optimizer.java, 
+                  including the optimization algorithms that used this feature.
  2008, July 28 wm In FileHandler.java, rewrote constructor FileHandler(File).
                   The previous version added a new line at the end of the 
                   simulation input file, which caused problems in ESP-r. 

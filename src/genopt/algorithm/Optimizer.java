@@ -121,7 +121,6 @@ abstract public class Optimizer
 	assert genOptData != null : "Received 'null' as argument";
 	assert (constraintMode == 0 || constraintMode == 1) : 
 	    "Invalid constraint mode";
-	doSmoothing = false;
 	conMode = constraintMode;
 	data = genOptData;
 	dimCon   = data.conPar.length;
@@ -443,7 +442,7 @@ abstract public class Optimizer
 	assert x != null : "Received 'null' as argument";
 	increaseStepNumber();
 	if  (wriSteNum)
-	    return getF(x);
+	    return this.getF(x);
 	else{
 	    updateParameterSetting(x);
 	    return (Point)x.clone();
@@ -837,10 +836,7 @@ abstract public class Optimizer
 	// make sure step number is set to the current value
 	Point r = (Point)x.clone();
 	r.setStepNumber(stepNumber);
-	if ( doSmoothing )
-	    return smoo.getF(r);
-	else
-	    return _getF(r);
+	return _getF(r);
     }
     /** Evaluates the simulation based on the parameter set x<BR>
      * The value <CODE>constraints</CODE> determines in which mode the constraints
@@ -1266,7 +1262,7 @@ abstract public class Optimizer
      *@param simulationInput file handler in which search will take place
      *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
      */
-    private boolean _replaceInInputFile(final String text, final String value,
+    private static boolean _replaceInInputFile(final String text, final String value,
 					final FileHandler[] simulationInput){
 	boolean found = false;
 	for (int i = 0; i < simulationInput.length; i++)
@@ -1280,7 +1276,7 @@ abstract public class Optimizer
      *@param value value that will replace <code>text</code>
      *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
      */
-    private boolean _replaceInInputFunction(final String text, final String value){
+    private static boolean _replaceInInputFunction(final String text, final String value){
 	boolean found = false;
 	for (int i = 0; i < inpFun.length; i++){
 	    if ( inpFun[i].indexOf(text) != -1 ){ // found string
@@ -1296,7 +1292,7 @@ abstract public class Optimizer
      *@param value value that will replace <code>text</code>
      *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
      */
-    private boolean _replaceInOutputFunction(final String text, final String value){
+    private static boolean _replaceInOutputFunction(final String text, final String value){
 	boolean found = false;
 	for (int i = 0; i < outFun.length; i++){
 	    if ( outFun[i] != null && outFun[i].indexOf(text) != -1 ){ // found String
@@ -1312,7 +1308,7 @@ abstract public class Optimizer
      *@param variableName name of the variable that was not found.
      *@exception SimulationInputException
      */
-    private void _variableNotFound(final String variableName) throws SimulationInputException{
+    private static void _variableNotFound(final String variableName) throws SimulationInputException{
 	final String ErrMes = "Variable was not found in any simulation input template file," +
 	    LS +"or in any function objects:" +
 	    LS + "    " + "Searching for String: '" + variableName +
@@ -1338,7 +1334,7 @@ abstract public class Optimizer
      * @exception InvocationTargetException if an invoked method throws an exception
      * @exception IOException if an error occurs
      */
-    private double[] _processResultFunction(final String[] formula, 
+    private static double[] _processResultFunction(final String[] formula, 
 					    final double[] objFunVal)
 	throws OptimizerException, NoSuchMethodException, 
 	       IllegalAccessException, InvocationTargetException, IOException {
@@ -1979,358 +1975,4 @@ abstract public class Optimizer
     */
     static private TreeMap<Point, Double[]> evaPoi;
 
-    /** Instance for smoothing the cost function */
-    static private Smoothing smoo;
-    /** Flag whether the cost function should be smoothed or not */
-    static private boolean doSmoothing;
-
-    /** Calls the constructor for the double integration.
-     *  This method must be called in the constructor of all
-     *  optimization algorithms that uses smoothing of the cost function
-     */
-    public void constructIntegrator() throws OptimizerException, 
-					     IOException, Exception, InputFormatException{
-	smoo = new Smoothing();
-	algorithmRequiresUsageOfStepNumber();
-    }
-
-    /** Activate smoothing of cost function */
-    public void activateSmoothing() {
-	assert smoo != null : "Integrator not constructed.";
-	doSmoothing = true;
-	increaseStepNumber();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
-    /** Inner class for smoothing the cost function.
-     */
-    private class Smoothing{
-	public Smoothing()
-	    throws OptimizerException, IOException, Exception, InputFormatException{
-	    final int dimX = getDimensionContinuous();
-	    // --- IntegrationDomainFactor
-	    // Factor how much bigger the integration domain must be compared to the step size
-	    final double intDomFac = getInputValueDouble("IntegrationDomainFactor",
-							 0, Optimizer.EXCLUDING,
-							 Double.MAX_VALUE, Optimizer.EXCLUDING);
-	    
-	    // --- NumberOfSupportPoint
-	    // Number of support points for integration along each coordinate direction
-	    NumSupPoi = getInputValueInteger("NumberOfSupportPoint");
-	    
-	    if ( ! ( NumSupPoi == 3 || NumSupPoi == 5 || NumSupPoi ==  7) )
-		throwInputError("3, 5, or 7 for 'NumberOfSupportPoint'");
-	    
-	    // Number of integrations
-	    final String nI = getInputValueString("NumberOfIntegration").trim();
-	    NumOfInt = new int[dimX];
-	    if ( nI.length() == 1 ){
-		int val = 0;
-		if ( nI.equals("0") )
-		    val = 0;
-		else if ( nI.equals("1") )
-		    val = 1;
-		else if ( nI.equals("2") )
-		    val = 2;
-		else
-		    throwInputError("Invalid value for 'NumberOfIntegration'. Expected '0', '1' or '2'");
-		for(int i = 0; i < dimX; i++)
-		    NumOfInt[i] = val;
-	    }
-	    else{
-		if ( nI.length() != dimX )
-		    throwInputError("'NumberOfIntegration' must have '1' or '" + dimX + "' digits");
-		for(int i = 0; i < dimX; i++){
-		    if (nI.charAt(i) == '0')
-			NumOfInt[i] = 0;
-		    else if (nI.charAt(i) == '1')
-			NumOfInt[i] = 1;
-		    else if (nI.charAt(i) == '2')
-			NumOfInt[i] = 2;
-		    else
-			throwInputError("Invalid value for 'NumberOfIntegration'. Expected '0', '1' or '2' for all elements");
-		    
-		}
-	    }
-
-	    Delta = new double[dimX];
-	    for(int i = 0; i < dimX; i++)
-		Delta[i] = getDx(i) * intDomFac;
-	    
-	    _initializeRungeCotteCoefficients();
-	    // initialize list with evaluated points after smoothing
-	    evaPoiF1 = new TreeMap<Point, Double[]>();
-	    evaPoiF2 = new TreeMap<Point, Double[]>();
-	}
-
-	/** Initializes the coefficients for the Runge-Cotte integration */
-	private void _initializeRungeCotteCoefficients(){
-	    switch( NumSupPoi ){
-	    case 3:
-		ANewCot = new double[NumSupPoi];
-		ANewCot[0] = 1./3.;
-		ANewCot[1] = 4./3.;
-		ANewCot[2] = 1./3.;
-		break;
-	    case 5:
-		ANewCot = new double[NumSupPoi];
-		ANewCot[0] = 14./45.;
-		ANewCot[1] = 64./45.;
-		ANewCot[2] = 24./45.;
-		ANewCot[3] = 64./45.;
-		ANewCot[4] = 14./45.;
-		break;
-	    case 7:
-		ANewCot = new double[NumSupPoi];
-		ANewCot[0] =  41./140.;
-		ANewCot[1] = 216./140.;
-		ANewCot[2] =  27./140.;
-		ANewCot[3] = 272./140.;
-		ANewCot[4] =  27./140.;
-		ANewCot[5] = 216./140.;
-		ANewCot[6] =  41./140.;
-		break;
-	    default:
-		assert true : "Wrong value for 'NumSupPoi'.";
-	    }
-	}
-    
-	/** Gets the objective function value and registers it into
-	 * the data base
-	 *@param x the point being evaluated
-	 *@return a clone of the point with the new function values stored
-	 *@exception OptimizerException if an OptimizerException occurs or
-	 *           if the user required to stop GenOpt
-	 *@exception SimulationInputException if an error in writing the
-	 *           simulation input file occurs
-	 *@exception NoSuchMethodException if a method that should be invoked could not be found
-	 *@exception IllegalAccessException  if an invoked method enforces Java language access 
-	 *                                    control and the underlying method is inaccessible
-	 *@exception InvocationTargetException if an invoked method throws an exception
-	 *@exception Exception if an I/O error in the simulation input file occurs
-	 */
-	public Point getF(Point x) throws
-	    SimulationInputException, OptimizerException, NoSuchMethodException,
-	    IllegalAccessException, Exception{
-	    final int iSim = getSimulationNumber();
-	    final Point r = this.getF2(x);
-	    return r;
-	}
-
-
-	/** Gets the function value of the smoothed cost function using double integration.
-	 *@param x the point being evaluated
-	 *@return a clone of the point with the new function values stored
-	 *@exception OptimizerException if an OptimizerException occurs or
-	 *           if the user required to stop GenOpt
-	 *@exception SimulationInputException if an error in writing the
-	 *           simulation input file occurs
-	 *@exception NoSuchMethodException if a method that should be invoked could not be found
-	 *@exception IllegalAccessException  if an invoked method enforces Java language access 
-	 *                                    control and the underlying method is inaccessible
-	 *@exception InvocationTargetException if an invoked method throws an exception
-	 *@exception Exception if an I/O error in the simulation input file occurs
-	 */
-	public Point getF2(Point x) throws
-	    SimulationInputException, OptimizerException, NoSuchMethodException,
-	    IllegalAccessException, Exception{
-
-	    Point poi = (Point)x.clone();
-	    if(evaPoiF2.containsKey(poi)){
-		////////////////////////////////////////////////////////
-		// point already evaluated
-		//println("Point already evaluated. Take function value from database.");
-		// get the function value corresponding to this point
-		Double[] val = (Double[])(evaPoiF2.get(poi));
-		for (int i = 0; i < dimF; i++)
-		    poi.setF( i, val[i].doubleValue() );
-		return poi;
-	    }
-	    else{
-		//println("------- Start second smoothing.");
-		final Point base = this.getF1(x);
-		// don't report the support point because otherwise it would be querried
-		// in the search for the point with lowest function value
-		// second integral
-		double[] funVal = base.getF();
-	    
-		for(int i = 0; i < dimX; i++){
-		    if (NumOfInt[i] > 1){ // integrate along this coordinate
-			final int M = NumSupPoi-1;
-			for(int j=0; j <= M; j++){
-			    if ( j != M/2 ){
-				final double inc = (double)(2 * j - M) / (double)(M) * Delta[i];
-				final double xNew = base.getX(i) + inc;
-				Point xS = (Point)base.clone();
-				xS.setX(i, xNew);
-				xS = this.getF1( xS );
-				double[] delF = LinAlg.subtract( xS.getF(), base.getF() );
-				final double aM = ANewCot[j] / (double)M;
-				delF = LinAlg.multiply( aM, delF );
-				funVal = LinAlg.add( funVal, delF );
-			    }
-			}
-		    }
-		}
-		poi.setF(funVal);
-		// add point and function value to the map of evaluated points
-		Double[] val = new Double[dimF];
-		for (int i = 0; i < dimF; i++)
-		    val[i] = new Double(funVal[i]);
-
-		if ( writeStepNumber() ) // step number is written, hence it may be used for penalty functions
-		    poi.setStepNumber( getStepNumber() );
-		else // step number is not used in function evaluation. Set to 1 
-		    poi.setStepNumber(1);
-	    
-		// we must clone the object that we put into the TreeMap
-		// Otherwise, it's coordinates get changed since the map
-		// contains only a reference to the instance.
-		evaPoiF2.put((Point)poi.clone(), val);
-		poi.setStepNumber( getStepNumber() );
-
-		//println("------- Finished second smoothing.");
-		return poi;
-	    }
-	}
-
-	/** Gets the function value of the smoothed cost function using one integration.
-	 *@param x the point being evaluated
-	 *@return a clone of the point with the new function values stored
-	 *@exception OptimizerException if an OptimizerException occurs or
-	 *           if the user required to stop GenOpt
-	 *@exception SimulationInputException if an error in writing the
-	 *           simulation input file occurs
-	 *@exception NoSuchMethodException if a method that should be invoked could not be found
-	 *@exception IllegalAccessException  if an invoked method enforces Java language access 
-	 *                                    control and the underlying method is inaccessible
-	 *@exception InvocationTargetException if an invoked method throws an exception
-	 *@exception Exception if an I/O error in the simulation input file occurs
-	 */
-	public Point getF1(Point x) throws
-	    SimulationInputException, OptimizerException, NoSuchMethodException,
-	    IllegalAccessException, Exception{
-
-	    Point poi = (Point)x.clone();
-	    if(evaPoiF1.containsKey(poi)){
-		////////////////////////////////////////////////////////
-		// point already evaluated
-		//println("Point already evaluated. Take function value from database.");
-		// get the function value corresponding to this point
-		Double[] val = (Double[])(evaPoiF1.get(poi));
-		for (int i = 0; i < dimF; i++)
-		    poi.setF(i, val[i].doubleValue() );
-		return poi;
-	    }
-	    else{
-		//println("------- Start first smoothing.");
-		final Point base = this._evaluateSupportPoint(x);
-		// don't report the support point because otherwise it would be querried
-		// in the search for the point with lowest function value
-		// second integral
-		double[] funVal = base.getF();
-	    
-		for(int i = 0; i < dimX; i++){
-		    if (NumOfInt[i] > 0){ // integrate along this coordinate
-			final int M = NumSupPoi-1;
-			for(int j=0; j <= M; j++){
-			    if ( j != M/2 ){
-				final double inc = (double)(2 * j - M) / (double)(M) * Delta[i];
-				final double xNew = base.getX(i) + inc;
-				Point xS = (Point)base.clone();
-				xS.setX(i, xNew);
-				xS = this._evaluateSupportPoint( xS );
-				double[] delF = LinAlg.subtract( xS.getF(), base.getF() );
-				final double aM = ANewCot[j] / (double)M;
-				delF = LinAlg.multiply( aM, delF );
-				funVal = LinAlg.add( funVal, delF );
-			    }
-			}
-		    }
-		}
-		poi.setF(funVal);
-		// add point and function value to the map of evaluated points
-		Double[] val = new Double[dimF];
-		for (int i = 0; i < dimF; i++)
-		    val[i] = new Double(funVal[i]);
-
-		if ( writeStepNumber() ) // step number is written, hence it may be used for penalty functions
-		    poi.setStepNumber( getStepNumber() );
-		else // step number is not used in function evaluation. Set to 1 
-		    poi.setStepNumber(1);
-	    
-		// we must clone the object that we put into the TreeMap
-		// Otherwise, it's coordinates get changed since the map
-		// contains only a reference to the instance.
-		evaPoiF1.put((Point)poi.clone(), val);
-		poi.setStepNumber( getStepNumber() );
-
-		//println("------- Finished first smoothing.");
-		return poi;
-	    }
-	}
-
-	/** Evaluates a support point for the numerical approximation to the
-	 *  double integral
-	 *@param p the point being evaluated
-	 *@return a clone of the point with the new function values stored
-	 *@exception OptimizerException if an OptimizerException occurs or
-	 *           if the user required to stop GenOpt
-	 *@exception SimulationInputException if an error in writing the
-	 *           simulation input file occurs
-	 *@exception NoSuchMethodException if a method that should be invoked could not be found
-	 *@exception IllegalAccessException  if an invoked method enforces Java language access 
-	 *                                    control and the underlying method is inaccessible
-	 *@exception InvocationTargetException if an invoked method throws an exception
-	 *@exception Exception if an I/O error in the simulation input file occurs
-	 */
-	private Point _evaluateSupportPoint(final Point p) throws
-	    SimulationInputException, OptimizerException, NoSuchMethodException,
-	    IllegalAccessException, Exception{
-	    Point poi = (Point)p.clone();
-	    if ( getMode() == Optimizer.ORIGINAL ){
-		// Optimization is done in original space.
-		// Transform all unfeasible support points to the feasible domain
-		// by reflecting each unfeasible coordinate value at the violated domain boundaries.
-		for(int i = 0; i < dimX; i++){
-		    final double xFea = setToFeasibleCoordinate( poi.getX(i), getL(i), getU(i) );
-		    poi.setX(i, xFea );
-		}
-	    }
-	    poi.setComment("Support point for smoothing.");
-	    //	    call the _getF(...) of Optimizer
-	    poi = _getF( poi );
-	    report(poi, Optimizer.SUBITERATION);
-	    return poi;
-	}
-
-
-	/** Half width of the length of the integration domain for 
-	    each coordinate direction */
-	private double[] Delta;
-	/** Number of support points for the integration 
-	    for each coordinate direction */
-	private int NumSupPoi;
-	/** Coefficients for the Newton-Cotes integration formula */
-	private double[] ANewCot;
-	/** Number of integrations along the coordinate directions */
-	private int[] NumOfInt;
-	/** The list with evaluated points and its function values 
-	    after the first smoothing.
-	    Prior to evaluating the cost function, this list is checked whether
-	    the same point has already been evaluated, 
-	    where equality is defined by the implementation of
-	    <CODE>genopt.algorithm.util.math.Point.compareTo(java.lang.Object o)</CODE>
-	*/
-	private TreeMap<Point, Double[]> evaPoiF1;
-	/** The list with evaluated points and its function values 
-	    after the second smoothing.
-	    Prior to evaluating the cost function, this list is checked whether
-	    the same point has already been evaluated, 
-	    where equality is defined by the implementation of
-	    <CODE>genopt.algorithm.util.math.Point.compareTo(java.lang.Object o)</CODE>
-	*/
-	private TreeMap<Point, Double[]> evaPoiF2;
-    }
 }
