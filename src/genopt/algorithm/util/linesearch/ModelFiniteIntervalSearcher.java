@@ -154,17 +154,18 @@ public abstract class ModelFiniteIntervalSearcher extends Optimizer
 
     /** Runs the optimization process until a termination criteria
       * is satisfied
+      * @param xIni initial point
       * @return <CODE>-1</CODE> if the maximum number of iteration 
       *                         is exceeded
       *     <BR><CODE>+1</CODE> if the required accuracy is reached
       * @exception Exception    
       * @exception OptimizerException
       */
-    public int run()
+    public int run(Point xIni)
 	throws OptimizerException, Exception
     {
-	Point x0 = new Point(getDimensionX(), 0, getDimensionF());
-	Point x3 = new Point(getDimensionX(), 0, getDimensionF());
+	Point x0 = (Point)xIni.clone();
+	Point x3 = (Point)xIni.clone();
 	double[] temp = new double[1];
         temp[0] = getL(0);
         x0.setX(temp);

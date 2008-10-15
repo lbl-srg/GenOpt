@@ -92,12 +92,6 @@ public class Perturber
 	/** checks the optimality condition in the transformed space
 	  * by testing in each orthogonal direction of <CODE>xL</CODE> whether 
 	  * the function increases or not.<BR>
-	  * <B>Note:</B> This function modifies the fields in the Optimizer due to
-	  *             the function calls and result reports! Hence, you must
-	  *             call either the method <CODE>Optimizer.setX(...)</CODE>
-	  *             or <CODE>Optimizer.report(...)</CODE> before using
-	  *             <CODE>Optimizer.getX(...)</CODE> or 
-	  *             <CODE>Optimizer.getDx(...)</CODE>.
 	  * @param x point with lowest known objective function value<BR>
 	  *        <B>Note:</B> The independent variable of the point
           *        has to be in the same mode as the Optimizer Object
@@ -123,7 +117,7 @@ public class Perturber
 		do
 		{
 			xL = (Point)xC.clone();
-			s = stepFactor * o.getDx(i);
+			s = stepFactor * o.getDx(i, xL.getX(i));
 			com = comTOC;
 			couExp = 0;
 			do
@@ -138,12 +132,14 @@ public class Perturber
 					double xCO;
 					if (o.getMode() == o.TRANSFORMED)
 					{
-						o.setMode(o.ORIGINAL);
-						xCO = o.getX(i);
-						o.setMode(o.TRANSFORMED);
+					    xCO = genopt.db.ContinuousParameter.transformValue(x.getX(i), 
+											       o.getL(i), 
+											       o.getU(i), 
+											       o.getKindOfConstraint(i), 
+											       1);
 					}
 					else
-						xCO = o.getX(i);
+						xCO = x.getX(i);
 			
 						String em = "Value 'Step' of parameter '" + varNam + 
 							"' too small or objective function has a" + LS +
@@ -172,12 +168,14 @@ public class Perturber
 						double xCO;
 						if (o.getMode() == o.TRANSFORMED)
 						{
-							o.setMode(o.ORIGINAL);
-							xCO = o.getX(i);
-							o.setMode(o.TRANSFORMED);
+						    xCO = genopt.db.ContinuousParameter.transformValue(x.getX(i), 
+												       o.getL(i), 
+												       o.getU(i), 
+												       o.getKindOfConstraint(i), 
+												       1);
 						}
 						else
-							xCO = o.getX(i);
+							xCO = x.getX(i);
 						
 						String em = "Value 'Step' of parameter '" + varNam + 
 							"' too small or objective function has a" + LS +
@@ -205,17 +203,12 @@ public class Perturber
 	/** gets the point with the lowest function value
 	  *@return the optimal point
 	  */
-	public Point getOptimialPoint()
+	public Point getOptimalPoint()
 	{
 		return (Point)xL.clone();
 	}
 
-	/* gets the function value of the optimal point
-	  *@return the function value of the optimal point
-	  */
-//	public double getOptimialFunctionValue() { return fL; }
-
-	/** checks whether we have an optimum point
+        /** checks whether we have an optimum point
 	  *@return <CODE>true</CODE> if the checked point is a local minimum point,<BR>
 	  *        <CODE>false</CODE> otherwise
 	  */

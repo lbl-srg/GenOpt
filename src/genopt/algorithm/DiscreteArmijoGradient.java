@@ -134,29 +134,11 @@ public class DiscreteArmijoGradient extends Optimizer
 				   0, Optimizer.EXCLUDING,
 				   Double.MAX_VALUE, Optimizer.INCLUDING);
 	
-	/////////////////////////////////////////////////////
-	// check initial point for feasibility
-	String errMes = "";
-	setMode(Optimizer.ORIGINAL);
-	for (int i=0; i < dimX; i++)
-	    if (getX(i) < getL(i))
-		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Lower bound " + getL(i) + "." + LS;
-	    else if (getX(i) > getU(i))
-		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Upper bound " + getU(i) + "." + LS;
-	if (errMes.length() > 0)
-	    throw new OptimizerException("Initial point not feasible:" + 
-					 LS + errMes);
-	setMode(Optimizer.TRANSFORMED);
-	xIni = super.getX();
-	dXIni = new double[dimX];
-	for(int i = 0; i < dimX; i++)
-	    dXIni[i] = super.getDx(i);
     }
 
     /** Runs the optimization process until a termination criteria
      * is satisfied
+     * @param x0 initial point
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
@@ -170,11 +152,34 @@ public class DiscreteArmijoGradient extends Optimizer
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public int run() throws
+    public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
 	IllegalAccessException, Exception{
 
 	int retFla;
+
+	/////////////////////////////////////////////////////
+	// check initial point for feasibility
+	String errMes = "";
+	setMode(Optimizer.ORIGINAL);
+	for (int i=0; i < dimX; i++){
+	    final double xi = super.getX0(i);
+	    if (xi < getL(i))
+		errMes += getVariableNameContinuous(i) + "=" + 
+		    xi + ": Lower bound " + getL(i) + "." + LS;
+	    else if (xi > getU(i))
+		errMes += getVariableNameContinuous(i) + "=" + 
+		    xi + ": Upper bound " + getU(i) + "." + LS;
+	}
+	if (errMes.length() > 0)
+	    throw new OptimizerException("Initial point not feasible:" + 
+					 LS + errMes);
+	setMode(Optimizer.TRANSFORMED);
+	xIni = x0.getX();
+	dXIni = new double[dimX];
+	for(int i = 0; i < dimX; i++)
+	    dXIni[i] = super.getDx(i, xIni[i]);
+
 	////////////////////////////////
 	// initialize
 	println("Initialize.");
@@ -185,10 +190,10 @@ public class DiscreteArmijoGradient extends Optimizer
 	int k = KSta;
 	////////////////////////////////
 	// evaluate function at initial point
-	Point x = new Point(dimX, 0, dimF);
+	Point x = (Point)x0.clone();
 	for(int j = 0; j < dimX; j++)
 	    x.setX(j, (double)0);
-	x.setComment( "Initial point." );
+	x.setComment( "Initial point.");
 	x = this.getF(x, Optimizer.MAINITERATION);
 	////////////////////////////////
 	// optimization loop

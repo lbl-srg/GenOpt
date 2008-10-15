@@ -144,12 +144,12 @@ public class HookeJeeves extends Optimizer
 	// check initial point for feasibility
 	String errMes = "";
 	for (int i=0; i < dimX; i++)
-	    if (getX(i) < getL(i))
+	    if (getX0(i) < getL(i))
 		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Lower bound " + getL(i) + LS;
-	    else if (getX(i) > getU(i))
+		    getX0(i) + ": Lower bound " + getL(i) + LS;
+	    else if (getX0(i) > getU(i))
 		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Upper bound " + getU(i) + LS;
+		    getX0(i) + ": Upper bound " + getU(i) + LS;
 	if (errMes.length() > 0)
 	    throw new OptimizerException("Initial point not feasible:" + 
 					 LS + errMes);
@@ -165,13 +165,14 @@ public class HookeJeeves extends Optimizer
 
     /** Runs the optimization process until a termination criteria
      * is satisfied
+     * @param x0 initial point     
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
      * @exception Exception
      * @exception OptimizerException
      */
-    public int run() throws OptimizerException, Exception{
+    public int run(Point x0) throws OptimizerException, Exception{
         boolean iterate = true;
         int i, step;
         int retFla = 0;
@@ -181,7 +182,7 @@ public class HookeJeeves extends Optimizer
 	Point temPoi; // Point object, for report used only
 		
         // evaluate function at base point
-        for (i=0; i < dimX; i++) cb[i] = getX(i);
+	cb = x0.getX();
         fc = getF(cb);
 	fr = new double[fc.length];
 	fp = new double[fc.length];
@@ -228,7 +229,7 @@ public class HookeJeeves extends Optimizer
 		else{
 		    step = 3;
 		    for (i = 0; i < dimX; i++)
-			if (StrictMath.abs(rb[i]-cb[i]) > 0.5 * absSr * getDx(i)) {
+			if (StrictMath.abs(rb[i]-cb[i]) > 0.5 * absSr * getDx(i, rb[i])) {
 			    step = 2;
 			    i = dimX;
 			}
@@ -285,7 +286,7 @@ public class HookeJeeves extends Optimizer
         for (int i = 0; i < dimX; i++) {
 	    cen = rb[i]; // center of test
 	    // check first direction
-	    rb[i] = cen + sr[i] * getDx(i);
+	    rb[i] = cen + sr[i] * getDx(i, cen);
 
 	    fr = getF(rb);
 	    dir = (sr[i] > 0) ? POSDIR : NEGDIR;
@@ -300,7 +301,7 @@ public class HookeJeeves extends Optimizer
 		checkObjectiveFunctionValue();
 		
 		sr[i] = -sr[i];
-		rb[i] = cen + sr[i] * getDx(i);
+		rb[i] = cen + sr[i] * getDx(i, cen);
 		fr = getF(rb);
 		dir = (sr[i] > 0) ? POSDIR : NEGDIR;
 		

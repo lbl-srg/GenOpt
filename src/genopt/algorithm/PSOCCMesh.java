@@ -108,7 +108,7 @@ public class PSOCCMesh extends PSOCC{
 	final double del =  1. / StrictMath.pow(MesSizDiv, IniMesSizExp);
 	Delta = new double[dimCon];
 	for(int i = 0; i < dimCon; i++)
-	    Delta[i] = del * getDx(i);
+	    Delta[i] = del * getDx0(i);
 	// make sure that Delta[i] is not larger than upper bound minus lower bound
 	String em = "";
 	for(int i = 0; i < dimCon; i++){
@@ -118,7 +118,7 @@ public class PSOCCMesh extends PSOCC{
 	}
 	if ( em.length() > 0 )
 	    throw new OptimizerException(em);
-	X0Con = getX();
+	X0Con = getX0();
     }
     
 

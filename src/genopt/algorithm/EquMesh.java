@@ -106,12 +106,12 @@ public class EquMesh extends Optimizer{
 		    "' has lower bound equal upper bound." + LS;
 	    
 	    // check that step is an integer value
-	    if ( Math.rint(getDx(i)) != getDx(i) )
+	    if ( Math.rint(getDx0(i)) != getDx0(i) )
 		em += "Parameter '" + getVariableNameContinuous(i) +
-		    "' has a step size equal to '" + getDx(i) + 
+		    "' has a step size equal to '" + getDx0(i) + 
 		    "'. Require an integer value." + LS;
 	    // check that Step is not negative
-	    if ( getDx(i) < 0)
+	    if ( getDx0(i) < 0)
 		em += "Parameter '" + getVariableNameContinuous(i) + 
 		    "' has a negative value for 'Step'." + LS;
 	}
@@ -128,7 +128,7 @@ public class EquMesh extends Optimizer{
 	nS = 1;
 	// number of runs
 	for (i = 0; i < dimX; i++){
-	    step[i] = Math.round(Math.round(getDx(i))) + 1; 
+	    step[i] = Math.round(Math.round(getDx0(i))) + 1; 
 	    nS *= step[i];
 	    x0[i] = getL(i);
 	    dx[i] = getU(i) - x0[i];
@@ -139,11 +139,13 @@ public class EquMesh extends Optimizer{
     }
 
     /** Runs the evaluation 
+     * @param x0 initial point
      * @return <CODE>+4</CODE> the only possible return value 
      * @exception Exception	  
      * @exception OptimizerException
      */
-    public int run() throws OptimizerException, Exception{
+    public int run(Point x0) throws OptimizerException, Exception{
+	// this algorithm does not use the initial point
 	perturb(dimX-1);
 	return 4;
     }

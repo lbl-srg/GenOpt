@@ -106,6 +106,7 @@ public class GPSPSOCCHJ extends PSOCCMesh
 
     /** Runs the optimization process until a termination criteria
      * is satisfied
+     * @param x0 initial point
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
@@ -119,20 +120,24 @@ public class GPSPSOCCHJ extends PSOCCMesh
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public int run() throws
+    public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
 	IllegalAccessException, Exception{
 	println("Start search for initial point for second algorithm.");
-	int retFla = super.run();
+	int retFla = super.run((Point)x0.clone());
 
-	final Point xMinIni = super.getMinimumPoint();
-	xMinIni.setComment("Minimum point of initialization.");
-	report(xMinIni, Optimizer.SUBITERATION);
-	report(xMinIni, Optimizer.MAINITERATION);
+	// get initial point for second algorithm
+	Point xMinIni = (Point)super.getMinimumPoint();
+	x0.setX(xMinIni.getX());
+	x0.setIndex(xMinIni.getIndex());
+	x0.setF(xMinIni.getF()); // set the function value to get correct reporting of initial value
+	x0.setStepNumber(xMinIni.getStepNumber());
+	x0.setComment("Minimum point of initialization.");
+	report(x0, Optimizer.SUBITERATION);
+	report(x0, Optimizer.MAINITERATION);
 	println("Finished search for initial point. Start second algorithm.");
 	println("");
-	updateParameterSetting(xMinIni);
-	retFla = FinAlg.run();
+	retFla = FinAlg.run(x0);
 	if ( retFla == 1 )  // required accuracy is reached
 	    super.reportMinimum();
 	return retFla;

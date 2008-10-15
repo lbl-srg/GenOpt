@@ -130,12 +130,6 @@ public class DiscreteParameter extends IndependentParameter
 	    return new DiscreteParameter(null, index, values);
     }
     
-    /** Sets the index that points to the currently selected value.
-     * @param ind index that points to the currently selected value.
-     */
-    public final void setIndex(int ind) { index = ind; }
-
-
     /** Gets the index that points to the currently selected value.
      * @return index that points to the currently selected value.
      */
@@ -187,15 +181,6 @@ public class DiscreteParameter extends IndependentParameter
 	    return valuesNum[ind];
     }
 
-
-    /** sets the discrete <CODE>discreteType</CODE>, as specified in DiscreteParameter.
-     * @param type <CODE>discreteType</CODE><br> 
-     * 0: string<BR>
-     * 1: integer<BR>
-     * 2: double</pre>
-     */
-    public void setDiscreteType(int type){ discreteType = type; }
-    
     /** Gets the discrete <CODE>discreteType</CODE>, as specified in DiscreteParameter.
      * @return <CODE>discreteType</CODE><br> 
      * 0: string<BR>

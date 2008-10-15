@@ -140,8 +140,8 @@ public class GPSCoordinateSearch extends ModelGPS
 	double[][] r = new double[dim][2*dim];
 	LinAlg.initialize(r, 0);
 	for(int i = 0; i < dim; i++){
-	    r[i][2*i] = getDx(i);
-	    r[i][2*i+1] = -getDx(i);
+	    r[i][2*i] = getDx0(i);
+	    r[i][2*i+1] = -getDx0(i);
 	}
 	return r;
     }

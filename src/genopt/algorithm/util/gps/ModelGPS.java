@@ -235,12 +235,12 @@ abstract public class ModelGPS extends Optimizer
 	// check initial point for feasibility
 	String errMes = "";
 	for (int i=0; i < dimX; i++)
-	    if (getX(i) < getL(i))
+	    if (getX0(i) < getL(i))
 		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Lower bound " + getL(i) + LS;
-	    else if (getX(i) > getU(i))
+		    getX0(i) + ": Lower bound " + getL(i) + LS;
+	    else if (getX0(i) > getU(i))
 		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Upper bound " + getU(i) + LS;
+		    getX0(i) + ": Upper bound " + getU(i) + LS;
 	if (errMes.length() > 0)
 	    throw new OptimizerException("Initial point not feasible:" + 
 					 LS + errMes);
@@ -325,8 +325,8 @@ abstract public class ModelGPS extends Optimizer
 	Point[] poi = new Point[numPoi];
 	poi[0] = new Point( dimCon, dimDis, dimF );
 	// initialize first point as in input file
-	poi[0].setX( getX() );
-	poi[0].setIndex( getIndex() );
+	poi[0].setX( getX0() );
+	poi[0].setIndex( getIndex0() );
 	poi[0].setStepNumber(getStepNumber());
 	poi[0].setF(fun);
 	double[] dDom = new double[dimCon];
@@ -345,11 +345,10 @@ abstract public class ModelGPS extends Optimizer
 	}
     
 	// initialize parameters randomly
-
 	final double delMes =  1. / StrictMath.pow(mesSizDiv, iniMesSizExp);
 	double[] delta = new double[dimCon];
 	for(int i = 0; i < dimCon; i++)
-	    delta[i] = delMes * getDx(i);
+	    delta[i] = delMes * getDx0(i);
 
 
 	for(int iP = 1; iP < numPoi; iP++){
@@ -393,7 +392,8 @@ abstract public class ModelGPS extends Optimizer
 
     /** Runs the optimization process until a termination criteria
      * is satisfied
-     * @return <CODE>-1</CODE> if the maximum number of iteration
+     *@param x0 Initial iterate
+     *@return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
      *@exception OptimizerException if an OptimizerException occurs or
@@ -406,12 +406,13 @@ abstract public class ModelGPS extends Optimizer
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public int run() throws
+    public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
 	IllegalAccessException, Exception{
 	if ( NumIniPoi == 1 ){
-	    return _run( new Point(getX(), getIndex(), 
-				   new double[dimF], getStepNumber(), "Initial point.") );
+	    Point xIni = (Point)x0.clone();
+	    xIni.setComment("Initial point");
+	    return _run( xIni );
 	}
 	else{
 	    int r = -1;
@@ -486,7 +487,7 @@ abstract public class ModelGPS extends Optimizer
 		final double[] f = new double[dimF];
 		// need to get index since this algo can be used in a hybrid algorithm
 		// which has continuous and discrete paramters.
-	        x[k] = xIni;
+	        x[k] = (Point)xIni.clone();
 		x[k] = this.getF(x[k]);
 		// need to set comment again because it may be overwritten
 		// if f is smoothed

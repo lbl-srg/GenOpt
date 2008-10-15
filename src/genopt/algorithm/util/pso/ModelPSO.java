@@ -165,12 +165,12 @@ abstract public class ModelPSO extends Optimizer
 	// check initial point for feasibility
 	String errMes = "";
 	for (int i=0; i < dimCon; i++)
-	    if (getX(i) < getL(i))
+	    if (getX0(i) < getL(i))
 		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Lower bound " + getL(i) + "." + LS;
-	    else if (getX(i) > getU(i))
+		    getX0(i) + ": Lower bound " + getL(i) + "." + LS;
+	    else if (getX0(i) > getU(i))
 		errMes += getVariableNameContinuous(i) + "=" + 
-		    getX(i) + ": Upper bound " + getU(i) + "." + LS;
+		    getX0(i) + ": Upper bound " + getU(i) + "." + LS;
 	if (errMes.length() > 0)
 	    throw new OptimizerException("Initial point not feasible:" + 
 					 LS + errMes);
@@ -198,6 +198,7 @@ abstract public class ModelPSO extends Optimizer
 
     /** Runs the optimization process until a termination criteria
      * is satisfied
+     * @param x0 Initial point
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
@@ -211,7 +212,7 @@ abstract public class ModelPSO extends Optimizer
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public int run() throws
+    public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
 	IllegalAccessException, Exception{
 
@@ -219,7 +220,7 @@ abstract public class ModelPSO extends Optimizer
 	////////////////////////////////
 	// initialize
 	// current population
-	initializeCurrentPopulation();
+	initializeCurrentPopulation(x0);
 	// local best
 	LocBes = new Point[NumPar];
 	// global best
@@ -371,13 +372,12 @@ abstract public class ModelPSO extends Optimizer
     
     
     /** Initializes the current population
+     *@param x0 Initial point
      */
-    private void initializeCurrentPopulation(){
+    private void initializeCurrentPopulation(Point x0){
 	CurPop = new Point[NumPar];
-	CurPop[0] = new Point( dimCon, dimDis, dimF );
 	// initialize first point as in input file
-	CurPop[0].setX( getX() );
-	CurPop[0].setIndex( getIndex() );
+	CurPop[0] = (Point)x0.clone();
 	
 	double[] dDom = new double[dimCon];
 	for(int i = 0; i < dimCon; i++){

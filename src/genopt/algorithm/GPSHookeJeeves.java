@@ -151,9 +151,6 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
 	    xBas.setX( newCoo );
 	    xBas.setStepNumber( getStepNumber() );
 	    xBas = getF(xBas);
-	    // we need to reset the comment because it gets overwritten if the
-	    // cost function is double-integrated
-	    xBas.setComment("Exploration base, Delta = " + getDelta() + ".");
 	    report(xBas, SUBITERATION);
 	}
 	Point[] r = explore(xBas, delta);

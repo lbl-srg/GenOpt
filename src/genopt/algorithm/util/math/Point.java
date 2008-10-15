@@ -207,7 +207,7 @@ public class Point implements Comparable
 	r += LS + "Maximum coordinates   : ";
 	for (int i=0; i < dimDis; i++)
 	    r += cooDisMax[i] + "; ";
-	r +=      "Step number           : " + steNum + ";";
+	r += LS + "Step number           : " + steNum + ";";
 	r += LS + "Function values       : ";
 	for (int i=0; i < dimF; i++)
 	    r += fun[i] + "; ";
@@ -216,8 +216,8 @@ public class Point implements Comparable
     }
 
     /** Gets the point's function values
-		  *@return the point's function values
-		  */
+      *@return the point's function values
+      */
     public double[] getF(){
     	if (dimF == 0) return null;
         double[] r = new double[dimF];
@@ -573,9 +573,6 @@ public class Point implements Comparable
 		    else
 			return +1;
 		}
-		// old comparison that just truncates to float
-		    //if ((float)cooCon[i] > (float)argCon[i]) return -1;
-		    //if ((float)cooCon[i] < (float)argCon[i]) return +1;
 	    }
 	}
 	// check discrete variables

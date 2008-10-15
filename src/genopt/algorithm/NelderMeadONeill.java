@@ -5,6 +5,8 @@ import genopt.algorithm.util.math.*;
 import genopt.GenOpt;
 import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
+import genopt.simulation.SimulationInputException;
+import genopt.db.ContinuousParameter;
 import java.io.*;
 
 /** Class for minimizing a function using the Simplex algorithm 
@@ -127,17 +129,28 @@ public class NelderMeadONeill extends Optimizer
 	x = new Point[dimXP1];
 	for (int i = 0; i < dimXP1; i++)
 	    x[i] = new Point(getDimensionX(), 0, getDimensionF());
+	
+	// Constraints
+	low = new double[dimX];
+	upp = new double[dimX];
+	con = new int[dimX];
+	for (int i = 0; i < dimX; i++){
+	    low[i] = getL(i);
+	    upp[i] = getU(i);
+	    con[i] = getKindOfConstraint(i);
+	}
     }
 
     /** Runs the optimization process until a termination criteria
 	  * is satisfied
+	  * @param x0 initial point
 	  * @return <CODE>-1</CODE> if the maximum number of iteration 
 	  *                         is exceeded
 	  *     <BR><CODE>+1</CODE> if the required accuracy is reached
 	  * @exception Exception	  
 	  * @exception OptimizerException
 	  */
-    public int run() throws OptimizerException, Exception
+    public int run(Point x0) throws OptimizerException, Exception
     {
 	boolean restart = false;
 	int retFla = 0;
@@ -193,19 +206,19 @@ public class NelderMeadONeill extends Optimizer
 		    {
 		    case 0: // Initalization
 			for (i = 0; i < dimX; i++) // starting point
-			    x[0].setX(i, getX(i));
+			    x[0].setX(i, getX0(i));
 			step = 1;
 			break;
 		    case 1: // Etablish the initial simplex
 			for (i = 1; i < dimXP1; i++)
 			    {
 				for (j = 0; j < dimX; j++)
-				    {
+				    {   // getX is used on x[0] since x[0] may be reassigned after a failed optimality check
 					if (i==j+1)
-					    x[i].setX(j, getX(j) +
-						      ssf * getDx(j));
+					    x[i].setX(j, x[0].getX(j) +
+						      ssf * getDx( j, x[0].getX(j) ));
 					else
-					    x[i].setX(j, getX(j));
+					    x[i].setX(j, x[0].getX(j));
 				    }
 			    }
 				// get the objective function values for the initial simplex
@@ -223,7 +236,7 @@ public class NelderMeadONeill extends Optimizer
 				report(x[i], SUBITERATION);
 				if ( i == 0)
 				    report(x[i], MAINITERATION);
-				checkObjectiveFunctionValue();						
+				checkObjectiveFunctionValue();	
 			    }
 			step = 2;
 			break;
@@ -418,7 +431,7 @@ public class NelderMeadONeill extends Optimizer
 			}
 			else {
 			    restart = true; // to prevent a recalculation of the 0-th pt.
-			    x[0] = per.getOptimialPoint();
+			    x[0] = per.getOptimalPoint();
 			    x[0].setComment(com[10]);
 			    report(x[0], MAINITERATION);
 			    if (writeStepNumber())
@@ -532,6 +545,12 @@ public class NelderMeadONeill extends Optimizer
 
     /** The points */
     protected Point[] x;
+    /** The lower bounds */
+    protected double[] low;
+    /** The upper bounds */
+    protected double[] upp;
+    /** The kind of constraints */
+    protected int[] con;
     /** The dimension of the problem */
     protected int dimX;
     /** The dimension of the problem plus 1 */

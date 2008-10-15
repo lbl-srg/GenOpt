@@ -517,10 +517,10 @@ public class ResultManager
 	    ResultPoint rp = (ResultPoint)o;
 	    if ( getF(0) < rp.getF(0) )
 		return -1;
-	    else if (getF(0) == rp.getF(0))
-		return 0;
-	    else
+	    else if (getF(0) > rp.getF(0))
 		return 1;
+	    else
+		return super.compareTo((Point)rp);
 	}
 
 	/** gets the run number

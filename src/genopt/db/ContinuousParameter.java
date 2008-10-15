@@ -108,167 +108,174 @@ public class ContinuousParameter extends IndependentParameter
 	maximum		 = MaxValue;
 	originalStepSize = OriginalStepSize;
 	constraint	 = Constraint;
-	transformed      = transformValue(OriginalValue, 0);
-	setTransformedStepSize();
     }
 
     /** Clone
      */
-    protected Object clone()
-    {
+    protected Object clone(){
 	if (name != null)
 	    return new ContinuousParameter(new String(name), minimum, original, maximum,
 					   originalStepSize, constraint);
 	else
 	    return new ContinuousParameter(null, minimum, original, maximum,
 					   originalStepSize, constraint);
-	    
+	
     }
-
-    /** Set the parameter value in the original space and
-     * update the parameter value in the transformed space
-     * and the step size in the transformed space.<BR>
-     * @param OriginalValue parameter value in the original space
-     */
-    public final void setOriginalValue(double OriginalValue)
-    {
-	original    = OriginalValue;
-	transformed = transformValue(OriginalValue, 0);
-	setTransformedStepSize();
-    }
-
-    /** Set the parameter value in the transformed space and
-     * update the parameter value in the original space
-     * and the step size in the transformed space.<BR>
-     * @param TransfomedValue parameter value in the transformed space
-     */
-    public final void setTransformedValue(double TransfomedValue)
-    {
-	transformed = TransfomedValue;
-	original    = transformValue(TransfomedValue, 1);
-	setTransformedStepSize();
-    }
-
-    /** Get the parameter value in the original space
+    
+    /** Gets the parameter value in the original space
      * @return parameter value in the original space
      */
     public final double getOriginalValue() { return original; }
- 
     
-    /** Get the parameter value in the transformed space
+    /** Gets the parameter value in the transformed space
      * @return parameter value in the transformed space
      */
-    public final double getTransformedValue(){ return transformed;  }
+    public final double getTransformedValue(){ 
+	return transformValue(original, minimum, maximum, constraint, 0);
+    }
 
-    /** Get the minimum restriction of the parameter
+    /** Gets the minimum restriction of the parameter
      * @return minimum restriction of the parameter
      */
     public final double getMinimum() { return minimum; }
 
-    /** Get the maximum restriction of the parameter
+    /** Gets the maximum restriction of the parameter
      * @return maximum restriction of the parameter
      */
     public final double getMaximum() { return maximum; }
 
 
-    /** Get the step size in the original space
+    /** Gets the step size in the original space
      * @return step size in the original space
      */
     public final double getOriginalStepSize() { return originalStepSize; }
 
-    /** Get the step size in the transformed space
-     * @return step size in the transformed space
-     */
-    public final double getTransformedStepSize() { return transformedStepSize; }
-
-    /** Get the kind of constraint
+    /** Gets the kind of constraint
      * @return kind of constraint
      */
     public final int getKindOfConstraint() {return constraint;}
 
-    /** transforms a value from the original to the transformed space or 
+    /** Transforms a value from the original to the transformed space or 
      * vice-versa, depending on the value of <CODE>direction</CODE><BR>
-     * @param value the value that has to be transformed
-     * @param direction <CODE>0</CODE> if transformation has to be done
+     * @param x the value that has to be transformed
+     * @param l its minimum value (or any dummy value if not applicable for this
+     *                type of constraint
+     * @param u its minimum value (or any dummy value if not applicable for this
+     *                type of constraint
+     * @param con kind of constraint
+     * @param dir <CODE>0</CODE> if transformation has to be done
      *       from original to transformed space, <CODE>1</CODE> otherwise
      * @return the transformed value
      */
-    private double transformValue(double value, int direction)
+    public static double[] transformValue(double x[], 
+					  double l[],
+					  double u[],
+					  int con[],
+					  int dir){
+	final int n = x.length;
+	double[] r = new double[n];
+	for(int i = 0; i < n; i++)
+	    r[i] = transformValue(x[i], l[i], u[i], con[i], dir);
+	return r;
+    }
+
+    /** Transforms a value from the original to the transformed space or 
+     * vice-versa, depending on the value of <CODE>direction</CODE><BR>
+     * @param x the value that has to be transformed
+     * @param l its minimum value (or any dummy value if not applicable for this
+     *                type of constraint
+     * @param u its minimum value (or any dummy value if not applicable for this
+     *                type of constraint
+     * @param con kind of constraint
+     * @param dir <CODE>0</CODE> if transformation has to be done
+     *       from original to transformed space, <CODE>1</CODE> otherwise
+     * @return the transformed value
+     */
+    public static double transformValue(double x, 
+					double l,
+					double u,
+					int con,
+					int dir)
     {
-	if (direction == 0) 
+	if (dir == 0) 
 	    {   //transform from original to transformed
-		switch (constraint)
+		switch (con)
 		    {
 		    case 2:
-			return Math.pow(value - minimum, 0.5);
+			return Math.pow(x - l, 0.5);
 		    case 3:
-			return Math.asin(Math.pow((value - minimum) /
-						  (maximum-minimum), 0.5)) ;
+			return Math.asin(Math.pow((x-l)/(u-l), 0.5)) ;
 		    case 4:
-			return Math.pow(maximum-value, 0.5);
+			return Math.pow(u-x, 0.5);
 		    default:
-			return value;
+			return x;
 
 		    }
 	    }
 	else   
 	    {	//transform from transformed to original
-		switch (constraint)
+		switch (con)
 		    {
 		    case 2:
-			return minimum + Math.pow(value, 2.);
+			return l + Math.pow(x, 2.);
 		    case 3:
-			return minimum + (maximum-minimum) * 
-			    Math.pow(Math.sin(value),2.);
+			return l + (u-l) * Math.pow(Math.sin(x),2.);
 		    case 4:
-			return maximum - Math.pow(value, 2.);
+			return u - Math.pow(x, 2.);
 		    default:
-			return value;
+			return x;
 		    }
 	    }
     }
 
-    /** Set the step size in the transformed space
+    /** Gets the step size in the transformed space
+     * @param x the parameter value in the original space
+     * @param dx the step size in the original space
+     * @param l its minimum value (or any dummy value if not applicable for this
+     *                type of constraint
+     * @param u its minimum value (or any dummy value if not applicable for this
+     *                type of constraint
+     * @param con kind of constraint
+     * @param dir <CODE>0</CODE> if transformation has to be done
+     *       from original to transformed space, <CODE>1</CODE> otherwise
+     * @return step size in the transformed space  
 	  */
-    private void setTransformedStepSize()
-    {
-	if (constraint == 1)
-	    {	// no restrictions
-		transformedStepSize = originalStepSize;
+    public static double getTransformedStepSize(double x, 
+						 double dx,
+						 double l,
+						 double u,
+						 int con,
+						 int dir){
+	if (con == 1) {   // no restrictions
+	    return dx;
+	}
+	else{   // some restrictions
+	    double HalSteSiz = dx / 2;
+	    double LowVal = x - HalSteSiz;
+	    double HigVal = x + HalSteSiz;
+	    // ensure that constraints are not crossed 
+	    if (LowVal < l){
+		LowVal = l;
+		HigVal = LowVal + 2 * HalSteSiz;
 	    }
-	else
-	    {	// some restrictions
-		double HalSteSiz = originalStepSize / 2;
-		double LowVal = original - HalSteSiz;
-		double HigVal = original + HalSteSiz;
-		// ensure that constraints are not crossed 
-		if (LowVal < minimum)
-		    {
-			LowVal = minimum;
-			HigVal = LowVal + 2 * HalSteSiz;
-		    }
-		if (HigVal > maximum)
-		    {
-			HigVal = maximum;
-			LowVal = HigVal - 2 * HalSteSiz;
-		    }
-		transformedStepSize = Math.abs(transformValue(HigVal, 0) -
-					       transformValue(LowVal, 0));
+	    if (HigVal > u){
+		HigVal = u;
+		LowVal = HigVal - 2 * HalSteSiz;
 	    }
+	    final double r = Math.abs(transformValue(HigVal, l, u, con, dir) -
+			    transformValue(LowVal, l, u, con, dir));
+	    return r;
+	}
     }
 
     /** value in the original space */
     protected double original;
-    /** value in the transformed space */
-    protected double transformed;
     /** lower boundary */
     protected double minimum;
     /** upper boundary */
     protected double maximum;
     /** step size in the original space */
     protected double originalStepSize;
-    /** step size in the transformed space */
-    protected double transformedStepSize;
     /** kind of constraint<BR>
 	   1: continuous, unconstrained,<BR>
 	   2: continuous, lower bounded,<BR>

@@ -8,6 +8,7 @@ import genopt.algorithm.util.math.Fun;
 import genopt.simulation.SimulationInputException;
 import java.io.IOException;
 import java.util.TreeMap;
+import java.util.Vector;
 
 /** Class for doing a parametric run where one parameter
    * is perturbed at a time while the others are fixed. 
@@ -116,7 +117,7 @@ public class Parametric extends Optimizer
 	for (int i = 0; i < dimCon; i++){
 	    // check that all values are positive if 
 	    // logarithmic spacing is required
-	    if (getDx(i) < 0){ // have logarithmic scale
+	    if (getDx0(i) < 0){ // have logarithmic scale
 		if(getL(i) <= 0)
 		    em += "Parameter '" + getVariableNameContinuous(i) +
 			"' has logarithmic scale and lower bound '" + getL(i) + "'." + LS;
@@ -125,13 +126,13 @@ public class Parametric extends Optimizer
 			"' has logarithmic scale and upper bound '" + getU(i) + "'." + LS;
 	    }
 	    // check that l != u if step != 0
-	    if (getDx(i) != 0 && getL(i) == getU(i))
+	    if (getDx0(i) != 0 && getL(i) == getU(i))
 		em += "Parameter '" + getVariableNameContinuous(i) +
 		    "' has step size unequal 0 but its lower bound equal to its upper bound." + LS;
 	    // check that step is an integer value
-	    if ( Math.rint(getDx(i)) != getDx(i) )
+	    if ( Math.rint(getDx0(i)) != getDx0(i) )
 		em += "Parameter '" + getVariableNameContinuous(i) +
-		    "' has a step size equal to '" + getDx(i) + "'. Require an integer value." + LS;
+		    "' has a step size equal to '" + getDx0(i) + "'. Require an integer value." + LS;
 	    
 	}
 	
@@ -144,22 +145,22 @@ public class Parametric extends Optimizer
     }
 
     /** Runs the evaluation 
+     * @param x0 initial point
      * @return <CODE>+4</CODE> the only possible return value 
      * @exception Exception	  
      * @exception OptimizerException
      */
-    public int run() throws OptimizerException, Exception {
-	Point poi = new Point(dimCon, dimDis, dimF);
+    public int run(Point x0) throws OptimizerException, Exception {
+	//	Point poi = (Point)x0.clone();
 	// initialize points with current settings
-	poi.setXIndex( getX(), getIndex() );
-	poi.setStepNumber(0);
-	final Point defPoi = (Point)poi.clone();
+	final Point defPoi = (Point)x0.clone();
+	Vector<Point> poiVec = new Vector<Point>(dimCon);
 	// vary continuous parameters
 	for(int iC = 0; iC < dimCon; iC++){
 	    // reset point to default values, so all coordinates are at their inital values
-	    poi = (Point)defPoi.clone();
+	    Point poi = (Point)defPoi.clone();
 	    
-	    int nStep = Math.round( (float)getDx(iC) );
+	    int nStep = Math.round( (float)getDx0(iC) );
 	    if ( nStep != 0 ){
 		// set up spacing
 		double[] xSp;
@@ -168,22 +169,38 @@ public class Parametric extends Optimizer
 		
 		for(int iS = 0; iS < xSp.length; iS++){
 		    poi.setX(iC, xSp[iS]);
-		    this.getF(poi);
+		    poiVec.add((Point)poi.clone());
 		}
 	    }
 	}
 	// vary discrete parameters
 	for(int iD = 0; iD < dimDis; iD++){
 	    // reset point to default values, so all coordinates are at their initial values
-	    poi = (Point)defPoi.clone();
+	    Point poi = (Point)defPoi.clone();
 	    
 	    int len = getLengthDiscrete(iD);
 	    if ( len != 1 ){
 		for (int ind = 0; ind < len; ind++){
 		    poi.setIndex(iD, ind);
-		    this.getF(poi);
+		    poiVec.add((Point)poi.clone());
 		}
 	    }
+	}
+	// execute the simulations
+	final int nPoi = poiVec.size();
+	Point[] p = new Point[nPoi];
+	int iSim = getSimulationNumber();
+	for(int i = 0; i < nPoi; i++){
+	    p[i] = (Point)(poiVec.get(i));
+	    p[i] = super.getF(p[i]);
+	    if ( iSim == getSimulationNumber() )
+		p[i].setComment("Point already evaluated.");
+	    else{
+		p[i].setComment("Function evaluation successful.");
+		iSim = getSimulationNumber();
+	    }
+	    report(p[i], SUBITERATION);
+	    report(p[i], MAINITERATION);
 	}
 	return 4;
     }

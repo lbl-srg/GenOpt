@@ -199,7 +199,7 @@ abstract public class Optimizer
      * This method must not be used to decrease the step number
      *@param sN
      */
-    protected void resetStepNumber(final int sN){
+    static protected void resetStepNumber(final int sN){
 	assert ( sN <= stepNumber ) : "Method can only be used to decrease the step number.";
 	assert ( sN > 0 ) : "Argument must be bigger than 0.";
 	stepNumber = sN;
@@ -407,13 +407,6 @@ abstract public class Optimizer
 	if (useSteNum){
 	    stepNumber++;
 	    data.ResMan.resetResultNumber();
-	    /*	 aaaaa   if (wriSteNum){
-		println("-------- Optimizer: evaPoi.clear().");
-		evaPoi.clear();
-		}*/
-	    // If we don't write the step number, it won't be used 
-	    // for computing the objective function.
-	    // Thus, we do not need to clear the mapping.
 	}
     }
     
@@ -444,7 +437,7 @@ abstract public class Optimizer
 	if  (wriSteNum)
 	    return this.getF(x);
 	else{
-	    updateParameterSetting(x);
+	    //	    updateParameterSetting(x);
 	    return (Point)x.clone();
 	}
     }
@@ -780,6 +773,7 @@ abstract public class Optimizer
 
     /** Abstract method for running the optimization algorithm
      *     until a termination criteria is satisfied
+     * @param x0 Initial iterate
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if any required accuracy is reached
@@ -796,22 +790,103 @@ abstract public class Optimizer
      * @exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an Exception occurs
      */
-    abstract public int run()
+    abstract public int run(Point x0)
 	throws OptimizerException, SimulationInputException, 
 	       NoSuchMethodException, IllegalAccessException, InvocationTargetException,
 	       Exception;
 
-    /** Evaluates the simulation based on the parameter set x<BR>
+    /** Method for running the optimization algorithm
+     *     until a termination criteria is satisfied. This method is called
+     *     by the GenOpt kernel. 
+     * @return <CODE>-1</CODE> if the maximum number of iteration
+     *                         is exceeded
+     *     <BR><CODE>+1</CODE> if any required accuracy is reached
+     *     <BR><CODE>+2</CODE> if the absolute accuracy is reached
+     *     <BR><CODE>+3</CODE> if the relative accuracy is reached
+     *     <BR><CODE>+4</CODE> if run is finished without checking
+     *                         a convergence criteria
+     *                         (e.g., parametric runs)
+     * @exception OptimizerException if an OptimizerException occurs
+     * @exception InputFormatException if an InputFormatException occurs
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
+     *                                    control and the underlying method is inaccessible
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an Exception occurs
+     */
+    final public int run()
+	throws OptimizerException, SimulationInputException, 
+	       NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+	       Exception{
+	Point x0 = new Point(dimCon, dimDis, dimF);
+	// initialize points with current settings
+	x0.setXIndex( getX0(), getIndex0() );
+	x0.setStepNumber(0);
+	x0.setComment( "Initial point.");
+	return this.run(x0);
+    }
+
+    /** Evaluates the simulation for the point x<BR>
      * The value <CODE>constraints</CODE> determines in which mode the constraints
-     * are treated<UL>
-     * <LI>After this call, the parameters in the original <I>and</I> in the
-     *     transformed space are set to the values that correspond to <CODE>x</CODE>
-     * <LI>The step size in the transformed space is updated according
-     *     to the transformation function
-     * <LI>A new input file is writen
-     * <LI>the simulation is launched
-     * <LI>simulation errors are checked
-     * <LI>the value of the objective function is returned</UL>
+     * are treated. The return value contains the same point but with its function value
+     * as determined by the simulation.
+     *
+     *@param x the point being evaluated
+     *@param stopAtError set to false to continue with function evaluations even if there was an error
+     *@return a clone of the point with the new function values stored
+     *@exception OptimizerException if an OptimizerException occurs or
+     *           if the user required to stop GenOpt
+     *@exception SimulationInputException if an error in writing the
+     *           simulation input file occurs
+     *@exception NoSuchMethodException if a method that should be invoked could not be found
+     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     *                                    control and the underlying method is inaccessible
+     *@exception InvocationTargetException if an invoked method throws an exception
+     *@exception Exception if an I/O error in the simulation input file occurs
+     */
+    public Point[] getF(Point[] x, boolean stopAtError)
+	throws SimulationInputException, OptimizerException, NoSuchMethodException,
+	       IllegalAccessException, Exception{
+	assert x != null : "Received 'null' as argument";
+	Point[] r = new Point[x.length];
+	for(int iP = 0; iP < x.length; iP++){
+	    try{
+		r[iP] = _getF(x[iP]);
+	    }
+	    catch(Exception e){
+		if(stopAtError || mustStopOptimization())
+		    throw e;
+		else{
+		    String em = "Exception in evaluating x = ( ";
+		    for (int i=0; i < dimCon-1; i++)
+		        em += x[iP].getX(i) + ", ";
+		    if (dimDis == 0)
+			em += x[iP].getX(dimCon-1) + ")." + LS;
+		    else{
+			em += x[iP].getX(dimCon-1) + "; ";
+			for (int i=0; i < dimDis-1; i++)
+			    em += x[iP].getIndex(i) + ", ";
+			em += x[iP].getIndex(dimDis-1) + ")." + LS;
+		    }
+		    setWarning( em + e.getMessage() );
+		    double[] f = new double[dimF];
+		    for(int i=0; i<dimF; i++)
+			f[i] = 0;
+		    r[iP].setF(f);
+		    r[iP].setComment("Error during function evaluation. See log file.");
+		}
+		// proceed as usual
+	    }
+	}
+	return r;
+    }
+
+
+    /** Evaluates the simulation for the point x<BR>
+     * The value <CODE>constraints</CODE> determines in which mode the constraints
+     * are treated. The return value contains the same point but with its function value
+     * as determined by the simulation.
+     *
      *@param x the point being evaluated
      *@return a clone of the point with the new function values stored
      *@exception OptimizerException if an OptimizerException occurs or
@@ -864,7 +939,7 @@ abstract public class Optimizer
     private Point _getF(final Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
-	updateParameterSetting(x);
+	//	updateParameterSetting(x);
 	Point r = (Point)x.clone();
 	////////////////////////////////////////////////////////
 	// check whether this point has already been evaluated
@@ -875,18 +950,22 @@ abstract public class Optimizer
 	else // step number is not used. Set to 1 
 	    key.setStepNumber(1);
 
-	// make sure step number is set to the current value
 	if( evaPoi.containsKey(key) ){
 	    ////////////////////////////////////////////////////////
 	    // point already evaluated
 	    //  println("Point already evaluated. Take function value from database.");
 	    // get the function value corresponding to this point
-	    Double[] valD = (Double[])(evaPoi.get(key));
-	    double[] val = new double[valD.length];
-	    for (int i = 0; i < valD.length; i++)
-		val[i] = valD[i].doubleValue();
-
-	    r.setF(val);
+	    try{
+		Double[] valD = (Double[])(evaPoi.get(key));
+		double[] val = new double[valD.length];
+		for (int i = 0; i < valD.length; i++)
+		    val[i] = valD[i].doubleValue();
+		r.setF(val);
+	    }
+	    catch(ClassCastException e){
+		String errMes = "ClassCastException when looking up previous function value";
+		throw new OptimizerException(errMes);
+	    }
 	    return r;
 	    ////////////////////////////////////////////////////////
 	}
@@ -991,24 +1070,6 @@ abstract public class Optimizer
 	return _evaluateSimulation(x);
     }
 
-    /** Updates the settings of the current value of the continuous
-     *  and discrete parameters.
-     *
-     * @param x Point whose values will be used to update the continuous and
-     *          discrete parameters.
-     */
-    protected void updateParameterSetting(final Point x){
-	//continuous parameters
-	if (conMode == ORIGINAL)
-	    for (int i = 0; i < dimCon; i++)
-		data.conPar[i].setOriginalValue(x.getX(i));
-	else if (conMode == TRANSFORMED)
-	    for (int i = 0; i < dimCon; i++)
-		data.conPar[i].setTransformedValue(x.getX(i));
-	// discrete parameters
-	for (int i = 0; i < dimDis; i++)
-	    data.disPar[i].setIndex(x.getIndex(i));
-    }
 
     /** appends a String to the output listing files
      *@param s String to be appended to output listing files
@@ -1085,10 +1146,14 @@ abstract public class Optimizer
 	    final String varNam = ( j < dimCon) ? 
 		getVariableNameContinuous(j) : getVariableNameDiscrete(j-dimCon);
 	    final String varVal = ( j < dimCon) ?
-		data.ioSet.toString(data.conPar[j].getOriginalValue()) :
-		data.disPar[j-dimCon].getValueString();
-	    final String repl = "%" + varNam + "%";
+		data.ioSet.toString( (conMode == TRANSFORMED ) ? 
+				     genopt.db.ContinuousParameter.transformValue(x.getX(j), 
+										  getL(j), getU(j),
+										  getKindOfConstraint(j), 1) :
+				     x.getX(j) ) :
+		data.disPar[j-dimCon].getValueString( x.getIndex(j-dimCon) );
 
+	    final String repl = "%" + varNam + "%";
 	    boolean found = _replaceInInputFile(repl, varVal, SimulationInput);
 	    found = ( _replaceInInputFunction(repl, varVal) || found );
 	    found = ( _replaceInOutputFunction(repl, varVal) || found  );
@@ -1161,7 +1226,6 @@ abstract public class Optimizer
 	    }
 	}
 	if (exit) throw new OptimizerException(errMes);
-
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
@@ -1429,7 +1493,7 @@ abstract public class Optimizer
      * @param i the number of the variable (zero-based counter)
      * @return the value of the variable
      */
-    public double getX(final int i){
+    public double getX0(final int i){
 	assert ( i >= 0 && i < dimCon) : 
 	    "Wrong argument. Received 'i=" + i +"'";
 	if (conMode == ORIGINAL)
@@ -1442,7 +1506,7 @@ abstract public class Optimizer
      * @param i the number of the variable (zero-based counter)
      * @return the index of the variable
      */
-    public int getIndex(final int i){
+    public int getIndex0(final int i){
 	assert ( i >= 0 && i < dimDis) : 
 	    "Wrong argument. Received 'i=" + i +"'";
 	return data.disPar[i].getIndex();
@@ -1450,24 +1514,17 @@ abstract public class Optimizer
 
 
     /** Gets the double representation of the <CODE>variableNumber</CODE>-th 
-     *  <I>discrete</I> parameter.<BR>
+     *  <I>discrete</I> parameter as specified in the command file<BR>
      *
      * If the variable represents discrete <I>numerical</I> values, then the double
      * value of the currently selected value is returned.<BR>
      * If the variable represents different <I>string</I> values, then the currently
      * selected index is returned.<P>
      *
-     * <B>Note:</B>
-     * Prior to calling this method, you need to call either
-     * {@link #setIndex(int, int) setIndex(int, int)} (for each component), 
-     * or {@link #getF(Point) getF(Point)}, or
-     * {@link #increaseStepNumber(Point) increaseStepNumber(Point)}.
-     * Either of these methods update the index of the discrete parameter.
-     *
      * @param variableNumber the number of the variable (zero-based counter)
      * @return the double representation of the currently selected value
      */
-    public double getDiscreteValueDouble(final int variableNumber){
+    public double getDiscreteValueDouble0(final int variableNumber){
 	assert ( variableNumber >= 0 && variableNumber < dimDis) : 
 	    "Wrong argument. Received 'i=" + variableNumber +"'";
 	return data.disPar[variableNumber].getValueDouble();
@@ -1479,20 +1536,20 @@ abstract public class Optimizer
      * depending on the value of <CODE>constraints</CODE>
      * @return the vector of the independent variables
      */
-    public double[] getX(){
+    public double[] getX0(){
 	double[] r = new double[dimCon];
 	for (int i = 0; i < dimCon; i++)
-	    r[i] = getX(i);
+	    r[i] = getX0(i);
 	return r;
     }
 
     /** Gets the indices of the discrete variable <CODE>x</CODE><BR>
      * @return the vector of indices of the independent variables
      */
-    public int[] getIndex(){
+    public int[] getIndex0(){
 	int[] r = new int[dimDis];
 	for (int i = 0; i < dimDis; i++)
-	    r[i] = getIndex(i);
+	    r[i] = getIndex0(i);
 	return r;
     }
 
@@ -1589,56 +1646,43 @@ abstract public class Optimizer
     /** Gets the step size <CODE>dx[i]</CODE> of the i-th continuous variable<BR>
      * <B>Note:</B> <CODE>dx[i]</CODE> might be in the transformed space
      * depending on the value of <CODE>constraints</CODE>.<BR>
-     * Do not forget to set x before using this method in an
-     * other mode than <CODE>contraints = 0</CODE>
      * @param i the number of the variable (zero-based counter)
+     * @param x the current value of the variable. If the optimization algorithm works in the transformed
+     *        space, then <code>x</code> need to be in the transformed space as well.
      * @return the value of the variable
      */
-    public double getDx(final int i){
-	assert ( i >= 0 && i < dimCon) : 
-	    "Wrong argument. Received 'i=" + i +"'";
+    public double getDx(final int i, final double x){
+	assert ( i >= 0 && i < dimCon) : "Wrong argument. Received 'i=" + i +"'";
+	final double dxOri = data.conPar[i].getOriginalStepSize();
 	if (conMode == ORIGINAL)
-	    return data.conPar[i].getOriginalStepSize();
-	else if (conMode == TRANSFORMED)
-	    return data.conPar[i].getTransformedStepSize();
+	    return dxOri;
+	else if (conMode == TRANSFORMED){
+	    final double l = getL(i);
+	    final double u = getU(i);
+	    final int    c = getKindOfConstraint(i);
+	    // transform x from transformed to original space, then get the step size in the 
+	    // transformed space
+	    final double xOri = genopt.db.ContinuousParameter.transformValue(x, l, u, c, 1);
+	    final double r    = genopt.db.ContinuousParameter.getTransformedStepSize(xOri, dxOri, 
+										     l, u, c, 0);
+	    return r;
+	}
 	else
 	    return 0;
     }
 
-    /** Sets the value of the continuous variable <CODE>x[i]</CODE> to <CODE>value</CODE>.<BR>
-     * <B>Note:</B> <CODE>x[i]</CODE> might have to be in the transformed space
-     * depending on the value of <CODE>constraints</CODE>
-     * @param i the number of the variable (zero-based counter)
-     * @param value the value of the variable
+    /** Gets the step size <CODE>dx[i]</CODE> of the i-th continuous variable as specified 
+     * in the command file.<BR>
+     * <B>Note:</B> <CODE>dx[i]</CODE> might be in the transformed space
+     * depending on the value of <CODE>constraints</CODE>.<BR>
+     * Do not forget to set x before using this method in an
+     * other mode than <CODE>contraints = 0</CODE>
+     * @param i the index of the variable (zero-based counter)
+     * @return the value of the variable
      */
-    public void setX(final int i, final double value) {
-	assert ( i >= 0 && i < dimCon) : 
-	    "Wrong argument. Received 'i=" + i +"'";
-	if (conMode == ORIGINAL){
-	    assert ( (value >= getL(i)) && (value <= getU(i)) ) : 
-		"Variable out of bounds. Received 'x[" + i + "]=" + value +"'";
-	    data.conPar[i].setOriginalValue(value);
-	}
-	else
-	    data.conPar[i].setTransformedValue(value);
+    public double getDx0(final int i){
+	return this.getDx(i, data.conPar[i].getOriginalValue());
     }
-
-    /** Sets the index of the discrete variable <CODE>x[variableNumber]</CODE>
-     *  to the value <CODE>index</CODE>.
-     * 
-     * @param variableNumber the number of the variable (zero-based counter)
-     * @param index the index of the variable
-     */
-    public void setIndex(final int variableNumber, final int index){
-	assert ( variableNumber >= 0 && variableNumber < dimDis) : 
-	    "Wrong argument. Received 'variableNumber=" + variableNumber +"'";
-	assert ( index >= 0 && 
-		 index < data.disPar[variableNumber].length() ) :
-	    "Index out of bounds. Received 'x[" + variableNumber + "]=" + 
-	    index +"'";
-	data.disPar[variableNumber].setIndex(index);
-    }
-
 
     /** Prints a message to the output device without finishing the line<BR>
      * <B>Note:</B> Use this method instead of <CODE>System.out.printl(String)</CODE>,
@@ -1690,10 +1734,7 @@ abstract public class Optimizer
     }
 
 
-    /** Reports the new trial and updates the parameters<UL>
-     * <LI>updates the original value
-     * <LI>updates the transformed value
-     * <LI>updates the transformed step size
+    /** Reports an iterate to the output files and to the internal data structure<UL>
      * <LI>reports the new trial
      * <LI>reports the objective function value
      * <LI>increases the number of the iteration</UL>
@@ -1718,8 +1759,10 @@ abstract public class Optimizer
 	// parse point to original domain
 	if (conMode == TRANSFORMED){
 	    for (int i = 0; i < dimCon; i++){
-		data.conPar[i].setTransformedValue(r.getX(i));
-		r.setX(i, data.conPar[i].getOriginalValue());
+		final double xOri = genopt.db.ContinuousParameter.transformValue(r.getX(i), 
+										 getL(i), getU(i),
+										 getKindOfConstraint(i), 1);
+		r.setX(i, xOri);
 	    }
 	}
 	data.ResMan.setNewTrial(r, (MainIteration) ? 0 : 1);
