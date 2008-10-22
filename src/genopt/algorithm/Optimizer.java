@@ -127,7 +127,6 @@ abstract public class Optimizer
 	dimDis   = data.disPar.length;
 	dimX = dimCon + dimDis;
 	dimInpFun = data.inpFun.length;
-	inpFun = new String[dimInpFun];
 
 	optComFilNam = new String(data.OptIni.getOptComPat() + FS +
 				  data.OptIni.getOptComFilNam());
@@ -167,7 +166,6 @@ abstract public class Optimizer
 	for (int i = 0; i < dimF; i++)
 	    nameF[i] = objFunObj[i].getName();
 
-	outFun = new String[dimF];
 	funValPoi = new int[dimF];
 	
 	// delete old input, log and output save files if user specifies savePath
@@ -972,7 +970,7 @@ abstract public class Optimizer
 	else{
 	    ////////////////////////////////////////////////////////
 	    // point not yet evaluated
-	    data.ResMan.increaseNumberOfFunctionEvaluation();
+	    genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
 	    
 	    /* since Windows NT4WS has problems with IO operation
 	       (i.e., after around a thousand calls of this function,
@@ -984,7 +982,7 @@ abstract public class Optimizer
 	       inproperly
 	    */
 
-	    if (data.ResMan.getNumberOfSimulation() > 1){
+	    if (genopt.db.ResultManager.getNumberOfSimulation() > 1){
 		try{
 		    key = _evaluateSimulation(r);
 		}
@@ -1133,10 +1131,11 @@ abstract public class Optimizer
 	    SimulationInput[i] = new FileHandler(simInpTemFilHan[i].getFileContentsString());
 	
 	// Formulas of the input function objects
-	for (int i = 0; i < dimInpFun; i++){
+	String[] inpFun = new String[dimInpFun];
+	for(int i = 0; i < dimInpFun; i++)
 	    inpFun[i] = data.inpFun[i].getFunction();
-	}
 	// Formulas of the output function objects
+	String[] outFun = new String[dimF];
 	for (int i = 0; i < dimF; i++)
 	    outFun[i] = objFunObj[i].isFunction() ? objFunObj[i].getFunction() : null;
 
@@ -1155,8 +1154,8 @@ abstract public class Optimizer
 
 	    final String repl = "%" + varNam + "%";
 	    boolean found = _replaceInInputFile(repl, varVal, SimulationInput);
-	    found = ( _replaceInInputFunction(repl, varVal) || found );
-	    found = ( _replaceInOutputFunction(repl, varVal) || found  );
+	    found = ( Optimizer.replace(inpFun, repl, varVal) || found );
+	    found = ( Optimizer.replace(outFun, repl, varVal) || found  );
 	    // check whether we found the value at least once
 	    if (!found) // variable was not found in input file
 		_variableNotFound(repl);
@@ -1167,8 +1166,8 @@ abstract public class Optimizer
 	    final String repl = "%stepNumber%";
 	    final String varVal = String.valueOf(stepNumber);
 	    boolean found = _replaceInInputFile(repl, varVal, SimulationInput);
-	    found = ( _replaceInInputFunction(repl, varVal) || found );
-	    found = ( _replaceInOutputFunction(repl, varVal) || found );
+	    found = ( Optimizer.replace(inpFun, repl, varVal) || found );
+	    found = ( Optimizer.replace(outFun, repl, varVal) || found );
 	    
 	    // check for wrong input file specification
 	    if (!found){ // variable was not found in input file
@@ -1186,12 +1185,13 @@ abstract public class Optimizer
 	    boolean found = ( data.inpFun[k].getReferenceCounter() > 0 );
 	    final String varNam = data.inpFun[k].getName();
 	    final String repl   = '%' + varNam + '%';
+
 	    FunctionEvaluator fe = new FunctionEvaluator( varNam, inpFun[k]);
 	    final String varVal = String.valueOf(fe.evaluate());
 	    found = ( _replaceInInputFile(repl, varVal, SimulationInput) || found );
 	    // replace result in output function objects 
 	    // (there are no references to input function objects)
-	    found = ( _replaceInOutputFunction(repl, varVal) || found );
+	    found = ( Optimizer.replace(outFun, repl, varVal) || found );
 	    // check whether we found the value at least once
 	    if (!found) // variable was not found in input file
 		_variableNotFound(repl);
@@ -1336,31 +1336,16 @@ abstract public class Optimizer
     }
 
     /** Replaces <code>text</code> with <code>value</code> in input functions.
+     *@param strArr array of strings that will be searched
      *@param text text to be searched for
      *@param value value that will replace <code>text</code>
      *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
      */
-    private static boolean _replaceInInputFunction(final String text, final String value){
+    protected static boolean replace(String[] strArr, final String text, final String value){
 	boolean found = false;
-	for (int i = 0; i < inpFun.length; i++){
-	    if ( inpFun[i].indexOf(text) != -1 ){ // found string
-		inpFun[i] = FileHandler.replaceAll(text, value, inpFun[i]);
-		found = true;
-	    }
-	}
-	return found;
-    }
-
-    /** Replaces <code>text</code> with <code>value</code> output functions.
-     *@param text text to be searched for
-     *@param value value that will replace <code>text</code>
-     *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
-     */
-    private static boolean _replaceInOutputFunction(final String text, final String value){
-	boolean found = false;
-	for (int i = 0; i < outFun.length; i++){
-	    if ( outFun[i] != null && outFun[i].indexOf(text) != -1 ){ // found String
-		outFun[i] = FileHandler.replaceAll(text, value, outFun[i]);
+	for (int i = 0; i < strArr.length; i++){
+	    if ( strArr[i] != null && strArr[i].indexOf(text) != -1 ){ // found string
+		strArr[i] = FileHandler.replaceAll(text, value, strArr[i]);
 		found = true;
 	    }
 	}
@@ -1962,10 +1947,6 @@ abstract public class Optimizer
     static private int dimX;
     /** The number of input functions */
     static private int dimInpFun;
-    /** Text representation of the input functions */
-    static private String[] inpFun;
-    /** Text representation of the output functions */
-    static private String[] outFun;
     /** The number of cost function values */
     static private int dimF;
     /** The name of the function values */

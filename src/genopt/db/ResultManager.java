@@ -169,7 +169,7 @@ public class ResultManager
 
     /** Increases the number of function evaluations
      */
-    public void increaseNumberOfFunctionEvaluation() { simNum++; }
+    static public void increaseNumberOfFunctionEvaluation() { simNum++; }
 
 
     /** Resets the counter of the main and sub iterations to 1.
@@ -232,7 +232,7 @@ public class ResultManager
     /** Returns the number of simulations
      * @return the number of simulations
      */
-    public int getNumberOfSimulation()  { return simNum; }
+    static public int getNumberOfSimulation()  { return simNum; }
     
     /** Returns the number of all results
      * @return the number of all results
@@ -450,7 +450,7 @@ public class ResultManager
     /** number of result entry of all and sub iterations, starting with 0*/
     protected int resNum;
     /** number of function evaluations */
-    protected int simNum;
+    static protected int simNum;
     /** number of the main iteration*/
     protected int maiIteNum;
     /** number of the sub iteration*/

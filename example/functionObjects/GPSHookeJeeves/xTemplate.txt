@@ -1,0 +1,2 @@
+This file does nothing. But it is needed as a placeholder 
+for an input template file.
