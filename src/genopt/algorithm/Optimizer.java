@@ -847,9 +847,10 @@ abstract public class Optimizer
 	       IllegalAccessException, Exception{
 	assert x != null : "Received 'null' as argument";
 	Point[] r = new Point[x.length];
+	boolean[] evaluate = setKnownFunctionValues(x);
 	for(int iP = 0; iP < x.length; iP++){
 	    try{
-		r[iP] = _getF(x[iP]);
+		r[iP] = (evaluate[iP]) ? _getF(x[iP]) : (Point)x[iP].clone();
 	    }
 	    catch(Exception e){
 		if(stopAtError || mustStopOptimization())
@@ -907,23 +908,63 @@ abstract public class Optimizer
 	    throw new OptimizerException(data.USER_STOP_MESSAGE);
 	}
 	// make sure step number is set to the current value
-	Point r = (Point)x.clone();
-	r.setStepNumber(stepNumber);
-	return _getF(r);
+	Point[] r = new Point[1];
+	r[0] = (Point)x.clone();
+	r[0].setStepNumber(stepNumber);
+	boolean[] evaluate = new boolean[1];
+	evaluate = setKnownFunctionValues(r);
+	if (evaluate[0]) // need a simulation
+	    r[0] = _getF(r[0]);
+	return r[0];
     }
+
+    /** Sets the function values in these points that are already known.
+     *@param x the points for which the function values are needed
+     *@return a vectors with elements set to <code>true</code> if a simulation is needed
+     *        for a particular point
+     *@exception OptimizerException if an OptimizerException occurs or
+     *           if the user required to stop GenOpt
+     */
+    private boolean[] setKnownFunctionValues(Point[] x)
+	throws OptimizerException{
+	boolean[] r = new boolean[x.length];
+	Point[] key = new Point[x.length];
+	////////////////////////////////////////////////////////
+	// check whether this point has already been evaluated
+	for (int i = 0; i < x.length; i++){
+	    key[i] = (Point)x[i].clone();
+	    if (wriSteNum) // step number is written, hence it may be used for penalty functions
+		key[i].setStepNumber(stepNumber);
+	    else // step number is not used. Set to 1 
+		key[i].setStepNumber(1);
+	    r[i] = !evaPoi.containsKey(key[i]);
+
+	    if( !r[i] ){
+		////////////////////////////////////////////////////////
+		// Point already evaluated
+		// set its function value
+		//  println("Point already evaluated. Take function value from database.");
+		try{
+		    Double[] valD = (Double[])(evaPoi.get(key[i]));
+		    double[] val = new double[valD.length];
+		    for (int iV = 0; iV < valD.length; iV++)
+			val[iV] = valD[iV].doubleValue();
+		    x[i].setF(val);
+
+		}
+		catch(ClassCastException e){
+		    String errMes = "ClassCastException when looking up previous function value";
+		    throw new OptimizerException(errMes);
+		}
+	    }
+	} // end of loop
+	return r;
+    }
+
+
     /** Evaluates the simulation based on the parameter set x<BR>
-     * The value <CODE>constraints</CODE> determines in which mode the constraints
-     * are treated<UL>
-     * <LI>After this call, the parameters in the original <I>and</I> in the
-     *     transformed space are set to the values that correspond to <CODE>x</CODE>
-     * <LI>The step size in the transformed space is updated according
-     *     to the transformation function
-     * <LI>A new input file is writen
-     * <LI>the simulation is launched
-     * <LI>simulation errors are checked
-     * <LI>the value of the objective function is returned</UL>
      *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
+     *@return a clone of the points with the new function values stored
      *@exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
      *@exception SimulationInputException if an error in writing the
@@ -937,84 +978,51 @@ abstract public class Optimizer
     private Point _getF(final Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
-	//	updateParameterSetting(x);
-	Point r = (Point)x.clone();
-	////////////////////////////////////////////////////////
-	// check whether this point has already been evaluated
-	Point key = (Point)x.clone();
+	Point key;
+	genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
+	    
+	/* since Windows NT4WS has problems with IO operation
+	   (i.e., after around a thousand calls of this function,
+	   it can happen that a file is not written properly
+	   to the disk) we give a second chance to perform
+	   the operation.
+	   But we do not retry it in the very first call since
+	   then the optimization/simulation is very likely set up
+	   inproperly
+	*/
 
-	if (wriSteNum) // step number is written, hence it may be used for penalty functions
-	    key.setStepNumber(stepNumber);
-	else // step number is not used. Set to 1 
-	    key.setStepNumber(1);
-
-	if( evaPoi.containsKey(key) ){
-	    ////////////////////////////////////////////////////////
-	    // point already evaluated
-	    //  println("Point already evaluated. Take function value from database.");
-	    // get the function value corresponding to this point
+	if (genopt.db.ResultManager.getNumberOfSimulation() > 1){
 	    try{
-		Double[] valD = (Double[])(evaPoi.get(key));
-		double[] val = new double[valD.length];
-		for (int i = 0; i < valD.length; i++)
-		    val[i] = valD[i].doubleValue();
-		r.setF(val);
+		key = _evaluateSimulation((Point)x.clone());
 	    }
-	    catch(ClassCastException e){
-		String errMes = "ClassCastException when looking up previous function value";
-		throw new OptimizerException(errMes);
+	    catch(Exception e){
+		key = _retryEvaluateSimulation((Point)x.clone(), e);
 	    }
-	    return r;
-	    ////////////////////////////////////////////////////////
 	}
 	else{
-	    ////////////////////////////////////////////////////////
-	    // point not yet evaluated
-	    genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
-	    
-	    /* since Windows NT4WS has problems with IO operation
-	       (i.e., after around a thousand calls of this function,
-	       it can happen that a file is not written properly
-	       to the disk) we give a second chance to perform
-	       the operation.
-	       But we do not retry it in the very first call since
-	       then the optimization/simulation is very likely set up
-	       inproperly
-	    */
-
-	    if (genopt.db.ResultManager.getNumberOfSimulation() > 1){
-		try{
-		    key = _evaluateSimulation(r);
-		}
-		catch(Exception e){
-		    key = _retryEvaluateSimulation(r, e);
-		}
-	    }
-	    else{
-		key = _evaluateSimulation(r);
-	    }
-	    
-	    /////////////////////////////////////////////////////
-	    // copy input, log and output files, if required
-	    _copyRunFiles();
-
-	    // add point and function value to the map of evaluated points
-	    Double[] val = new Double[key.getDimensionF()];
-	    for (int i = 0; i < val.length; i++)
-		val[i] = new Double(key.getF(i));
-
-	    if (wriSteNum) // step number is written, hence it may be used for penalty functions
-		key.setStepNumber(stepNumber);
-	    else // step number is not used in function evaluation. Set to 1 
-		key.setStepNumber(1);
-	    
-	    // we must clone the object that we put into the TreeMap
-	    // Otherwise, it's coordinates get changed since the map
-	    // contains only a reference to the instance.
-	    evaPoi.put((Point)key.clone(), val);
-	    key.setStepNumber(stepNumber);
-	    return key;
+	    key = _evaluateSimulation((Point)x.clone());
 	}
+	
+	/////////////////////////////////////////////////////
+	// copy input, log and output files, if required
+	_copyRunFiles();
+	
+	// add point and function value to the map of evaluated points
+	Double[] val = new Double[key.getDimensionF()];
+	for (int i = 0; i < val.length; i++)
+	    val[i] = new Double(key.getF(i));
+	
+	if (wriSteNum) // step number is written, hence it may be used for penalty functions
+	    key.setStepNumber(stepNumber);
+	else // step number is not used in function evaluation. Set to 1 
+	    key.setStepNumber(1);
+	
+	// we must clone the object that we put into the TreeMap
+	// Otherwise, it's coordinates get changed since the map
+	// contains only a reference to the instance.
+	evaPoi.put((Point)key.clone(), val);
+	key.setStepNumber(stepNumber);
+	return key;
     }
 
     /** Copies the files from <CODE>path</CODE> to <CODE>savePath</CODE> and
