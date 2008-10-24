@@ -1,1 +1,0 @@
-Dummy file, needed since GenOpt needs a simulation output file
