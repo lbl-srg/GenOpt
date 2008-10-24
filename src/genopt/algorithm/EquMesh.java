@@ -201,7 +201,7 @@ public class EquMesh extends Optimizer{
 		for (int i=0; i < dimX-1; i++)
 		        em += r.getX(i) + ", ";
 		    em += r.getX(dimX-1) + ")." + LS;
-		    setWarning( em + e.getMessage() );
+		    setWarning( em + e.getMessage(), r.getSimulationNumber() );
 		    double[] f = new double[dimF];
 		    for(int i=0; i<dimF; i++)
 			f[i] = 0;

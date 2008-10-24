@@ -351,7 +351,7 @@ public class DiscreteArmijoGradient extends Optimizer
 		final String mes = 
 		    "Initial cost function value is close to zero." + LS +
 		    "Algorithm does not use normalization of cost.";
-		setInfo(mes);
+		setInfo(mes, p.getSimulationNumber() );
 	    }
 	    InitializeNormalization = false;
 	}

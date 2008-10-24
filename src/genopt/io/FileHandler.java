@@ -1,6 +1,7 @@
 package genopt.io;
 import java.io.*;
 import java.io.FileWriter;
+import java.util.StringTokenizer;
 
 /** Object that handles file reading and writing and offers
   *   various manipulation and access methods of the file contents.
@@ -76,6 +77,8 @@ import java.io.FileWriter;
 public class FileHandler implements Cloneable{
     /** System dependent line separator */
     private final static String LS = System.getProperty("line.separator");
+    /** System dependent file separator */
+    protected final static String FS = System.getProperty("file.separator");
 
 	/** Increment for array that stores the Strings */
     private final int INCREMENT = 5;
@@ -212,6 +215,30 @@ public class FileHandler implements Cloneable{
 	return r;
     }
 
+    /** Replaces all paths with their canonical paths
+     *
+     *@param str The original string
+     *return A copy of <tt>str</tt> with all paths replaced by their canonical path
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
+     */
+    public static String replacePathsByCanonicalPaths(final String str, final String userDir)
+	throws IOException{
+	StringTokenizer st = new StringTokenizer(str, " \"", true);
+	String r = "";
+	while (st.hasMoreTokens()) {
+	    String tok = st.nextToken();
+	    if (tok.startsWith(".")){   // This adds, for example, to ./simulate.sh the full path name
+		tok = userDir + FS + tok;
+	    }
+	    File fil = new File(tok);
+	    if ( fil.isFile() || fil.isDirectory() )
+		r += fil.getCanonicalPath();
+	    else
+		r += tok;
+	} 
+	return r;
+    }
 
     /** replaces all occurences of the String 'find' with 
      *    the String 'set' (even if 'find' appears several times
@@ -260,6 +287,26 @@ public class FileHandler implements Cloneable{
 		j = FileContents[++LineNumber].indexOf(MatchString);
 	    }	while (j == -1 && LineNumber < (nLines-1) );
 	return (j == -1) ? j : LineNumber;
+    }
+
+    /** Deletes directories, even if they are not empty
+     *
+     *@param path Name of the directory
+     *@return <tt>true</tt> if and only if the file or directory is successfully deleted; <tt>false</tt> otherwise 
+     *@exception SecurityException If a security manager exists and its SecurityManager.checkDelete(java.lang.String) method denies delete access to the file
+     */
+    static public boolean deleteDirectory(File path)
+	throws SecurityException{
+	if( path.exists() ) {
+	    File[] files = path.listFiles();
+	    for(int i=0; i<files.length; i++) {
+		if(files[i].isDirectory()) 
+		    deleteDirectory(files[i]);
+		else
+		    files[i].delete();
+	    }
+	}
+	return( path.delete() );
     }
 
     /** gets the lowest position of two delimiters in 'Line'.

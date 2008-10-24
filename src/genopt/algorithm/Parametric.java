@@ -255,7 +255,7 @@ public class Parametric extends Optimizer
 			    em += r.getIndex(i) + ", ";
 			em += r.getIndex(dimDis-1) + ")." + LS;
 		    }
-		    setWarning( em + e.getMessage() );
+		    setWarning( em + e.getMessage(), r.getSimulationNumber() );
 		    double[] f = new double[dimF];
 		    for(int i=0; i<dimF; i++)
 			f[i] = 0;

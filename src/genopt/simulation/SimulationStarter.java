@@ -85,88 +85,110 @@ public class SimulationStarter implements Cloneable
      *        (Set it <CODE>true</CODE> if the extension has to be written, 
      *        <CODE>false</CODE> otherwise.)
      * @param workingDirectory the working directory for the process.
+     * @param OptIni Instance of OptimizationIni
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
      */
     public SimulationStarter(String command, boolean promptInputFileExtension,
-			     String workingDirectory)
-    {
+			     String workingDirectory, OptimizationIni optIni)
+	throws IOException{
 	CommandLine          = command;
 	PrombtFileExtension  = promptInputFileExtension;
 	this.setWorkingDirectory(workingDirectory);
+        OptIni           = optIni;
+	_updateCommandLine();
     }
 
-    /** updates the command line. This command must be used to update the command
-     * line that was set by the constructor before the method
-     * <A HREF="#runSimulation">runSimulation</A> or
-     * <A HREF="#getCommandLine">getCommandLine</A>
-     * is called the
-     * first time. It adds the additional informations
-     * that are contained in the command file to the command line.<dd>
-     * <b>Note:</b> All parameter might also be empty strings.
-     * @param OptIni Instance of Class OptimizationIni
+    /** Updates the command line. This command must be used to update the command
+     *  line that was set by the constructor.
+     *  Prior to the simulation, the method 
+     * <A HREF="#_updateCommandLine(String)">_updateCommandLine(String)</A>
+     * needs to be called to update the output and log directory with the full name of the
+     * temporary working directory.
+     *
      */
-    public void updateCommandLine(OptimizationIni OptIni)
-    {
+    private void _updateCommandLine(){
 	//update the command line so that it is ready to use
-	//  and set a flag that the CommandLine is now ready to use
-		
-	// cut the file extension apart the string if necessairy
+	
+	// cut the file extension from the string if necessairy
 	int nSimInpFil = OptIni.getNumberOfInputFiles();
 	String[] SimInputFileCal = new String[nSimInpFil];
 	for(int i = 0; i < nSimInpFil; i++)
 	    SimInputFileCal[i] = OptIni.getSimInpFilNam(i);
-	if (!PrombtFileExtension)
-	    {
-		int j;
-		for(int i = 0; i < nSimInpFil; i++)
-		    {	
-			j = SimInputFileCal[i].lastIndexOf('.');
-			if (j != -1)	//cut the extension only if there is really one
-			    SimInputFileCal[i] = new String(SimInputFileCal[i].substring(0, j));
-		    }
+	if (!PrombtFileExtension){
+	    for(int i = 0; i < nSimInpFil; i++){	
+		int j = SimInputFileCal[i].lastIndexOf('.');
+		if (j != -1)	//cut the extension only if there is really one
+		    SimInputFileCal[i] = new String(SimInputFileCal[i].substring(0, j));
 	    }
-	for(int i = 0; i < nSimInpFil; i++)
-	    {
-		CommandLine = replaceString(CommandLine, "%Simulation.Files.Template.File" + (i+1) +"%",
-					    OptIni.getSimInpTemFilNam(i) );
-		CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.File" + (i+1) +"%",
-					    SimInputFileCal[i]           );
-		CommandLine = replaceString(CommandLine, "%Simulation.Files.Template.Path" + (i+1) +"%",
-					    OptIni.getSimInpTemPat(i)    );
-		CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.Path" + (i+1) +"%",
-					    OptIni.getSimInpPat(i)       );
-		if (OptIni.getSimInpSavPat(i) != null)
-		    CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.SavePath" + (i+1) + "%",
-						OptIni.getSimInpSavPat(i));
-	    }
-
-	for (int i = 0; i < OptIni.getNumberOfLogFiles(); i++){
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Log.File" + (i+1) + "%",
-					OptIni.getSimLogFilNam(i));
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Log.Path" + (i+1) + "%",
-					OptIni.getSimLogPat(i));
+	}
+	for(int i = 0; i < nSimInpFil; i++){
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Template.File" + (i+1) +"%",
+					OptIni.getSimInpTemFilNam(i) );
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.File" + (i+1) +"%",
+					SimInputFileCal[i]           );
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Template.Path" + (i+1) +"%",
+					OptIni.getSimInpTemPat(i)    );
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.Path" + (i+1) +"%",
+					OptIni.getSimInpPat(i)       );
+	    if (OptIni.getSimInpSavPat(i) != null)
+		CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.SavePath" + (i+1) + "%",
+					    OptIni.getSimInpSavPat(i));
 	}
 
-	for (int i = 0; i < OptIni.getNumberOfOutputFiles(); i++){
+	for (int i = 0; i < OptIni.getNumberOfLogFiles(); i++){ // the path is update in the other _update... method
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Log.File" + (i+1) + "%",
+					OptIni.getSimLogFilNam(i));
+	}
+
+	for (int i = 0; i < OptIni.getNumberOfOutputFiles(); i++){ // the path is update in the other _update... method
 	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Output.File" + (i+1) + "%",
 					OptIni.getSimOutFilNam(i));
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Output.Path" + (i+1) + "%",
-					OptIni.getSimOutPat(i));
 	    if (OptIni.getSimOutSavPat(i) != null)
 		CommandLine = replaceString(CommandLine, "%Simulation.Files.Output.SavePath" + (i+1) + "%",
 					    OptIni.getSimOutSavPat(i));
 	}
 
-	CommandLine = replaceString(CommandLine, "%Simulation.Files.Configuration.Name1%"   , OptIni.getSimConFilNam()       );
-	CommandLine = replaceString(CommandLine, "%Simulation.Files.Configuration.Path1%"   , OptIni.getSimConPat()       );
-	CommandLine = replaceString(CommandLine, "%Simulation.CallParameter.Prefix%"        , OptIni.getSimCalPre()       );
-	CommandLine = replaceString(CommandLine, "%Simulation.CallParameter.Suffix%"        , OptIni.getSimCalSuf()       );
+	CommandLine = replaceString(CommandLine, "%Simulation.Files.Configuration.Name1%"   , OptIni.getSimConFilNam());
+	CommandLine = replaceString(CommandLine, "%Simulation.Files.Configuration.Path1%"   , OptIni.getSimConPat());
+	CommandLine = replaceString(CommandLine, "%Simulation.CallParameter.Prefix%"        , OptIni.getSimCalPre());
+	CommandLine = replaceString(CommandLine, "%Simulation.CallParameter.Suffix%"        , OptIni.getSimCalSuf());
 
-	CommandLine = replaceString(CommandLine, "%Optimization.Files.Command.File1%"       , OptIni.getOptComFilNam()    );
-	CommandLine = replaceString(CommandLine, "%Optimization.Files.Command.Path1%"       , OptIni.getOptComPat()       );
+	CommandLine = replaceString(CommandLine, "%Optimization.Files.Command.File1%"       , OptIni.getOptComFilNam());
+	CommandLine = replaceString(CommandLine, "%Optimization.Files.Command.Path1%"       , OptIni.getOptComPat());
 
-	CommandLine = replaceString(CommandLine, "%CLASSPATH%"            , System.getProperty("java.class.path")       );
+	CommandLine = replaceString(CommandLine, "%CLASSPATH%", System.getProperty("java.class.path"));
+
 	return;
     }
+
+    /** Updates the command line by replacing the output paths with the output path of the 
+     *  working directory, which can change from one simulation to another.
+     *
+     * Prior to this function, the function 
+     * <A HREF="#_updateCommandLine()">_updateCommandLine()</A>
+     * need to be called.
+     *
+     * @param worDirSuf Suffix for working directory. This will be added to all output and log paths.
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
+     */
+    private void _updateCommandLine(String worDirSuf)
+	throws IOException{
+	//update the command line so that it is ready to use
+
+	for (int i = 0; i < OptIni.getNumberOfLogFiles(); i++)
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Log.Path" + (i+1) + "%",
+					OptIni.getSimLogPat(i) + worDirSuf);
+
+	for (int i = 0; i < OptIni.getNumberOfOutputFiles(); i++)
+	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Output.Path" + (i+1) + "%",
+					OptIni.getSimOutPat(i) + worDirSuf);
+
+	CommandLine = genopt.io.FileHandler.replacePathsByCanonicalPaths(CommandLine, OptIni.getOptIniPat());
+	return;
+    }
+
 
     /** Replace all occurences of the String 'Find' with the String 'Set'
      *  in the String 'Original' even if 'Find' appears several times.<dd>
@@ -178,14 +200,13 @@ public class SimulationStarter implements Cloneable
      * @return String 'Original' where each occurence of 'Find' is replaced
      *   with 'Set'
      */
-    public static String replaceString(String Original, String Find, String Set)
-    {
+    public static String replaceString(String Original, String Find, String Set){
 	String WorStr = new String(Original);
 	int j;
 	int k = 0;
 	int SetLen    = Set.length();
 	int FinLen    = Find.length();
-
+	
 	do 
 	    {
 		j = WorStr.indexOf(Find, k);
@@ -211,16 +232,21 @@ public class SimulationStarter implements Cloneable
 
     /** Run the simulation program<dd>
      * <b>Note:</b> This method works only if the command line is already updated.
+     * @param worDirSuf working directory suffix, to be added to current working directory to enable
+     *                  parallel simulations
      * @exception IOException
      * @exception OptimizerException
      * @exception Exception
      * @see SimulationStarter#updateCommandLine
      */
-    public void run() throws IOException, OptimizerException, Exception
+    public void run(String worDirSuf) throws IOException, OptimizerException, Exception
     {
+	final File proWorDir = new File(worDir + worDirSuf);
+	_updateCommandLine(worDirSuf);
 	try
 	    {
-		pro = Runtime.getRuntime().exec(this.getCommandLine(), null, worDir);
+		//		pro = Runtime.getRuntime().exec(this.getCommandLine(worDirSuf), null, new File(worDir + worDirSuf));
+		pro = Runtime.getRuntime().exec(this.getCommandLine(), null, proWorDir);
 		pro.waitFor();
 		// sleep for some milliseconds
 		//			System.err.print("Go to sleep...   ");
@@ -232,7 +258,7 @@ public class SimulationStarter implements Cloneable
 		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 		    // Otherwise, the system does not release its resources, and
 		    // the exception "java.io.IOException: Too many open files" is
-		    // thrown after a few hundred or thoussands of simulations.
+		    // thrown after a few hundred or thousands of simulations.
 		    destroyProcess();
 
 		    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
@@ -244,7 +270,7 @@ public class SimulationStarter implements Cloneable
 			// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 			// Otherwise, the system does not release its resources, and
 			// the exception "java.io.IOException: Too many open files" is
-			// thrown after a few hundred or thoussands of simulations.
+			// thrown after a few hundred or thousands of simulations.
 			destroyProcess();
 
 			throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
@@ -263,13 +289,14 @@ public class SimulationStarter implements Cloneable
 		    String ErrMes =
 			LS + "Error in executing the simulation program" +
 			LS + "Exit value of the simulation program: " + ev +
+			LS + "Working directory                   : '" + proWorDir.getCanonicalPath() + "'." +
 			LS + "Current command String              : '" + this.getCommandLine() + "'." +
 			LS + "Error stream of simulation program  : " + sem + LS;
 
 		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 		    // Otherwise, the system does not release its resources, and
 		    // the exception "java.io.IOException: Too many open files" is
-		    // thrown after a few hundred or thoussands of simulations.
+		    // thrown after a few hundred or thousands of simulations.
 		    destroyProcess();
 
 		    throw new OptimizerException(ErrMes);
@@ -278,24 +305,26 @@ public class SimulationStarter implements Cloneable
 	catch(InterruptedException e){
 	    String ErrMes =
 		LS + "InterruptedException in executing the simulation program" + LS +
+		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
 		LS + "Current command String: '" + this.getCommandLine() + "'." + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
-	    // thrown after a few hundred or thoussands of simulations.
+	    // thrown after a few hundred or thousands of simulations.
 	    destroyProcess();
 	    throw new OptimizerException(ErrMes);
 	}
 	catch(SecurityException e){
 	    String ErrMes =
 		LS + "SecurityException in executing the simulation program" + LS +
+		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
 		LS + "Current command String: '" + this.getCommandLine() + "'." + LS +
 		"Exception message: " + LS + e.getMessage();
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
-	    // thrown after a few hundred or thoussands of simulations.
+	    // thrown after a few hundred or thousands of simulations.
 	    destroyProcess();
 	    throw new OptimizerException(ErrMes);
 	}
@@ -305,19 +334,20 @@ public class SimulationStarter implements Cloneable
 	catch(Exception e){ // any other exception
 	    String ErrMes =
 		LS + "Exception in executing the simulation program" + LS  +
+		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
 		LS + "Current command String: '" + this.getCommandLine() + "'." + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
-	    // thrown after a few hundred or thoussands of simulations.
+	    // thrown after a few hundred or thousands of simulations.
 	    destroyProcess();
 	    throw new Exception(ErrMes);
 	}
 	// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	// Otherwise, the system does not release its resources, and
 	// the exception "java.io.IOException: Too many open files" is
-	// thrown after a few hundred or thoussands of simulations.
+	// thrown after a few hundred or thousands of simulations.
 	destroyProcess();
     }
 	
@@ -335,11 +365,12 @@ public class SimulationStarter implements Cloneable
      * @param workingDirectory the working directory.
      */
     public void setWorkingDirectory(String workingDirectory){
-	worDir = new File(workingDirectory);
+	worDir = new String(workingDirectory);
     }
 
     protected String CommandLine;
     protected boolean PrombtFileExtension;
     protected Process pro;
-    protected File worDir;
+    protected String worDir;
+    protected OptimizationIni OptIni;
 }

@@ -236,7 +236,7 @@ public class NelderMeadONeill extends Optimizer
 				report(x[i], SUBITERATION);
 				if ( i == 0)
 				    report(x[i], MAINITERATION);
-				checkObjectiveFunctionValue();	
+				checkObjectiveFunctionValue( x[i] );	
 			    }
 			step = 2;
 			break;
@@ -334,7 +334,7 @@ public class NelderMeadONeill extends Optimizer
 					xkP1[i] = getF(xkP1[i]);
 					report(xkP1[i], SUBITERATION);
 					report(xkP1[i], MAINITERATION);
-					checkObjectiveFunctionValue();
+					checkObjectiveFunctionValue( xkP1[i] );
 				    }
 			    }
 			insideContraction = true;
@@ -349,7 +349,7 @@ public class NelderMeadONeill extends Optimizer
 				    {
 					xkP1[w].setComment( com[stepOld] );
 					report(xkP1[w], MAINITERATION);
-					checkObjectiveFunctionValue();
+					checkObjectiveFunctionValue( xkP1[w] );
 				    }
 			    }
 			step = 9;

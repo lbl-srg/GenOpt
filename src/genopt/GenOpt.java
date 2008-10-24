@@ -117,6 +117,7 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Oct  24 wm Deleted algorithm HookeJeeves.java. This is replaced by GPSHookeJeeves.java
  2008, Oct  04 wm Deleted the experimental feature for smoothing in Optimizer.java, 
                   including the optimization algorithms that used this feature.
  2008, July 28 wm In FileHandler.java, rewrote constructor FileHandler(File).
@@ -577,14 +578,16 @@ public class GenOpt extends Thread
      *         , ... , [NameN, DelimiterN]]</CODE>
      *         if present or a null pointer otherwise
      * @exception FileNotFoundException
+     * @exception IOException If the canonical path of the user directory cannot be obtained
      */
     private OrderedMap instantiateOptimizationIni(InputFormatException inpForExc)
-	throws FileNotFoundException
+	throws FileNotFoundException, IOException
     {
 	int nErr = inpForExc.getNumberOfErrors();
 	String fn = optIniPat + File.separator + optIniFilNam;
-        USERDIR = optIniPat; // the SimulationStarter will use this directory
-                             // as the working directory
+	USERDIR = (new File(optIniPat)).getCanonicalPath(); // the SimulationStarter will use this directory
+	    // as the working directory
+
 
 	StreamTokenizer optIniStrTok = new StreamTokenizer( new FileReader(fn) );
 
@@ -1400,8 +1403,12 @@ public class GenOpt extends Thread
 	    return;
 
 	// Constructor SimulationStarter
-	SimSta = new SimulationStarter(comEnt, proFilExt, USERDIR);
-	SimSta.updateCommandLine(OptIni);
+	try{ 
+	    SimSta = new SimulationStarter(comEnt, proFilExt, USERDIR, OptIni); 
+	}
+	catch(IOException e){
+	    inpForExc.setThrowable(e);
+	}
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -668,11 +668,13 @@ abstract public class ModelGPS extends Optimizer
 				Delta = 1. / StrictMath.pow((double)mesSizDiv, (double)mesSizExp);
 				setInfo("Set N = " + getStepNumber() + 
 					"; Phi = " + phiVal + 
-					"; t = " + t + "; Delta = " + Delta + ".");
+					"; t = " + t + "; Delta = " + Delta + ".", 
+					x[k+1].getSimulationNumber());
 			    }
 			    else
 				setInfo("Set N = " + getStepNumber() + 
-					 "; Phi = " + phiVal + ".");
+					"; Phi = " + phiVal + ".", 
+					x[k+1].getSimulationNumber() );
 
 			}
 		    }
@@ -876,17 +878,18 @@ abstract public class ModelGPS extends Optimizer
 	SimulationInputException, OptimizerException, NoSuchMethodException,
 	IllegalAccessException, Exception;
     
-    /** Checks whether the last cost function value has already been
+    /** Checks whether the cost function value has already been
      * obtained previously.<BR>
      * If it has been obtained previously, an information message is reported.
      * If the maximum number of matching function value is obtained, an exception
      * is thrown.
+     *@param x the point to be checked
      *@exception OptimizerException thrown if the maximum number of matching
      *           function value is obtained
      */
-    public void checkObjectiveFunctionValue()
+    public void checkObjectiveFunctionValue(final Point x)
 	throws OptimizerException {
-	if (checkObjFun) super.checkObjectiveFunctionValue();
+	if (checkObjFun) super.checkObjectiveFunctionValue(x);
     }
     
     

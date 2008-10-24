@@ -149,7 +149,7 @@ abstract public class Optimizer
 	    simInpTemFilHan[i] = new FileHandler(data.OptIni.getSimInpTemPat(i),
 						 data.OptIni.getSimInpTemFilNam(i));
 	
-	simLogFil = new String[nSimLogFil];
+	/*	simLogFil = new String[nSimLogFil];
 	simOutFil = new String[nSimOutFil];
 
 	for (int i = 0; i < nSimLogFil; i++)
@@ -159,7 +159,7 @@ abstract public class Optimizer
 	for (int i = 0; i < nSimOutFil; i++)
 	    simOutFil[i] = new String(data.OptIni.getSimOutPat(i) + FS +
 				      data.OptIni.getSimOutFilNam(i) );
-
+	*/
 	        
 	dimF = objFunObj.length;
 	nameF = new String[dimF];
@@ -212,53 +212,6 @@ abstract public class Optimizer
      */
     protected String getOutputPath(){
 	return data.OptIni.getOptComPat();
-    }
-
-    /** Post-process the objective function value.<BR>
-     * If required, post-process the objective function value
-     * in this method.
-     * <P>
-     * <B>Usage</B><P>
-     * The number of elements of the array <CODE>f</CODE>
-     * is equal to the number of <CODE>DelimiterN</CODE> (N=1, 2, 3, ...)
-     * that are specified in the initialization file. <P>
-     * Thus, if you want to minimize the sum of heating and 
-     * cooling energy, you could specify in the initialization file
-     * the section<PRE>
-     // --- Start of section
-     ObjectiveFunctionLocation{
-     Delimiter1 = "Eheat=";  Name1 = "E_tot";
-     Delimiter2 = "Eheat=";  Name2 = "E_heat";
-     Delimiter3 = "Ecool=";  Name3 = "E_cool";
-     }
-     // --- End of section
-     </PRE>
-     * and define this method as<PRE>
-     private void _postProcessObjectiveFunction(int iterationNumber,
-     double[] f){
-     f[0] = f[1] + f[2];
-     if (iterationNumber == 1) 
-     setInfo("Post-process objective function value.");
-     return;
-     }
-     </PRE>
-     * Then, the optimization algorithm will minimize the sum
-     * of heating and cooling energy, and will write an information
-     * to the log file to remind you that the objective function value
-     * has been post-processed.<P>
-     *
-     * <B>Note:</B> Use <CODE>stepNumber</CODE> to implement penalty or
-     * barrier functions.
-     *
-     * @deprecated You should use function objects, which can be defined
-     *             in the input files, instead of this function.
-     *
-     * @param iterationNumber current iteration number
-     * @param f array that contains the objective function values
-     */
-    private void _postProcessObjectiveFunction(final int iterationNumber,
-					      double[] f){
-	return;
     }
 
     /** Checks whether all independent parameters are continuous.
@@ -352,12 +305,14 @@ abstract public class Optimizer
      *  If it does not exist, it will be created.
      * @param path source path of the files
      * @param name name of the files
+     *@param simNum The number of the simulation
      * @exception SecurityException if a SecurityException occured
      * @exception Exception if the directory could not be made
      */
     private void _copyRunFiles(final String[] savePath, 
 			       final String[] path, 
-			       final String[] name)
+			       final String[] name,
+			       int simNum)
 	throws SecurityException, Exception {
 	// first, make sure the directories exist, or create them otherwise.
 	// This is because the user may delete it during the optimization 
@@ -365,21 +320,20 @@ abstract public class Optimizer
 	genopt.io.FileHandler.makeDirectory(savePath);
 	// copy the files
 	File f;
-	final int nS = data.ResMan.getNumberOfSimulation();
 	for (int iF=0; iF < path.length ; iF++){
 	    if (!(savePath[iF].equals(""))){
 		final String fn = path[iF] + FS + name[iF];
 		f = new File(fn);
 		try {
 		    if ( f.exists() ){
-			if (!f.renameTo(new File(savePath[iF] + FS + nS + name[iF])))
-			    setWarning("Cannot rename file '" + fn + "'.");
+			if (!f.renameTo(new File(savePath[iF] + FS + simNum + name[iF])))
+			    setWarning("Cannot rename file '" + fn + "'.", simNum);
 		    }
 		    else
-			setWarning("File '" + fn + "' does not exist.");
+			setWarning("File '" + fn + "' does not exist.", simNum);
 		}
 		catch (SecurityException e){
-		    throw new SecurityException("Simulation " + nS + ": SecurityException occured during copying of '" +
+		    throw new SecurityException("Simulation " + simNum + ": SecurityException occured during copying of '" +
 						fn + "': Message '" + e.getMessage() + "'.");
 		}
 	    }
@@ -847,10 +801,20 @@ abstract public class Optimizer
 	       IllegalAccessException, Exception{
 	assert x != null : "Received 'null' as argument";
 	Point[] r = new Point[x.length];
+
 	boolean[] evaluate = setKnownFunctionValues(x);
+
 	for(int iP = 0; iP < x.length; iP++){
 	    try{
-		r[iP] = (evaluate[iP]) ? _getF(x[iP]) : (Point)x[iP].clone();
+		if (evaluate[iP]){
+		    genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
+		    x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
+		    r[iP] = _getF(x[iP]);
+		}
+		else{ // don't increase number of simulation
+		    x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
+		    r[iP] = (Point)x[iP].clone();
+		}
 	    }
 	    catch(Exception e){
 		if(stopAtError || mustStopOptimization())
@@ -867,7 +831,7 @@ abstract public class Optimizer
 			    em += x[iP].getIndex(i) + ", ";
 			em += x[iP].getIndex(dimDis-1) + ")." + LS;
 		    }
-		    setWarning( em + e.getMessage() );
+		    setWarning( em + e.getMessage(), x[iP].getSimulationNumber() );
 		    double[] f = new double[dimF];
 		    for(int i=0; i<dimF; i++)
 			f[i] = 0;
@@ -913,8 +877,11 @@ abstract public class Optimizer
 	r[0].setStepNumber(stepNumber);
 	boolean[] evaluate = new boolean[1];
 	evaluate = setKnownFunctionValues(r);
-	if (evaluate[0]) // need a simulation
+	if (evaluate[0]){ // need a simulation
+	    genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
+	    r[0].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
 	    r[0] = _getF(r[0]);
+	}
 	return r[0];
     }
 
@@ -979,7 +946,6 @@ abstract public class Optimizer
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
 	Point key;
-	genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
 	    
 	/* since Windows NT4WS has problems with IO operation
 	   (i.e., after around a thousand calls of this function,
@@ -990,8 +956,8 @@ abstract public class Optimizer
 	   then the optimization/simulation is very likely set up
 	   inproperly
 	*/
-
-	if (genopt.db.ResultManager.getNumberOfSimulation() > 1){
+	final int simNum = x.getSimulationNumber();
+	if (simNum > 1){
 	    try{
 		key = _evaluateSimulation((Point)x.clone());
 	    }
@@ -1002,10 +968,6 @@ abstract public class Optimizer
 	else{
 	    key = _evaluateSimulation((Point)x.clone());
 	}
-	
-	/////////////////////////////////////////////////////
-	// copy input, log and output files, if required
-	_copyRunFiles();
 	
 	// add point and function value to the map of evaluated points
 	Double[] val = new Double[key.getDimensionF()];
@@ -1025,23 +987,6 @@ abstract public class Optimizer
 	return key;
     }
 
-    /** Copies the files from <CODE>path</CODE> to <CODE>savePath</CODE> and
-     *  adds the run number in front of the file name.
-     * @exception SecurityException if a SecurityException occured
-     * @exception Exception if the directory could not be made
-     */
-    private void _copyRunFiles() throws SecurityException, Exception{
-	_copyRunFiles(data.OptIni.getSimInpSavPat(),
-		      data.OptIni.getSimInpPat(),
-		      data.OptIni.getSimInpFilNam());
-	_copyRunFiles(data.OptIni.getSimLogSavPat(),
-		      data.OptIni.getSimLogPat(),
-		      data.OptIni.getSimLogFilNam());
-	_copyRunFiles(data.OptIni.getSimOutSavPat(),
-		      data.OptIni.getSimOutPat(),
-		      data.OptIni.getSimOutFilNam());
-    }
-    
     /** Tries to evaluate the simulation a second time if an exception has been
      * thrown
      *@param x the point being evaluated
@@ -1072,7 +1017,7 @@ abstract public class Optimizer
 	    "   " + t.getMessage() + LS +
 	    "   Try to evaluate simulation a second time.";
 	if (data.DEBUG) data.printStackTrace(t);
-	setInfo(infMes);
+	setInfo(infMes, x.getSimulationNumber() );
 	return _evaluateSimulation(x);
     }
 
@@ -1206,17 +1151,33 @@ abstract public class Optimizer
 	}
 
 	// write simulation input files
-	for (int i = 0; i < nSimInpFil; i++)
-	    SimulationInput[i].writeFile(data.OptIni.getSimInpPat(i),
-					 data.OptIni.getSimInpFilNam(i));
+	final int simNum = x.getSimulationNumber();
+	final String worDirSuf = FS + "tmp-genopt-run-" + simNum;
+	String[] simInpPat = new String[nSimInpFil];
+	String[] simOutPat = new String[nSimOutFil];
+	String[] simLogPat = new String[nSimLogFil];
+	String[] simOutFil = new String[nSimOutFil];
+	String[] simLogFil = new String[nSimLogFil];
+	for (int i = 0; i < nSimInpFil; i++){
+	    simInpPat[i] = data.OptIni.getSimInpPat(i) + worDirSuf;
+	}
+	for (int iFil = 0; iFil < nSimOutFil; iFil++){
+	    simOutPat[iFil] = data.OptIni.getSimOutPat(iFil) + worDirSuf ;
+	    simOutFil[iFil] = simOutPat[iFil] + FS + data.OptIni.getSimOutFilNam(iFil) ;
+	}
+	for (int iFil = 0; iFil < nSimLogFil; iFil++){
+	    simLogPat[iFil] = data.OptIni.getSimLogPat(iFil) + worDirSuf;
+	    simLogFil[iFil] = simLogPat[iFil] + FS + data.OptIni.getSimLogFilNam(iFil);
+	}
+
+	for (int iFil = 0; iFil < nSimInpFil; iFil++)
+	    SimulationInput[iFil].writeFile(simInpPat[iFil], data.OptIni.getSimInpFilNam(iFil));
 	
 	// delete simulation output and simulation log file
-	// (to ensure that the files being read
-	// are really new written)
-	File of;
+	// (to ensure that the files being read are really new)
 	String errMes="";
 	for (int iFil = 0; iFil < nSimOutFil; iFil++){
-	    of = new File(simOutFil[iFil]);
+	    File of = new File(simOutFil[iFil]);
 	    try { of.delete(); }
 	    catch (SecurityException e){
 		errMes += "SecurityException occured during deleting of '" +
@@ -1225,7 +1186,7 @@ abstract public class Optimizer
 	    }
 	}
 	for (int iFil = 0; iFil < nSimLogFil; iFil++){
-	    of = new File(simLogFil[iFil]);
+	    File of = new File(simLogFil[iFil]);
 	    try { of.delete(); }
 	    catch (SecurityException e){
 		errMes += "SecurityException occured during deleting of '" +
@@ -1237,7 +1198,7 @@ abstract public class Optimizer
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
-	data.SimSta.run();
+	data.SimSta.run(worDirSuf);
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// check if simulation log files exist
@@ -1273,7 +1234,6 @@ abstract public class Optimizer
 
 	SimOutputFileHandler[] simOutFilHan = new SimOutputFileHandler[nSimOutFil];
 	double[] objFunVal = new double[dimF];
-	final int runNum = data.ResMan.getNumberOfSimulation();
 
 	for (int iOutFil = 0; iOutFil < nSimOutFil; iOutFil++)
 	    simOutFilHan[iOutFil] = new SimOutputFileHandler(simOutFil[iOutFil],
@@ -1281,7 +1241,7 @@ abstract public class Optimizer
 	
 	// in first function call, construct the pointer "funValPoi" that shows
 	// which function value is in what file
-	if (runNum == 1){ // first call
+	if (simNum == 1){ // first call
 	    for (int iFx = 0; iFx < dimF; iFx++){
 		
 		if ( objFunObj[iFx].isFunction() ){
@@ -1313,18 +1273,46 @@ abstract public class Optimizer
 	}
 	/////////////////////////////////////////////////////
 	// process function objects
-	objFunVal = _processResultFunction(outFun, objFunVal);
-	/////////////////////////////////////////////////////
-	_postProcessObjectiveFunction(runNum, objFunVal);
+	objFunVal = Optimizer._processResultFunction(outFun, objFunVal);
 	/////////////////////////////////////////////////////
 	// write result to GUI or console
 	for (int iFx = 0; iFx < dimF; iFx++)
-	    println("Simulation " + runNum + ": " + nameF[iFx] + "\t= " + objFunVal[iFx]);
+	    println("Simulation " + simNum + ": " + nameF[iFx] + "\t= " + objFunVal[iFx]);
 
 	/////////////////////////////////////////////////////
 	// data handling
 	Point r = (Point)x.clone();
 	r.setF(objFunVal);
+	// Copy run files
+	_copyRunFiles(data.OptIni.getSimInpSavPat(), simInpPat,
+		      data.OptIni.getSimInpFilNam(), simNum);
+	_copyRunFiles(data.OptIni.getSimLogSavPat(), simLogPat, 
+		      data.OptIni.getSimLogFilNam(), simNum);
+	_copyRunFiles(data.OptIni.getSimOutSavPat(), simOutPat, 
+		      data.OptIni.getSimOutFilNam(), simNum);
+
+	// Delete temporary working directories
+	// First, we make sure that they are really temporary to prevent wipping out
+	// non-temporary files. This is more a prevention for developers, since
+	// the test is always true unless there is a coding error.
+	for (int iFil = 0; iFil < nSimInpFil; iFil++){
+	    if ( simInpPat[iFil].endsWith(worDirSuf))
+		genopt.io.FileHandler.deleteDirectory( new File(simInpPat[iFil]) );
+	    else
+		throw new OptimizerException("Program error. Attempted to delete non-temporary file.");
+	}
+	for (int iFil = 0; iFil < nSimOutFil; iFil++){
+	    if ( simOutPat[iFil].endsWith(worDirSuf))
+		genopt.io.FileHandler.deleteDirectory( new File(simOutPat[iFil]) );
+	    else
+		throw new OptimizerException("Program error. Attempted to delete non-temporary file.");
+	}
+	for (int iFil = 0; iFil < nSimLogFil; iFil++){
+	    if ( simLogPat[iFil].endsWith(worDirSuf))
+		genopt.io.FileHandler.deleteDirectory( new File(simLogPat[iFil]) );
+	    else
+		throw new OptimizerException("Program error. Attempted to delete non-temporary file.");
+	}
 	return r;
     }
 
@@ -1422,21 +1410,22 @@ abstract public class Optimizer
      * If it has been obtained previously, an information message is reported.<BR>
      * If the maximum number of matching function value is obtained, an exception
      * is thrown.
+     *@param x the point to be checked
      *@exception OptimizerException thrown if the maximum number of matching
      * function value is obtained
      */
-    public void checkObjectiveFunctionValue()
+    public void checkObjectiveFunctionValue(Point x)
 	throws OptimizerException{
 	final int matVal = data.resChe.getNumberOfMatchingResults();
-	final int numOfSim = data.ResMan.getNumberOfSimulation();
-	final double funVal = (data.ResMan.getAllPoint(1)[0]).getF(0);
-	data.resChe.setNewTrial(funVal,	numOfSim);
+	final double funVal = x.getF(0);
+	data.resChe.setNewTrial(funVal,	x.getSimulationNumber());
 
 	if (matVal != data.resChe.getNumberOfMatchingResults()){
-	    String mes = "f(x[" + numOfSim + "]) = " + funVal + LS +
+	    final int simNum = x.getSimulationNumber();
+	    String mes = "f(x[" + simNum + "]) = " + funVal + LS +
 		"Same result already obtained previously." + LS +
 		"This may lead to abnormal termination.";
-	    setInfo(mes);
+	    setInfo(mes, simNum);
 	}
 	data.resChe.check();
     }
@@ -1446,13 +1435,14 @@ abstract public class Optimizer
      * (GUI in WinGenOpt, command shell otherwise) and in
      * the log file
      *@param s the message
-     *@see #setWarning(java.lang.String)
+     *@param simNum The number of the simulation
+     *@see #setWarning(java.lang.String, int)
      */
-    protected void setInfo(final String s) {
+    protected void setInfo(final String s, int simNum) {
 	assert s != null : "Received 'null' as argument";
 	assert s != "" : "Received \"\" as argument";
 
-	final String mes = "Simulation " + data.ResMan.getNumberOfSimulation() + ": " + s;
+	final String mes = "Simulation " + simNum + ": " + s;
 	data.infMan.setMessage(mes);
     }
 
@@ -1461,13 +1451,14 @@ abstract public class Optimizer
      * (GUI in WinGenOpt, command shell otherwise) and in
      * the log file
      *@param s the message
-     *@see #setInfo(java.lang.String)
+     *@param simNum The number of the simulation
+     *@see #setInfo(java.lang.String, int)
      */
-    protected void setWarning(final String s) {
+    protected void setWarning(final String s, int simNum) {
 	assert s != null : "Received 'null' as argument";
 	assert s != "" : "Received \"\" as argument";
 
-	final String mes = "Simulation " + data.ResMan.getNumberOfSimulation() + ": " + s;
+	final String mes = "Simulation " + simNum + ": " + s;
 	data.warMan.setMessage(mes);
     }
 
@@ -1983,10 +1974,10 @@ abstract public class Optimizer
     static private boolean useSteNum;
     /** The simulation input template file handler */
     static private FileHandler[] simInpTemFilHan;
-    /** The simulation log file names (incl. path) */
-    static private String[] simLogFil;
-    /** The simulation output file names (incl. path) */
-    static private String[] simOutFil;
+    //    /** The simulation log file names (incl. path) */
+    //    static private String[] simLogFil;
+    //    /** The simulation output file names (incl. path) */
+    //    static private String[] simOutFil;
     /** The objective function objects */
     static private ObjectiveFunctionLocation[] objFunObj;
     /** The number of the simulation input files */

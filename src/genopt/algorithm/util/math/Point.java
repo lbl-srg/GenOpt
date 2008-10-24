@@ -104,6 +104,7 @@ public class Point implements Comparable
 	cooDisBitLength = new int[nDis];
 	com = "";
 	steNum = 0;
+	simNum = 0; // the simulation number starts with 1 in GenOpt. So, 0 means it is not set
 	for(int i = 0; i < dimDis; i++){
 	    cooDisMax[i]       = Integer.MAX_VALUE;
 	    cooDisBitLength[i] = -1; // not initialized yet
@@ -163,13 +164,14 @@ public class Point implements Comparable
      *@param f its function values
      *@param stepNumber the step number
      *@param comment a comment
+     *@param simulationNumber the number of the simulation
      *@exception IllegalArgumentException if <code>xDis</code>
      *           and <code>xDisMax</code> are not <code>null</code>
      *           but of different length
      */
     public Point(double[] xCon, int[] xDis, int[] xDisMax,
 		 double[] f, 
-                 int stepNumber, String comment){
+                 int stepNumber, String comment, int simulationNumber){
 	if ( xDis != null && xDisMax != null )
 	    if ( xDis.length != xDisMax.length ) 
 		throw new IllegalArgumentException("xDis.length = " +
@@ -182,6 +184,7 @@ public class Point implements Comparable
 	final int nFun = ( f    == null ) ? 0 : f.length;
 	_initialize(nCon, nDis, nFun);
 	set(xCon, xDis, xDisMax, f, stepNumber, comment);
+	simNum = simulationNumber;
     }
     
     /** Clones the object.
@@ -189,7 +192,7 @@ public class Point implements Comparable
      */
     public Object clone(){
 	return new Point(cooCon, cooDis, cooDisMax,
-			 fun, steNum, com);
+			 fun, steNum, com, simNum);
     }
 
     /** Returns a string representation of the object.
@@ -212,6 +215,7 @@ public class Point implements Comparable
 	for (int i=0; i < dimF; i++)
 	    r += fun[i] + "; ";
 	r += LS + "Comment               : " + com + LS;
+	r += LS + "Simulation number     : " + simNum + ";";
 	return r;
     }
 
@@ -440,6 +444,16 @@ public class Point implements Comparable
      *@param stepNumber the step number
      */
     public void setStepNumber(int stepNumber) { steNum = stepNumber;  }
+
+    /** Sets a the simulation number
+     *@param simulationNumber the number of the simulation
+     */
+    public void setSimulationNumber(int simulationNumber) { simNum = simulationNumber;  }
+
+    /** Gets the simulation number
+     *@return simulationNumber the number of the simulation
+     */
+    public int getSimulationNumber() { return simNum;  }
         
     /** Sets a comment
      *@param comment the comment
@@ -726,6 +740,8 @@ public class Point implements Comparable
     protected int dimDis;
     /** the dimension of the function value vector */
     protected int dimF;		
+    /** the number of the simulation corresponding to this point */
+    protected int simNum;		
 
     public static void main(String[] args){
 	double x1 = new Double(args[0]).doubleValue();
