@@ -12,6 +12,7 @@ import java.io.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.*;
 
 /** Abstract Class that represents the structure of an optimization 
   * algorithm class and offers generic methods to run the optimization.<BR>
@@ -800,21 +801,40 @@ abstract public class Optimizer
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
 	assert x != null : "Received 'null' as argument";
-	Point[] r = new Point[x.length];
 
 	boolean[] evaluate = setKnownFunctionValues(x);
-
+	int numOfSim = 0;
 	for(int iP = 0; iP < x.length; iP++){
+	    if (evaluate[iP]){ // this points will need to be simulated
+		genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
+		x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
+		numOfSim++;
+	    }
+	    else{ // don't increase number of simulation
+		x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
+	    }
+	}
+
+	ExecutorService exec = Executors.newFixedThreadPool(2);
+	done = new CountDownLatch(numOfSim);
+	long startTime = System.nanoTime();
+
+	SimulationThread[] simThr = new SimulationThread[numOfSim];
+	int k=0;
+	for(int iP = 0; iP < numOfSim; iP++){
+	    if (evaluate[iP]) // this points will need to be simulated
+		simThr[k++] = new SimulationThread(this, x[iP]);
+	}
+
+	// run simulations
+	for(int iT = 0; iT < numOfSim; iT++)
+	    exec.execute( simThr[iT] );
+	// wait until all threads completed
+	done.await();
+	// throw the exceptions, if any
+	for(int iT = 0; iT < numOfSim; iT++){
 	    try{
-		if (evaluate[iP]){
-		    genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
-		    x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
-		    r[iP] = _getF(x[iP]);
-		}
-		else{ // don't increase number of simulation
-		    x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
-		    r[iP] = (Point)x[iP].clone();
-		}
+		simThr[iT].throwStoredException();
 	    }
 	    catch(Exception e){
 		if(stopAtError || mustStopOptimization())
@@ -822,25 +842,30 @@ abstract public class Optimizer
 		else{
 		    String em = "Exception in evaluating x = ( ";
 		    for (int i=0; i < dimCon-1; i++)
-		        em += x[iP].getX(i) + ", ";
+		        em += x[iT].getX(i) + ", ";
 		    if (dimDis == 0)
-			em += x[iP].getX(dimCon-1) + ")." + LS;
+			em += x[iT].getX(dimCon-1) + ")." + LS;
 		    else{
-			em += x[iP].getX(dimCon-1) + "; ";
+			em += x[iT].getX(dimCon-1) + "; ";
 			for (int i=0; i < dimDis-1; i++)
-			    em += x[iP].getIndex(i) + ", ";
-			em += x[iP].getIndex(dimDis-1) + ")." + LS;
+			    em += x[iT].getIndex(i) + ", ";
+			em += x[iT].getIndex(dimDis-1) + ")." + LS;
 		    }
-		    setWarning( em + e.getMessage(), x[iP].getSimulationNumber() );
+		    setWarning( em + e.getMessage(), x[iT].getSimulationNumber() );
 		    double[] f = new double[dimF];
 		    for(int i=0; i<dimF; i++)
 			f[i] = 0;
-		    r[iP].setF(f);
-		    r[iP].setComment("Error during function evaluation. See log file.");
+		    x[iT].setF(f);
+		    x[iT].setComment("Error during function evaluation. See log file.");
 		}
 		// proceed as usual
 	    }
 	}
+	// shut down thread pool
+	exec.shutdown();
+	// copy points
+	Point[] r = new Point[x.length];
+	System.arraycopy(x, 0, r, 0, x.length);
 	return r;
     }
 
@@ -875,13 +900,7 @@ abstract public class Optimizer
 	Point[] r = new Point[1];
 	r[0] = (Point)x.clone();
 	r[0].setStepNumber(stepNumber);
-	boolean[] evaluate = new boolean[1];
-	evaluate = setKnownFunctionValues(r);
-	if (evaluate[0]){ // need a simulation
-	    genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
-	    r[0].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
-	    r[0] = _getF(r[0]);
-	}
+	getF(r, false); // there is only one point, hence stopAtError does not do anything
 	return r[0];
     }
 
@@ -942,7 +961,7 @@ abstract public class Optimizer
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    private Point _getF(final Point x)
+    public void simulate(Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
 	Point key;
@@ -957,18 +976,19 @@ abstract public class Optimizer
 	   inproperly
 	*/
 	final int simNum = x.getSimulationNumber();
-	if (simNum > 1){
-	    try{
-		key = _evaluateSimulation((Point)x.clone());
-	    }
-	    catch(Exception e){
-		key = _retryEvaluateSimulation((Point)x.clone(), e);
-	    }
-	}
-	else{
+	//	if (simNum > 1){
+	//	    try{
+	//		key = _evaluateSimulation((Point)x.clone());
+	//	    }
+	//	    catch(Exception e){
+	//		key = _retryEvaluateSimulation((Point)x.clone(), e);
+	//	    }
+	//	}
+	//	else{
+	System.err.println("Optimizer: disabled retry of function eval.");
 	    key = _evaluateSimulation((Point)x.clone());
-	}
-	
+	    //	}
+
 	// add point and function value to the map of evaluated points
 	Double[] val = new Double[key.getDimensionF()];
 	for (int i = 0; i < val.length; i++)
@@ -983,8 +1003,8 @@ abstract public class Optimizer
 	// Otherwise, it's coordinates get changed since the map
 	// contains only a reference to the instance.
 	evaPoi.put((Point)key.clone(), val);
-	key.setStepNumber(stepNumber);
-	return key;
+	x.setStepNumber(stepNumber); // set actual step number
+	x.setF(key.getF());
     }
 
     /** Tries to evaluate the simulation a second time if an exception has been
@@ -1198,7 +1218,7 @@ abstract public class Optimizer
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
-	data.SimSta.run(worDirSuf);
+	data.SimSta.run(worDirSuf, simNum);
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// check if simulation log files exist
@@ -1950,6 +1970,9 @@ abstract public class Optimizer
     static private int dimF;
     /** The name of the function values */
     static private String[] nameF;
+    
+    /** Count down latch for parallel function evaluations */
+    public static CountDownLatch done;
 
     /** The reference to the GenOpt kernel */
     static private GenOpt data;

@@ -97,6 +97,7 @@ public class SimulationStarter implements Cloneable
 	this.setWorkingDirectory(workingDirectory);
         OptIni           = optIni;
 	_updateCommandLine();
+	pro = new Vector<Process>();
     }
 
     /** Updates the command line. This command must be used to update the command
@@ -173,20 +174,19 @@ public class SimulationStarter implements Cloneable
      * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
-    private void _updateCommandLine(String worDirSuf)
+    private String _updateAndGetCommandLine(String worDirSuf)
 	throws IOException{
 	//update the command line so that it is ready to use
-
+	String ret = CommandLine;
 	for (int i = 0; i < OptIni.getNumberOfLogFiles(); i++)
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Log.Path" + (i+1) + "%",
+	    ret = replaceString(ret, "%Simulation.Files.Log.Path" + (i+1) + "%",
 					OptIni.getSimLogPat(i) + worDirSuf);
 
 	for (int i = 0; i < OptIni.getNumberOfOutputFiles(); i++)
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Output.Path" + (i+1) + "%",
+	    ret = replaceString(ret, "%Simulation.Files.Output.Path" + (i+1) + "%",
 					OptIni.getSimOutPat(i) + worDirSuf);
 
-	CommandLine = genopt.io.FileHandler.replacePathsByCanonicalPaths(CommandLine, OptIni.getOptIniPat());
-	return;
+	return genopt.io.FileHandler.replacePathsByCanonicalPaths(ret, OptIni.getOptIniPat());
     }
 
 
@@ -221,57 +221,52 @@ public class SimulationStarter implements Cloneable
 	return WorStr;			
     }
 
-    /** Get the command line.<dd>
-     * @return Command line
-     * @see SimulationStarter#updateCommandLine
-     */
-    public String getCommandLine()
-    {
-	return CommandLine;
-    }
-
     /** Run the simulation program<dd>
      * <b>Note:</b> This method works only if the command line is already updated.
      * @param worDirSuf working directory suffix, to be added to current working directory to enable
      *                  parallel simulations
+     * @param iSim simulation number
      * @exception IOException
      * @exception OptimizerException
      * @exception Exception
      * @see SimulationStarter#updateCommandLine
      */
-    public void run(String worDirSuf) throws IOException, OptimizerException, Exception
+    public void run(String worDirSuf, int iSim) throws IOException, OptimizerException, Exception
     {
+	final int iPro = iSim - 1;
 	final File proWorDir = new File(worDir + worDirSuf);
-	_updateCommandLine(worDirSuf);
+	final String comLin = _updateAndGetCommandLine(worDirSuf);
 	try
 	    {
-		//		pro = Runtime.getRuntime().exec(this.getCommandLine(worDirSuf), null, new File(worDir + worDirSuf));
-		pro = Runtime.getRuntime().exec(this.getCommandLine(), null, proWorDir);
-		pro.waitFor();
+		Process p = Runtime.getRuntime().exec(comLin, null, proWorDir);
+		pro.add(iPro, p);
+		p.waitFor();
 		// sleep for some milliseconds
-		//			System.err.print("Go to sleep...   ");
-		//			Thread.sleep(2000);
-		//			System.err.println("Woke up");
+		/*
+		  System.err.print("Go to sleep...   ");
+		  Thread.sleep(2000);
+		  System.err.println("Woke up");
+		*/
 		int ev = 0;
-		try { ev = pro.exitValue(); }
+		try { ev = p.exitValue(); }
 		catch (NullPointerException e){ // if process was destroyed
 		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 		    // Otherwise, the system does not release its resources, and
 		    // the exception "java.io.IOException: Too many open files" is
 		    // thrown after a few hundred or thousands of simulations.
-		    destroyProcess();
+		    destroyProcess(iPro);
 
 		    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
 		}
 		if (ev != 0){
 		    InputStream ips = null;
-		    try { ips = pro.getErrorStream(); }
+		    try { ips = p.getErrorStream(); }
 		    catch (NullPointerException e){ // if process was destroyed
 			// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 			// Otherwise, the system does not release its resources, and
 			// the exception "java.io.IOException: Too many open files" is
 			// thrown after a few hundred or thousands of simulations.
-			destroyProcess();
+			destroyProcess(iPro);
 
 			throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
 		    }					
@@ -290,14 +285,14 @@ public class SimulationStarter implements Cloneable
 			LS + "Error in executing the simulation program" +
 			LS + "Exit value of the simulation program: " + ev +
 			LS + "Working directory                   : '" + proWorDir.getCanonicalPath() + "'." +
-			LS + "Current command String              : '" + this.getCommandLine() + "'." +
+			LS + "Current command String              : '" + comLin + "'." +
 			LS + "Error stream of simulation program  : " + sem + LS;
 
 		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 		    // Otherwise, the system does not release its resources, and
 		    // the exception "java.io.IOException: Too many open files" is
 		    // thrown after a few hundred or thousands of simulations.
-		    destroyProcess();
+		    destroyProcess(iPro);
 
 		    throw new OptimizerException(ErrMes);
 		}
@@ -306,26 +301,26 @@ public class SimulationStarter implements Cloneable
 	    String ErrMes =
 		LS + "InterruptedException in executing the simulation program" + LS +
 		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + this.getCommandLine() + "'." + LS +
+		LS + "Current command String: '" + comLin + "'." + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
 	    // thrown after a few hundred or thousands of simulations.
-	    destroyProcess();
+	    destroyProcess(iPro);
 	    throw new OptimizerException(ErrMes);
 	}
 	catch(SecurityException e){
 	    String ErrMes =
 		LS + "SecurityException in executing the simulation program" + LS +
 		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + this.getCommandLine() + "'." + LS +
+		LS + "Current command String: '" + comLin + "'." + LS +
 		"Exception message: " + LS + e.getMessage();
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
 	    // thrown after a few hundred or thousands of simulations.
-	    destroyProcess();
+	    destroyProcess(iPro);
 	    throw new OptimizerException(ErrMes);
 	}
 	// Note that we do NOT catch IOException separately since Java is buggy.
@@ -335,28 +330,39 @@ public class SimulationStarter implements Cloneable
 	    String ErrMes =
 		LS + "Exception in executing the simulation program" + LS  +
 		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + this.getCommandLine() + "'." + LS +
+		LS + "Current command String: '" + comLin + "'." + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
 	    // thrown after a few hundred or thousands of simulations.
-	    destroyProcess();
+	    destroyProcess(iPro);
 	    throw new Exception(ErrMes);
 	}
 	// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	// Otherwise, the system does not release its resources, and
 	// the exception "java.io.IOException: Too many open files" is
 	// thrown after a few hundred or thousands of simulations.
-	destroyProcess();
+	destroyProcess(iPro);
     }
 	
-    /** destroys the process if it exists
+    /** destroys the processes that exists
      */
-    public void destroyProcess(){
-	if (pro != null){
-	    pro.destroy();
-	    pro = null;
+    public synchronized void destroyProcess(){
+	for (int i = 0; i < pro.size(); i++)
+	    destroyProcess(i);
+    }
+
+    /** destroys the process if it exists
+     *@param iPro number of the process
+     */
+    public synchronized void destroyProcess(int iPro){
+	if ( (pro.size()-1) < iPro )
+	    return;
+	Process p = pro.get(iPro);
+	if (p != null){
+	    p.destroy();
+	    pro.add(iPro, null);
 	}
     }
 
@@ -370,7 +376,7 @@ public class SimulationStarter implements Cloneable
 
     protected String CommandLine;
     protected boolean PrombtFileExtension;
-    protected Process pro;
     protected String worDir;
     protected OptimizationIni OptIni;
+    protected Vector<Process> pro;
 }

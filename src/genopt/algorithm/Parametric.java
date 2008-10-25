@@ -189,16 +189,18 @@ public class Parametric extends Optimizer
 	// execute the simulations
 	final int nPoi = poiVec.size();
 	Point[] p = new Point[nPoi];
-	int iSim = getSimulationNumber();
 	for(int i = 0; i < nPoi; i++){
 	    p[i] = (Point)(poiVec.get(i));
-	    p[i] = super.getF(p[i]);
-	    if ( iSim == getSimulationNumber() )
+	}
+	super.getF(p, stopAtError);
+	for(int i = 1; i < nPoi; i++){
+	    if ( p[i].getSimulationNumber() == p[i-1].getSimulationNumber() )
 		p[i].setComment("Point already evaluated.");
 	    else{
 		p[i].setComment("Function evaluation successful.");
-		iSim = getSimulationNumber();
 	    }
+	}
+	for(int i = 0; i < nPoi; i++){
 	    report(p[i], SUBITERATION);
 	    report(p[i], MAINITERATION);
 	}

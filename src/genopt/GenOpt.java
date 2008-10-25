@@ -377,7 +377,7 @@ public class GenOpt extends Thread
      * Flag whether we are in debug mode or not.
      *
      */
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
 
     /**
      * String containing the debug warning.
