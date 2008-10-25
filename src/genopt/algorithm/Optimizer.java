@@ -1102,7 +1102,7 @@ abstract public class Optimizer
 	// simulation input files
 	for (int i = 0; i < nSimInpFil; i++)
 	    SimulationInput[i] = new FileHandler(simInpTemFilHan[i].getFileContentsString());
-	
+
 	// Formulas of the input function objects
 	String[] inpFun = new String[dimInpFun];
 	for(int i = 0; i < dimInpFun; i++)
@@ -1189,13 +1189,12 @@ abstract public class Optimizer
 	    simLogPat[iFil] = data.OptIni.getSimLogPat(iFil) + worDirSuf;
 	    simLogFil[iFil] = simLogPat[iFil] + FS + data.OptIni.getSimLogFilNam(iFil);
 	}
-
+	String errMes="";
 	for (int iFil = 0; iFil < nSimInpFil; iFil++)
 	    SimulationInput[iFil].writeFile(simInpPat[iFil], data.OptIni.getSimInpFilNam(iFil));
-	
 	// delete simulation output and simulation log file
 	// (to ensure that the files being read are really new)
-	String errMes="";
+
 	for (int iFil = 0; iFil < nSimOutFil; iFil++){
 	    File of = new File(simOutFil[iFil]);
 	    try { of.delete(); }
@@ -1218,7 +1217,15 @@ abstract public class Optimizer
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
+	synchronized(Optimizer.class){
+	System.err.println("**** Optimizer: Start for simNum = " + simNum);
 	data.SimSta.run(worDirSuf, simNum);
+	System.err.println("**** Optimizer: Ended for simNum = " + simNum);
+	//		  System.err.print("Go to sleep...   ");
+	//		  Thread.sleep(1000);
+	//		  System.err.println("Woke up");
+
+	}
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// check if simulation log files exist
@@ -1261,7 +1268,8 @@ abstract public class Optimizer
 	
 	// in first function call, construct the pointer "funValPoi" that shows
 	// which function value is in what file
-	if (simNum == 1){ // first call
+	System.err.println("Optimizer: removed section to test function object");
+	//--	if (simNum == 1){ // first call
 	    for (int iFx = 0; iFx < dimF; iFx++){
 		
 		if ( objFunObj[iFx].isFunction() ){
@@ -1282,18 +1290,18 @@ abstract public class Optimizer
 		    }
 		}
 	    }
-	}
-	else{ // all other calls
-	    for (int iFx = 0; iFx < dimF; iFx++){
-		if ( ! objFunObj[iFx].isFunction() ){
-		    String del = objFunObj[iFx].getDelimiter();
-		    objFunVal[iFx] = simOutFilHan[funValPoi[iFx]].getObjectiveFunctionValue(del);
-		}
-	    }
-	}
+	//--	else{ // all other calls
+	//--	    for (int iFx = 0; iFx < dimF; iFx++){
+	//--		if ( ! objFunObj[iFx].isFunction() ){
+	//--		    String del = objFunObj[iFx].getDelimiter();
+	//--		    objFunVal[iFx] = simOutFilHan[funValPoi[iFx]].getObjectiveFunctionValue(del);
+	//--		}
+	
 	/////////////////////////////////////////////////////
 	// process function objects
+	System.err.println("Optimizer: call _process..." + simNum);
 	objFunVal = Optimizer._processResultFunction(outFun, objFunVal);
+	System.err.println("Optimizer: called _process..." + simNum);
 	/////////////////////////////////////////////////////
 	// write result to GUI or console
 	for (int iFx = 0; iFx < dimF; iFx++)
@@ -1403,7 +1411,9 @@ abstract public class Optimizer
 					    final double[] objFunVal)
 	throws OptimizerException, NoSuchMethodException, 
 	       IllegalAccessException, InvocationTargetException, IOException {
+	    System.err.println("Optimizer: entered _processResultFun");
 	for (int iFx = 0; iFx < dimF; iFx++){
+	    System.err.println("Optimizer: _processResultFun" + iFx);
 	    if ( formula[iFx] != null ){
 		for (int iVal = 0; iVal < dimF; iVal++){
 		    // replace all function values that are the result of the simulation

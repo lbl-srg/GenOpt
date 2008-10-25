@@ -61,7 +61,7 @@ all: doc jar
 
 ### Compiles the GenOpt source code
 prog:
-	(cd src; javac -Xlint:unchecked $(SRC))
+	(cd src; javac -g -Xlint:unchecked $(SRC))
 	@echo "==== Made program"
 
 ### Makes the jar file

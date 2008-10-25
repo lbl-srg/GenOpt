@@ -239,14 +239,14 @@ public class SimulationStarter implements Cloneable
 	try
 	    {
 		Process p = Runtime.getRuntime().exec(comLin, null, proWorDir);
-		pro.add(iPro, p);
+		//--		pro.add(iPro, p);
 		p.waitFor();
 		// sleep for some milliseconds
-		/*
-		  System.err.print("Go to sleep...   ");
-		  Thread.sleep(2000);
-		  System.err.println("Woke up");
-		*/
+		    System.err.print("SimulationStarter: Go to sleep...   " + iSim);
+		    Thread.sleep((int)(2000*Math.random()));
+		    //		    Thread.sleep(2000);
+		    System.err.println("Woke up");
+
 		int ev = 0;
 		try { ev = p.exitValue(); }
 		catch (NullPointerException e){ // if process was destroyed
@@ -357,13 +357,15 @@ public class SimulationStarter implements Cloneable
      *@param iPro number of the process
      */
     public synchronized void destroyProcess(int iPro){
+	System.err.println("SimulationStarter: do not destroy process" + iPro);
+	/*
 	if ( (pro.size()-1) < iPro )
 	    return;
 	Process p = pro.get(iPro);
 	if (p != null){
 	    p.destroy();
 	    pro.add(iPro, null);
-	}
+	    }*/
     }
 
     /** Sets the working directory.
