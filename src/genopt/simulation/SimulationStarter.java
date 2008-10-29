@@ -5,6 +5,8 @@ import genopt.io.FileHandler;
 import genopt.lang.OptimizerException;
 import java.util.Vector;
 import java.io.*;
+import java.util.concurrent.locks.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Object for calling a simulation program with free selectable
   * structure of the calling command.
@@ -97,8 +99,29 @@ public class SimulationStarter implements Cloneable
 	this.setWorkingDirectory(workingDirectory);
         OptIni           = optIni;
 	_updateCommandLine();
-	pro = new Vector<Process>();
+	maxThrPoo = 0;
+	lock = new ReentrantLock();
     }
+
+    /** Sets the maximum number of threads in the pool.
+     * This method can only be called once.
+     *
+     *@param maximumThreads The maximum number of threads in the pool
+     *@exception OptimizerException If the maximum number of processes has already been allocated
+     */
+    public void setMaximumNumberOfThreads(int maximumThreads) 
+	throws OptimizerException{
+	if (maxThrPoo == 0){
+	    maxThrPoo = maximumThreads;
+	    pro = new Process[maxThrPoo];
+	    proFre = new AtomicBoolean[maxThrPoo];
+	    for(int i = 0; i < maxThrPoo; i++)
+		proFre[i] = new AtomicBoolean(true);
+	}
+	else
+	    throw new OptimizerException("Program error. The maximum number of processes has already been allocated.");
+    }
+
 
     /** Updates the command line. This command must be used to update the command
      *  line that was set by the constructor.
@@ -221,93 +244,63 @@ public class SimulationStarter implements Cloneable
 	return WorStr;			
     }
 
+    /** Returns the thread number to be used by this process
+     *@return The thread number to be used by this process
+     *@OptimizerException If no thread is available. This condition should never occur.
+     */
+    private int _getThreadNumber()
+	throws OptimizerException{
+	lock.lock();
+	try{
+	    int i = 0;
+	    for( ; i < pro.length; i++){
+		if (proFre[i].get() == true){
+		    proFre[i].set(false);
+		    return i;
+		}
+	    }
+	    if ( i == pro.length){
+		final String em = "Program error. No thread available in SimulationStarter" +
+		    LS + "Please send bug report.";
+		throw new OptimizerException(em);
+	    }
+	}// end of try
+	finally{ lock.unlock(); }
+	// no thread available, this should not happen
+	return -1;
+    }
+
     /** Run the simulation program<dd>
      * <b>Note:</b> This method works only if the command line is already updated.
      * @param worDirSuf working directory suffix, to be added to current working directory to enable
      *                  parallel simulations
-     * @param iSim simulation number
      * @exception IOException
      * @exception OptimizerException
      * @exception Exception
      * @see SimulationStarter#updateCommandLine
      */
-    public void run(String worDirSuf, int iSim) throws IOException, OptimizerException, Exception
+    public void run(String worDirSuf) throws IOException, OptimizerException, Exception
     {
-	final int iPro = iSim - 1;
+	final int iPro = _getThreadNumber();
 	final File proWorDir = new File(worDir + worDirSuf);
 	final String comLin = _updateAndGetCommandLine(worDirSuf);
-	try
-	    {
-		Process p = Runtime.getRuntime().exec(comLin, null, proWorDir);
-		//--		pro.add(iPro, p);
-		p.waitFor();
-		// sleep for some milliseconds
-		    System.err.print("SimulationStarter: Go to sleep...   " + iSim);
-		    Thread.sleep((int)(2000*Math.random()));
-		    //		    Thread.sleep(2000);
-		    System.err.println("Woke up");
-
-		int ev = 0;
-		try { ev = p.exitValue(); }
-		catch (NullPointerException e){ // if process was destroyed
-		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-		    // Otherwise, the system does not release its resources, and
-		    // the exception "java.io.IOException: Too many open files" is
-		    // thrown after a few hundred or thousands of simulations.
-		    destroyProcess(iPro);
-
-		    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
-		}
-		if (ev != 0){
-		    InputStream ips = null;
-		    try { ips = p.getErrorStream(); }
-		    catch (NullPointerException e){ // if process was destroyed
-			// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-			// Otherwise, the system does not release its resources, and
-			// the exception "java.io.IOException: Too many open files" is
-			// thrown after a few hundred or thousands of simulations.
-			destroyProcess(iPro);
-
-			throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
-		    }					
-		    int len = ips.available();
-		    String sem;
-		    if (len > 0){
-			byte[] by = new byte[len];
-			ips.read(by);
-			sem = LS + new String(by);
-			ips.close();
-		    }
-		    else
-			sem = new String("Simulation program did not return an error stream.");
-		 
-		    String ErrMes =
-			LS + "Error in executing the simulation program" +
-			LS + "Exit value of the simulation program: " + ev +
-			LS + "Working directory                   : '" + proWorDir.getCanonicalPath() + "'." +
-			LS + "Current command String              : '" + comLin + "'." +
-			LS + "Error stream of simulation program  : " + sem + LS;
-
-		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-		    // Otherwise, the system does not release its resources, and
-		    // the exception "java.io.IOException: Too many open files" is
-		    // thrown after a few hundred or thousands of simulations.
-		    destroyProcess(iPro);
-
-		    throw new OptimizerException(ErrMes);
-		}
-	    }
+	try{
+	    pro[iPro] = Runtime.getRuntime().exec(comLin, null, proWorDir);
+	    pro[iPro].waitFor();
+	    
+	    // sleep for some milliseconds
+	    // System.err.print("SimulationStarter: Go to sleep...");
+	    // Thread.sleep((int)(2000*Math.random()));
+	    // Thread.sleep(2000);
+	    // System.err.println("Woke up");
+	    _processProcessOutput(iPro, worDirSuf, proWorDir, comLin);
+	}
 	catch(InterruptedException e){
 	    String ErrMes =
 		LS + "InterruptedException in executing the simulation program" + LS +
 		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
 		LS + "Current command String: '" + comLin + "'." + LS +
 		"Exception message: " + LS + e.getMessage(); 
-	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-	    // Otherwise, the system does not release its resources, and
-	    // the exception "java.io.IOException: Too many open files" is
-	    // thrown after a few hundred or thousands of simulations.
-	    destroyProcess(iPro);
 	    throw new OptimizerException(ErrMes);
 	}
 	catch(SecurityException e){
@@ -316,11 +309,6 @@ public class SimulationStarter implements Cloneable
 		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
 		LS + "Current command String: '" + comLin + "'." + LS +
 		"Exception message: " + LS + e.getMessage();
-	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-	    // Otherwise, the system does not release its resources, and
-	    // the exception "java.io.IOException: Too many open files" is
-	    // thrown after a few hundred or thousands of simulations.
-	    destroyProcess(iPro);
 	    throw new OptimizerException(ErrMes);
 	}
 	// Note that we do NOT catch IOException separately since Java is buggy.
@@ -332,42 +320,99 @@ public class SimulationStarter implements Cloneable
 		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
 		LS + "Current command String: '" + comLin + "'." + LS +
 		"Exception message: " + LS + e.getMessage(); 
+	    throw new Exception(ErrMes);
+	}
+	finally{
 	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
 	    // Otherwise, the system does not release its resources, and
 	    // the exception "java.io.IOException: Too many open files" is
 	    // thrown after a few hundred or thousands of simulations.
 	    destroyProcess(iPro);
-	    throw new Exception(ErrMes);
 	}
-	// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-	// Otherwise, the system does not release its resources, and
-	// the exception "java.io.IOException: Too many open files" is
-	// thrown after a few hundred or thousands of simulations.
-	destroyProcess(iPro);
-    }
-	
-    /** destroys the processes that exists
-     */
-    public synchronized void destroyProcess(){
-	for (int i = 0; i < pro.size(); i++)
-	    destroyProcess(i);
     }
 
+    /////////
+    /** Processes the output of the simulation
+     *
+     * @param iPro the process number
+     * @param worDirSuf the working directory suffix (used for error reporting)
+     * @param proWorDir the process working directory (used for error reporting)
+     * @param comLin the command line (used for error reporting)
+     * @exception NullPointerException If the user requested GenOpt to stop
+     * @exception OptimizerException
+     * @exception IOException if the output or error stream cannot be read
+     */
+    void _processProcessOutput(int iPro, final String worDirSuf, final File proWorDir, final String comLin)
+	throws NullPointerException, OptimizerException, IOException{
+	int ev = 0;
+	try { ev = pro[iPro].exitValue(); }
+	catch (NullPointerException e){ // if process was destroyed
+	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
+	    // Otherwise, the system does not release its resources, and
+	    // the exception "java.io.IOException: Too many open files" is
+	    // thrown after a few hundred or thousands of simulations.
+	    
+	    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
+	}
+	if (ev != 0){
+		InputStream ips = null;
+		try { ips = pro[iPro].getErrorStream(); }
+		catch (NullPointerException e){ // if process was destroyed
+		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
+		    // Otherwise, the system does not release its resources, and
+		    // the exception "java.io.IOException: Too many open files" is
+		    // thrown after a few hundred or thousands of simulations.
+		    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
+		}					
+		int len = ips.available();
+		String sem;
+		if (len > 0){
+		    byte[] by = new byte[len];
+		    ips.read(by);
+		    sem = LS + new String(by);
+		    ips.close();
+		}
+		else
+		    sem = new String("Simulation program did not return an error stream.");
+		
+		String ErrMes =
+		    LS + "Error in executing the simulation program" +
+		    LS + "Exit value of the simulation program: " + ev +
+		    LS + "Working directory                   : '" + proWorDir.getCanonicalPath() + "'." +
+		    LS + "Current command String              : '" + comLin + "'." +
+		    LS + "Error stream of simulation program  : " + sem + LS;
+		
+		// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
+		// Otherwise, the system does not release its resources, and
+		// the exception "java.io.IOException: Too many open files" is
+		// thrown after a few hundred or thousands of simulations.
+		throw new OptimizerException(ErrMes);
+	}
+    }
+
+
+    /** Destroys all processes that exists
+     */
+    public void destroyProcess(){
+	for (int i = 0; i < maxThrPoo; i++)
+	    destroyProcess(i);
+    }
+    
     /** destroys the process if it exists
      *@param iPro number of the process
      */
-    public synchronized void destroyProcess(int iPro){
-	System.err.println("SimulationStarter: do not destroy process" + iPro);
-	/*
-	if ( (pro.size()-1) < iPro )
-	    return;
-	Process p = pro.get(iPro);
-	if (p != null){
-	    p.destroy();
-	    pro.add(iPro, null);
-	    }*/
+    public void destroyProcess(int iPro){
+	lock.lock();
+	try{
+	    if (pro[iPro] != null){
+		pro[iPro].destroy();
+		pro[iPro] = null;
+		proFre[iPro].set(true);
+	    }
+	}
+	finally{ lock.unlock(); }
     }
-
+    
     /** Sets the working directory.
      *
      * @param workingDirectory the working directory.
@@ -380,5 +425,10 @@ public class SimulationStarter implements Cloneable
     protected boolean PrombtFileExtension;
     protected String worDir;
     protected OptimizationIni OptIni;
-    protected Vector<Process> pro;
+    protected Process[] pro;
+    /** Array with boolean flag, flag is <tt>true</tt> if this process number can be used */
+    protected AtomicBoolean[] proFre;
+    /** The maximum number of threads in the pool */
+    protected int maxThrPoo;
+    protected ReentrantLock lock;
 }

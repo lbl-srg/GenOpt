@@ -1,7 +1,12 @@
 package genopt.db;
 import genopt.*;
 import genopt.lang.ObjectiveFunctionLocation;
+import genopt.io.FileHandler;
+
 import java.util.*;
+import java.io.IOException;
+
+
 
 /** Object that stores the various file names that are used
   * by the optimization program.
@@ -114,6 +119,8 @@ public class OptimizationIni implements Cloneable
      *        might be a blank character
      * @param SimulationCallSuffix suffix for simulation call
      *        might be a blank character
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
      */
     public OptimizationIni(String[] SimulationInputTemplateFileName,
 			   String[] SimulationInputTemplatePath,
@@ -132,9 +139,30 @@ public class OptimizationIni implements Cloneable
 			   String OptimizationCommandFileName,
 			   String OptimizationCommandPath,
 			   String SimulationCallPrefix,
-			   String SimulationCallSuffix
-			   )
+			   String SimulationCallSuffix)
+	throws IOException
     {
+	// replace path by canonical path
+	SimulationInputTemplatePath = FileHandler.replacePathsByCanonicalPaths(SimulationInputTemplatePath,
+									       OptimizationInitializationPath);
+	SimulationInputPath = FileHandler.replacePathsByCanonicalPaths(SimulationInputPath,
+								       OptimizationInitializationPath);
+	SimulationInputSavePath = FileHandler.replacePathsByCanonicalPaths(SimulationInputSavePath,
+									   OptimizationInitializationPath);
+	SimulationOutputPath = FileHandler.replacePathsByCanonicalPaths(SimulationOutputPath,
+									OptimizationInitializationPath);
+	SimulationOutputSavePath = FileHandler.replacePathsByCanonicalPaths(SimulationOutputSavePath,
+									    OptimizationInitializationPath);
+	SimulationLogPath = FileHandler.replacePathsByCanonicalPaths(SimulationLogPath,
+								     OptimizationInitializationPath);
+	SimulationLogSavePath = FileHandler.replacePathsByCanonicalPaths(SimulationLogSavePath,
+									 OptimizationInitializationPath);
+	SimulationConfigPath = FileHandler.replacePathsByCanonicalPaths(SimulationConfigPath,
+									OptimizationInitializationPath);
+	OptimizationCommandPath = FileHandler.replacePathsByCanonicalPaths(OptimizationCommandPath,
+									   OptimizationInitializationPath);
+	
+
 	objFunMapIsSet = false;
 	nInpFil = SimulationInputTemplateFileName.length;
 	nOutFil = SimulationOutputFileName.length;

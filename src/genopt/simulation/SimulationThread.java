@@ -4,8 +4,12 @@ import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.math.Point;
 import genopt.simulation.SimulationInputException;
 import genopt.lang.OptimizerException;
+import java.util.concurrent.atomic.AtomicInteger;
 
-/** Object for creating a thread that executes a simulation
+/** Object for creating a thread that executes a simulation.
+  *
+  * The method {@link #genopt.algorithm.Optimizer.getF(Point[], boolean)}n
+  * makes instances of this class to parallelize the simulations.
   * 
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">
@@ -74,50 +78,74 @@ import genopt.lang.OptimizerException;
 public class SimulationThread implements Runnable
 {
 
-    /** constructor
-     * @param command the command line (with placeholder for the variables)
-     * @param promptInputFileExtension flag for specifying whether the extension
-     *        of the inputfile must be written in the command or not.<d>
-     *        (Set it <CODE>true</CODE> if the extension has to be written, 
-     *        <CODE>false</CODE> otherwise.)
-     * @param workingDirectory the working directory for the process.
-     * @param OptIni Instance of OptimizationIni
-     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
-     *                        canonical pathname may require filesystem queries
+    /** Constructor.
+     *
+     * @param optimizer reference to the optimizer instance
+     * @param poi the point to be evaluated
      */
     public SimulationThread(Optimizer optimizer, Point poi){
 	opt = optimizer;
 	x = poi;
 	exc = null;
+	iExc = new AtomicInteger(0);
     }
 
+    /** Runs the simulation.
+     *
+     *  This method stores all exceptions that may occur during its execution. The exceptions
+     *  can be retrieved by calling {@link #throwStoredException() throwStoredException}
+     */
     public void run(){
-	try{  opt.simulate(x); }
-	catch(SimulationInputException e){ simInpExc = e;}
-	catch(OptimizerException e){ optExc = e;}
-	catch(NoSuchMethodException e) { noSucMetExc = e;}
-	catch(IllegalAccessException e){ illAccExc = e;}
-	catch(Exception	e){ exc = e;}
+	if (iExc.get() == 0){
+	    try{  opt.simulate(x); }
+	    catch(SimulationInputException e){ simInpExc = e; iExc.incrementAndGet(); }
+	    catch(OptimizerException e){ optExc = e; iExc.incrementAndGet(); }
+	    catch(NoSuchMethodException e) { noSucMetExc = e; iExc.incrementAndGet(); }
+	    catch(IllegalAccessException e){ illAccExc = e; iExc.incrementAndGet(); }
+	    catch(Exception	e){ exc = e; iExc.incrementAndGet(); }
+	}
+	else if (!opt.mustStopOptimization()){
+	    opt.println("Skipping evaluation of simulation " + 
+			x.getSimulationNumber() + " because of previous simulation error.");
+	}
 	opt.done.countDown(); // count down the count down latch
     }
 
+    /** Throws all exceptions that have been catched when running 
+     *  {@link #run() run}.
+     *
+     * @exception SimulationInputException
+     * @exception OptimizerException
+     * @exception NoSuchMethodException
+     * @exception IllegalAccessException
+     * @exception Exception
+     */
     public void throwStoredException() 
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
-	if ( exc != null ) throw exc;
-	if ( simInpExc != null ) throw  simInpExc;
-	if ( optExc != null ) throw  optExc;
-	if ( noSucMetExc != null ) throw  noSucMetExc;
-	if ( illAccExc != null ) throw  illAccExc;
-	if ( exc != null ) throw  exc;
+	if ( iExc.get() > 0 ){
+	    if ( simInpExc != null ) throw  simInpExc;
+	    if ( optExc != null ) throw  optExc;
+	    if ( noSucMetExc != null ) throw  noSucMetExc;
+	    if ( illAccExc != null ) throw  illAccExc;
+	    if ( exc != null ) throw  exc;
+	}
     }
 
+    /** The point to be evaluated */
     protected Point x;
+    /** The reference to the GenOpt Optimizer instance */
     protected Optimizer opt;
-
+    /** The number of exceptions that have been accumulated */
+    protected static AtomicInteger iExc;
+    /** The <b>SimulationInputException</b> exception */
     protected SimulationInputException simInpExc;
+    /** The <b>OptimizerException</b> exception */
     protected OptimizerException optExc;
+    /** The <b>NoSuchMethodException</b> exception */
     protected NoSuchMethodException noSucMetExc;
+    /** The <b>IllegalAccessException</b> exception */
     protected IllegalAccessException illAccExc;
+    /** The <b>Exception</b> exception */
     protected Exception exc;
 }

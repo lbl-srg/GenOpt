@@ -1,6 +1,7 @@
 package genopt.algorithm.util.linesearch;
 import genopt.simulation.SimulationInputException;
 import genopt.lang.OptimizerException;
+import genopt.algorithm.DiscreteArmijoGradient;
 import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.math.*;
 import java.io.*;
@@ -85,7 +86,7 @@ public class Armijo{
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public Armijo(Optimizer optimizer, 
+    public Armijo(DiscreteArmijoGradient optimizer, 
 		  final int kSta, 
 		  final int lMax,
 		  final int kappa,
@@ -120,7 +121,7 @@ public class Armijo{
 		    final double del)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
-
+	final boolean stopAtError = true;
 	xLS = new Point[2];
 
 	xLS[0] = (Point)x.clone();
@@ -144,23 +145,36 @@ public class Armijo{
 	do{
 	    loopCount++;
 	    // first condition
-	    if ( ! con0 ){
+	    if ( con0 == false ){
 		lam0 = StrictMath.pow(Bet, K[0]);
 		xLS[0].setX( LinAlg.add( x.getX(), 
 					 LinAlg.multiply( lam0, h) ));
 		xLS[0].setComment("Line search. lambda = " + lam0 + ".");
-		xLS[0] = Opt.getF(xLS[0]);
+		// if con1 == false, wait with evaluting xLS[0] so 
+		// it can be evaluated in parallel with xLS[1]
+		if ( con1 == true ){
+		    xLS[0] = Opt.getF(xLS[0]);
+		}
 	    }
-	    con0 = ( xLS[0].getF(0) - x.getF(0) <= lam0 * Alp * del );
 	    // second condition 
-	    if ( ! con1 ){
+	    if ( con1 == false ){
 		K[1] = K[0]-1;
 		lam1 = StrictMath.pow(Bet, K[1]);
 		xLS[1].setX( LinAlg.add( x.getX(), 
 					 LinAlg.multiply( lam1, h) ));
 		xLS[1].setComment("Line search. lambda = " + lam1  + ".");
-		xLS[1] = Opt.getF(xLS[1]);
+		// if con0 == false, evaluate xLS[0] and xLS[1] here. Otherwise, 
+		// evaluate only xLS[1]
+		if ( con0 == false ){
+		    xLS = Opt.getF(Optimizer.SUBITERATION, xLS);
+		}
+		else{
+		    xLS[1] = Opt.getF(xLS[1]);
+		}
+		
 	    }
+	    // update the conditions
+	    con0 = ( xLS[0].getF(0) - x.getF(0) <= lam0 * Alp * del );
 	    con1 = ( xLS[1].getF(0) - x.getF(0) > lam1 * Alp * del );
 	    // check conditions		    
 	    if ( con1 == false ) {
@@ -229,7 +243,7 @@ public class Armijo{
     }
 
     /** The reference to the Optimizer object */
-    protected Optimizer Opt;
+    protected DiscreteArmijoGradient Opt;
     /** Algorithm parameter */
     private double Alp;
     /** Algorithm parameter */

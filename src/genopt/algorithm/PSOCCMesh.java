@@ -133,8 +133,9 @@ public class PSOCCMesh extends PSOCC{
      * <LI>the simulation is launched
      * <LI>simulation errors are checked
      * <LI>the value of the objective function is returned</UL>
-     *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
+     *@param x the points to be evaluated
+     *@param stopAtError set to false to continue with function evaluations even if there was an error
+     *@return a clone of the points with the new function values stored
      *@exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
      *@exception SimulationInputException if an error in writing the
@@ -145,39 +146,41 @@ public class PSOCCMesh extends PSOCC{
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public Point getF(Point x)
+    public Point[] getF(Point[] x, boolean stopAtError)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
-	Point r1 = Optimizer.roundCoordinates( x );
-	if ( ! isFeasible(r1) ){
-	    for(int i = 0; i < dimCon; i++)
-		r1.setX(i, Optimizer.setToFeasibleCoordinate(x.getX(i), getL(i), getU(i)));
-	    for(int i = 0; i < dimDis; i++)
-		r1.setIndex(i, Optimizer.setToFeasibleCoordinate(x.getIndex(i), 
-								0, getLengthDiscrete(i)-1));
-	}
-	// r is now feasible. Set to mesh point
-	final double[] xMes = genopt.algorithm.util.gps.ModelGPS.getClosestEuclideanMeshPoint( r1.getX(), X0Con, Delta );
-	r1.setX( xMes );
-	Point r = Optimizer.roundCoordinates( r1 );
-	// r need not be feasible since the closest mesh point may be outside the
-	// feasible domain.
-	// Make r feasible.
-	if ( ! isFeasible( r ) ){
-	    for(int i = 0; i < dimCon; i++){
-		final double xi = r.getX(i);
-		if (xi > getU(i)) // upper bound violated
-		    r.setX(i, xi - Delta[i] );
-		else if (xi < getL(i))   // lower bound violated
-		    r.setX(i, xi + Delta[i] );
-
+	final int nPoi = x.length;
+	Point[] r1 = new Point[nPoi];
+	for (int iP = 0; iP < nPoi; iP++){
+	    r1[iP] = Optimizer.roundCoordinates( x[iP] );
+	    if ( ! isFeasible(r1[iP]) ){
+		for(int i = 0; i < dimCon; i++)
+		    r1[iP].setX(i, Optimizer.setToFeasibleCoordinate(x[iP].getX(i), getL(i), getU(i)));
+		for(int i = 0; i < dimDis; i++)
+		    r1[iP].setIndex(i, Optimizer.setToFeasibleCoordinate(x[iP].getIndex(i), 
+								     0, getLengthDiscrete(i)-1));
 	    }
-	    Point r2 = Optimizer.roundCoordinates(r);
-	    assert isFeasible( r2 ) : "Point is not feasible.";
-	    return super.getF( r2 );
+	    // r1 are now feasible. Set to mesh point
+	    final double[] xMes = genopt.algorithm.util.gps.ModelGPS.getClosestEuclideanMeshPoint( r1[iP].getX(), X0Con, Delta );
+	    r1[iP].setX( xMes );
+	    r1[iP] = Optimizer.roundCoordinates( r1[iP] );
+	    // r need not be feasible since the closest mesh point may be outside the
+	    // feasible domain.
+	    // Make r feasible.
+	    if ( ! isFeasible( r1[iP] ) ){
+		for(int i = 0; i < dimCon; i++){
+		    final double xi = r1[iP].getX(i);
+		    if (xi > getU(i)) // upper bound violated
+			r1[iP].setX(i, xi - Delta[i] );
+		    else if (xi < getL(i))   // lower bound violated
+			r1[iP].setX(i, xi + Delta[i] );
+		    
+		}
+		r1[iP] = Optimizer.roundCoordinates(r1[iP]);
+		assert isFeasible( r1[iP] ) : "Point is not feasible.";
+	    }
 	}
-	else
-	    return super.getF( r ); // the coordinates of r are already rounded
+	return super.getF(r1, stopAtError);
     }
 
 

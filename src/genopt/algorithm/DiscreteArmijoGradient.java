@@ -194,7 +194,6 @@ public class DiscreteArmijoGradient extends Optimizer
 	for(int j = 0; j < dimX; j++)
 	    x.setX(j, (double)0);
 	x.setComment( "Initial point.");
-	x = this.getF(x, Optimizer.MAINITERATION);
 	////////////////////////////////
 	// optimization loop
 	do{
@@ -208,27 +207,49 @@ public class DiscreteArmijoGradient extends Optimizer
 	    ////////////////////////////////
 	    // compute search direction
 	    println("Compute search direction.");
-	    Point xSea = (Point)x.clone();
-	    xSea.setComment("Search direction computation.");
+	    Point xSea[] = new Point[dimX];
+	    for(int iP = 0; iP < dimX; iP++){
+		xSea[iP] = (Point)x.clone();
+		xSea[iP].setComment("Search direction computation.");
+	    }
 	    double[] h = new double[dimX];
 
 	    final double eps = StrictMath.pow(Bet, K0+m);
-	    for (int j = 0; j < dimX; j++){
-		    xSea.setX(j, x.getX(j) + eps);
-		    xSea = getF(xSea, Optimizer.SUBITERATION);
-		    h[j] = - ( xSea.getF(0) - x.getF(0) ) / eps;
-		    // reset coordinate
-		    xSea.setX(j, x.getX(j));
+	    for (int iP = 0; iP < dimX; iP++){
+		    xSea[iP].setX(iP, x.getX(iP) + eps);
+	    }
+	    // do the function evaluation
+	    // For the first iteration, x has not been evaluated yet.
+	    // So, do this here so we can do it in parallel with the gradient
+	    // evaluation
+	    if ( InitializeNormalization ){
+		// make temporary vector so we can evaluate [x, xSea] in parallel
+		Point[] tem = new Point[dimX+1];
+		tem[0] = (Point)x.clone();
+		for (int iP = 0; iP < dimX; iP++)
+		    tem[iP+1] = (Point)xSea[iP].clone();
+		tem = getF(Optimizer.SUBITERATION, tem);
+		// assign points from temporary vector back to variables
+		x = (Point)tem[0].clone();
+		for (int iP = 0; iP < dimX; iP++)
+		    xSea[iP] = (Point)tem[iP+1].clone();
+	    }
+	    else // x has already been evaluated. 
+		xSea = getF(Optimizer.SUBITERATION, xSea);
+	    // assign the search direction
+	    for (int iP = 0; iP < dimX; iP++){
+		h[iP] = - ( xSea[iP].getF(0) - x.getF(0) ) / eps;
 	    }
 	    /////////////////////////////////
 	    // compute decrease
 	    println("Checking decrease.");
-	    Point xDec = (Point)x.clone();
+	    Point xDec[] = new Point[1];
+	    xDec[0] = (Point)x.clone();
 	    final double[] ste = LinAlg.multiply(eps, h);
-	    xDec.setX( LinAlg.add( x.getX(), ste ) );
-	    xDec.setComment("Decrease computation.");
-	    xDec = getF( xDec, Optimizer.SUBITERATION);
-	    final double del = ( xDec.getF(0) - x.getF(0) ) / eps;
+	    xDec[0].setX( LinAlg.add( x.getX(), ste ) );
+	    xDec[0].setComment("Decrease computation.");
+	    xDec = getF(Optimizer.SUBITERATION, xDec);
+	    final double del = ( xDec[0].getF(0) - x.getF(0) ) / eps;
 	    /////////////////////////////////
 	    // check for decrease
 	    if ( del >= 0 ){
@@ -318,9 +339,9 @@ public class DiscreteArmijoGradient extends Optimizer
      * <LI>the simulation is launched
      * <LI>simulation errors are checked
      * <LI>the value of the objective function is returned</UL>
-     *@param x the point being evaluated
      *@param MainIteration <CODE>true</CODE> if step was a main iteration or
      *       <CODE>false</CODE> if it was a sub iteration
+     *@param x the point being evaluated
      *@return a clone of the point with the new function values stored
      *@exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
@@ -332,39 +353,104 @@ public class DiscreteArmijoGradient extends Optimizer
      *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an I/O error in the simulation input file occurs
      */
-    public Point getF(Point x, boolean MainIteration)
+    public Point[] getF(boolean MainIteration, Point x[])
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
 
 	// point with coordinates for simulation input
-	Point p = _convertPointToUserUnits(x);
+	final int nPoi = x.length;
+	Point[] p = new Point[nPoi];
+	for (int iP = 0; iP < nPoi; iP++)
+	    p[iP] = _convertPointToUserUnits(x[iP]);
 	
 	// evaluate cost function
-	p = super.getF(p);
+	final boolean stopAtError = true;
+	p = super.getF(p, stopAtError);
 	// store function value if first run
 	if ( InitializeNormalization ){
 	    // if f0 is very small, do not use normalization
-	    if (StrictMath.abs( p.getF(0) ) >  1.E100 * Double.MIN_VALUE )
-		fIni = p.getF(0);
+	    if (StrictMath.abs( p[0].getF(0) ) >  1.E100 * Double.MIN_VALUE )
+		fIni = p[0].getF(0);
 	    else{
 		fIni = 1.;
 		final String mes = 
 		    "Initial cost function value is close to zero." + LS +
 		    "Algorithm does not use normalization of cost.";
-		setInfo(mes, p.getSimulationNumber() );
+		setInfo(mes, p[0].getSimulationNumber() );
 	    }
-	    InitializeNormalization = false;
 	}
-	// report result
-	if ( MainIteration )
-	    super.report(p, !MainIteration);
-	super.report(p, MainIteration);
+	// report results
+	if ( InitializeNormalization ){
+	    super.report(p[0], Optimizer.SUBITERATION); // the initial point is a main iteration
+	    super.report(p[0], Optimizer.MAINITERATION); // the initial point is a main iteration
+	}
+	for (int iP = InitializeNormalization ? 1 : 0; iP < nPoi; iP++){
+	    if ( MainIteration )
+		super.report(p[iP], Optimizer.MAINITERATION);
+	    super.report(p[iP], MainIteration);
+	}
 	// point with normalized coordinates and cost function
-	Point r = (Point)p.clone();
-	r.setX( x.getX() );
-	r.setF(0, p.getF(0)/fIni );
+	Point[] r = new Point[nPoi];
+	for (int iP = 0; iP < nPoi; iP++){
+	    r[iP] = (Point)p[iP].clone();
+	    r[iP].setX( x[iP].getX() );
+	    r[iP].setF(0, p[iP].getF(0)/fIni );
+	}
+	InitializeNormalization = false;
 	return r;
     }
+
+    /** Evaluates the simulation based on the parameter set x and reports the point.
+     *
+     * This method simply calls the vectorized form {@link #getF(boolean, Point[]} 
+     * and returns its value
+     *
+     *@param MainIteration <CODE>true</CODE> if step was a main iteration or
+     *       <CODE>false</CODE> if it was a sub iteration
+     *@param x the point being evaluated
+     *@return a clone of the point with the new function values stored
+     *@exception OptimizerException if an OptimizerException occurs or
+     *           if the user required to stop GenOpt
+     *@exception SimulationInputException if an error in writing the
+     *           simulation input file occurs
+     *@exception NoSuchMethodException if a method that should be invoked could not be found
+     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     *                                    control and the underlying method is inaccessible
+     *@exception InvocationTargetException if an invoked method throws an exception
+     *@exception Exception if an I/O error in the simulation input file occurs
+     */
+    public Point getF(boolean MainIteration, Point x)
+	throws SimulationInputException, OptimizerException, NoSuchMethodException,
+	       IllegalAccessException, Exception{
+	// call vectorized implementation
+	Point[] r = new Point[1];
+	r[0] = (Point)x.clone();
+	r = getF(MainIteration, r);
+	return (Point)r[0].clone();
+    }
+
+    /** Computes a function evaluation and reports the point as a sub iteration.
+     * 
+     * This method calls {@link #getF(boolean, Point} with the boolean flag set to
+     * <tt>Optimizer.SUBITERATION</tt>
+     *@param x the point being evaluated
+     *@return a clone of the point with the new function values stored
+     *@exception OptimizerException if an OptimizerException occurs or
+     *           if the user required to stop GenOpt
+     *@exception SimulationInputException if an error in writing the
+     *           simulation input file occurs
+     *@exception NoSuchMethodException if a method that should be invoked could not be found
+     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     *                                    control and the underlying method is inaccessible
+     *@exception InvocationTargetException if an invoked method throws an exception
+     *@exception Exception if an I/O error in the simulation input file occurs
+     */     
+    public Point getF(Point x)
+	throws SimulationInputException, OptimizerException, NoSuchMethodException,
+	       IllegalAccessException, Exception{
+	return this.getF(Optimizer.SUBITERATION, x);
+    }
+
 
     /** Converts the argument's independent parameters
       * to the units used in the simulation input.
@@ -379,12 +465,6 @@ public class DiscreteArmijoGradient extends Optimizer
 	    p.setX(i, coo );
 	}
 	return p;
-    }
-
-    public Point getF(Point x)
-	throws SimulationInputException, OptimizerException, NoSuchMethodException,
-	       IllegalAccessException, Exception{
-	return this.getF(x, Optimizer.SUBITERATION);
     }
 
     /** The number of independent variables */

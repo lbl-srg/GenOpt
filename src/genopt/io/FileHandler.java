@@ -222,6 +222,23 @@ public class FileHandler implements Cloneable{
      * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
+    public static String[] replacePathsByCanonicalPaths(final String str[], final String userDir)
+	throws IOException{
+	if ( str == null )
+	    return null;
+	String[] r = new String[str.length];
+	for(int i = 0; i < str.length; i++)
+	    r[i] = FileHandler.replacePathsByCanonicalPaths(str[i], userDir);
+	return r;
+    }
+
+    /** Replaces all paths with their canonical paths
+     *
+     *@param str The original string
+     *return A copy of <tt>str</tt> with all paths replaced by their canonical path
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
+     */
     public static String replacePathsByCanonicalPaths(final String str, final String userDir)
 	throws IOException{
 	StringTokenizer st = new StringTokenizer(str, " \"", true);

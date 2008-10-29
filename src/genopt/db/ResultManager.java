@@ -208,7 +208,7 @@ public class ResultManager
      */
     public void setNewTrial(Point x, int runIde) throws IOException{
 	ResultPoint rp = new ResultPoint(x);
-	rp.setSimulationNumber(simNum, maiIteNum, subIteNum);
+	rp.setSimulationNumber(x.getSimulationNumber(), maiIteNum, subIteNum);
 	
 	// Add point to stored results
 	switch (runIde) {

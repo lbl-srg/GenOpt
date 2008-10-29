@@ -3,8 +3,8 @@
 */
 
 Vary{
-  Parameter{ Name = x1; Min = -1; Ini = 0; Max = 1; Step = 0; }
-  Parameter{ Name = x2; Min = -1; Ini = 0; Max = 1; Step = 1; }
+  Parameter{ Name = x1; Min = -1; Ini = 0; Max = 1; Step = 4; }
+  Parameter{ Name = x2; Min = -1; Ini = 0; Max = 1; Step = 4; }
   Function{ Name = x1Squared; Function = "multiply(%x1%, %x1%)"; }
   Function{ Name = x2Squared; Function = "multiply(%x2%, %x2%)"; }
 }

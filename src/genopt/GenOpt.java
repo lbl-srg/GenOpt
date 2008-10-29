@@ -533,8 +533,11 @@ public class GenOpt extends Thread
     ///////////////////////////////////////////////////////////////////////
     /** initializes the optimization ini file name and path
      * @param optIniFileName name of optimization ini file or null pointer
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
      */
     private void initializeOptimizationIniName(String optIniFileName)
+	throws IOException
     {
 	// constructor for FileHandler Optimization ini File
 	if (optIniFileName == null)
@@ -568,6 +571,8 @@ public class GenOpt extends Thread
 			optIniFilNam = optIniFileName.substring(lasSep+1);
 		    }
 	    }
+	optIniPat = (new File(optIniPat)).getCanonicalPath();
+	System.err.println("Optimizer: ***** " + optIniPat);
     }
 
     ///////////////////////////////////////////////////////////////////////

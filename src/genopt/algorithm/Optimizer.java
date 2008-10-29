@@ -13,10 +13,14 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Abstract Class that represents the structure of an optimization 
   * algorithm class and offers generic methods to run the optimization.<BR>
   * All optimization algorithms must extend this class.
+  *
+  * Note that many data fields are <tt>static</tt>. This is needed for the
+  * hybrid algorithms.
   *
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">
@@ -185,7 +189,16 @@ abstract public class Optimizer
 	genopt.io.FileHandler.makeDirectory(data.OptIni.getSimOutSavPat());
 
 	// initialize list with evaluated points
-	evaPoi = new TreeMap<Point, Double[]>();
+	evaPoi = Collections.synchronizedMap(new TreeMap<Point, Double[]>());
+
+	// maximum number of threads int the pool
+	maxThrPoo = java.lang.Runtime.getRuntime().availableProcessors();
+	println("Assigning " + maxThrPoo + " processors.");
+	//	maxThrPoo = 2;
+	data.SimSta.setMaximumNumberOfThreads(maxThrPoo);
+	// flag, true 
+	functionValuesParsed = new AtomicBoolean(false);
+	funValParLat = new CountDownLatch(1);
     }
 
     /** Constructor
@@ -784,9 +797,9 @@ abstract public class Optimizer
      * are treated. The return value contains the same point but with its function value
      * as determined by the simulation.
      *
-     *@param x the point being evaluated
+     *@param x the points to be evaluated
      *@param stopAtError set to false to continue with function evaluations even if there was an error
-     *@return a clone of the point with the new function values stored
+     *@return a clone of the points with the new function values stored
      *@exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
      *@exception SimulationInputException if an error in writing the
@@ -803,7 +816,17 @@ abstract public class Optimizer
 	assert x != null : "Received 'null' as argument";
 
 	boolean[] evaluate = setKnownFunctionValues(x);
+	int[] poiToEquPoint = Optimizer.getPointerToEqualPoints(x);
+	
+	// reset the evaluate vector in case x contains the same point multiple times
+	for (int iP = 0; iP < x.length; iP++){
+	    if ( poiToEquPoint[iP] > -1 )
+		evaluate[iP] = false;
+	}
+
 	int numOfSim = 0;
+
+	// Set the simulation number for each point that requires a simulation
 	for(int iP = 0; iP < x.length; iP++){
 	    if (evaluate[iP]){ // this points will need to be simulated
 		genopt.db.ResultManager.increaseNumberOfFunctionEvaluation();
@@ -814,21 +837,23 @@ abstract public class Optimizer
 		x[iP].setSimulationNumber( genopt.db.ResultManager.getNumberOfSimulation() );
 	    }
 	}
-
-	ExecutorService exec = Executors.newFixedThreadPool(2);
+	assert (maxThrPoo > 0) : "maxThrPoo must be bigger than 0";
+	ExecutorService exec = Executors.newFixedThreadPool(maxThrPoo);
 	done = new CountDownLatch(numOfSim);
-	long startTime = System.nanoTime();
 
 	SimulationThread[] simThr = new SimulationThread[numOfSim];
 	int k=0;
-	for(int iP = 0; iP < numOfSim; iP++){
-	    if (evaluate[iP]) // this points will need to be simulated
-		simThr[k++] = new SimulationThread(this, x[iP]);
+	for(int iP = 0; iP < x.length; iP++){
+	    if (evaluate[iP]){ // this points will need to be simulated
+		simThr[k] = new SimulationThread(this, x[iP]);
+		k++;
+	    }
 	}
 
 	// run simulations
 	for(int iT = 0; iT < numOfSim; iT++)
 	    exec.execute( simThr[iT] );
+
 	// wait until all threads completed
 	done.await();
 	// throw the exceptions, if any
@@ -863,6 +888,15 @@ abstract public class Optimizer
 	}
 	// shut down thread pool
 	exec.shutdown();
+	// copy points that did not require a simulation because they were more than once
+	// in the vector x
+	for(int iP = 0; iP < x.length; iP++){
+	    final int j = poiToEquPoint[iP];
+	    if ( j > -1 ){
+		x[iP].setF( x[j].getF() );
+		x[iP].setSimulationNumber( x[j].getSimulationNumber() );
+	    }
+	}
 	// copy points
 	Point[] r = new Point[x.length];
 	System.arraycopy(x, 0, r, 0, x.length);
@@ -900,7 +934,7 @@ abstract public class Optimizer
 	Point[] r = new Point[1];
 	r[0] = (Point)x.clone();
 	r[0].setStepNumber(stepNumber);
-	getF(r, false); // there is only one point, hence stopAtError does not do anything
+	r = getF(r, false); // there is only one point, hence stopAtError does not do anything
 	return r[0];
     }
 
@@ -947,6 +981,33 @@ abstract public class Optimizer
 	return r;
     }
 
+    /** Gets an integer array that shows what points are equals.
+     *
+     * If an element is equal to <tt>-1</tt>, then no point with lower index is equal.
+     * If a element is non-negative, then its value is the index of the point that has
+     * is equal. For such a point, no simulation is required.
+     *
+     *@param x the points for which the function values are needed
+     *@return a vectors with elements set to <code>true</code> if a simulation is needed
+     *        for a particular point
+     *@exception OptimizerException if an OptimizerException occurs or
+     *           if the user required to stop GenOpt
+     */
+    public static int[] getPointerToEqualPoints(final Point[] x){
+
+	int[] r = new int[x.length];
+	r[0] = -1;
+	for(int iCur = 1; iCur < x.length; iCur++){
+	    r[iCur] = -1;
+	    for(int iRef = 0; iRef < iCur; iRef++){
+		if ( x[iCur].equals( x[iRef] ) ){
+		    r[iCur] = iRef;
+		    iRef = iCur; // to escape inner loop
+		}
+	    }
+	}
+	return r;
+    }
 
     /** Evaluates the simulation based on the parameter set x<BR>
      *@param x the point being evaluated
@@ -976,18 +1037,17 @@ abstract public class Optimizer
 	   inproperly
 	*/
 	final int simNum = x.getSimulationNumber();
-	//	if (simNum > 1){
-	//	    try{
-	//		key = _evaluateSimulation((Point)x.clone());
-	//	    }
-	//	    catch(Exception e){
-	//		key = _retryEvaluateSimulation((Point)x.clone(), e);
-	//	    }
-	//	}
-	//	else{
-	System.err.println("Optimizer: disabled retry of function eval.");
+	if (simNum > 1){
+	    try{
+		key = _evaluateSimulation((Point)x.clone());
+	    }
+	    catch(Exception e){
+		key = _retryEvaluateSimulation((Point)x.clone(), e);
+	    }
+	}
+	else{
 	    key = _evaluateSimulation((Point)x.clone());
-	    //	}
+	}
 
 	// add point and function value to the map of evaluated points
 	Double[] val = new Double[key.getDimensionF()];
@@ -1217,15 +1277,12 @@ abstract public class Optimizer
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
-	synchronized(Optimizer.class){
-	System.err.println("**** Optimizer: Start for simNum = " + simNum);
-	data.SimSta.run(worDirSuf, simNum);
-	System.err.println("**** Optimizer: Ended for simNum = " + simNum);
+	//	System.err.println("**** Optimizer: Start for simNum = " + simNum);
+	data.SimSta.run(worDirSuf);
+	//	System.err.println("**** Optimizer: Ended for simNum = " + simNum);
 	//		  System.err.print("Go to sleep...   ");
 	//		  Thread.sleep(1000);
 	//		  System.err.println("Woke up");
-
-	}
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// check if simulation log files exist
@@ -1268,10 +1325,17 @@ abstract public class Optimizer
 	
 	// in first function call, construct the pointer "funValPoi" that shows
 	// which function value is in what file
-	System.err.println("Optimizer: removed section to test function object");
-	//--	if (simNum == 1){ // first call
+	if ( simNum > 1 ){
+	    while( functionValuesParsed.get() == false ) { funValParLat.await(); }
 	    for (int iFx = 0; iFx < dimF; iFx++){
-		
+		if ( ! objFunObj[iFx].isFunction() ){
+		    String del = objFunObj[iFx].getDelimiter();
+		    objFunVal[iFx] = simOutFilHan[funValPoi[iFx]].getObjectiveFunctionValue(del);
+		}
+	    }
+	} // simSum > 1
+	else{ // first call. Establish mapping of function value objects
+	    for (int iFx = 0; iFx < dimF; iFx++){
 		if ( objFunObj[iFx].isFunction() ){
 		    // objective function is defined by a function object
 		    funValPoi[iFx] = -1;
@@ -1289,19 +1353,14 @@ abstract public class Optimizer
 			}
 		    }
 		}
-	    }
-	//--	else{ // all other calls
-	//--	    for (int iFx = 0; iFx < dimF; iFx++){
-	//--		if ( ! objFunObj[iFx].isFunction() ){
-	//--		    String del = objFunObj[iFx].getDelimiter();
-	//--		    objFunVal[iFx] = simOutFilHan[funValPoi[iFx]].getObjectiveFunctionValue(del);
-	//--		}
-	
+		functionValuesParsed.set(true);
+		funValParLat.countDown();
+	    } // for loop
+	} // first call branch
+			
 	/////////////////////////////////////////////////////
 	// process function objects
-	System.err.println("Optimizer: call _process..." + simNum);
 	objFunVal = Optimizer._processResultFunction(outFun, objFunVal);
-	System.err.println("Optimizer: called _process..." + simNum);
 	/////////////////////////////////////////////////////
 	// write result to GUI or console
 	for (int iFx = 0; iFx < dimF; iFx++)
@@ -1411,9 +1470,7 @@ abstract public class Optimizer
 					    final double[] objFunVal)
 	throws OptimizerException, NoSuchMethodException, 
 	       IllegalAccessException, InvocationTargetException, IOException {
-	    System.err.println("Optimizer: entered _processResultFun");
 	for (int iFx = 0; iFx < dimF; iFx++){
-	    System.err.println("Optimizer: _processResultFun" + iFx);
 	    if ( formula[iFx] != null ){
 		for (int iVal = 0; iVal < dimF; iVal++){
 		    // replace all function values that are the result of the simulation
@@ -1851,7 +1908,7 @@ abstract public class Optimizer
      *@return <CODE>true</CODE> if GenOpt has to be stopped, <CODE>false</CODE>
      *        otherwise
      */
-    protected final boolean mustStopOptimization(){
+    public final boolean mustStopOptimization(){
 	return data.mustStopOptimization();
     }
 
@@ -2029,6 +2086,12 @@ abstract public class Optimizer
         the same point, where equality is defined by the implementation of
         <CODE>genopt.algorithm.util.math.Point.compareTo(java.lang.Object o)</CODE>
     */
-    static private TreeMap<Point, Double[]> evaPoi;
+    static private Map<Point, Double[]> evaPoi;
+    /** The maximum number of threads in the pool */
+    static private int maxThrPoo;
+    /** Flag that indicates whether function values have been parsed at least once */
+    static private AtomicBoolean functionValuesParsed;
 
+    /** Count down latch, if 0, the function value pointer <tt>funValPoi</tt> has been set */
+    private CountDownLatch funValParLat;
 }

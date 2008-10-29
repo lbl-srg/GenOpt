@@ -264,13 +264,16 @@ abstract public class ModelPSO extends Optimizer
 	    println(com);
 	    for(int iP = 0; iP < NumPar; iP++){
 		CurPop[iP].setComment(com);
-		// increase step number, if step number is used
-		if ( writeStepNumber() && IGen > 1 ){
-		    increaseStepNumber();
-		    LocBes[iP] = getF(LocBes[iP]);
-		}
-		// evaluate cost function
-		CurPop[iP] = getF(CurPop[iP]);
+	    }
+	    // increase step number, if step number is used
+	    if ( writeStepNumber() && IGen > 1 ){
+		increaseStepNumber();
+		LocBes = getF(LocBes, true);
+	    }
+	    // evaluate cost function
+	    CurPop = getF(CurPop, true);
+	    // Report the points
+	    for(int iP = 0; iP < NumPar; iP++){
 		report(CurPop[iP], Optimizer.SUBITERATION);
 		report(CurPop[iP], Optimizer.MAINITERATION);
 	    }
