@@ -1,0 +1,42 @@
+/* GenOpt command file
+   MWetter@lbl.gov 2008-10-27
+*/
+
+Vary{
+  Parameter{ Name = x1; Min = -1; Ini = 1; Max = 1; Step = 0.01; Type = CONTINUOUS; }
+  Parameter{ Name = x2; Min = -1; Ini = 1; Max = 1; Step = 0.01; Type = CONTINUOUS; }
+  Parameter{ Name = x3; Min = -1; Ini = 1; Max = 1; Step = 0.01; Type = CONTINUOUS; }
+  Parameter{ Name = x4; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+  Parameter{ Name = x5; Min = -1; Ini = 1; Max = 1; Step = 20; Type = SET; }
+
+  Function{ Name = x1Squared; Function = "multiply(%x1%, %x1%)"; }
+  Function{ Name = x2Squared; Function = "multiply(%x2%, %x2%)"; }
+  Function{ Name = x3Squared; Function = "multiply(%x3%, %x3%)"; }
+  Function{ Name = x4Squared; Function = "multiply(%x4%, %x4%)"; }
+  Function{ Name = x5Squared; Function = "multiply(%x5%, %x5%)"; }
+}
+
+OptimizationSettings{
+  MaxIte = 2000;
+  MaxEqualResults = 100;
+  WriteStepNumber = false;
+}
+
+Algorithm{
+  Main = GPSPSOCCHJ;
+  NeighborhoodTopology = vonNeumann;
+  NeighborhoodSize = 5;
+  NumberOfParticle = 20;
+  NumberOfGeneration = 20;
+  Seed = 1;
+  CognitiveAcceleration = 2.8;
+  SocialAcceleration = 1.3;
+  MaxVelocityGainContinuous = 0.5;
+  MaxVelocityDiscrete = 4;
+  ConstrictionGain = 0.5;
+  MeshSizeDivider = 2;
+  InitialMeshSizeExponent = 0;
+  MeshSizeExponentIncrement = 1;
+  NumberOfStepReduction = 4;
+}
+
