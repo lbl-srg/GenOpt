@@ -133,28 +133,11 @@ public class SimulationStarter implements Cloneable
      */
     private void _updateCommandLine(){
 	//update the command line so that it is ready to use
-	
-	// cut the file extension from the string if necessairy
-	int nSimInpFil = OptIni.getNumberOfInputFiles();
-	String[] SimInputFileCal = new String[nSimInpFil];
-	for(int i = 0; i < nSimInpFil; i++)
-	    SimInputFileCal[i] = OptIni.getSimInpFilNam(i);
-	if (!PrombtFileExtension){
-	    for(int i = 0; i < nSimInpFil; i++){	
-		int j = SimInputFileCal[i].lastIndexOf('.');
-		if (j != -1)	//cut the extension only if there is really one
-		    SimInputFileCal[i] = new String(SimInputFileCal[i].substring(0, j));
-	    }
-	}
-	for(int i = 0; i < nSimInpFil; i++){
+	for(int i = 0; i < OptIni.getNumberOfInputFiles(); i++){
 	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Template.File" + (i+1) +"%",
 					OptIni.getSimInpTemFilNam(i) );
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.File" + (i+1) +"%",
-					SimInputFileCal[i]           );
 	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Template.Path" + (i+1) +"%",
 					OptIni.getSimInpTemPat(i)    );
-	    CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.Path" + (i+1) +"%",
-					OptIni.getSimInpPat(i)       );
 	    if (OptIni.getSimInpSavPat(i) != null)
 		CommandLine = replaceString(CommandLine, "%Simulation.Files.Input.SavePath" + (i+1) + "%",
 					    OptIni.getSimInpSavPat(i));
@@ -208,6 +191,25 @@ public class SimulationStarter implements Cloneable
 	for (int i = 0; i < OptIni.getNumberOfOutputFiles(); i++)
 	    ret = replaceString(ret, "%Simulation.Files.Output.Path" + (i+1) + "%",
 					OptIni.getSimOutPat(i) + worDirSuf);
+
+	// cut the file extension from the string if necessairy
+	final int nSimInpFil = OptIni.getNumberOfInputFiles();
+	String[] SimInputFileCal = new String[nSimInpFil];
+	for(int i = 0; i < nSimInpFil; i++)
+	    SimInputFileCal[i] = OptIni.getSimInpFilNam(i);
+	if (!PrombtFileExtension){
+	    for(int i = 0; i < nSimInpFil; i++){	
+		int j = SimInputFileCal[i].lastIndexOf('.');
+		if (j != -1)	//cut the extension only if there is really one
+		    SimInputFileCal[i] = new String(SimInputFileCal[i].substring(0, j));
+	    }
+	}
+	for(int i = 0; i < nSimInpFil; i++){
+	    ret = replaceString(ret, "%Simulation.Files.Input.File" + (i+1) +"%",
+					SimInputFileCal[i]           );
+	    ret = replaceString(ret, "%Simulation.Files.Input.Path" + (i+1) +"%",
+					OptIni.getSimInpPat(i) + worDirSuf);
+	}
 
 	return genopt.io.FileHandler.replacePathsByCanonicalPaths(ret, OptIni.getOptIniPat());
     }

@@ -934,7 +934,10 @@ abstract public class Optimizer
 	Point[] r = new Point[1];
 	r[0] = (Point)x.clone();
 	r[0].setStepNumber(stepNumber);
-	r = getF(r, false); // there is only one point, hence stopAtError does not do anything
+	// Set stopAtError to true. Otherwise, the function evaluations continues
+	// in case of error.
+	final boolean stopAtError = true;
+	r = getF(r, stopAtError); 
 	return r[0];
     }
 
@@ -1277,7 +1280,7 @@ abstract public class Optimizer
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
-	//	System.err.println("**** Optimizer: Start for simNum = " + simNum);
+	//		println("**** Optimizer: Start for simNum = " + simNum);
 	data.SimSta.run(worDirSuf);
 	//	System.err.println("**** Optimizer: Ended for simNum = " + simNum);
 	//		  System.err.print("Go to sleep...   ");

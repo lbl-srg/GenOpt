@@ -420,6 +420,12 @@ public class ResultManager
      */
     public int getDimensionF() { return dimF; }	
 
+    /** gets the run number
+     *@return the run number
+     */		
+    public int getSimulationNumber() { return simNum;}
+
+
     ///////////////////////////////////////////////////////////////////////////
     /** reference to GenOpt object */
     protected GenOpt go;

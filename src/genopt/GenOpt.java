@@ -572,7 +572,6 @@ public class GenOpt extends Thread
 		    }
 	    }
 	optIniPat = (new File(optIniPat)).getCanonicalPath();
-	System.err.println("Optimizer: ***** " + optIniPat);
     }
 
     ///////////////////////////////////////////////////////////////////////

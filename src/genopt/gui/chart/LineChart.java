@@ -485,11 +485,9 @@ public class LineChart extends JComponent{
 	labAsc = (int)(new TextLayout("ABC", 
 				      foLa, frc).getAscent());			
 
-	final int maxVal = getMaxPoints();
-	
 	g.setColor(Color.black);
 
-	if (maxVal >= MINPOI)
+	if (getMaxPoints() >= MINPOI)
 	    drawWholeChart(g2);
 	else
 	    initialize(g2);
