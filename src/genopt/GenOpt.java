@@ -430,9 +430,7 @@ public class GenOpt extends Thread
 	// it takes to choose the initalization file from the GUI
 	startDate = new Date();
 	OrderedMap objFunDel = instantiateOptimizationIni(inpForExc);
-	
 	if (nErr < inpForExc.getNumberOfErrors()) return;
-
 	// delete the log file if it already exists
 	File lf = new File(optIniPat + File.separator + "GenOpt.log");
 	try { lf.delete(); }

@@ -793,7 +793,7 @@ abstract public class Optimizer
     }
 
     /** Evaluates the simulation for the point x<BR>
-     * The value <CODE>constraints</CODE> determines in which mode the constraints
+     * The value <CODE>conMode</CODE> determines in which mode the constraints
      * are treated. The return value contains the same point but with its function value
      * as determined by the simulation.
      *
@@ -905,7 +905,7 @@ abstract public class Optimizer
 
 
     /** Evaluates the simulation for the point x<BR>
-     * The value <CODE>constraints</CODE> determines in which mode the constraints
+     * The value <CODE>conMode</CODE> determines in which mode the constraints
      * are treated. The return value contains the same point but with its function value
      * as determined by the simulation.
      *
@@ -1014,7 +1014,6 @@ abstract public class Optimizer
 
     /** Evaluates the simulation based on the parameter set x<BR>
      *@param x the point being evaluated
-     *@return a clone of the points with the new function values stored
      *@exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
      *@exception SimulationInputException if an error in writing the
@@ -1079,10 +1078,10 @@ abstract public class Optimizer
      *           if the user required to stop GenOpt
      *@exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     * @exception NoSuchMethodException if a method that should be invoked could not be found
-     * @exception IllegalAccessException  if an invoked method enforces Java language access 
-     *                                    control and the underlying method is inaccessible
-     * @exception InvocationTargetException if an invoked method throws an exception
+     *@exception NoSuchMethodException if a method that should be invoked could not be found
+     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     *                                   control and the underlying method is inaccessible
+     *@exception InvocationTargetException if an invoked method throws an exception
      *@exception Exception if an exception occurs
      */
     private Point _retryEvaluateSimulation(final Point x, final Throwable t)
@@ -1563,7 +1562,7 @@ abstract public class Optimizer
 
     /** Gets the value of <CODE>x[i]</CODE><BR>
      * <B>Note:</B> <CODE>x[i]</CODE> might be in the transformed space
-     * depending on the value of <CODE>constraints</CODE>
+     * depending on the value of <CODE>conMode</CODE>
      * @param i the number of the variable (zero-based counter)
      * @return the value of the variable
      */
@@ -1607,7 +1606,7 @@ abstract public class Optimizer
 
     /** Gets the values of the continuous variable <CODE>x</CODE><BR>
      * <B>Note:</B> <CODE>x</CODE> might be in the transformed space
-     * depending on the value of <CODE>constraints</CODE>
+     * depending on the value of <CODE>conMode</CODE>
      * @return the vector of the independent variables
      */
     public double[] getX0(){
@@ -1719,7 +1718,7 @@ abstract public class Optimizer
 
     /** Gets the step size <CODE>dx[i]</CODE> of the i-th continuous variable<BR>
      * <B>Note:</B> <CODE>dx[i]</CODE> might be in the transformed space
-     * depending on the value of <CODE>constraints</CODE>.<BR>
+     * depending on the value of <CODE>conMode</CODE>.<BR>
      * @param i the number of the variable (zero-based counter)
      * @param x the current value of the variable. If the optimization algorithm works in the transformed
      *        space, then <code>x</code> need to be in the transformed space as well.
@@ -1746,11 +1745,8 @@ abstract public class Optimizer
     }
 
     /** Gets the step size <CODE>dx[i]</CODE> of the i-th continuous variable as specified 
-     * in the command file.<BR>
-     * <B>Note:</B> <CODE>dx[i]</CODE> might be in the transformed space
-     * depending on the value of <CODE>constraints</CODE>.<BR>
-     * Do not forget to set x before using this method in an
-     * other mode than <CODE>contraints = 0</CODE>
+     * in the command file.
+     *
      * @param i the index of the variable (zero-based counter)
      * @return the value of the variable
      */

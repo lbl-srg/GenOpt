@@ -402,7 +402,7 @@ public class DiscreteArmijoGradient extends Optimizer
 
     /** Evaluates the simulation based on the parameter set x and reports the point.
      *
-     * This method simply calls the vectorized form {@link #getF(boolean, Point[]} 
+     * This method simply calls the vectorized form {@link #getF(boolean, Point[])} 
      * and returns its value
      *
      *@param MainIteration <CODE>true</CODE> if step was a main iteration or
@@ -431,7 +431,7 @@ public class DiscreteArmijoGradient extends Optimizer
 
     /** Computes a function evaluation and reports the point as a sub iteration.
      * 
-     * This method calls {@link #getF(boolean, Point} with the boolean flag set to
+     * This method calls {@link #getF(boolean, Point)} with the boolean flag set to
      * <tt>Optimizer.SUBITERATION</tt>
      *@param x the point being evaluated
      *@return a clone of the point with the new function values stored

@@ -8,8 +8,7 @@ import java.io.*;
 import java.util.concurrent.locks.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Object for calling a simulation program with free selectable
-  * structure of the calling command.
+/** Object for calling a simulation program.
   * 
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">
@@ -87,7 +86,7 @@ public class SimulationStarter implements Cloneable
      *        (Set it <CODE>true</CODE> if the extension has to be written, 
      *        <CODE>false</CODE> otherwise.)
      * @param workingDirectory the working directory for the process.
-     * @param OptIni Instance of OptimizationIni
+     * @param optIni Instance of the OptimizationIni class
      * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
@@ -248,7 +247,7 @@ public class SimulationStarter implements Cloneable
 
     /** Returns the thread number to be used by this process
      *@return The thread number to be used by this process
-     *@OptimizerException If no thread is available. This condition should never occur.
+     *@exception OptimizerException If no thread is available. This condition should never occur.
      */
     private int _getThreadNumber()
 	throws OptimizerException{
@@ -272,14 +271,13 @@ public class SimulationStarter implements Cloneable
 	return -1;
     }
 
-    /** Run the simulation program<dd>
-     * <b>Note:</b> This method works only if the command line is already updated.
+    /** Runs the simulation program<dd>
+     *
      * @param worDirSuf working directory suffix, to be added to current working directory to enable
      *                  parallel simulations
      * @exception IOException
      * @exception OptimizerException
      * @exception Exception
-     * @see SimulationStarter#updateCommandLine
      */
     public void run(String worDirSuf) throws IOException, OptimizerException, Exception
     {

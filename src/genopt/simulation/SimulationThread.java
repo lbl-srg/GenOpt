@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /** Object for creating a thread that executes a simulation.
   *
-  * The method {@link #genopt.algorithm.Optimizer.getF(Point[], boolean)}n
+  * The method {@link genopt.algorithm.Optimizer#getF(Point[], boolean)}
   * makes instances of this class to parallelize the simulations.
   * 
   * <P><I>This project was carried out at:</I>

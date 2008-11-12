@@ -10,10 +10,6 @@ import genopt.io.InputFormatException;
 /** Class for minimizing a function using the Hooke-Jeeves
   * Generalized Pattern Search algorithm.<P>
   *
-  * This algorithm replaces its older implementation in the
-  * {@link HookeJeeves} class. Users should use this implementation
-  * instead of {@link HookeJeeves}.
-  *
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
