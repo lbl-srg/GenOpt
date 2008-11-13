@@ -54,7 +54,7 @@ else
 IZPACK=izpack
 endif
 
-export genopt-version=2.1.0
+export genopt-version=3.0.0alpha1
 ### Targets of Makefile ###########################
 ### Compiles the GenOpt source code and the JavaDoc 
 all: doc jar
@@ -89,7 +89,7 @@ doc:
 	TARGET=_top>LBL SRG</A> | <A HREF="http://www.lbl.gov" \
 	TARGET=_top>LBL</A> </CENTER> <HR WIDTH="100%"> \
 	<BR> Contact: <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A> </DIV>" -d ../documentation/jdoc $(SRC))
-	cp -v ../../../1_report/1_manual/2.1.0/manual.pdf documentation
+	cp -v ../../../1_report/1_manual/${genopt-version}/manual.pdf documentation
 	@echo "==== Made documentation"
 
 ### Copies the files to the web directory
