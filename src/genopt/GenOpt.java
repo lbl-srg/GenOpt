@@ -293,19 +293,19 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_NUMBER</code> here.
      *
      */
-    public final static String VERSION_NUMBER = "2.1.1";
+    public final static String VERSION_NUMBER = "3.0.0";
     /**
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "";//"-rc3";
+    public final static String VERSION_ID     = "alpha1";//"alpha1 or -rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", July 28, 2008";
+	VERSION_NUMBER + VERSION_ID + ", November 12, 2008";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
