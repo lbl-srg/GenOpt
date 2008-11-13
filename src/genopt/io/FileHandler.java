@@ -218,8 +218,8 @@ public class FileHandler implements Cloneable{
     /** Replaces all paths with their canonical paths
      *
      *@param str The original string
-     *return A copy of <tt>str</tt> with all paths replaced by their canonical path
-     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *@return A copy of <tt>str</tt> with all paths replaced by their canonical path
+     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
     public static String[] replacePathsByCanonicalPaths(final String str[], final String userDir)
@@ -235,8 +235,8 @@ public class FileHandler implements Cloneable{
     /** Replaces all paths with their canonical paths
      *
      *@param str The original string
-     *return A copy of <tt>str</tt> with all paths replaced by their canonical path
-     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *@return A copy of <tt>str</tt> with all paths replaced by their canonical path
+     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
     public static String replacePathsByCanonicalPaths(final String str, final String userDir)
