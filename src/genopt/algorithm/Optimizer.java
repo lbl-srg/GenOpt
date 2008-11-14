@@ -1378,7 +1378,7 @@ abstract public class Optimizer
 		p += "Simulation " + simNum + ": " + 
 		    nameF[iFx] + "\t= " + objFunVal[iFx] + LS;
 	    }
-	    println(p);
+	    print(p);
 	}
 
 	/////////////////////////////////////////////////////
