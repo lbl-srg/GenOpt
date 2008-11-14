@@ -194,7 +194,6 @@ abstract public class Optimizer
 	// maximum number of threads int the pool
 	maxThrPoo = java.lang.Runtime.getRuntime().availableProcessors();
 	println("Assigning " + maxThrPoo + " processors.");
-	//	maxThrPoo = 2;
 	data.SimSta.setMaximumNumberOfThreads(maxThrPoo);
 	// flag, true 
 	functionValuesParsed = new AtomicBoolean(false);
