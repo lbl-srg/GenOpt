@@ -271,6 +271,25 @@ public class SimulationStarter implements Cloneable
 	return -1;
     }
 
+
+    /** Gets a string representation of the command line and the working directory.
+     *  Use this method for diagnostics report in case the simulation had errors.
+     *
+     * @param worDirSuf working directory suffix, to be added to current working directory to enable
+     *                  parallel simulations
+     * @exception IOException
+     */
+    public String getCommandDiagnostics(String worDirSuf) 
+	throws IOException{
+	final File proWorDir = new File(worDir + worDirSuf);
+	final String comLin = _updateAndGetCommandLine(worDirSuf);
+	String r = 
+	    "Simulation working directory : '" + proWorDir.getCanonicalPath() + "'" + LS +
+	    "Command string               : '" + comLin + "'";
+	return r;
+    }
+
+
     /** Runs the simulation program<dd>
      *
      * @param worDirSuf working directory suffix, to be added to current working directory to enable
@@ -290,8 +309,7 @@ public class SimulationStarter implements Cloneable
 	catch(SecurityException e){
 	    String ErrMes =
 		LS + "SecurityException when creating the working directory." + LS +
-		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + comLin + "'." + LS +
+		LS + getCommandDiagnostics(worDirSuf) + LS +
 		"Exception message: " + LS + e.getMessage();
 	    throw new OptimizerException(ErrMes);
 	}
@@ -309,16 +327,14 @@ public class SimulationStarter implements Cloneable
 	catch(InterruptedException e){
 	    String ErrMes =
 		LS + "InterruptedException in executing the simulation program" + LS +
-		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + comLin + "'." + LS +
+		LS + getCommandDiagnostics(worDirSuf) + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    throw new OptimizerException(ErrMes);
 	}
 	catch(SecurityException e){
 	    String ErrMes =
 		LS + "SecurityException in executing the simulation program" + LS +
-		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + comLin + "'." + LS +
+		LS + getCommandDiagnostics(worDirSuf) + LS +
 		"Exception message: " + LS + e.getMessage();
 	    throw new OptimizerException(ErrMes);
 	}
@@ -328,8 +344,7 @@ public class SimulationStarter implements Cloneable
 	catch(Exception e){ // any other exception
 	    String ErrMes =
 		LS + "Exception in executing the simulation program" + LS  +
-		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
-		LS + "Current command String: '" + comLin + "'." + LS +
+		LS + getCommandDiagnostics(worDirSuf) + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    throw new Exception(ErrMes);
 	}

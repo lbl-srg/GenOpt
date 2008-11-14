@@ -1305,7 +1305,10 @@ abstract public class Optimizer
 		}
 	    }
 	}
-	if (exit) throw new OptimizerException(errMes);
+	if (exit){
+	    errMes += LS + data.SimSta.getCommandDiagnostics(worDirSuf);
+	    throw new OptimizerException(errMes);
+	}
 	////////////////////////////////////////////////////
 	// read and return values of objective function
 	for (int iOutFil = 0; iOutFil < nSimOutFil; iOutFil++){
@@ -1315,7 +1318,10 @@ abstract public class Optimizer
 		exit = true;
 	    }
 	}
-	if (exit) throw new OptimizerException(errMes);
+	if (exit){
+	    errMes += data.SimSta.getCommandDiagnostics(worDirSuf);
+	    throw new OptimizerException(errMes);
+	}
 
 	SimOutputFileHandler[] simOutFilHan = new SimOutputFileHandler[nSimOutFil];
 	double[] objFunVal = new double[dimF];
@@ -1364,8 +1370,15 @@ abstract public class Optimizer
 	objFunVal = Optimizer._processResultFunction(outFun, objFunVal);
 	/////////////////////////////////////////////////////
 	// write result to GUI or console
-	for (int iFx = 0; iFx < dimF; iFx++)
-	    println("Simulation " + simNum + ": " + nameF[iFx] + "\t= " + objFunVal[iFx]);
+	// Store contents in a string, as this avoids that two processes
+	// write simultaneously lines to the GUI or the console
+	{
+	    String p = "";
+	    for (int iFx = 0; iFx < dimF; iFx++){
+		p += "Simulation " + simNum + ": " + nameF[iFx] + "\t= " + objFunVal[iFx];
+	    }
+	    println(p);
+	}
 
 	/////////////////////////////////////////////////////
 	// data handling
