@@ -1375,7 +1375,8 @@ abstract public class Optimizer
 	{
 	    String p = "";
 	    for (int iFx = 0; iFx < dimF; iFx++){
-		p += "Simulation " + simNum + ": " + nameF[iFx] + "\t= " + objFunVal[iFx];
+		p += "Simulation " + simNum + ": " + 
+		    nameF[iFx] + "\t= " + objFunVal[iFx] + LS;
 	    }
 	    println(p);
 	}
