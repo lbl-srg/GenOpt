@@ -285,6 +285,17 @@ public class SimulationStarter implements Cloneable
 	final File proWorDir = new File(worDir + worDirSuf);
 	final String comLin = _updateAndGetCommandLine(worDirSuf);
 	try{
+	    proWorDir.mkdirs();
+	}
+	catch(SecurityException e){
+	    String ErrMes =
+		LS + "SecurityException when creating the working directory." + LS +
+		LS + "Working directory     : '" + proWorDir.getCanonicalPath() + "'." +
+		LS + "Current command String: '" + comLin + "'." + LS +
+		"Exception message: " + LS + e.getMessage();
+	    throw new OptimizerException(ErrMes);
+	}
+	try{
 	    pro[iPro] = Runtime.getRuntime().exec(comLin, null, proWorDir);
 	    pro[iPro].waitFor();
 	    
