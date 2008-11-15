@@ -898,7 +898,8 @@ abstract public class Optimizer
 	}
 	// copy points
 	Point[] r = new Point[x.length];
-	System.arraycopy(x, 0, r, 0, x.length);
+	for(int iP = 0; iP < x.length; iP++)
+	    r[iP] = (Point)x[iP].clone();
 	return r;
     }
 
