@@ -117,6 +117,9 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Nov  14 wm In genopt.algorithm.util.pso.ModelPSO, replaced System.arraycopy with clone.
+                  Using arraycopy resulted in wrong values for the local best points.
+ 2008, Nov  10 wm Implemented parallel computation.
  2008, Oct  24 wm Deleted algorithm HookeJeeves.java. This is replaced by GPSHookeJeeves.java
  2008, Oct  04 wm Deleted the experimental feature for smoothing in Optimizer.java, 
                   including the optimization algorithms that used this feature.
