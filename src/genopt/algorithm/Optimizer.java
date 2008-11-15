@@ -786,7 +786,7 @@ abstract public class Optimizer
 	Point x0 = new Point(dimCon, dimDis, dimF);
 	// initialize points with current settings
 	x0.setXIndex( getX0(), getIndex0() );
-	x0.setStepNumber(0);
+	x0.setStepNumber(1);
 	x0.setComment( "Initial point.");
 	return this.run(x0);
     }
@@ -960,7 +960,6 @@ abstract public class Optimizer
 	    else // step number is not used. Set to 1 
 		key[i].setStepNumber(1);
 	    r[i] = !evaPoi.containsKey(key[i]);
-
 	    if( !r[i] ){
 		////////////////////////////////////////////////////////
 		// Point already evaluated
