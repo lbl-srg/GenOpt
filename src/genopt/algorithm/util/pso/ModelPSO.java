@@ -226,7 +226,8 @@ abstract public class ModelPSO extends Optimizer
 	// global best
 	GloBes = new Point[NumPar];
 
-	System.arraycopy(CurPop, 0, LocBes, 0, NumPar);
+	for(int iP = 0; iP < NumPar; iP++)
+	    LocBes[iP] = (Point)CurPop[iP].clone();
 	// neighborhood of each particle
 	initializeNeighborhoodIndices();
 	////////////////////////////////
@@ -283,7 +284,9 @@ abstract public class ModelPSO extends Optimizer
 		////////////////////////////////
 		// get local best
 		if ( IGen == 1 ) // first generation
-		    System.arraycopy(CurPop, 0, LocBes, 0, NumPar);
+		    for(int iP = 0; iP < NumPar; iP++){
+			LocBes[iP] = (Point)CurPop[iP].clone();
+		    }
 
 		updateLocalBest();
 		updateGlobalBest();
