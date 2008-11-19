@@ -1,0 +1,916 @@
+! singleZonePurchAir.idf
+! Basic file description: Office room with east and west facade,
+!                         based on BESTEST High-Mass building loads test (Case 930).
+!
+! Author:   Michael Wetter, SRG-LBNL, MWetter@lbl.gov
+!           Input file based on BESTEST Case930 from R. H. Henninger,  GARD Analytics, Inc.
+! Date:     May 16, 2008
+! Run:      Run for Chicago, IL location
+! Building: Fictional 1 zone building + hallway with walls, windows and internal mass.  
+!           Windows on east and west walls only
+!           Window has overhang shading device
+!           0.5 ACH Infiltration
+!           20C heating, 25C cooling (instead of 27 as in BESTEST)
+! Internal: None.
+! System:   None.  
+! Plant:    None.
+! Modified: Changed internal loads, removed side fins of windows,
+!           now only two exterior walls, added thermal mass to account for
+!           interior walls to hallways, changed floor and ceiling construction to 
+!           massive construction, changed cooling set point temperature to 25 C always, 
+!           heating to 18 C during night hours,
+!           added LoE SPEC SEL CLEAR 3MM DOUBLE pane window
+!           changed window spec.: Now, Krypton filling, 1 x 8 mm and other glass thickness
+!           Exterior wall increased insulation (and concrete thickness): U = 0.252 W/m2*K
+!           Interior wall (partition) now brick 120mm instead of concrete
+!           Overhang depth also design parameter (for West and East window separately)
+!           Solar, visible, and thermal transmittance of shading device also design parameter
+
+Version,
+    2.2.0;  !- Version Identifier
+
+    
+Solution Algorithm, CTF; ! Heat balance solution algorithm
+
+ Location, 
+   CHICAGO ILLINOIS,     ! Location Name
+      41.78        ,     ! Latitude {N+ S-}
+     -87.75        ,     ! Longitude {W- E+}
+     -6            ,     ! TimeZoneNumber {GMT+/-}
+     190.0         ;     ! Elevation {m}
+
+RunPeriod,              ! One summer week
+       1          ,     ! Start month
+       1          ,     ! Start day
+       12         ,     ! End month
+       31         ,     ! End day
+        Monday   ,     ! Day Of Week For Start Day
+	yes	  ,     ! Holidays/Special Days
+	yes	  ,     ! DaylightSavingPeriod
+	no        ,     ! Apply week-end holiday rules
+	yes      ,      ! Use WeatherFile Rain Indicators
+	yes      ;      ! Use WeatherFile Snow Indicators
+	
+	
+	
+ MATERIAL:Regular,
+      CONCRETE BLOCK,   ! Material Name
+               Rough,   ! Roughness
+       0.2000      ,   ! Thickness {m}
+       0.51000      ,   ! Conductivity {W/M-K}        
+       1400.000     ,   ! Density  {Kg/M3
+       1000.00      ,   ! Specific Heat {J/Kg-K}
+             0.9000000    ,   ! Thermal Emissivity 
+             0.600000    ,   ! Solar Absorptance
+             0.600000    ;   ! Visible Absorptance
+
+
+ MATERIAL:Regular,
+     FOAM INSULATION,   ! Material Name
+               Rough,   ! Roughness
+       0.100        ,   ! Thickness {m}
+       0.030        ,   ! Conductivity {W/M-K}        
+       10.000       ,   ! Density  {Kg/M3
+       1400.00      ,   ! Specific Heat {J/Kg-K}
+             0.9000000    ,   ! Thermal Emissivity 
+             0.600000    ,   ! Solar Absorptance
+             0.600000    ;   ! Visible Absorptance
+
+ MATERIAL:Regular-R,
+       WOOD SIDING-1,   ! Material Name
+               Rough,   ! Roughness
+             0.06   ,   ! Thermal resistance {m2*K/W}
+             0.9000000    ,   ! Thermal Emissivity 
+             0.600000    ,   ! Solar Absorptance
+             0.600000    ;   ! Visible Absorptance
+
+
+  CONSTRUCTION, 
+            HWWALL,     ! Construction Name
+              ! Material layer names follow:
+                 WOOD SIDING-1,
+                 FOAM INSULATION,
+                 CONCRETE BLOCK;
+
+! ------------------------------------------------------------------
+
+ MATERIAL:Regular,
+    CONCRETE SLAB050,   ! Material Name
+               Rough,   ! Roughness
+       0.05000      ,   ! Thickness {m}
+       1.13000      ,   ! Conductivity {W/M-K}        
+       1400.000     ,   ! Density  {Kg/M3
+       1000.0       ,   ! Specific Heat {J/Kg-K}
+             0.9000000    ,   ! Thermal Emissivity 
+             0.600000    ,   ! Solar Absorptance
+             0.600000    ;   ! Visible Absorptance
+
+ MATERIAL:Regular,
+    CONCRETE SLAB180,   ! Material Name
+               Rough,   ! Roughness
+       0.18000      ,   ! Thickness {m}
+       1.13000      ,   ! Conductivity {W/M-K}        
+       1400.000     ,   ! Density  {Kg/M3
+       1000.0       ,   ! Specific Heat {J/Kg-K}
+             0.9000000    ,   ! Thermal Emissivity 
+             0.600000    ,   ! Solar Absorptance
+             0.600000    ;   ! Visible Absorptance
+
+MATERIAL:Regular-R,
+      R-1 INSULATION,    ! Material Name
+               Rough,    ! Roughness
+             1.0       , ! Thermal Resistance {M2-K/W}
+             0.9000000 , ! Thermal Emissivity
+             0.600000  , ! Solar Absorptance
+             0.600000  ; ! Visible Absorptance
+
+MATERIAL:Regular-R,
+              CARPET,    ! Material Name
+               Rough,    ! Roughness
+             0.125     , ! Thermal Resistance {M2-K/W}
+             0.9000000 , ! Thermal Emissivity
+             0.600000  , ! Solar Absorptance
+             0.600000  ; ! Visible Absorptance
+
+   CONSTRUCTION, 
+           HWFLOOR,     ! Construction Name
+             ! Material layer names follow:
+                 CONCRETE SLAB180,
+                 R-1 INSULATION,
+                 CONCRETE SLAB050,
+                 CARPET;
+
+   CONSTRUCTION, 
+           HWCEILING,     ! Construction Name
+             ! Material layer names follow:
+                 CARPET,
+                 CONCRETE SLAB050,
+                 R-1 INSULATION,
+                 CONCRETE SLAB180;
+! ------------------------------------------------------------------
+! Thermal mass (wall within zone)
+
+ MATERIAL:Regular,
+    BRICK120,           ! Material Name
+               Rough,   ! Roughness
+       0.12000      ,   ! Thickness {m}
+       1.00000      ,   ! Conductivity {W/M-K}        
+       2080.000     ,   ! Density  {Kg/M3
+        790.0       ,   ! Specific Heat {J/Kg-K}
+             0.9000000    ,   ! Thermal Emissivity 
+             0.600000    ,   ! Solar Absorptance
+             0.600000    ;   ! Visible Absorptance
+
+   CONSTRUCTION, 
+           INTWALL,     ! Construction Name
+             ! Material layer names follow:
+                 BRICK120;
+! ------------------------------------------------------------------
+! Interior walls between zones
+
+
+   CONSTRUCTION, 
+           PARWALL,     ! Construction Name
+             ! Material layer names follow:
+                 BRICK120;
+
+! ------------------------------------------------------------------
+! ID 501
+MATERIAL:WindowGlass,LoE SPEC SEL CLEAR 6MM,SpectralAverage,    ,.006,.430,.300,.420,.770,.070,.060,.0,.84,.03,.9;  
+
+! Window ID 2
+MATERIAL:WindowGlass,CLEAR 3MM,SpectralAverage,                 ,.003,.837,.075,.075,.898,.081,.081,.0,.84,.84,.9;  ! ID 2
+
+MATERIAL:WindowGas, KRYPTON 8MM,
+    Krypton,    !- Type
+    .0079  ;    !- Thickness {m}
+
+MATERIAL:WindowShade, ExtShade,
+         0.30625     ,  ! Solar transmittance
+         0.1       ,  ! Solar reflectance
+         0.30625     ,  ! Visible transmittance
+         0.1       ,  ! Visible reflectance
+         0.1       ,  ! Thermal emissivity
+         0.30625     ,  ! Thermal transmittance
+         0.02      ,  ! Thickness (used only for insulating shade)
+         0.1       ,  ! Conductivity (used only for insulating shade) in W/(m*K)
+         0.05      ,  !Shade-to-glass distance
+         0.5       ,  !Top opening multiplier
+         0.5       ,  !Bottom opening multiplier
+         0.5       ,  !Left-side opening multiplier
+         0.5       ,  !Right-side opening multiplier
+         0         ;  !Air flow permeability
+
+! =====================================================================
+! Window shading control
+
+WINDOWSHADINGCONTROL,
+  WinShadingControl,   ! Name
+  ExteriorShade, ! Shading type
+  Double Pane Window Shaded,         ! Name of construction with shading
+  OnIfHighSolarOnWindow,   ! Shading control type
+  Sch Summer,                 ! Schedule name
+  200,                        ! Trigger point in W/m2
+  Yes,                         ! Shading Control Is Scheduled
+  Yes,                        ! Glare Control Is Active
+     ,                        ! Material Name of Shading Device
+     ,                        ! Type of Slat Angle Control for Blinds
+     ;                        ! Slat Angle Schedule Name   
+
+! =====================================================================
+
+ CONSTRUCTION,
+            Double Pane Window Shaded,     ! Construction Name
+               ! Material layer names follow: (from outside surface to zone side surface)
+                   ExtShade,
+                   LoE SPEC SEL CLEAR 6MM,
+                   KRYPTON 8MM,
+                   CLEAR 3MM;
+
+ CONSTRUCTION,
+            Double Pane Window,     ! Construction Name
+               ! Material layer names follow: (from outside surface to zone side surface)
+                   LoE SPEC SEL CLEAR 6MM,
+                   KRYPTON 8MM,
+                   CLEAR 3MM;
+
+ WindowFrameAndDivider, 
+   WinFrameAndDivider, ! Name
+   0.05 , ! Frame width
+   0.0  , ! Frame outside projection
+   0.0  , ! Frame inside projection
+   2.0  , ! Frame conductance in W/(m2*K)
+   1.5  , ! Frame edge glass conductance (currently unused)
+   0.8  , ! Frame solar absorbtance
+   0.8  , ! Frame visible absorbtance
+   0.9  , ! Frame thermal emissivity
+   DividedLite, ! Divider type
+   0.02 , ! Divider width
+   3    , ! Number of horizontal dividers
+   0    , ! Number of vertical dividers
+   0.0  , ! Divider outside protection
+   0.0  , ! Divider inside protection
+   2.0  , ! Divider conductance in W/(m2*K)
+   1.0  , ! Divider edge glass conductance (currently unused)
+   0.8  , ! Divider solar absorptance
+   0.8  , ! Divider visible absorptance
+   0.9  ; ! Divider thermal emissivity
+
+ End Lead Input;
+
+! ========================================================================
+
+ Simulation Data;
+
+ TIMESTEP IN HOUR,     4;
+
+ INSIDE CONVECTION ALGORITHM,     1;
+
+ OUTSIDE CONVECTION ALGORITHM,    1;
+
+! -----------------------------------------------------------------------
+
+ BUILDING,
+    office zone,   ! Building Name
+           87.5,   ! Building Azimuth
+                   1,   ! Building Terrain {1=FlatOpenCountry | 2=RoughWoodedCountryTownsSuburbs | 3=CityCenter}
+       4.0000000E-02,   ! Loads Convergence Tolerance
+       4.0000002E-03,   ! Temperature Convergence Tolerance
+                  1,   ! Solar Distribution {-1=MinimalShadowing | 0=FullExterior | 1=FullInteriorAndExterior}
+                  25;  ! Maximum number of warm-up days
+! -----------------------------------------------------------------------
+
+ ZONE, 
+            ZONE ONE,   ! Zone Name
+       0.0000000E+00,   ! Zone North Axis (relative to Building)
+       0.0000000E+00,   ! Zone X Origin {m}
+       0.0000000E+00,   ! Zone Y Origin {m}
+       0.0000000E+00,   ! Zone Z Origin {m}
+                   1,   ! Zone Type (1 is the only valid value right now)
+                   1,   ! Zone Multiplier
+       2.7000       ,   ! Zone Ceiling Height {m}
+       259.2        ;   ! Zone Volume {m**3}
+
+ ZONE VOLUME CAPACITANCE MULTIPLIER,
+                  1.2;   ! Used for Stability in Predictor Corrector Step by Increasing Reactive Capacity
+
+! -----------------------------------------------------------------------
+
+ SurfaceGeometry,UpperLeftCorner,CounterClockWise,relative;
+ Surface:HeatTransfer,ZONE SURFACE NORTH,  !- Base Surface Name
+   WALL,PARWALL,  !- Class and Construction Name
+   ZONE ONE,  !- Zone
+  OtherZoneSurface, ZONE SURFACE SOUTH,  !- Exterior Conditions and Target (if applicable)
+   NoSun,  !- Solar Exposure
+   NoWind,  !- Wind Exposure
+  0.5000000    ,  !- VF to Ground
+           4, !-Rectangle
+  16.000000    ,   6.000000    ,   2.700000    ,
+  16.000000    ,   6.000000    ,  0.0000000E+00,
+  0.0000000E+00,   6.000000    ,  0.0000000E+00,
+  0.0000000E+00,   6.000000    ,   2.700000    ;
+ Surface:HeatTransfer,ZONE SURFACE EAST,  !- Base Surface Name
+   WALL,HWWALL,  !- Class and Construction Name
+   ZONE ONE,  !- Zone
+  ExteriorEnvironment,,  !- Exterior Conditions and Target (if applicable)
+   SunExposed,  !- Solar Exposure
+   WindExposed,  !- Wind Exposure
+  0.5000000    ,  !- VF to Ground
+           4, !-Rectangle
+  16.000000    ,  0.0000000E+00,   2.700000    ,
+  16.000000    ,  0.0000000E+00,  0.0000000E+00,
+  16.000000    ,   6.000000    ,  0.0000000E+00,
+  16.000000    ,   6.000000    ,   2.700000    ;
+
+ Surface:HeatTransfer:Sub,ZONE SUBSURFACE 1 EAST WINDOW,  !- SubSurface Name
+   WINDOW,DOUBLE PANE WINDOW,  !- Class and Construction Name
+  ZONE SURFACE EAST,,  !- Base Surface Name and Target (if applicable)
+  0.5000000    ,  !- VF to Ground
+  WinShadingControl ,  !- Window Shading Control
+  WinFrameAndDivider ,  !- Frame Divider
+  1, ! number of identical windows
+           4, !-RectangularDoorWindow
+  16.000000    ,   0.000000    ,   2.200000    ,
+  16.000000    ,   0.000000    ,  0.2000000    ,
+  16.000000    ,   5.9   ,  0.2000000    ,
+  16.000000    ,   5.9   ,   2.200000    ;
+
+  Surface:Shading:Attached,EAST WINDOW OVERHANG,  !- Surface Name
+   ZONE SURFACE EAST,  !- Base Surface Name
+   ,  !- Shadowing Schedule
+           4, !-RectangularOverhang
+  16.000000    ,   0.000000    ,   2.700000    ,
+  17.0     ,   0.000000    ,   2.700000    ,
+  17.0     ,   5.9 ,   2.700000    ,
+  16.000000    ,   5.9  ,   2.700000    ;
+
+ Surface:HeatTransfer,ZONE SURFACE SOUTH,  !- Base Surface Name
+   WALL,PARWALL,  !- Class and Construction Name
+   ZONE ONE,  !- Zone
+  OtherZoneSurface, ZONE SURFACE NORTH, !- Exterior Conditions and Target (if applicable)
+   NoSun,  !- Solar Exposure
+   NoWind,  !- Wind Exposure
+  0.5000000    ,  !- VF to Ground
+           4, !-Rectangle
+  0.0000000E+00,  0.0000000E+00,   2.700000    ,
+  0.0000000E+00,  0.0000000E+00,  0.0000000E+00,
+  16.000000    ,  0.0000000E+00,  0.0000000E+00,
+  16.000000    ,  0.0000000E+00,   2.700000    ;
+
+
+ Surface:HeatTransfer,ZONE SURFACE WEST,  !- Base Surface Name
+   WALL,HWWALL,  !- Class and Construction Name
+   ZONE ONE,  !- Zone
+  ExteriorEnvironment,,  !- Exterior Conditions and Target (if applicable)
+   SunExposed,  !- Solar Exposure
+   WindExposed,  !- Wind Exposure
+  0.5000000    ,  !- VF to Ground
+           4, !-Rectangle
+  0.0000000E+00,   6.000000    ,   2.700000    ,
+  0.0000000E+00,   6.000000    ,  0.0000000E+00,
+  0.0000000E+00,  0.0000000E+00,  0.0000000E+00,
+  0.0000000E+00,  0.0000000E+00,   2.700000    ;
+
+
+ Surface:HeatTransfer:Sub,ZONE SUBSURFACE 2 WEST WINDOW,  !- SubSurface Name
+   WINDOW,DOUBLE PANE WINDOW,  !- Class and Construction Name
+  ZONE SURFACE WEST,,  !- Base Surface Name and Target (if applicable)
+  0.5000000    ,  !- VF to Ground
+  WinShadingControl ,  !- Window Shading Control
+  WinFrameAndDivider ,  !- Frame Divider
+  1, ! number of identical windows
+           4, !-RectangularDoorWindow
+  0.0000000E+00,   4.2    ,   2.200000    ,
+  0.0000000E+00,   4.2    ,  0.2000000    ,
+  0.0000000E+00,   0.000000    ,  0.2000000    ,
+  0.0000000E+00,   0.000000    ,   2.200000    ;
+
+  Surface:Shading:Attached,WEST WINDOW OVERHANG,  !- Surface Name
+   ZONE SURFACE WEST,  !- Base Surface Name
+   ,  !- Shadowing Schedule
+           4, !-RectangularOverhang
+  0.0000000E+00,   4.2  ,   2.700000    ,
+  -1.0    ,   4.2  ,   2.700000    ,
+  -1.0    ,   0.000000    ,   2.700000    ,
+  0.0000000E+00,   0.000000    ,   2.700000    ;
+
+
+ Surface:HeatTransfer,ZONE SURFACE FLOOR,  !- Base Surface Name
+   FLOOR,HWFLOOR,  !- Class and Construction Name
+   ZONE ONE,  !- Zone
+  OtherZoneSurface, ZONE SURFACE CEILING,  !- Exterior Conditions and Target (if applicable)
+   NoSun,  !- Solar Exposure
+   NoWind,  !- Wind Exposure
+  0.0000000E+00,  !- VF to Ground
+           4, !-Rectangle
+  0.0000000E+00,  0.0000000E+00,  0.0000000E+00,
+  0.0000000E+00,   6.000000    ,  0.0000000E+00,
+  16.000000    ,   6.000000    ,  0.0000000E+00,
+  16.000000    ,  0.0000000E+00,  0.0000000E+00;
+
+ Surface:HeatTransfer,ZONE SURFACE CEILING,  !- Base Surface Name
+   ROOF,HWCEILING,  !- Class and Construction Name
+   ZONE ONE,  !- Zone
+  OtherZoneSurface, ZONE SURFACE FLOOR, !- Exterior Conditions and Target (if applicable)
+   NoSun,  !- Solar Exposure
+   NoWind,  !- Wind Exposure
+  0.0000000E+00,  !- VF to Ground
+           4, !-Rectangle
+  0.0000000E+00,   6.000000    ,   2.700000    ,
+  0.0000000E+00,  0.0000000E+00,   2.700000    ,
+  16.000000    ,  0.0000000E+00,   2.700000    ,
+  16.000000    ,   6.000000    ,   2.700000    ;
+
+! ----------------------------------------------------------
+! Surface for internal mass, seperating the two office and hallway
+ Surface:HeatTransfer:InternalMass, HALLWAY WALL,  !- Base Surface Name
+   INTWALL,  !- Construction Name
+   ZONE ONE,  !- Zone
+   54.24   ;  !- Total area exposed to Zone {m2}
+              ! 54.24 = 4 * ( 2.7 * 6 - 2.2 * 1.2 )
+
+! ===========================================================
+
+ELECTRIC EQUIPMENT,
+  ROOM ELE EQU     , !- Name
+  ZONE ONE         , !- Zone Name
+  Sch Equ          , !- SCHEDULE Name
+  equipment level  , !- Design Level calculation method
+  768              , !- Design Level {W}
+                   , !- Watts per Zone Area {watts/m2}
+                   , !- Watts per Person {watts/person}
+  0                , !- Fraction Latent
+  0.3              , !- Fraction Radiant
+  0                , !- Fraction Lost
+  Room Equi;         !- End-use Subcategory
+
+
+LIGHTS,
+       ROOM LIGHTS   ,  ! Name
+       ZONE ONE      ,  ! Zone Name
+       Sch Lig       ,  ! Schedule Name
+       Lighting Level,  ! Design Level Calculation Method
+       1632.0        ,  ! Design Level {W)
+       0             ,  ! Watts per Zone Area
+       0             ,  ! Watts per Person     
+       0.000         ,  ! Return air fraction
+       0.400         ,  ! Fraction radiant
+       0.200         ,  ! Fraction visible
+       1             ,  ! Fraction replaceable (by daylighting)
+       GeneralLights ;  ! LightsEndUseKey
+
+PEOPLE,
+       ROOM PEOPLE   ,  ! Name
+       ZONE ONE      ,  ! Zone Name
+       Sch Peo       ,  !- Number of People SCHEDULE Name
+       people        ,  !- Number of People calculation method
+       3.2           ,  !- Number of People
+                     ,  !- People per Zone Area {people/m2}
+                     ,  !- Zone area per person {m2/people}
+       0.6           ,  !- Fraction Radiant
+       Autocalculate ,  !- user specified sensible fraction
+       Sch Act;         !- Activity level SCHEDULE Name
+
+ ScheduleType,Any Number;  ! Not limited
+
+DAYSCHEDULE, Day Sch Act, Any Number,
+     130, 130, 130, 130, 130, 130, 130, 130, 130, 
+	 130, 130, 130, 130, 130, 130, 130, 130, 130, 
+	 130, 130, 130, 130, 130, 130;
+ WEEKSCHEDULE, Wee Sch Act,
+     Day Sch Act ,Day Sch Act, Day Sch Act, Day Sch Act, Day Sch Act,
+	 Day Sch Act, Day Sch Act, Day Sch Act, Day Sch Act, Day Sch Act, 
+	 Day Sch Act, Day Sch Act;
+ SCHEDULE, Sch Act, Any Number,
+    Wee Sch Act,
+	1,1,12,31;
+
+
+SCHEDULETYPE,
+       Cont Sch,
+       0.0:1.0,
+       CONTINUOUS;
+
+SCHEDULETYPE,
+       Disc Sch,
+       0.0:1.0,
+       DISCRETE;
+
+! ------------------------------------------------------------------
+
+DAYSCHEDULE,
+       Day Sch 0     ,  ! Day schedule name
+       Disc Sch,  ! 
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+
+
+DAYSCHEDULE,
+       Day Sch 1     ,  ! Day schedule name
+       Disc Sch,  ! 
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1;
+
+! ------------------------------------------------------------------
+       
+! People, weekdays
+DAYSCHEDULE,
+       Day Sch Peo WD   ,  ! Day schedule name
+       Cont Sch      ,  ! 
+       0, 0, 0, 0, 0, 0, 0.33, 0.67, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0, 0, 0, 0, 0, 0;
+
+! People, weekend and holiday
+DAYSCHEDULE,
+       Day Sch Peo WEH    ,  ! Day schedule name
+       Cont Sch      ,  ! 
+       0, 0, 0, 0, 0, 0, 0, 0.07, 0.13, 0.2, 0.2, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;   
+
+! ------------------------------------------------------------------
+
+! Lights, weekdays
+DAYSCHEDULE,
+       Day Sch Lig WD   ,  ! Day schedule name
+       Cont Sch      ,  ! 
+       0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2;
+
+! Lights, weekend and holiday
+DAYSCHEDULE,
+       Day Sch Lig WEH    ,  ! Day schedule name
+       Cont Sch      ,  ! 
+       0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2;
+
+! ------------------------------------------------------------------
+       
+! Daylighting control, weekdays (same as people, but only 0/1 entries)
+DAYSCHEDULE,
+       Day Sch DayLig WD   ,  ! Day schedule name
+       Disc Sch        ,  ! 
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0;
+
+! Daylighting control, weekend
+DAYSCHEDULE,
+       Day Sch DayLig WEH   ,  ! Day schedule name
+       Disc Sch        ,  ! 
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+
+! ------------------------------------------------------------------
+
+! Equipment, weekdays
+DAYSCHEDULE,
+       Day Sch Equ WD   ,  ! Day schedule name
+       Cont Sch      ,  ! 
+       0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17;
+
+! Equipment, weekend and holiday
+DAYSCHEDULE,
+       Day Sch Equ WEH    ,  ! Day schedule name
+       Cont Sch      ,  ! 
+       0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17;
+
+! ------------------------------------------------------------------
+
+WEEKSCHEDULE,
+       Week Sch 0,  ! Week schedule name
+       Day Sch 0,  Day Sch 0,  Day Sch 0,
+       Day Sch 0,  Day Sch 0,  Day Sch 0,
+       Day Sch 0,  Day Sch 0,  Day Sch 0,
+       Day Sch 0,  Day Sch 0,  Day Sch 0;
+
+
+WEEKSCHEDULE,
+       Week Sch 1,  ! Week schedule name
+       Day Sch 1,  Day Sch 1,  Day Sch 1,
+       Day Sch 1,  Day Sch 1,  Day Sch 1,
+       Day Sch 1,  Day Sch 1,  Day Sch 1,
+       Day Sch 1,  Day Sch 1,  Day Sch 1;
+
+WEEKSCHEDULE,
+       Week Sch Lig,  ! Week schedule name
+       Day Sch Lig WEH,  Day Sch Lig WD,  Day Sch Lig WD,
+       Day Sch Lig WD ,  Day Sch Lig WD,  Day Sch Lig WD,
+       Day Sch Lig WEH,  Day Sch Lig WEH,  Day Sch Lig WD,
+       Day Sch Lig WEH,  Day Sch Lig WD,  Day Sch Lig WD;
+
+WEEKSCHEDULE,
+       Week Sch DayLig,  ! Week schedule name
+       Day Sch DayLig WEH,  Day Sch DayLig WD,  Day Sch DayLig WD,
+       Day Sch DayLig WD ,  Day Sch DayLig WD,  Day Sch DayLig WD,
+       Day Sch DayLig WEH,  Day Sch DayLig WEH,  Day Sch DayLig WD,
+       Day Sch DayLig WEH,  Day Sch DayLig WD,  Day Sch DayLig WD;
+
+WEEKSCHEDULE,
+       Week Sch Peo,  ! Week schedule name
+       Day Sch Peo WEH,  Day Sch Peo WD,  Day Sch Peo WD,
+       Day Sch Peo WD ,  Day Sch Peo WD,  Day Sch Peo WD,
+       Day Sch Peo WEH,  Day Sch Peo WEH,  Day Sch Peo WD,
+       Day Sch Peo WEH,  Day Sch Peo WD,  Day Sch Peo WD;
+
+WEEKSCHEDULE,
+       Week Sch Equ,  ! Week schedule name
+       Day Sch Equ WEH,  Day Sch Equ WD,  Day Sch Equ WD,
+       Day Sch Equ WD ,  Day Sch Equ WD,  Day Sch Equ WD,
+       Day Sch Equ WEH,  Day Sch Equ WEH,  Day Sch Equ WD,
+       Day Sch Equ WEH,  Day Sch Equ WD,  Day Sch Equ WD;
+
+! ------------------------------------------------------------------
+
+SCHEDULE,
+       Sch 1         , ! Schedule name
+       Disc Sch      , ! 
+       Week Sch 1    , ! Week schedule name
+       1             , ! Starting month
+       1             , ! Starting day of month
+       12            , ! Ending month
+       31            ; ! Ending day of month
+
+SCHEDULE,
+       Sch Summer, ! Schedule name
+       Disc Sch, !
+       Week Sch 0 , ! Week schedule name
+       1          , ! Starting month
+       1          , ! Starting day of month
+       4          , ! Ending month
+       30         , ! Ending day of month
+       Week Sch 1 , ! Week schedule name
+       5          , ! Starting month
+       1          , ! Starting day of month
+       9          , ! Ending month
+       30         , ! Ending day of month
+       Week Sch 0 , ! Week schedule name
+       10         , ! Starting month
+       1          , ! Starting day of month
+       12         , ! Ending month
+       31         ; ! Ending day of month
+  
+SCHEDULE,
+       Sch Lig       , ! Schedule name
+       Cont Sch      , ! 
+       Week Sch Lig  , ! Week schedule name
+       1             , ! Starting month
+       1             , ! Starting day of month
+       12            , ! Ending month
+       31            ; ! Ending day of month
+
+
+SCHEDULE,
+       Sch DayLig      , ! Schedule name
+       Disc Sch       , ! 
+       Week Sch DayLig , ! Week schedule name
+       1             , ! Starting month
+       1             , ! Starting day of month
+       12            , ! Ending month
+       31            ; ! Ending day of month
+
+
+SCHEDULE,
+       Sch Peo       , ! Schedule name
+       Cont Sch      , ! 
+       Week Sch Peo  , ! Week schedule name
+       1             , ! Starting month
+       1             , ! Starting day of month
+       12            , ! Ending month
+       31            ; ! Ending day of month
+
+SCHEDULE,
+       Sch Equ       , ! Schedule name
+       Cont Sch      , ! 
+       Week Sch Equ  , ! Week schedule name
+       1             , ! Starting month
+       1             , ! Starting day of month
+       12            , ! Ending month
+       31            ; ! Ending day of month
+
+! ------------------------------------------------------------------
+
+
+INFILTRATION,
+  INFILTRATION 1,   !- Name
+  ZONE ONE      , !- Zone Name
+  Sch 1         , !- SCHEDULE Name
+  flow/zone     , !- Design Volume Flow Rate calculation method
+  0.036         , !- Design Volume Flow Rate {m3/s}
+                , !- Flow per Zone Area {m3/s/m2}
+                , !- Flow per Exterior Surface Area {m3/s/m2}
+                , !- Air Changes Per Hour
+  1             , !- Constant Term Coefficient
+  0             , !- Temperature Term Coefficient
+  0             , !- Velocity Term Coefficient
+  0             ; !- Velocity Squared Term Coefficient
+
+
+! =====================================================================
+! Daylighting
+!
+DAYLIGHTING:Detailed, ZONE ONE, ! Zone name
+       2         , ! Total daylighting reference points
+        3, 3, 1  , ! (x,y,z) of first  reference point in zone coordinate system
+       13, 3, 1  , ! (x,y,z) of second reference point in zone coordinate system
+       0.5       , ! fraction of zone controlled by first  reference point
+       0.5       , ! fraction of zone controlled by second reference point
+       500       , ! illuminance set point at first  reference point
+       500       , ! illuminance set point at second reference point
+         3       , ! lighting control type (continuous/off)
+       180       , ! azimuth angle of view direction (relative to zone's y-axis)
+       22.0      , ! maximum discomfort glare index
+       0.3       , ! minimum input power fraction
+       0.2       , ! minimum light output fraction
+       0         , ! number of steps of stepped control
+       1.0       ; ! propability lighting will be reset when needed
+! =====================================================================
+!     What follows is RHH model for BESTEST
+
+
+    ZONE CONTROL:THERMOSTATIC, 
+        Zone 1 Thermostat,                 ! Thermostat Name
+        ZONE ONE,                          ! Zone Name
+        Zone Control Type Sched,           ! Control Type SCHEDULE Name
+        DUAL SETPOINT WITH DEADBAND,       ! Control Type
+        Heating Cooling Setpoints;         ! Control Type Name
+
+
+
+    DUAL SETPOINT WITH DEADBAND, 
+        Heating Cooling Setpoints, ! Name
+        Heating Setpoints,         ! Heating Setpoint Temperature SCHEDULE Name
+        Cooling Setpoints;         ! Cooling Setpoint Temperature SCHEDULE Name
+
+     SCHEDULETYPE,
+         Temperature,
+         -60:200,
+         CONTINUOUS;
+
+    DAYSCHEDULE, 
+        Zone Heating Setpoint All Days,    ! Name
+        Temperature,                       ! Type of schedule -- e.g. Fraction on/off etc.
+          ! Next Arguments represent each hour of day
+! starting at time
+!        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23
+        18.,18.,18.,18.,18.,18.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,18.;
+!         20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.;
+
+    WEEKSCHEDULE, 
+        Zone Heating Setpoint All Weeks,           ! Name
+          ! Next arguments are names (DaySchedules) for the days
+        Zone Heating Setpoint All Days,            ! Sunday
+        Zone Heating Setpoint All Days,            ! Monday
+        Zone Heating Setpoint All Days,            ! Tuesday
+        Zone Heating Setpoint All Days,            ! Wednesday
+        Zone Heating Setpoint All Days,            ! Thursday
+        Zone Heating Setpoint All Days,            ! Friday
+        Zone Heating Setpoint All Days,            ! Saturday
+        Zone Heating Setpoint All Days,            ! Holiday
+        Zone Heating Setpoint All Days,            ! Summer Design Day
+        Zone Heating Setpoint All Days,            ! Winter Design Day
+        Zone Heating Setpoint All Days,            ! Special Day1
+        Zone Heating Setpoint All Days;            ! Special Day2
+
+    SCHEDULE, 
+        Heating Setpoints,          ! Name
+        Temperature,                       ! Type of schedule -- e.g. Fraction on/off etc.
+          ! remaining arguments are grouped [Name (WeekSchedules),startmonth,startday,endmonth,endday]
+          ! 18 periods allowed
+        Zone Heating Setpoint All Weeks,           ! Name of WeekSchedule
+        1,1,                               ! startmonth,startday
+        12,31;                             ! endmonth,endday
+
+
+    DAYSCHEDULE, 
+        Zone Cooling Setpoint All Days,    ! Name
+        Temperature,                       ! Type of schedule -- e.g. Fraction on/off etc.
+          ! Next Arguments represent each hour of day
+        25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.,25.;
+
+    WEEKSCHEDULE, 
+        Zone Cooling Setpoint All Weeks,           ! Name
+          ! Next arguments are names (DaySchedules) for the days
+        Zone Cooling Setpoint All Days,            ! Sunday
+        Zone Cooling Setpoint All Days,            ! Monday
+        Zone Cooling Setpoint All Days,            ! Tuesday
+        Zone Cooling Setpoint All Days,            ! Wednesday
+        Zone Cooling Setpoint All Days,            ! Thursday
+        Zone Cooling Setpoint All Days,            ! Friday
+        Zone Cooling Setpoint All Days,            ! Saturday
+        Zone Cooling Setpoint All Days,            ! Holiday
+        Zone Cooling Setpoint All Days,            ! Summer Design Day
+        Zone Cooling Setpoint All Days,            ! Winter Design Day
+        Zone Cooling Setpoint All Days,            ! Special Day1
+        Zone Cooling Setpoint All Days;            ! Special Day2
+
+    SCHEDULE, 
+        Cooling Setpoints,          ! Name
+        Temperature,                       ! Type of schedule -- e.g. Fraction on/off etc.
+          ! remaining arguments are grouped [Name (WeekSchedules),startmonth,startday,endmonth,endday]
+          ! 18 periods allowed
+        Zone Cooling Setpoint All Weeks,           ! Name of WeekSchedule
+        1,1,                               ! startmonth,startday
+        12,31;                             ! endmonth,endday
+
+
+     SCHEDULETYPE,
+        Control Type,
+        0:4,
+        DISCRETE;
+
+
+
+     DAYSCHEDULE, 
+        Control Type All Days,             ! Name
+        Control Type,                      ! Type of schedule -- e.g. Fraction on/off etc.
+          ! Next Arguments represent each hour of day
+              4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4;
+
+     WEEKSCHEDULE, 
+        Control Type All Weeks,            ! Name
+          ! Next arguments are names (DaySchedules) for the days
+        Control Type All Days,             ! Sunday            
+        Control Type All Days,             ! Monday            
+        Control Type All Days,             ! Tuesday           
+        Control Type All Days,             ! Wednesday         
+        Control Type All Days,             ! Thursday          
+        Control Type All Days,             ! Friday            
+        Control Type All Days,             ! Saturday          
+        Control Type All Days,             ! Holiday           
+        Control Type All Days,             ! Summer Design Day 
+        Control Type All Days,             ! Winter Design Day 
+        Control Type All Days,             ! Special Day1      
+        Control Type All Days;             ! Special Day2      
+
+     SCHEDULE, 
+        Zone Control Type Sched,           ! Name
+        Control Type,                      ! Type of schedule -- e.g. Fraction on/off etc.
+          ! remaining arguments are grouped [Name (WeekSchedules),startmonth,startday,endmonth,endday]
+          ! 18 periods allowed
+        Control Type All Weeks, 
+        1,1,                               ! startmonth,startday
+        12,31;                             ! endmonth,endday
+
+
+    !*****************ZONE EQUIPMENT SPECIFICATION*********************
+    !Zone Heating and Cooling Equipment are attached to zones by the following statements:
+
+    CONTROLLED ZONE EQUIP CONFIGURATION, 
+      ZONE ONE,                            ! Zone Name
+      Zone1Equipment,                      ! List Name: Zone Equipment
+      Zone1Inlets,                         ! List Name: Zone Inlet Nodes
+      ,                                    ! List Name: Zone Exhaust Nodes
+      NODE_2,                              ! Zone Air Node Name
+      NODE_3;                              ! Zone Return Air Node Name
+    
+    ZONE EQUIPMENT LIST, 
+      Zone1Equipment,                      ! Name
+        !List equipment in simulation order
+      PURCHASED AIR,Zone1Air,1,1;          ! KEY--Zone Equipment Type 1, Type Name 1, Cooling Priority, Heating Priority
+
+
+! PURCHASED AIR, (unlimited heating/cooling capacity) 
+    PURCHASED AIR, 
+      Zone1Air,                            ! Purchased Air Name
+      NODE_1,                              ! Zone Supply Air Node Name
+      30,                                  ! Heating Supply Air Temp {C}
+      18,                                  ! Cooling Supply Air Temp {C}
+      0.010,                               ! Heating Supply Air Humidity Ratio {kg/kg}
+      0.010,                               ! Cooling Supply Air Humidity Ratio {kg/kg}
+      no limit,                            ! Heating limit 
+         ,                                 ! Maximum heating air flow rate
+      no limit,                            ! Cooling limit 
+         ,                                 ! Maximum cooling air flow rate
+      no outside air,                      ! outside air
+           ,                               ! outside air flow rate
+      ,                                    ! Heating availability schedule
+      ;                                    ! Cooling availability schedule
+      
+
+    NODE LIST,
+       Zone1Inlets,                        ! Node List Name
+       NODE_1;                             ! Node_ID_1
+    
+! ===============================================================
+
+!report variable,,outdoor dry bulb,hourly;
+!report variable,,mean air temperature,hourly;
+!report variable,,zone latent load,hourly;
+!report variable,,lights return air load,hourly;
+!report variable,,electric load,hourly;
+!report variable,,Electric Load,hourly;
+!report variable,,Mean Radiant Temperature,hourly;
+!report variable,,Surface Inside Temperature,hourly;
+!report variable,,Surface Outside Temperature,hourly;
+!report variable,,Zone/Sys Sensible Heating Energy,hourly;
+!report variable,,Zone/Sys Sensible Cooling Energy,hourly;
+!report variable,,Zone/Sys Sensible Heating Rate,hourly;
+!report variable,,Zone/Sys Sensible Cooling Rate,hourly;
+!report variable,,Zone/Sys Air Temp,hourly;
+!report variable,,Zone Air Humidity Ratio,hourly;
+!report variable,,System Node Temp,hourly;
+!report variable,,System Node MassFlowRate,hourly;
+!report variable,,System Node Humidity Ratio,hourly;
+!report variable,,SimAir Iterations,hourly;
+
+report variable,, Purchased Air Sensible Cooling Energy, environment;
+report variable,, Purchased Air Heating Energy, environment;
+report variable,, Lights Electric Consumption, environment;
+
+!report variable dictionary;
+!report,surfaces,dxf;
+!report,construction;
+
+End Simulation Data;
+
