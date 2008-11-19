@@ -175,21 +175,23 @@ public class SimulationStarter implements Cloneable
      * <A HREF="#_updateCommandLine()">_updateCommandLine()</A>
      * need to be called.
      *
-     * @param worDirSuf Suffix for working directory. This will be added to all output and log paths.
+     * @param worDirPre Prefix for working directory. This will be added to all output and log paths.
      * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
-    private String _updateAndGetCommandLine(String worDirSuf)
+    private String _updateAndGetCommandLine(String worDirPre)
 	throws IOException{
 	//update the command line so that it is ready to use
 	String ret = CommandLine;
 	for (int i = 0; i < OptIni.getNumberOfLogFiles(); i++)
 	    ret = replaceString(ret, "%Simulation.Files.Log.Path" + (i+1) + "%",
-					OptIni.getSimLogPat(i) + worDirSuf);
+				OptIni.convertToTemporaryPath(OptIni.getSimLogPat(i),
+							      worDirPre));
 
 	for (int i = 0; i < OptIni.getNumberOfOutputFiles(); i++)
 	    ret = replaceString(ret, "%Simulation.Files.Output.Path" + (i+1) + "%",
-					OptIni.getSimOutPat(i) + worDirSuf);
+				OptIni.convertToTemporaryPath(OptIni.getSimOutPat(i),
+							      worDirPre));
 
 	// cut the file extension from the string if necessairy
 	final int nSimInpFil = OptIni.getNumberOfInputFiles();
@@ -205,9 +207,10 @@ public class SimulationStarter implements Cloneable
 	}
 	for(int i = 0; i < nSimInpFil; i++){
 	    ret = replaceString(ret, "%Simulation.Files.Input.File" + (i+1) +"%",
-					SimInputFileCal[i]           );
+				SimInputFileCal[i]);  
 	    ret = replaceString(ret, "%Simulation.Files.Input.Path" + (i+1) +"%",
-					OptIni.getSimInpPat(i) + worDirSuf);
+				OptIni.convertToTemporaryPath(OptIni.getSimInpPat(i),
+							      worDirPre));
 	}
 
 	return genopt.io.FileHandler.replacePathsByCanonicalPaths(ret, OptIni.getOptIniPat());
@@ -275,14 +278,14 @@ public class SimulationStarter implements Cloneable
     /** Gets a string representation of the command line and the working directory.
      *  Use this method for diagnostics report in case the simulation had errors.
      *
-     * @param worDirSuf working directory suffix, to be added to current working directory to enable
+     * @param worDirPre working directory prefix, to be added to current working directory to enable
      *                  parallel simulations
      * @exception IOException
      */
-    public String getCommandDiagnostics(String worDirSuf) 
+    public String getCommandDiagnostics(String worDirPre) 
 	throws IOException{
-	final File proWorDir = new File(worDir + worDirSuf);
-	final String comLin = _updateAndGetCommandLine(worDirSuf);
+	final File proWorDir = new File(OptIni.convertToTemporaryPath(worDir, worDirPre));
+	final String comLin = _updateAndGetCommandLine(worDirPre);
 	String r = 
 	    "Simulation working directory : '" + proWorDir.getCanonicalPath() + "'" + LS +
 	    "Command string               : '" + comLin + "'";
@@ -292,24 +295,24 @@ public class SimulationStarter implements Cloneable
 
     /** Runs the simulation program<dd>
      *
-     * @param worDirSuf working directory suffix, to be added to current working directory to enable
+     * @param worDirPre working directory prefix, to be added to current working directory to enable
      *                  parallel simulations
      * @exception IOException
      * @exception OptimizerException
      * @exception Exception
      */
-    public void run(String worDirSuf) throws IOException, OptimizerException, Exception
+    public void run(String worDirPre) throws IOException, OptimizerException, Exception
     {
 	final int iPro = _getThreadNumber();
-	final File proWorDir = new File(worDir + worDirSuf);
-	final String comLin = _updateAndGetCommandLine(worDirSuf);
+	final File proWorDir = new File(OptIni.convertToTemporaryPath(worDir, worDirPre));
+	final String comLin = _updateAndGetCommandLine(worDirPre);
 	try{
 	    proWorDir.mkdirs();
 	}
 	catch(SecurityException e){
 	    String ErrMes =
 		LS + "SecurityException when creating the working directory." + LS +
-		LS + getCommandDiagnostics(worDirSuf) + LS +
+		LS + getCommandDiagnostics(worDirPre) + LS +
 		"Exception message: " + LS + e.getMessage();
 	    throw new OptimizerException(ErrMes);
 	}
@@ -322,19 +325,19 @@ public class SimulationStarter implements Cloneable
 	    // Thread.sleep((int)(2000*Math.random()));
 	    // Thread.sleep(2000);
 	    // System.err.println("Woke up");
-	    _processProcessOutput(iPro, worDirSuf, proWorDir, comLin);
+	    _processProcessOutput(iPro, proWorDir, comLin);
 	}
 	catch(InterruptedException e){
 	    String ErrMes =
 		LS + "InterruptedException in executing the simulation program" + LS +
-		LS + getCommandDiagnostics(worDirSuf) + LS +
+		LS + getCommandDiagnostics(worDirPre) + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    throw new OptimizerException(ErrMes);
 	}
 	catch(SecurityException e){
 	    String ErrMes =
 		LS + "SecurityException in executing the simulation program" + LS +
-		LS + getCommandDiagnostics(worDirSuf) + LS +
+		LS + getCommandDiagnostics(worDirPre) + LS +
 		"Exception message: " + LS + e.getMessage();
 	    throw new OptimizerException(ErrMes);
 	}
@@ -344,7 +347,7 @@ public class SimulationStarter implements Cloneable
 	catch(Exception e){ // any other exception
 	    String ErrMes =
 		LS + "Exception in executing the simulation program" + LS  +
-		LS + getCommandDiagnostics(worDirSuf) + LS +
+		LS + getCommandDiagnostics(worDirPre) + LS +
 		"Exception message: " + LS + e.getMessage(); 
 	    throw new Exception(ErrMes);
 	}
@@ -361,14 +364,13 @@ public class SimulationStarter implements Cloneable
     /** Processes the output of the simulation
      *
      * @param iPro the process number
-     * @param worDirSuf the working directory suffix (used for error reporting)
      * @param proWorDir the process working directory (used for error reporting)
      * @param comLin the command line (used for error reporting)
      * @exception NullPointerException If the user requested GenOpt to stop
      * @exception OptimizerException
      * @exception IOException if the output or error stream cannot be read
      */
-    void _processProcessOutput(int iPro, final String worDirSuf, final File proWorDir, final String comLin)
+    void _processProcessOutput(int iPro, final File proWorDir, final String comLin)
 	throws NullPointerException, OptimizerException, IOException{
 	int ev = 0;
 	try { ev = pro[iPro].exitValue(); }

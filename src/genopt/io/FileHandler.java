@@ -166,8 +166,8 @@ public class FileHandler implements Cloneable{
 
 
     /** adds an element to the object
-	  *@param s String to be added
-	 */
+     *@param s String to be added
+     */
     private void addElement(String s)
     {
 	if (++nLines >= FileContents.length)
@@ -429,8 +429,8 @@ public class FileHandler implements Cloneable{
     }
 
 	
-    /** writes a string in a text file
-	  * @param text text that has to be written into the file
+    /** writes a string to a text file
+	  * @param text text that has to be written to the file
 	  * @param path path of file (or null pointer if file is in current
 	  *    directory)
 	  * @param name name of file
@@ -444,7 +444,6 @@ public class FileHandler implements Cloneable{
 	    TemFil.mkdirs();
 	String FilNam = (path.equals(".")) ?
 	    new String(name) : new String(path + TemFil.separator + name);
-
 	FileWriter FilWri = new FileWriter(FilNam);
 	FilWri.write(text);
 	FilWri.close();

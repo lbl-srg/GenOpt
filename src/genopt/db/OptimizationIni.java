@@ -5,6 +5,7 @@ import genopt.io.FileHandler;
 
 import java.util.*;
 import java.io.IOException;
+import java.io.File;
 
 
 
@@ -77,6 +78,10 @@ import java.io.IOException;
 
 public class OptimizationIni implements Cloneable
 {
+
+    /** System dependent file separator */
+    protected final static String FS = System.getProperty("file.separator");
+
     /** constructor
      * @param SimulationInputTemplateFileName File name of
      *   the template input files of the simulation <b>input</b>
@@ -168,36 +173,69 @@ public class OptimizationIni implements Cloneable
 	nOutFil = SimulationOutputFileName.length;
 	nLogFil = SimulationLogFileName.length;
 
+
+	// Resolve the path and file names. This section ensures that statements such as
+        // File1 = "/myDir/myFile.txt";
+	// are resolved so that they look like a specification
+        // File1 = "myFile.txt";
+        // Path1 = "/myDir";
 	SimInpTemFilNam = new String[nInpFil];
 	SimInpTemPat    = new String[nInpFil];
+	for (int i = 0; i < nInpFil; i++){
+	    File fil = new File(SimulationInputTemplatePath[i],
+				SimulationInputTemplateFileName[i]);
+	    SimInpTemFilNam[i] = fil.getName();
+	    SimInpTemPat[i]    = fil.getParentFile().getCanonicalPath();
+
+	}
+
 	SimInpFilNam    = new String[nInpFil];
 	SimInpPat       = new String[nInpFil];
 	SimInpSavPat    = new String[nInpFil];
+	for (int i = 0; i < nInpFil; i++){
+	    File fil = new File(SimulationInputPath[i],
+				SimulationInputFileName[i]);
+	    SimInpFilNam[i] = fil.getName();
+	    SimInpPat[i]    = fil.getParentFile().getCanonicalPath();
 
-	System.arraycopy(SimulationInputTemplateFileName, 0, SimInpTemFilNam, 0, nInpFil);
-	System.arraycopy(SimulationInputTemplatePath,     0, SimInpTemPat,    0, nInpFil);
-	System.arraycopy(SimulationInputFileName,         0, SimInpFilNam,    0, nInpFil);
-	System.arraycopy(SimulationInputPath,             0, SimInpPat,       0, nInpFil);
-System.arraycopy(SimulationInputSavePath,             0, SimInpSavPat,       0, nInpFil);
+	    SimInpSavPat[i] = new File(SimulationInputSavePath[i]).getCanonicalPath();
+	}
+
+
 	SimOutFilNam = new String[nOutFil];
 	SimOutPat    = new String[nOutFil];
 	SimOutSavPat = new String[nOutFil];
-	System.arraycopy(SimulationOutputFileName, 0, SimOutFilNam, 0, nOutFil);
-	System.arraycopy(SimulationOutputPath,     0, SimOutPat,    0, nOutFil);
-	System.arraycopy(SimulationOutputSavePath, 0, SimOutSavPat, 0, nOutFil);
+	for (int i = 0; i < nOutFil; i++){
+	    File fil = new File(SimulationOutputPath[i],
+				SimulationOutputFileName[i]);
+	    SimOutFilNam[i] = fil.getName();
+	    SimOutPat[i]    = fil.getParentFile().getCanonicalPath();
+
+	    SimOutSavPat[i] = new File(SimulationOutputSavePath[i]).getCanonicalPath();
+	}
+
 
 	SimLogFilNam = new String[nLogFil];
 	SimLogPat    = new String[nLogFil];
 	SimLogSavPat = new String[nLogFil];
-	System.arraycopy(SimulationLogFileName, 0, SimLogFilNam, 0, nLogFil);
-	System.arraycopy(SimulationLogPath,     0, SimLogPat,    0, nLogFil);
-	System.arraycopy(SimulationLogSavePath, 0, SimLogSavPat, 0, nLogFil);
+	for (int i = 0; i < nLogFil; i++){
+	    File fil = new File(SimulationLogPath[i],
+				SimulationLogFileName[i]);
+	    SimLogFilNam[i] = fil.getName();
+	    SimLogPat[i]    = fil.getParentFile().getCanonicalPath();
 
-	SimConFilNam    = SimulationConfigFileName;
-	SimConPat       = SimulationConfigPath;
-	OptIniPat       = OptimizationInitializationPath;
-	OptComFilNam    = OptimizationCommandFileName;
-	OptComPat       = OptimizationCommandPath;
+	    SimLogSavPat[i] = new File(SimulationLogSavePath[i]).getCanonicalPath();
+	}
+
+	File fil = new File(SimulationConfigPath, SimulationConfigFileName);
+	SimConFilNam    = fil.getName();
+	SimConPat       = fil.getParentFile().getCanonicalPath();
+
+	OptIniPat       = new File(OptimizationInitializationPath).getCanonicalPath();
+
+	fil = new File(OptimizationCommandPath, OptimizationCommandFileName);
+	OptComFilNam    = fil.getName();
+	OptComPat       = fil.getParentFile().getCanonicalPath();
 	SimCalPre       = SimulationCallPrefix;		
 	SimCalSuf       = SimulationCallSuffix;
     }
@@ -503,6 +541,24 @@ System.arraycopy(SimulationInputSavePath,             0, SimInpSavPat,       0, 
      *@return <CODE>true</CODE> if it is set, <CODE>false</CODE> otherwise
      */
     public final boolean isObjectiveFunctionDelimiterSet() { return objFunMapIsSet; }
+
+    /** converts the argument <code>path</code> to the temporary path that will be used
+     *  for the simulation
+     *@param path the original path as specified in GenOpt's files
+     *@param dirName the name of the temporary directory (without the full path name)
+     *@return the path name
+    */
+    public final String convertToTemporaryPath(final String path, final String dirName){
+	String ori = this.getOptIniPat();
+	String rep;
+	if (ori.endsWith(FS)) 
+	    rep = new String(ori + dirName + FS);
+	else
+	    rep = new String(ori + FS + dirName);
+	final String r = path.replaceFirst(ori, rep);
+	//	System.err.println("------- OptimizationIni: returning " + r);
+	return r;
+    }
 
     /** file name: Simulation input template */
     protected String[] SimInpTemFilNam;

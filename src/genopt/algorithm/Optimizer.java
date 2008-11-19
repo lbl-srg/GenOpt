@@ -1233,21 +1233,24 @@ abstract public class Optimizer
 
 	// write simulation input files
 	final int simNum = x.getSimulationNumber();
-	final String worDirSuf = FS + "tmp-genopt-run-" + simNum;
+	final String worDirPre = "tmp-genopt-run-" + simNum;
 	String[] simInpPat = new String[nSimInpFil];
 	String[] simOutPat = new String[nSimOutFil];
 	String[] simLogPat = new String[nSimLogFil];
 	String[] simOutFil = new String[nSimOutFil];
 	String[] simLogFil = new String[nSimLogFil];
 	for (int i = 0; i < nSimInpFil; i++){
-	    simInpPat[i] = data.OptIni.getSimInpPat(i) + worDirSuf;
+	    simInpPat[i] = data.OptIni.convertToTemporaryPath(data.OptIni.getSimInpPat(i),
+							 worDirPre);
 	}
 	for (int iFil = 0; iFil < nSimOutFil; iFil++){
-	    simOutPat[iFil] = data.OptIni.getSimOutPat(iFil) + worDirSuf ;
+	    simOutPat[iFil] = data.OptIni.convertToTemporaryPath(data.OptIni.getSimOutPat(iFil),
+							    worDirPre);
 	    simOutFil[iFil] = simOutPat[iFil] + FS + data.OptIni.getSimOutFilNam(iFil) ;
 	}
 	for (int iFil = 0; iFil < nSimLogFil; iFil++){
-	    simLogPat[iFil] = data.OptIni.getSimLogPat(iFil) + worDirSuf;
+	    simLogPat[iFil] = data.OptIni.convertToTemporaryPath(data.OptIni.getSimLogPat(iFil),
+							    worDirPre);
 	    simLogFil[iFil] = simLogPat[iFil] + FS + data.OptIni.getSimLogFilNam(iFil);
 	}
 	String errMes="";
@@ -1279,7 +1282,7 @@ abstract public class Optimizer
 	////////////////////////////////////////////////////////////
 	// start simulation
 	//		println("**** Optimizer: Start for simNum = " + simNum);
-	data.SimSta.run(worDirSuf);
+	data.SimSta.run(worDirPre);
 	//	System.err.println("**** Optimizer: Ended for simNum = " + simNum);
 	//		  System.err.print("Go to sleep...   ");
 	//		  Thread.sleep(1000);
@@ -1306,7 +1309,7 @@ abstract public class Optimizer
 	    }
 	}
 	if (exit){
-	    errMes += LS + data.SimSta.getCommandDiagnostics(worDirSuf);
+	    errMes += LS + data.SimSta.getCommandDiagnostics(worDirPre);
 	    throw new OptimizerException(errMes);
 	}
 	////////////////////////////////////////////////////
@@ -1319,7 +1322,7 @@ abstract public class Optimizer
 	    }
 	}
 	if (exit){
-	    errMes += data.SimSta.getCommandDiagnostics(worDirSuf);
+	    errMes += data.SimSta.getCommandDiagnostics(worDirPre);
 	    throw new OptimizerException(errMes);
 	}
 
@@ -1398,19 +1401,19 @@ abstract public class Optimizer
 	// non-temporary files. This is more a prevention for developers, since
 	// the test is always true unless there is a coding error.
 	for (int iFil = 0; iFil < nSimInpFil; iFil++){
-	    if ( simInpPat[iFil].endsWith(worDirSuf))
+	    if ( simInpPat[iFil].contains(worDirPre))
 		genopt.io.FileHandler.deleteDirectory( new File(simInpPat[iFil]) );
 	    else
 		throw new OptimizerException("Program error. Attempted to delete non-temporary file.");
 	}
 	for (int iFil = 0; iFil < nSimOutFil; iFil++){
-	    if ( simOutPat[iFil].endsWith(worDirSuf))
+	    if ( simOutPat[iFil].contains(worDirPre))
 		genopt.io.FileHandler.deleteDirectory( new File(simOutPat[iFil]) );
 	    else
 		throw new OptimizerException("Program error. Attempted to delete non-temporary file.");
 	}
 	for (int iFil = 0; iFil < nSimLogFil; iFil++){
-	    if ( simLogPat[iFil].endsWith(worDirSuf))
+	    if ( simLogPat[iFil].contains(worDirPre))
 		genopt.io.FileHandler.deleteDirectory( new File(simLogPat[iFil]) );
 	    else
 		throw new OptimizerException("Program error. Attempted to delete non-temporary file.");
