@@ -120,6 +120,8 @@ IF EXIST audit.out DEL audit.out
 IF EXIST expanded.idf   DEL expanded.idf
 IF EXIST expandedidf.err   DEL expandedidf.err
 IF EXIST readvars.audit   DEL readvars.audit
+IF EXIST eplusout.sql  DEL eplusout.sql
+IF EXIST sqlite.err  DEL sqlite.err
 :if %pausing%==Y pause
 
 :  2. Clean up target directory
@@ -173,6 +175,7 @@ IF EXIST "%output_path%%2DElight.eldmp" DEL "%output_path%%2DElight.eldmp"
 IF EXIST "%output_path%%2Spark.log" DEL "%output_path%%2Spark.log"
 IF EXIST "%output_path%%2.expidf" DEL "%output_path%%2.expidf"
 IF EXIST "%output_path%%2.rvaudit" DEL "%output_path%%2.rvaudit"
+IF EXIST "%output_path%%2.sql" DEL "%output_path%%2.sql"
 
 :  3. Copy input data file to working directory
 echo Copying "%program_path%Energy+.idd" "%input_path%In.idd"
@@ -277,7 +280,8 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST eplusout.sparklog MOVE eplusout.sparklog "%output_path%%2Spark.log"
  IF EXIST expandedidf.err copy expandedidf.err+eplusout.err "%output_path%%2.err"
  IF EXIST readvars.audit MOVE readvars.audit "%output_path%%2.rvaudit"
- 
+ IF EXIST eplusout.sql MOVE eplusout.sql "%output_path%%2.sql"
+
 :   11.  Clean up directory.
  ECHO Removing extra files . . .
  IF EXIST eplusout.inp DEL eplusout.inp
@@ -290,6 +294,7 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST test.mvi DEL test.mvi
  IF EXIST expandedidf.err DEL expandedidf.err
  IF EXIST readvars.audit DEL readvars.audit
+ IF EXIST sqlite.err  DEL sqlite.err
  
  :done
  echo ===== %0 %1 %2 ===== Complete =====
