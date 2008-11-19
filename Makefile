@@ -54,7 +54,7 @@ else
 IZPACK=izpack
 endif
 
-export genopt-version=3.0.0alpha1
+export genopt-version=3.0.0alpha2
 ### Targets of Makefile ###########################
 ### Compiles the GenOpt source code and the JavaDoc 
 all: doc jar

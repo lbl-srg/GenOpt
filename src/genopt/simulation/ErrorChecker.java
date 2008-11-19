@@ -29,7 +29,7 @@ import java.util.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 alpha 1 (November 12, 2008)<P>
+  * @version GenOpt(R) 3.0.0 alpha 2 (November 18, 2008)<P>
   */
 
 /*

@@ -112,7 +112,7 @@ import java.security.SecureClassLoader;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 alpha 1 (November 12, 2008)<P>
+  * @version GenOpt(R) 3.0.0 alpha 2 (November 18, 2008)<P>
   */
 
 /* Revision history:
@@ -301,14 +301,14 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "alpha1";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "alpha2";//"alpha1 or -rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", November 12, 2008";
+	VERSION_NUMBER + VERSION_ID + ", November 18, 2008";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *

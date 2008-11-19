@@ -33,7 +33,7 @@ import java.io.File;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 alpha 1 (November 12, 2008)<P>
+  * @version GenOpt(R) 3.0.0 alpha 2 (November 18, 2008)<P>
   */
 
 /*
@@ -198,7 +198,8 @@ public class OptimizationIni implements Cloneable
 	    SimInpFilNam[i] = fil.getName();
 	    SimInpPat[i]    = fil.getParentFile().getCanonicalPath();
 
-	    SimInpSavPat[i] = new File(SimulationInputSavePath[i]).getCanonicalPath();
+	    SimInpSavPat[i] =  SimulationInputSavePath[i].equals("") ? 
+		"" : new File(SimulationInputSavePath[i]).getCanonicalPath();
 	}
 
 
@@ -210,8 +211,8 @@ public class OptimizationIni implements Cloneable
 				SimulationOutputFileName[i]);
 	    SimOutFilNam[i] = fil.getName();
 	    SimOutPat[i]    = fil.getParentFile().getCanonicalPath();
-
-	    SimOutSavPat[i] = new File(SimulationOutputSavePath[i]).getCanonicalPath();
+	    SimOutSavPat[i] = SimulationOutputSavePath[i].equals("") ? 
+		"" : new File(SimulationOutputSavePath[i]).getCanonicalPath();
 	}
 
 
@@ -224,7 +225,8 @@ public class OptimizationIni implements Cloneable
 	    SimLogFilNam[i] = fil.getName();
 	    SimLogPat[i]    = fil.getParentFile().getCanonicalPath();
 
-	    SimLogSavPat[i] = new File(SimulationLogSavePath[i]).getCanonicalPath();
+	    SimLogSavPat[i] = SimulationLogSavePath[i].equals("") ? 
+		"" : new File(SimulationLogSavePath[i]).getCanonicalPath();
 	}
 
 	File fil = new File(SimulationConfigPath, SimulationConfigFileName);
