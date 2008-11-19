@@ -551,15 +551,20 @@ public class OptimizationIni implements Cloneable
      *@return the path name
     */
     public final String convertToTemporaryPath(final String path, final String dirName){
-	String ori = this.getOptIniPat();
-	String rep;
-	if (ori.endsWith(FS)) 
-	    rep = new String(ori + dirName + FS);
+	final String ori = this.getOptIniPat();
+	// insert new directory name if the original string starts with the path
+	// of the optimization initialization file
+	if ( path.startsWith(ori) ){
+	    String rep;
+	    // create new directory name
+	    if (ori.endsWith(FS)) 
+		rep = new String(ori + dirName + FS);
+	    else
+		rep = new String(ori + FS + dirName);
+	    return new String(rep + path.substring(ori.length()));
+	}
 	else
-	    rep = new String(ori + FS + dirName);
-	final String r = path.replaceFirst(ori, rep);
-	//	System.err.println("------- OptimizationIni: returning " + r);
-	return r;
+	    return new String(path);
     }
 
     /** file name: Simulation input template */
