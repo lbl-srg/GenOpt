@@ -80,8 +80,12 @@ public class FileHandler implements Cloneable{
     /** System dependent file separator */
     protected final static String FS = System.getProperty("file.separator");
 
-	/** Increment for array that stores the Strings */
-    private final int INCREMENT = 5;
+    /** Increment for array that stores the Strings */
+    private final int INCREMENT = 1;
+    // leave this at 1: If set to one, then file reading is much faster.
+    // For example, changing this from 1 to 5 results in a 6 times
+    // longer CPU time for reading an annual weather file.
+
 
     /** constructor
 	  * @param FileLines where
@@ -168,7 +172,7 @@ public class FileHandler implements Cloneable{
     /** adds an element to the object
      *@param s String to be added
      */
-    private void addElement(String s)
+    private void addElement(final String s)
     {
 	if (++nLines >= FileContents.length)
 	    FileContents[nLines-1] = new String(s);
