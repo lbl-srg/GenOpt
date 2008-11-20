@@ -1253,12 +1253,9 @@ abstract public class Optimizer
 							    worDirPre);
 	    simLogFil[iFil] = simLogPat[iFil] + FS + data.OptIni.getSimLogFilNam(iFil);
 	}
-	String errMes="";
-	for (int iFil = 0; iFil < nSimInpFil; iFil++)
-	    SimulationInput[iFil].writeFile(simInpPat[iFil], data.OptIni.getSimInpFilNam(iFil));
-	// delete simulation output and simulation log file
+	// delete simulation output and simulation log files
 	// (to ensure that the files being read are really new)
-
+	String errMes="";
 	for (int iFil = 0; iFil < nSimOutFil; iFil++){
 	    File of = new File(simOutFil[iFil]);
 	    try { of.delete(); }
@@ -1278,6 +1275,9 @@ abstract public class Optimizer
 	    }
 	}
 	if (exit) throw new OptimizerException(errMes);
+	// write input files
+	for (int iFil = 0; iFil < nSimInpFil; iFil++)
+	    SimulationInput[iFil].writeFile(simInpPat[iFil], data.OptIni.getSimInpFilNam(iFil));
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 	// start simulation
