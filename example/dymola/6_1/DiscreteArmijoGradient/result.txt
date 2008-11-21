@@ -1,0 +1,2 @@
+Objective function value
+f(x) = 0.4095408495535687

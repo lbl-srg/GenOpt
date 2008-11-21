@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Michael Wetter">
+   <TITLE>GenOpt Readme Note</TITLE>
+   <LINK REL ="stylesheet" TYPE="text/css" HREF="../../documentation/jdoc/jstyle.css" TITLE="Style">
+</HEAD>
+<!-- ========================================================== -->
+<BODY>
+<H1>GenOpt Examples for Dymola</H1>
+<P>
+This directory contains example files that illustrate the use 
+of GenOpt in conjunction with the  
+Modelica modeling and simulation environment Dymola.
+To run the example files, a license of Dymola is required, which 
+may be obtained from 
+<a href="http://www.dynasim.com">Dynasim</a>.
+</p>
+<p>
+Prior to running the optimization, you may have to start
+Dymola, open the file <code>ObjectiveFunction.mo</code> translate and simulate
+the model. This should generate the files 
+<code>dymosim.exe</code> (or <code>dymosim</code> on Linux), 
+<code>dsin.txt</code> and other 
+files that are not needed to run the example.
+The model needs to be simulated once, as this adds the final time
+of the simulation (which is stored in <code>ObjectiveFunction.mo</code>) to the
+file <code>dsin.txt</code>.
+The files <code>dymosim.exe</code> (or <code>dymosim</code> on Linux)
+and <code>dsin.txt</code> need 
+to be in the same directory as the file 
+<code>ObjectiveFunction.mo</code>. If they are written to a different directory,
+then you will need to change the working directory of Dymola.
+This may be done from the Dymola simulation window by typing
+<code>cd("path");</code> where <code>path</code> need to be replaced 
+by the name of the path that contains the file <code>ObjectiveFunction.mo</code>.
+</p>
+<p>
+To learn how to run the optimization, see the GenOpt manual and
+the GenOpt <a href="../../readme.html">readme file</a>.
+</p>
+<p>
+During the optimization, GenOpt will use the template file
+<code>modelicaScheduleTemplate.txt</code> to write the file
+<code>modelicaSchedule.txt</code>.
+This file contains the values of the independent parameters and will
+be read by <code>dymosim.exe</code> during the simulation.
+At the end of the simulation, 
+GenOpt will scan the file <code>dslog.txt</code> for
+possible errors that may have occurred during the simulation.
+If there were no errors, GenOpt will read the file
+<code>result.txt</code> to obtain the objective function value.
+This file has been written by <code>dymosim.exe</code>.
+If the file <code>dslog.txt</code> contains error messages,
+then GenOpt will stop.
+</p>
+<p>
+The optimization should fine a control sequence that looks as follows:<br>
+<img src="images/optimalControlSequence.png">
+<br>
+This should yield the following temperature trajectory:<br>
+<img src="images/temperatureTrajectory.png">
+</p>
+<p>
+For further information, please consult the GenOpt manual 
+and the Dymola manual.
+</p>
+<p>
+<h2>Note</h2>
+If Dymola has convergence problems, then its console output can be very large
+which can cause GenOpt to get slow when processing the error message.
+</p>
+<p>
+On Linux, this problem can be avoided if <code>dymosim</code> is called
+from a shell script that redirects the console output. For example, one could use
+<code>./dymosim -s dsin.txt > console.out</code>.
+If this redirection is used, then <code>dymosim</code> must be called from a shell
+script. The reason is the Java's runtime environment parses the command line into
+tokens, and then <code>dymosim -s</code> thinks that there are three arguments, 
+i.e., the tokens <code>&lt;</code> and <code>console.out</code> are passed to 
+<code>dymosim</code> instead of being interpreted as output redirection.
+This problem is also described 
+<a href="http://www.velocityreviews.com/forums/t138173-p2-runtimegetruntimexecsomecmd-problem-with-linux.html">
+here</a>.
+</p>
+<p>
+On Windows, this problem does not occur because the output redirection works.
+The reason for this is the
+Windows command line interpreter, which adds one more level of interpretation that causes
+the redirection to work.
+</p>
+<!-- ========================================================== -->
+<DIV CLASS="FOOTER">
+<P>
+<HR WIDTH=100%>
+Please send comments or questions to
+Michael Wetter, LBNL, <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A>
+<BR>
+November 11, 2008.
+</DIV>
+</BODY>
+</HTML>

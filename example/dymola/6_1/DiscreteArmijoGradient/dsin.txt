@@ -1,0 +1,344 @@
+#1
+char Aclass(3,24)
+Adymosim
+1.4
+Modelica experiment file
+
+
+#    Experiment parameters
+double experiment(7,1)
+       0                   # StartTime    Time at which integration starts
+                           #              (and linearization and trimming time)
+   86400                   # StopTime     Time at which integration stops
+       0                   # Increment    Communication step size, if > 0
+     500                   # nInterval    Number of communication intervals, if > 0
+   1.000000000000000E-06   # Tolerance    Relative precision of signals for
+                           #              simulation, linearization and trimming
+       0                   # MaxFixedStep Maximum step size of fixed step size
+                           #              integrators, if > 0.0
+       8                   # Algorithm    Integration algorithm as integer (1...28)
+                           #
+                           #             | model|       |        | dense | state |
+                           # Algorithm   | typ  | stiff | order  | output| event |
+                           # ------------+------+-------+--------+-------+-------+
+                           #  1 | deabm  |  ode |   no  |  1-12  |  yes  |   no  |
+                           #  2 | lsode1 |  ode |   no  |  1-12  |  yes  |   no  |
+                           #  3 | lsode2 |  ode |  yes  |  1-5   |  yes  |   no  |
+                           #  4 | lsodar |  ode |  both |1-12,1-5|  yes  |  yes  |
+                           #  5 | dopri5 |  ode |   no  |   5    |   no  |   no  |
+                           #  6 | dopri8 |  ode |   no  |   8    |   no  |   no  |
+                           #  7 | grk4t  |  ode |  yes  |   4    |   no  |   no  |
+                           #  8 | dassl  |  dae |  yes  |  1-5   |  yes  |  yes  |
+                           #  9 | odassl | hdae |  yes  |  1-5   |  yes  |  yes  |
+                           # 10 | mexx   | hdae |   no  |  2-24  |   no  |   no  |
+                           # 11 | euler  |  ode |   no  |   1    |   no  |  yes  |
+                           # 12 | rkfix2 |  ode |   no  |   2    |   no  |  yes  |
+                           # 13 | rkfix3 |  ode |   no  |   3    |   no  |  yes  |
+                           # 14 | rkfix4 |  ode |   no  |   4    |   no  |  yes  |
+                           #>=14| others |  ode |yes/no |  2-5   |   yes |  yes  |
+                           # ---+--------+------+-------+--------+-------+-------+
+                           # euler and rkfix have fixed stepsize.
+
+
+#    Method tuning parameters
+double method(27,1)
+       1                   # grid     type of communication time grid, defined by
+                           #          = 1: equidistant points ("Increment/nInterval")
+                           #          = 2: vector of grid points ("tgrid")
+                           #          = 3: variable step integrator (automatically)
+                           #          = 4: model (call of "increment" in Dymola, e.g.
+                           #                      incr=Time > 2 then 0 else 0.1
+                           #                      dummy=increment(incr))
+                           #          = 5: hardware clock (functions "udstimerXXX")
+                           #          grid = 1,3 is stopped by "StopTime"
+                           #          grid = 2   is stopped by "tgrid(last)"
+                           #          grid = 4   runs forever (stopped by model)
+                           #          grid = 5   runs forever (stopped by udstimerRun)
+       1                   # nt       Use every NT time instant, if grid = 3
+       3                   # dense    1/2/3 restart/step/interpolate GRID points
+       1                   # evgrid   0/1 do not/save event points in comm. time grid
+       1                   # evu      0/1 U-discontinuity does not/trigger events
+       0                   # evuord       U-discontinuity order to consider (0,1,...)
+       0                   # error    0/1/2 One message/warning/error messages
+       0                   # jac      0/1 Compute jacobian numerically/by BLOCKJ
+       0                   # xd0c     0/1 Compute/set XD0
+       0                   # f3       0/1 Ignore/use F3 of HDAE (= index 1)
+       0                   # f4       0/1 Ignore/use F4 of HDAE (= index 2)
+       0                   # f5       0/1 Ignore/use F5 of HDAE (= invar.)
+       0                   # debug    flags for debug information (1<<0 uses pdebug) 
+     100                   # pdebug       priority of debug information (1...100)
+       0                   # fmax     Maximum number of evaluations of BLOCKF, if > 0
+       0                   # ordmax   Maximum allowed integration order, if > 0
+       0                   # hmax     Maximum absolute stepsize, if > 0
+       0                   # hmin     Minimum absolute stepsize, if > 0 (use with care!)
+       0                   # h0       Stepsize to be attempted on first step, if > 0
+   2.000000000000000E-14   # teps     Bound to check, if 2 equal time instants
+   1.000000000000000E-10   # eveps    Hysteresis epsilon at event points
+      20                   # eviter   Maximum number of event iterations
+   1.000000000000000E-06   # delaym   Minimum time increment in delay buffers
+       1                   # fexcep   0/1 floating exception crashes/stops dymosim
+       1                   # tscale   clock-time = tscale*simulation-time, if grid = 5
+                           #          > 1: simulation too slow
+                           #          = 1: simulation-time = real-time
+                           #          < 1: simulation too fast
+       1                   # shared   type of process communication, if grid = 5
+                           #          = 0: no communication,(single process without clock)
+                           #          = 1: no communication (single process with clock)
+                           #          = 2: shared memory (multiple processes with clock)
+    2473                   # memkey   key to be used for shared memory, if shared = 2
+
+
+#    Output parameters
+int settings(13,1)
+ 0                         # lprec    0/1 do not/store result data in double
+ 1                         # lx       0/1 do not/store x  (state variables)
+ 1                         # lxd      0/1 do not/store xd (derivative of states)
+ 1                         # lu       0/1 do not/store u  (input     signals)
+ 1                         # ly       0/1 do not/store y  (output    signals)
+ 0                         # lz       0/1 do not/store z  (indicator signals)
+ 1                         # lw       0/1 do not/store w  (auxiliary signals)
+ 1                         # la       0/1 do not/store a  (alias     signals)
+ 0                         # lperf    0/1 do not/store performance indicators
+ 0                         # levent   0/1 do not/store event point
+ 1                         # lres     0/1 do not/store results on result file
+ 0                         # lshare   0/1 do not/store info data for shared memory on dsshare.txt
+ 1                         # lform    0/1 ASCII/Matlab-binary storage format of results
+                           #              (for simulation/linearization; not for trimming)
+
+
+#    Names of initial variables
+char initialName(60,20)
+TIni
+product.u1
+product.y
+u.nout
+u.y[1]
+u.tableOnFile
+u.columns[1]
+u.smoothness
+u.extrapolation
+u.offset[1]
+u.startTime
+u.t_min
+u.t_max
+u.p_offset[1]
+u.tableID
+TMea.port.Q_flow
+TSet.table[1, 1]
+TSet.table[1, 2]
+TSet.table[2, 1]
+TSet.table[2, 2]
+TSet.table[3, 1]
+TSet.table[3, 2]
+TSet.table[4, 1]
+TSet.table[4, 2]
+TSet.table[5, 1]
+TSet.table[5, 2]
+TSet.table[6, 1]
+TSet.table[6, 2]
+TSet.offset
+TSet.startTime
+TSet.a
+TSet.b
+TSet.last
+TSet.nextEvent
+feedback.u1
+toKelvin.Kelvin
+cap.C
+cap.steadyStateStart
+cap.T
+cap.der(T)
+cap.port.Q_flow
+UAHea.Q_flow
+UAHea.dT
+UAHea.G
+UABld.Q_flow
+UABld.dT
+UABld.G
+sine.y
+sine.amplitude
+sine.freqHz
+sine.phase
+sine.offset
+sine.startTime
+sine.pi
+int.y
+int.der(y)
+int.k
+int.initType
+int.y_start
+fromKelvin.Celsius
+
+double initialValue(60,6)
+  0       0                  0  1.000000000000000E+100  6   256   # TIni
+  0       0                  0       0                  6   256   # product.u1
+  0       0                  0       0                  6   256   # product.y
+  0       1                  1  1.000000000000000E+100  6   258   # u.nout
+  0       0                  0       0                  6   256   # u.y[1]
+  0       1                  0       0                  6   257   # u.tableOnFile
+  0       2                  0       0                  6   258   # u.columns[1]
+ -1       0                  0       0                  1   282   # u.smoothness
+ -1       0                  0       0                  1   282   # u.extrapolation
+ -1       0                  0       0                  1   280   # u.offset[1]
+ -1       0                  0       0                  1   280   # u.startTime
+  0       0                  0       0                  6   256   # u.t_min
+  0       0                  0       0                  6   256   # u.t_max
+  0       0                  0       0                  6  1280   # u.p_offset[1]
+  0       0                  0       0                  6  1282   # u.tableID
+  0       0                  0       0                  6   388   # TMea.port.Q_flow
+ -1       0                  0       0                  1   280   # TSet.table[1, 1]
+ -1   2.881500000000000E+02  0       0                  1   280   # TSet.table[1, 2]
+ -1   25200                  0       0                  1   280   # TSet.table[2, 1]
+ -1   2.881500000000000E+02  0       0                  1   280   # TSet.table[2, 2]
+ -1   25200                  0       0                  1   280   # TSet.table[3, 1]
+ -1   2.931500000000000E+02  0       0                  1   280   # TSet.table[3, 2]
+ -1   68400                  0       0                  1   280   # TSet.table[4, 1]
+ -1   2.931500000000000E+02  0       0                  1   280   # TSet.table[4, 2]
+ -1   68400                  0       0                  1   280   # TSet.table[5, 1]
+ -1   2.881500000000000E+02  0       0                  1   280   # TSet.table[5, 2]
+ -1   86400                  0       0                  1   280   # TSet.table[6, 1]
+ -1   2.881500000000000E+02  0       0                  1   280   # TSet.table[6, 2]
+ -1       0                  0       0                  1   280   # TSet.offset
+ -1       0                  0       0                  1   280   # TSet.startTime
+  0       0                  0       0                  6  1344   # TSet.a
+  0       0                  0       0                  6  1344   # TSet.b
+  0       1                  0       0                  6  1346   # TSet.last
+  0       0                  0       0                  6  1344   # TSet.nextEvent
+  0       0                  0  1.000000000000000E+100  6   256   # feedback.u1
+  0       0                  0  1.000000000000000E+100  6   256   # toKelvin.Kelvin
+ -1   1.000000000000000E+06  0       0                  1   280   # cap.C
+  0       0                  0       0                  6   257   # cap.steadyStateStart
+ -1       0                  0  1.000000000000000E+100  2   272   # cap.T
+  0       0                  0       0                  3   256   # cap.der(T)
+  0       0                  0       0                  6   388   # cap.port.Q_flow
+  0       0                  0       0                  6   256   # UAHea.Q_flow
+  0       0                  0  1.000000000000000E+100  6   256   # UAHea.dT
+ -1     200                  0       0                  1   280   # UAHea.G
+  0       0                  0       0                  6   256   # UABld.Q_flow
+  0       0                  0  1.000000000000000E+100  6   256   # UABld.dT
+ -1     100                  0       0                  1   280   # UABld.G
+  0       0                  0  1.000000000000000E+100  6   256   # sine.y
+ -1       5                  0       0                  1   280   # sine.amplitude
+ -1   1.157407407407410E-05  0       0                  1   280   # sine.freqHz
+ -1   21600                  0       0                  1   280   # sine.phase
+ -1   2.731500000000000E+02  0       0                  1   280   # sine.offset
+ -1       0                  0       0                  1   280   # sine.startTime
+  0   3.141592653589790E+00  0       0                  6  1280   # sine.pi
+ -1       0                  0       0                  2   272   # int.y
+  0       0                  0       0                  3   256   # int.der(y)
+ -1   1.157407407407410E-05  0       0                  1   280   # int.k
+  0       3                  1       4                  6   258   # int.initType
+ -1       0                  0       0                  1   280   # int.y_start
+  0       0                  0       0                  6   256   # fromKelvin.Celsius
+
+
+# Matrix with 6 columns defining the initial value calculation
+# (columns 5 and 6 are not utilized for the calculation but are
+#  reported by dymosim via dymosim -i for user convenience):
+#
+# column 1: Type of initial value
+#           = -2: special case: for continuing simulation (column 2 = value)
+#           = -1: fixed value (column 2 = fixed value)
+#           =  0: free value, i.e., no restriction (column 2 = initial value)
+#           >  0: desired value (column 1 = weight for optimization
+#                                column 2 = desired value)
+#                 use weight=1, since automatic scaling usually
+#                 leads to equally weighted terms
+# column 2: fixed, free or desired value according to column 1.
+# column 3: Minimum value (ignored, if Minimum >= Maximum).
+# column 4: Maximum value (ignored, if Minimum >= Maximum).
+#           Minimum and maximum restrict the search range in initial
+#           value calculation. They might also be used for scaling.
+# column 5: Category of variable.
+#           = 1: parameter.
+#           = 2: state.
+#           = 3: state derivative.
+#           = 4: output.
+#           = 5: input.
+#           = 6: auxiliary variable.
+# column 6: Data type of variable.
+#           = 0: real.
+#           = 1: boolean.
+#           = 2: integer.
+#
+# Initial values are calculated according to the following procedure:
+#
+# - If parameters, states and inputs are FIXED, and other variables
+#   are FREE, no special action takes place (default setting).
+#
+# - If there are only FIXED and FREE variables and the number of
+#   FREE parameters, states and inputs is IDENTICAL to the number of
+#   FIXED state derivatives, outputs and auxiliary variables, a non-linear
+#   equation is solved to determine a consistent set of initial conditions.
+#
+# - In all other cases the following optimization problem is solved:
+#      min( sum( weight(i)*( (value(i) - DESIRED(i))/scale(i) )^2 ) )
+#   under the constraint that the differential equation is fulfilled
+#   at the initial time. In most cases weight(i)=1 is sufficient, due
+#   to the automatic scaling (if DESIRED(i) is not close to zero,
+#   scale(i) = DESIRED(i). Otherwise, the scaling is based on the
+#   nominal value (and maybe minimum and maximum values given in 
+#   column 3 and 4). If these values are zero, scale(i)=1 is used).
+#
+char initialDescription(60,72)
+Initial temperature [K]
+Connector of Real input signal 1
+Connector of Real output signal
+Number of outputs
+Connector of Real output signals
+true, if table is defined on file or in function usertab
+columns of table to be interpolated
+smoothness of table interpolation
+extrapolation of data outside the definition range
+Offsets of output signals
+Output = offset for time < startTime [s]
+
+
+
+
+Heat flow rate (positive if flowing from outside into the component) [W]
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Table matrix (time = first column)
+Offset of output signal
+Output = offset for time < startTime [s]
+Interpolation coefficients a of actual interval (y=a*x+b)
+Interpolation coefficients b of actual interval (y=a*x+b)
+Last used lower grid index
+Next event instant [s]
+
+[K]
+Heat capacity of part (= cp*m) [J/K]
+true, if component shall start in steady state
+Temperature of part [K]
+der(Temperature of part) [K/s]
+Heat flow rate (positive if flowing from outside into the component) [W]
+Heat flow rate from port_a -> port_b [W]
+port_a.T - port_b.T [K]
+Constant thermal conductance of material [W/K]
+Heat flow rate from port_a -> port_b [W]
+port_a.T - port_b.T [K]
+Constant thermal conductance of material [W/K]
+Connector of Real output signal
+Amplitude of sine wave
+Frequency of sine wave [Hz]
+Phase of sine wave [rad]
+Offset of output signal
+Output = offset for time < startTime [s]
+
+Connector of Real output signal
+der(Connector of Real output signal)
+Integrator gain
+Type of initialization (InitialState and InitialOutput are identical)
+Initial or guess value of output (= state)
+[degC]
+
