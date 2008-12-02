@@ -117,6 +117,7 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Nov  20 wm Updated to 3.0.0 alpha 3
  2008, Nov  14 wm In genopt.algorithm.util.pso.ModelPSO, replaced System.arraycopy with clone.
                   Using arraycopy resulted in wrong values for the local best points.
  2008, Nov  10 wm Implemented parallel computation.
@@ -301,14 +302,14 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "alpha2";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "alpha3";//"alpha1 or -rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", November 18, 2008";
+	VERSION_NUMBER + VERSION_ID + ", November 20, 2008";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
