@@ -996,21 +996,24 @@ abstract public class Optimizer
      *           if the user required to stop GenOpt
      */
     public static int[] getPointerToEqualPoints(final Point[] x){
-
-	int[] r = new int[x.length];
-	r[0] = -1;
-	for(int iCur = 1; iCur < x.length; iCur++){
-	    r[iCur] = -1;
-	    for(int iRef = 0; iRef < iCur; iRef++){
-		if ( x[iCur].equals( x[iRef] ) ){
-		    r[iCur] = iRef;
-		    iRef = iCur; // to escape inner loop
+	if ( x.length == 0 )
+	    return null;
+	else{
+	    int[] r = new int[x.length];
+	    r[0] = -1;
+	    for(int iCur = 1; iCur < x.length; iCur++){
+		r[iCur] = -1;
+		for(int iRef = 0; iRef < iCur; iRef++){
+		    if ( x[iCur].equals( x[iRef] ) ){
+			r[iCur] = iRef;
+			iRef = iCur; // to escape inner loop
+		    }
 		}
 	    }
+	    return r;
 	}
-	return r;
     }
-
+    
     /** Evaluates the simulation based on the parameter set x<BR>
      *@param x the point being evaluated
      *@exception OptimizerException if an OptimizerException occurs or
