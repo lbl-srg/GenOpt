@@ -3,8 +3,9 @@
 */
 
 Vary{
-  Parameter{ Name = x1; Min = -1; Ini = 0.9; Max = 1; Step = 5; }
-  Parameter{ Name = x2; Min = -1; Ini = 0.9; Max = 1; Step = 5; }
+  Parameter{ Name = x1; Min = -1; Ini = 0.9; Max = 2; Step = 3; }
+  Parameter{ Name = x2; Min = -1; Ini = 0.9; Max = 3; Step = 4; }
+  Parameter{ Name = x3; Min = -1; Ini = 0.9; Max = 4; Step = 5; }
 }
 
 OptimizationSettings{
