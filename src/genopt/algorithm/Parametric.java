@@ -128,7 +128,7 @@ public class Parametric extends Optimizer
 	    // check that l != u if step != 0
 	    if (getDx0(i) != 0 && getL(i) == getU(i))
 		em += "Parameter '" + getVariableNameContinuous(i) +
-		    "' has step size unequal 0 but its lower bound equal to its upper bound." + LS;
+		    "' has step size unequal 0 but its lower bound is equal to its upper bound." + LS;
 	    // check that step is an integer value
 	    if ( Math.rint(getDx0(i)) != getDx0(i) )
 		em += "Parameter '" + getVariableNameContinuous(i) +
@@ -186,8 +186,13 @@ public class Parametric extends Optimizer
 		}
 	    }
 	}
+	// for the special case that no parameter is being varied, we
+	// run the point specified by the Ini keyword.
+	if (poiVec.size() == 0)
+	    poiVec.add((Point)defPoi.clone());
 	// execute the simulations
 	final int nPoi = poiVec.size();
+	System.out.println("Parametric : " + nPoi);
 	Point[] p = new Point[nPoi];
 	for(int i = 0; i < nPoi; i++){
 	    p[i] = (Point)(poiVec.get(i));
