@@ -185,6 +185,7 @@ public class EquMesh extends Optimizer{
 	    p[i] = (Point)(poiVec.get(i));
 	}
 	super.getF(p, stopAtError);
+	p[0].setComment("Function evaluation successful.");
 	for(int i = 1; i < nPoi; i++){
 	    if ( p[i].getSimulationNumber() == p[i-1].getSimulationNumber() )
 		p[i].setComment("Point already evaluated.");
