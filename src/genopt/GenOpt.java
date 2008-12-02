@@ -117,6 +117,7 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Dec  01 wm Converted EquMesh to parallel version
  2008, Nov  20 wm Updated to 3.0.0 alpha 3
  2008, Nov  14 wm In genopt.algorithm.util.pso.ModelPSO, replaced System.arraycopy with clone.
                   Using arraycopy resulted in wrong values for the local best points.

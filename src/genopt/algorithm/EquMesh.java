@@ -6,6 +6,7 @@ import genopt.lang.OptimizerException;
 import genopt.simulation.SimulationInputException;
 import genopt.algorithm.util.math.Point;
 import java.io.IOException;
+import java.util.Vector;
 
 /** Class for doing a parametric run where the parameters are
   * the nodes of an equidistant grid.<BR>
@@ -90,6 +91,8 @@ public class EquMesh extends Optimizer{
 	super(genOptData, 0);
 	ensureOnlyContinuousParameters();
 	dimX = getDimensionX();
+	dimCon = getDimensionContinuous();
+	dimDis = getDimensionDiscrete();
 	dimF = getDimensionF();
 	
 	// get additional input
@@ -97,7 +100,7 @@ public class EquMesh extends Optimizer{
 
 	// check whether all lower and upper bounds are set
 	String em = "";
-	for (int i = 0; i < dimX; i++){
+	for (int i = 0; i < dimCon; i++){
 	    if (getKindOfConstraint(i) != 3)
 		em += "Parameter '" + getVariableNameContinuous(i) + 
 		    "' does not have lower and upper bounds specified." + LS;
@@ -120,22 +123,17 @@ public class EquMesh extends Optimizer{
 	    throw new OptimizerException(em);
 		
 	// initialization
-	x    = new double[dimX];
-	dx   = new double[dimX];
-	x0   = new double[dimX];
-	step = new int[dimX];
+	xCon    = new double[dimCon];
+	step = new int[dimCon];
 	int i;
 	nS = 1;
 	// number of runs
-	for (i = 0; i < dimX; i++){
+	for (i = 0; i < dimCon; i++){
 	    step[i] = Math.round(Math.round(getDx0(i))) + 1; 
 	    nS *= step[i];
-	    x0[i] = getL(i);
-	    dx[i] = getU(i) - x0[i];
+	    xCon[i] = getL(i);
 	}
 	println("Require " + nS + " function evaluations.");
-	
-	System.arraycopy(x0, 0, x, 0, dimX);
     }
 
     /** Runs the evaluation 
@@ -145,8 +143,10 @@ public class EquMesh extends Optimizer{
      * @exception OptimizerException
      */
     public int run(Point x0) throws OptimizerException, Exception{
+	poiVec = new Vector<Point>(nS);
 	// this algorithm does not use the initial point
 	perturb(dimX-1);
+	executeSimulations();
 	return 4;
     }
 
@@ -158,19 +158,46 @@ public class EquMesh extends Optimizer{
     private void perturb(int dimNr) throws OptimizerException, Exception
     {
 	for (int i = 0; i < step[dimNr]; i++){
-	    x[dimNr] = (step[dimNr] ==1) ? x0[dimNr] :
-		x0[dimNr] + (double)(i)/(double)(step[dimNr]-1) * dx[dimNr];
+	    xCon[dimNr] = (step[dimNr] ==1) ? getL(dimNr) :
+		getL(dimNr) + (double)(i)/(double)(step[dimNr]-1) * (getU(dimNr)-getL(dimNr));
 	    if (dimNr > 0)
 		perturb(dimNr-1);
 	    else{
-		Point poi = new Point(dimX, 0, dimF);
-		poi.setX(x);
+		Point poi = new Point(dimCon, dimDis, dimF);
+		poi.setX(xCon);
 		poi.setStepNumber(0);
-		poi = this.getF(poi);
-		println( (int)( (float)(getSimulationNumber()) * 100 / (float)(nS)) + "% completed.");
+		poiVec.add(roundCoordinates((Point)poi.clone()));  
+		//		println( (int)( (float)(getSimulationNumber()) * 100 / (float)(nS)) + "% completed.");
 	    }
 	}
     }
+
+    /** Executes all simulations
+     * @exception Exception	  
+     * @exception OptimizerException
+     */
+    private void executeSimulations()
+	throws OptimizerException, Exception{
+	// execute the simulations
+	final int nPoi = poiVec.size();
+	Point[] p = new Point[nPoi];
+	for(int i = 0; i < nPoi; i++){
+	    p[i] = (Point)(poiVec.get(i));
+	}
+	super.getF(p, stopAtError);
+	for(int i = 1; i < nPoi; i++){
+	    if ( p[i].getSimulationNumber() == p[i-1].getSimulationNumber() )
+		p[i].setComment("Point already evaluated.");
+	    else{
+		p[i].setComment("Function evaluation successful.");
+	    }
+	}
+	for(int i = 0; i < nPoi; i++){
+	    report(p[i], SUBITERATION);
+	    report(p[i], MAINITERATION);
+	}
+    }
+
     
     /** Evaluates a simulation and reports result
      *@param pt point to be evaluated 
@@ -197,16 +224,14 @@ public class EquMesh extends Optimizer{
 	    if(stopAtError || mustStopOptimization())
 		throw e;
 	    else{
-		String em = "Point x = ( ";
-		for (int i=0; i < dimX-1; i++)
-		        em += r.getX(i) + ", ";
-		    em += r.getX(dimX-1) + ")." + LS;
-		    setWarning( em + e.getMessage(), r.getSimulationNumber() );
-		    double[] f = new double[dimF];
-		    for(int i=0; i<dimF; i++)
-			f[i] = 0;
-		    r.setF(f);
-		    r.setComment("Error during function evaluation. See log file.");
+		String em = "Point : ";
+		em += r.toString() + LS;
+		setWarning(em + e.getMessage(), r.getSimulationNumber() );
+		double[] f = new double[dimF];
+		for(int i=0; i<dimF; i++)
+		    f[i] = 0;
+		r.setF(f);
+		r.setComment("Error during function evaluation. See log file.");
 	    }
 	}
 	report(r, SUBITERATION);
@@ -218,16 +243,18 @@ public class EquMesh extends Optimizer{
     protected int nS;
     /** number of independent variables */
     protected int dimX;
+    /** number of continuous independent variables */
+    protected int dimCon;
+    /** number of discrete independent variables */
+    protected int dimDis;
     /** number of function values */
     protected int dimF;	
-    /** free parameter */
-    protected double[] x;
-    /** lower bound */
-    protected double[] x0;
-    /** number of steps */
+    /** independent continuous parameter */
+    protected double[] xCon;
+    /** number of steps for continuous parameters */
     protected int[]    step;
-    /** width of steps for each dimension */
-    protected double[] dx;
     /** flag whether run should stop or proceed if a simulation error occurs */
     protected boolean stopAtError;
+    /** Vector of points to be evaluated */
+    Vector<Point> poiVec;
 }
