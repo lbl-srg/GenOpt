@@ -4,7 +4,7 @@
 
 Vary{
   Parameter{ Name = x1; Min = -1; Ini = 0; Max = 1; Step = 4; }
-  Parameter{ Name = x2; Min = -1; Ini = 0; Max = 1; Step = 4; }
+  Parameter{ Name = x2; Ini = 3; Values = "-1.0, -0.5, 0.0, 0.5, 1.0"; }
 }
 
 OptimizationSettings{
