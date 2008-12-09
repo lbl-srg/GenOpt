@@ -192,7 +192,6 @@ public class Parametric extends Optimizer
 	    poiVec.add((Point)defPoi.clone());
 	// execute the simulations
 	final int nPoi = poiVec.size();
-	System.out.println("Parametric : " + nPoi);
 	Point[] p = new Point[nPoi];
 	for(int i = 0; i < nPoi; i++){
 	    p[i] = (Point)(poiVec.get(i));
