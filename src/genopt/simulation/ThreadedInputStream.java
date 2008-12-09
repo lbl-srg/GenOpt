@@ -86,7 +86,7 @@ public class ThreadedInputStream extends Thread
 		while(this != null){
 		    final int ch = bis.read();
 		    if(ch != -1) // -1 indicates the end of the stream
-			sb.append(ch); 
+			sb.append((char)ch); 
 		    else break;
 		}
 		bis.close();
