@@ -318,6 +318,8 @@ public class SimulationStarter implements Cloneable
 	}
 	try{
 	    pro[iPro] = Runtime.getRuntime().exec(comLin, null, proWorDir);
+	    ThreadedInputStream errStr = new ThreadedInputStream(pro[iPro].getErrorStream());
+	    errStr.start();
 	    pro[iPro].waitFor();
 	    
 	    // sleep for some milliseconds
@@ -325,7 +327,7 @@ public class SimulationStarter implements Cloneable
 	    // Thread.sleep((int)(2000*Math.random()));
 	    // Thread.sleep(2000);
 	    // System.err.println("Woke up");
-	    _processProcessOutput(iPro, proWorDir, comLin);
+	    _processProcessOutput(iPro, errStr, proWorDir, comLin);
 	}
 	catch(InterruptedException e){
 	    String ErrMes =
@@ -370,7 +372,8 @@ public class SimulationStarter implements Cloneable
      * @exception OptimizerException
      * @exception IOException if the output or error stream cannot be read
      */
-    void _processProcessOutput(int iPro, final File proWorDir, final String comLin)
+    void _processProcessOutput(int iPro, final ThreadedInputStream errorStream, 
+			       final File proWorDir, final String comLin)
 	throws NullPointerException, OptimizerException, IOException{
 	int ev = 0;
 	try { ev = pro[iPro].exitValue(); }
@@ -382,42 +385,28 @@ public class SimulationStarter implements Cloneable
 	    
 	    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
 	}
+	// throw any exceptions that may have been stored when reading the error stream
+	errorStream.throwStoredException();
 	if (ev != 0){
-		InputStream ips = null;
-		try { ips = pro[iPro].getErrorStream(); }
-		catch (NullPointerException e){ // if process was destroyed
-		    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-		    // Otherwise, the system does not release its resources, and
-		    // the exception "java.io.IOException: Too many open files" is
-		    // thrown after a few hundred or thousands of simulations.
-		    throw new OptimizerException(genopt.GenOpt.USER_STOP_MESSAGE);
-		}					
-		int len = ips.available();
-		String sem;
-		if (len > 0){
-		    byte[] by = new byte[len];
-		    ips.read(by);
-		    sem = LS + new String(by);
-		    ips.close();
-		}
-		else
-		    sem = new String("Simulation program did not return an error stream.");
-		
-		String ErrMes =
-		    LS + "Error in executing the simulation program" +
-		    LS + "Exit value of the simulation program: " + ev +
-		    LS + "Working directory                   : '" + proWorDir.getCanonicalPath() + "'." +
-		    LS + "Current command String              : '" + comLin + "'." +
-		    LS + "Error stream of simulation program  : " + sem + LS;
-		
-		// The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
-		// Otherwise, the system does not release its resources, and
-		// the exception "java.io.IOException: Too many open files" is
-		// thrown after a few hundred or thousands of simulations.
-		throw new OptimizerException(ErrMes);
+	    String sem = errorStream.getInputStream();
+	    if ( sem == null || sem.length() == 0)
+		sem = new String("Simulation program did not return an error stream.");
+	    
+	    String ErrMes =
+		LS + "Error in executing the simulation program" +
+		LS + "Exit value of the simulation program: " + ev +
+		LS + "Working directory                   : '" + proWorDir.getCanonicalPath() + "'." +
+		LS + "Current command String              : '" + comLin + "'." +
+		LS + "Error stream of simulation program  : " + sem + LS;
+	    
+	    // The next line is new in GenOpt 2.0.0 due to Java's Bug Id 4637504 and 4784692.
+	    // Otherwise, the system does not release its resources, and
+	    // the exception "java.io.IOException: Too many open files" is
+	    // thrown after a few hundred or thousands of simulations.
+	    throw new OptimizerException(ErrMes);
 	}
     }
-
+    
 
     /** Destroys all processes that exists
      */

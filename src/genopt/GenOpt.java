@@ -117,6 +117,9 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Dec  08 wm Added class ThreadedInputStream. This is needed to avoid a deadlock
+                  if a simulation program writes a large amount of data to the 
+                  error stream.
  2008, Dec  02 wm Changed Parametric so that also a single point can be simulated.
                   Fixed NullPointerException is Optimizer.
  2008, Dec  01 wm Converted EquMesh to parallel version
