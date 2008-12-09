@@ -310,12 +310,12 @@ public class SimOutputFileHandler extends FileHandler
 	    	"Error in searching for the objective function value: " + LS +
 	    	"  The objective function value could not be found." + LS + 
 	    	"  - Check the optimization ini file for" + LS +
-	    	"    the prober value of SimOutputFile." + LS + 
-			"  - Check the SimOutputFile for the prober" + LS +
+	    	"    the correct value for the simulation output file." + LS + 
+		"  - Check the simulation output file for the correct" + LS +
 	    	"    structure." + LS +
 	    	"  - Check the optimization configuration file for" + LS +
-	    	"    the prober value of the objective function delimiter." + LS +
-			"    Objective function delimiter is '" + delimiter + "'.";
+	    	"    the correct value of the objective function delimiter." + LS +
+		"    Objective function delimiter is '" + delimiter + "'.";
 	    throw new OptimizerException(ErrMes);
 	}
 
