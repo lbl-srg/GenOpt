@@ -198,6 +198,8 @@ abstract public class Optimizer
 	// flag, true 
 	functionValuesParsed = new AtomicBoolean(false);
 	funValParLat = new CountDownLatch(1);
+
+	firstSimulations = true;
     }
 
     /** Constructor
@@ -855,6 +857,8 @@ abstract public class Optimizer
 
 	// wait until all threads completed
 	done.await();
+	// Set flag firstSimulations to false
+	firstSimulations = false;
 	// throw the exceptions, if any
 	for(int iT = 0; iT < numOfSim; iT++){
 	    try{
@@ -1041,16 +1045,16 @@ abstract public class Optimizer
 	   inproperly
 	*/
 	final int simNum = x.getSimulationNumber();
-	if (simNum > 1){
+	if ( firstSimulations )
+	    key = _evaluateSimulation((Point)x.clone());
+	else{
 	    try{
 		key = _evaluateSimulation((Point)x.clone());
 	    }
 	    catch(Exception e){
 		key = _retryEvaluateSimulation((Point)x.clone(), e);
 	    }
-	}
-	else{
-	    key = _evaluateSimulation((Point)x.clone());
+	    
 	}
 
 	// add point and function value to the map of evaluated points
@@ -2112,4 +2116,11 @@ abstract public class Optimizer
 
     /** Count down latch, if 0, the function value pointer <tt>funValPoi</tt> has been set */
     private CountDownLatch funValParLat;
+
+    /** Flag that indicates whether the set of points that are currently evaluated are the
+     *  first simulations.
+     *
+     *  If the flag is <code>true</code>, then no second simulation is done in case of an error.
+     */
+    private boolean firstSimulations;
 }
