@@ -320,6 +320,8 @@ public class SimulationStarter implements Cloneable
 	    pro[iPro] = Runtime.getRuntime().exec(comLin, null, proWorDir);
 	    ThreadedInputStream errStr = new ThreadedInputStream(pro[iPro].getErrorStream());
 	    errStr.start();
+	    ThreadedInputStream outStr = new ThreadedInputStream(pro[iPro].getInputStream());
+	    outStr.start();
 	    pro[iPro].waitFor();
 	    
 	    // sleep for some milliseconds

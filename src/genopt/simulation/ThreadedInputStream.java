@@ -1,7 +1,7 @@
 package genopt.simulation;
 
 import java.io.IOException;
-import java.io.BufferedInputStream;
+
 
 /** Class to buffer the error stream.
   * This class is needed to avoid a deadlock of waitFor(), which may
@@ -74,7 +74,7 @@ import java.io.BufferedInputStream;
 public class ThreadedInputStream extends Thread
     {
 	public ThreadedInputStream(java.io.InputStream inputStream){
-	    bis = new BufferedInputStream(inputStream);
+	    is = inputStream;
 	    sb = new java.lang.StringBuffer();
 	    ioExc = null;
 	}
@@ -83,13 +83,15 @@ public class ThreadedInputStream extends Thread
 	 */
 	public void run(){
 	    try{
+		byte[] by = new byte[1];
 		while(this != null){
-		    final int ch = bis.read();
-		    if(ch != -1) // -1 indicates the end of the stream
-			sb.append((char)ch); 
+		    int ch = is.read(by);
+		    if(ch != -1){ // -1 indicates the end of the stream
+			sb.append((char)by[0]); 
+		    }
 		    else break;
 		}
-		bis.close();
+		is.close();
 	    } 
 	    catch (IOException e){
 		ioExc = e;
@@ -115,7 +117,7 @@ public class ThreadedInputStream extends Thread
 	/** The <b>IOException</b> stored by this thread */
 	protected IOException ioExc;
 	/** The buffered input stream */
-	java.io.BufferedInputStream bis;
+	java.io.InputStream is;
 	/** The string buffer that stores the output of the stream */
 	java.lang.StringBuffer sb = null;
     }
