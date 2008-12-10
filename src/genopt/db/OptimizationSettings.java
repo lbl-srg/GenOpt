@@ -81,11 +81,16 @@ public class OptimizationSettings
 	  * @param writeStepNumber flag that indicates whether the step number
 	  *        has to written to the simulation input file (<CODE>true</CODE>)
 	  *        or not <CODE>false</CODE>
+	  * @param unitsOfExecution the maximum number of units of executions to be used
 	  */
-	public OptimizationSettings(int maximumNumberOfIteration, boolean writeStepNumber)
+    public OptimizationSettings(int maximumNumberOfIteration, boolean writeStepNumber,
+				int unitsOfExecution)
 	{
 		maxIteration = maximumNumberOfIteration;
 		wriSteNum    = writeStepNumber;
+		uniOfExe     = unitsOfExecution;
+		if ( uniOfExe < 1 )
+		    uniOfExe = java.lang.Runtime.getRuntime().availableProcessors();
 	}
 
 	/** returns the flag that indicates whether the step number
@@ -101,8 +106,14 @@ public class OptimizationSettings
 	  */
 	public final int getMaxIteration() {return maxIteration;}
 
+	/** Get the maximum number of units of executions
+	  * @return Maximum number of units of executions, or zero.
+	  */
+	public final int getMaxUnitsOfExecution() {return uniOfExe;}
+
     protected int     maxIteration;	
-	protected boolean wriSteNum;
+    protected boolean wriSteNum;
+    protected int uniOfExe;
 }
 
 

@@ -192,8 +192,8 @@ abstract public class Optimizer
 	evaPoi = Collections.synchronizedMap(new TreeMap<Point, Double[]>());
 
 	// maximum number of threads int the pool
-	maxThrPoo = java.lang.Runtime.getRuntime().availableProcessors();
-	println("Assigning " + maxThrPoo + " processors.");
+	maxThrPoo = data.OptSet.getMaxUnitsOfExecution();
+	println("Assigning " + maxThrPoo + " threads for simulations.");
 	data.SimSta.setMaximumNumberOfThreads(maxThrPoo);
 	// flag, true 
 	functionValuesParsed = new AtomicBoolean(false);

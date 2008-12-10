@@ -1791,13 +1791,14 @@ public class GenOpt extends Thread
 							       InputFormatException inpForExc, String fn, int maxEqualResults)
     {
 	int nErr = inpForExc.getNumberOfErrors();
-	int numOfEnt = 3;
+	int numOfEnt = 4;
 	String[] key = new String[numOfEnt];
 	String[] val    = new String[numOfEnt];
 
 	key[0] = "MaxIte";
 	key[1] = "MaxEqualResults";
 	key[2] = "WriteStepNumber";
+	key[3] = "UnitsOfExecution";
 
 	for (int i = 0; i < numOfEnt; i++)
 	    val[i] = new String("");
@@ -1819,6 +1820,7 @@ public class GenOpt extends Thread
 		Token.getStringValue(optComStrTok, '=', ';',
 				     key, val, inpForExc, fn, Token.PART);
 		if (val[1].length() == 0) val[1] = new Integer(maxEqualResults).toString();
+		if (val[3].length() == 0) val[3] = new Integer(0).toString();
 		Token.checkVariableSetting(optComStrTok, inpForExc, key, val, fn);
 		Token.moveToSectionEnd(optComStrTok, inpForExc, fn);
 	    }
@@ -1847,11 +1849,13 @@ public class GenOpt extends Thread
 	boolean wriSteNum = parseBoolean(optComStrTok, key[2], val[2],
 					 inpForExc, fn);
 
+	int uniOfExe = parseInteger(optComStrTok, key[3], val[3],
+				    0, Integer.MAX_VALUE, inpForExc, fn);
 
 	//check for error
 	if (nErr < inpForExc.getNumberOfErrors()) return;
 
-	OptSet = new OptimizationSettings(maxIte, wriSteNum);
+	OptSet = new OptimizationSettings(maxIte, wriSteNum, uniOfExe);
 	resChe = new ResultChecker(maxEquRes);
     }
 
