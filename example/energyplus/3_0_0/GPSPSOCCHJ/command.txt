@@ -36,6 +36,7 @@ OptimizationSettings{
   MaxIte = 2000;
   MaxEqualResults = 100;
   WriteStepNumber = false;
+  UnitsOfExecution = 0;
 }
 
 Algorithm{
