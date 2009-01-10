@@ -76,7 +76,7 @@ import java.util.Vector;
   * or derivative works thereof, in binary and source code form. 
  */
 
-public class EquMesh extends Optimizer{
+public class Mesh extends Optimizer{
     /** Constructor
      * @param genOptData a reference to the GenOpt object.<BR> 
      * <B>Note:</B> the object is used as a reference. 
@@ -87,7 +87,7 @@ public class EquMesh extends Optimizer{
      * @exception Exception
      * @exception InputFormatException
      */
-    public EquMesh(GenOpt genOptData)
+    public Mesh(GenOpt genOptData)
 	throws OptimizerException, IOException, Exception, InputFormatException{
 	super(genOptData, 0);
 	dimX = getDimensionX();

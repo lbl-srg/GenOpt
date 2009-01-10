@@ -15,6 +15,6 @@ OptimizationSettings{
 }
 
 Algorithm{
-  Main = EquMesh;
+  Main = Mesh;
   StopAtError = false;
 }
