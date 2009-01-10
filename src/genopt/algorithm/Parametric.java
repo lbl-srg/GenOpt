@@ -151,7 +151,6 @@ public class Parametric extends Optimizer
      * @exception OptimizerException
      */
     public int run(Point x0) throws OptimizerException, Exception {
-	//	Point poi = (Point)x0.clone();
 	// initialize points with current settings
 	final Point defPoi = (Point)x0.clone();
 	Vector<Point> poiVec = new Vector<Point>(dimCon);

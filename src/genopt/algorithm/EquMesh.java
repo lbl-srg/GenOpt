@@ -1,6 +1,7 @@
 package genopt.algorithm;
 
 import genopt.GenOpt;
+import genopt.algorithm.util.math.Fun;
 import genopt.io.InputFormatException;
 import genopt.lang.OptimizerException;
 import genopt.simulation.SimulationInputException;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 /** Class for doing a parametric run where the parameters are
-  * the nodes of an equidistant grid.<BR>
+  * the nodes of a grid.<BR>
   *
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">
@@ -89,7 +90,6 @@ public class EquMesh extends Optimizer{
     public EquMesh(GenOpt genOptData)
 	throws OptimizerException, IOException, Exception, InputFormatException{
 	super(genOptData, 0);
-	ensureOnlyContinuousParameters();
 	dimX = getDimensionX();
 	dimCon = getDimensionContinuous();
 	dimDis = getDimensionDiscrete();
@@ -113,26 +113,29 @@ public class EquMesh extends Optimizer{
 		em += "Parameter '" + getVariableNameContinuous(i) +
 		    "' has a step size equal to '" + getDx0(i) + 
 		    "'. Require an integer value." + LS;
-	    // check that Step is not negative
-	    if ( getDx0(i) < 0)
-		em += "Parameter '" + getVariableNameContinuous(i) + 
-		    "' has a negative value for 'Step'." + LS;
 	}
 	
 	if (em.length() > 0)
 	    throw new OptimizerException(em);
 		
 	// initialization
-	xCon    = new double[dimCon];
 	step = new int[dimCon];
-	int i;
+	leng  = new int[dimCon+dimDis]; // number of values each parameter can take on
+	ind  = new int[dimCon+dimDis];
 	nS = 1;
 	// number of runs
-	for (i = 0; i < dimCon; i++){
-	    step[i] = Math.round(Math.round(getDx0(i))) + 1; 
-	    nS *= step[i];
-	    xCon[i] = getL(i);
+	for (int i = 0; i < dimCon; i++){
+	    step[i] = Math.round((float)getDx0(i));
+	    leng[i] = (Math.abs(step[i])+1); // step may be negative
+	    nS *= leng[i];
 	}
+	for (int i = 0; i < dimDis; i++){
+	    leng[dimCon+i] = getLengthDiscrete(i);
+	    nS *= leng[dimCon+i];
+	}
+	// initialize ind array
+	for (int i = 0; i < dimCon+dimDis; i++)
+	    ind[i] = 0;
 	println("Require " + nS + " function evaluations.");
     }
 
@@ -145,29 +148,36 @@ public class EquMesh extends Optimizer{
     public int run(Point x0) throws OptimizerException, Exception{
 	poiVec = new Vector<Point>(nS);
 	// this algorithm does not use the initial point
-	perturb(dimX-1);
+	perturb(dimCon+dimDis-1);
 	executeSimulations();
 	return 4;
     }
 
     /** Perturbs the point and evaluates a simulation
-     *@param dimNr number of dimensions that have to be perturbed
-	  * @exception Exception	  
-	  * @exception OptimizerException
-	  */
-    private void perturb(int dimNr) throws OptimizerException, Exception
-    {
-	for (int i = 0; i < step[dimNr]; i++){
-	    xCon[dimNr] = (step[dimNr] ==1) ? getL(dimNr) :
-		getL(dimNr) + (double)(i)/(double)(step[dimNr]-1) * (getU(dimNr)-getL(dimNr));
-	    if (dimNr > 0)
-		perturb(dimNr-1);
+     *@param iPar number of continuous and discrete parameters that has to be perturbed
+     * @exception Exception	  
+     * @exception OptimizerException
+     */
+    private void perturb(int iPar) throws OptimizerException, Exception{
+	for (int i = 0; i < leng[iPar]; i++){
+	    ind[iPar] = i;
+	    if (iPar > 0)
+		perturb(iPar-1);
 	    else{
 		Point poi = new Point(dimCon, dimDis, dimF);
-		poi.setX(xCon);
+		for (int j = 0; j < dimCon; j++){
+		    if ( step[j] != 0 ){
+			final double[] spa = Fun.getSpacing(step[j], getL(j), getU(j));
+			poi.setX(j, spa[ind[j]]);
+		    }
+		    else
+			poi.setX(j, getX0(j)); // set to Ini if step = 0.
+		}
+		for (int j = 0; j < dimDis; j++){
+		    poi.setIndex(j, ind[dimCon+j]);
+		}
 		poi.setStepNumber(0);
 		poiVec.add(roundCoordinates((Point)poi.clone()));  
-		//		println( (int)( (float)(getSimulationNumber()) * 100 / (float)(nS)) + "% completed.");
 	    }
 	}
     }
@@ -250,10 +260,12 @@ public class EquMesh extends Optimizer{
     protected int dimDis;
     /** number of function values */
     protected int dimF;	
-    /** independent continuous parameter */
-    protected double[] xCon;
+    /** number of values that each parameter can take on */
+    protected int[] leng;
+    /** index that defines the perturbated parameter value */
+    protected int[] ind;
     /** number of steps for continuous parameters */
-    protected int[]    step;
+    protected int[]  step;
     /** flag whether run should stop or proceed if a simulation error occurs */
     protected boolean stopAtError;
     /** Vector of points to be evaluated */

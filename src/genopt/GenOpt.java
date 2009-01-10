@@ -117,6 +117,8 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2008, Jan  08 wm Changed EquMesh. Now, also allowed are discrete parameters and 
+                  continuous parameters with logarithmic spacing.
  2008, Dec  08 wm Added class ThreadedInputStream. This is needed to avoid a deadlock
                   if a simulation program writes a large amount of data to the 
                   error stream.
