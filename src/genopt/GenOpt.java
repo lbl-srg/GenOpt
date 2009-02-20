@@ -112,12 +112,14 @@ import java.security.SecureClassLoader;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 alpha 3 (November 20, 2008)<P>
+  * @version GenOpt(R) 3.0.0 beta 1 (February 20, 2009)<P>
   */
 
 /* Revision history:
  *******************
- 2008, Jan  08 wm Changed EquMesh. Now, also allowed are discrete parameters and 
+ 2009, Feb. 20 wm Updated to 3.0.0 beta 1
+ 2009, Jan  12 wm Updated to 3.0.0 alpha 4
+ 2009, Jan  08 wm Changed EquMesh. Now, also allowed are discrete parameters and 
                   continuous parameters with logarithmic spacing.
  2008, Dec  08 wm Added class ThreadedInputStream. This is needed to avoid a deadlock
                   if a simulation program writes a large amount of data to the 
@@ -310,14 +312,14 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "alpha3";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "beta1";//"alpha1 or -rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", November 20, 2008";
+	VERSION_NUMBER + VERSION_ID + ", January 12, 2008";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *

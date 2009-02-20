@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 alpha 3 (November 20, 2008)<P>
+  * @version GenOpt(R) 3.0.0 beta 1 (February 20, 2009)<P>
   */
 
 /*
