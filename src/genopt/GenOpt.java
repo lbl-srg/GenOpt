@@ -319,7 +319,7 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", January 12, 2008";
+	VERSION_NUMBER + VERSION_ID + ", February 20, 2009";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
