@@ -65,30 +65,6 @@ This should yield the following temperature trajectory:<br>
 For further information, please consult the GenOpt manual 
 and the Dymola manual.
 </p>
-<p>
-<h2>Note</h2>
-If Dymola has convergence problems, then its console output can be very large
-which can cause GenOpt to get slow when processing the error message.
-</p>
-<p>
-On Linux, this problem can be avoided if <code>dymosim</code> is called
-from a shell script that redirects the console output. For example, one could use
-<code>./dymosim -s dsin.txt > console.out</code>.
-If this redirection is used, then <code>dymosim</code> must be called from a shell
-script. The reason is the Java's runtime environment parses the command line into
-tokens, and then <code>dymosim -s</code> thinks that there are three arguments, 
-i.e., the tokens <code>&lt;</code> and <code>console.out</code> are passed to 
-<code>dymosim</code> instead of being interpreted as output redirection.
-This problem is also described 
-<a href="http://www.velocityreviews.com/forums/t138173-p2-runtimegetruntimexecsomecmd-problem-with-linux.html">
-here</a>.
-</p>
-<p>
-On Windows, this problem does not occur because the output redirection works.
-The reason for this is the
-Windows command line interpreter, which adds one more level of interpretation that causes
-the redirection to work.
-</p>
 <!-- ========================================================== -->
 <DIV CLASS="FOOTER">
 <P>
@@ -96,7 +72,7 @@ the redirection to work.
 Please send comments or questions to
 Michael Wetter, LBNL, <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A>
 <BR>
-November 11, 2008.
+February 20, 2009.
 </DIV>
 </BODY>
 </HTML>
