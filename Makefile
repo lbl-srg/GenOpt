@@ -59,7 +59,9 @@ else
 IZPACK=izpack
 endif
 
-export genopt-version=3.0.0beta1
+export genopt-version-dot=3.0.0beta1
+
+export genopt-version-dash=`echo $(genopt-version-dot) | sed -e 's/[.]/_/g'
 ### Targets of Makefile ###########################
 ### Compiles the GenOpt source code and the JavaDoc 
 all: doc jar
@@ -95,13 +97,13 @@ doc:
 	TARGET=_top>LBL SRG</A> | <A HREF="http://www.lbl.gov" \
 	TARGET=_top>LBL</A> </CENTER> <HR WIDTH="100%"> \
 	<BR> Contact: <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A> </DIV>" -d ../documentation/jdoc $(SRC))
-	cp -v ../../../1_report/1_manual/${genopt-version}/manual.pdf documentation
+	cp -v ../../../1_report/1_manual/$(genopt-version-dot)/manual.pdf documentation
 	@echo "==== Made documentation"
 
 ### Copies the files to the web directory
 www:
-	cp documentation/manual.pdf ~/proj/www/genopt/GO/download
-	cp $(DISDIR)/genopt-install.jar ~/proj/www/genopt/GO/download
+	cp documentation/manual.pdf ~/proj/www/genopt/GO/download/manual-$(genopt-version-dash).pdf
+	cp $(DISDIR)/genopt-install-$(genopt-version-dash).jar ~/proj/www/genopt/GO/download
 	rm -rf ~/proj/www/genopt/GO/jdoc
 	mkdir ~/proj/www/genopt/GO/jdoc
 	cp documentation/jdoc/*.html ~/proj/www/genopt/GO/jdoc/
@@ -144,10 +146,11 @@ unitTest:
 inst:
 	mkdir -p $(DISDIR)
 	rm -f $(DISDIR)/genopt-install.jar
+	rm -f $(DISDIR)/genopt-install-$(genopt-version-dash).jar
 	cd install; \
-	$(IZPACK) install.xml -b . -o genopt-install.jar -k standard; \
-	mv genopt-install.jar ../$(DISDIR); 
-	@echo "==== Made installation program in $(DISDIR)/genopt-install.jar";
+	$(IZPACK) install.xml -b . -o genopt-install-$(genopt-version-dash).jar -k standard; \
+	mv genopt-install-$(genopt-version-dash).jar ../$(DISDIR); 
+	@echo "==== Made installation program in $(DISDIR)/genopt-install-$(genopt-version-dash).jar";
 
 ### distribution, including web pages
 dist:   clean prog doc jar inst www
