@@ -132,6 +132,13 @@
 	      <exclude name="**/dymosim"/>
 	      <exclude name="**/.svn"/>
 	    </fileset>
+	    <!-- Make files executable -->
+	    <executable targetfile="$INSTALL_PATH/example/functionObjects/GPSHookeJeeves/simulate.sh"
+                        stage="never" os="unix"/>
+	    <executable targetfile="$INSTALL_PATH/example/functionObjects/GPSPSOCCHJMixed/simulate.sh"
+                        stage="never" os="unix"/>
+	    <executable targetfile="$INSTALL_PATH/example/functionObjects/Parametric/simulate.sh"
+                        stage="never" os="unix"/>
         </pack>
     </packs>
 </installation>
