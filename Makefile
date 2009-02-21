@@ -61,7 +61,7 @@ endif
 
 export genopt-version-dot=3.0.0beta1
 
-export genopt-version-dash=`echo $(genopt-version-dot) | sed -e 's/[.]/_/g'`
+export genopt-version-dash=$(shell echo $(genopt-version-dot) | sed -e 's/[.]/-/g')
 ### Targets of Makefile ###########################
 ### Compiles the GenOpt source code and the JavaDoc 
 all: doc jar
