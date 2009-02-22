@@ -112,11 +112,12 @@ import java.security.SecureClassLoader;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 beta 1 (February 20, 2009)<P>
+  * @version GenOpt(R) 3.0.0 beta 2 (February 23, 2009)<P>
   */
 
 /* Revision history:
  *******************
+ 2009, Feb. 23 wm Updated to 3.0.0 beta 2. (Fixed cfg files for Windows.)
  2009, Feb. 20 wm Updated to 3.0.0 beta 1
  2009, Jan  12 wm Updated to 3.0.0 alpha 4
  2009, Jan  08 wm Changed EquMesh. Now, also allowed are discrete parameters and 
@@ -245,7 +246,7 @@ import java.security.SecureClassLoader;
  2000, July    wm Release 1.1 beta2
  2000, May     wm Keyword "SavePath" implemented.
  2000, May     wm Class io.GenOptFileFilter rewritten.
- 2000, May        Release 1.1 beta1.
+ 2000, May        Release 1.1 beta2.
  2000, Jan.    wm implemented class Point.
                   Changed data management using class Point.
  1999, Sept.   wm Class EquMesh added.
@@ -312,14 +313,14 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "beta1";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "beta2";//"alpha1 or -rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", February 20, 2009";
+	VERSION_NUMBER + VERSION_ID + ", February 23, 2009";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
