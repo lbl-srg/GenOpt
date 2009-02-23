@@ -1,14 +1,20 @@
 @echo off
  if Not "%2" == "" goto :NoErr
  echo This is a modified version of the file RunEPlus.bat that is distributed
- echo with EnergyPlus. The modification allow to run multiple EnergyPlus
- echo versions in parallel.
+ echo with EnergyPlus. The modifications allow running multiple EnergyPlus
+ echo simulations in parallel. To use EnergyPlus with GenOpt, this file need
+ echo to be used instead of the original RunEPlus.bat file.
+ echo The GenOpt configuration file for EnergyPlus (cfg\EnergyPlusWinXP.cfg)
+ echo automatically invokes the file RunEPlusParallel.bat instead of RunEPlus.bat.
+ echo GenOpt assumes that the file RunEPlusParallel.bat is in the same directory
+ echo as the GenOpt initialization file.
  echo
- echo Modification done by Michael Wetter, 2008-11-13:
- echo Replace %2 with %3, %1 with %2 and introduced %1 as the program_path
- echo argument.
+ echo Modifications done by Michael Wetter, 2008-11-13:
+ echo Replaced %2 with %3, %1 with %2 and introduced %1 as the program_path
+ echo argument. Made several changes that were needed because of the new
+ echo order of the batch file parameters.
  echo
- echo usage: %0 ProgramPath (req) InputFileName (req) WeatherFileName (opt)
+ echo usage: %0 ProgramPath (rpeq) InputFileName (req) WeatherFileName (opt)
  echo Current Parameters:
  echo Program         : %program_path%%program_name%
  echo Input Path      : %input_path%
@@ -120,6 +126,8 @@ IF EXIST audit.out DEL audit.out
 IF EXIST expanded.idf   DEL expanded.idf
 IF EXIST expandedidf.err   DEL expandedidf.err
 IF EXIST readvars.audit   DEL readvars.audit
+IF EXIST eplusout.sql  DEL eplusout.sql
+IF EXIST sqlite.err  DEL sqlite.err
 :if %pausing%==Y pause
 
 :  2. Clean up target directory
@@ -173,6 +181,7 @@ IF EXIST "%output_path%%2DElight.eldmp" DEL "%output_path%%2DElight.eldmp"
 IF EXIST "%output_path%%2Spark.log" DEL "%output_path%%2Spark.log"
 IF EXIST "%output_path%%2.expidf" DEL "%output_path%%2.expidf"
 IF EXIST "%output_path%%2.rvaudit" DEL "%output_path%%2.rvaudit"
+IF EXIST "%output_path%%2.sql" DEL "%output_path%%2.sql"
 
 :  3. Copy input data file to working directory
 echo Copying "%program_path%Energy+.idd" "%input_path%In.idd"
@@ -277,7 +286,8 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST eplusout.sparklog MOVE eplusout.sparklog "%output_path%%2Spark.log"
  IF EXIST expandedidf.err copy expandedidf.err+eplusout.err "%output_path%%2.err"
  IF EXIST readvars.audit MOVE readvars.audit "%output_path%%2.rvaudit"
- 
+ IF EXIST eplusout.sql MOVE eplusout.sql "%output_path%%2.sql"
+
 :   11.  Clean up directory.
  ECHO Removing extra files . . .
  IF EXIST eplusout.inp DEL eplusout.inp
@@ -290,6 +300,7 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST test.mvi DEL test.mvi
  IF EXIST expandedidf.err DEL expandedidf.err
  IF EXIST readvars.audit DEL readvars.audit
+ IF EXIST sqlite.err  DEL sqlite.err
  
  :done
  echo ===== %0 %1 %2 ===== Complete =====

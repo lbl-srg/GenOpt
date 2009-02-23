@@ -1,14 +1,20 @@
 @echo off
  if Not "%2" == "" goto :NoErr
  echo This is a modified version of the file RunEPlus.bat that is distributed
- echo with EnergyPlus. The modification allow to run multiple EnergyPlus
- echo versions in parallel.
+ echo with EnergyPlus. The modifications allow running multiple EnergyPlus
+ echo simulations in parallel. To use EnergyPlus with GenOpt, this file need
+ echo to be used instead of the original RunEPlus.bat file.
+ echo The GenOpt configuration file for EnergyPlus (cfg\EnergyPlusWinXP.cfg)
+ echo automatically invokes the file RunEPlusParallel.bat instead of RunEPlus.bat.
+ echo GenOpt assumes that the file RunEPlusParallel.bat is in the same directory
+ echo as the GenOpt initialization file.
  echo
- echo Modification done by Michael Wetter, 2008-11-13:
- echo Replace %2 with %3, %1 with %2 and introduced %1 as the program_path
- echo argument.
+ echo Modifications done by Michael Wetter, 2008-11-13:
+ echo Replaced %2 with %3, %1 with %2 and introduced %1 as the program_path
+ echo argument. Made several changes that were needed because of the new
+ echo order of the batch file parameters.
  echo
- echo usage: %0 ProgramPath (req) InputFileName (req) WeatherFileName (opt)
+ echo usage: %0 ProgramPath (rpeq) InputFileName (req) WeatherFileName (opt)
  echo Current Parameters:
  echo Program         : %program_path%%program_name%
  echo Input Path      : %input_path%
