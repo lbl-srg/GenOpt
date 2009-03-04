@@ -11,13 +11,10 @@
  echo as long as they are in different directories.
  echo
  echo Modifications done by Michael Wetter, 2009-03-03:
- echo Set directory names so that multiple EnergyPlus versions can run in
- echo parallel.
- echo
- echo Modifications done by Michael Wetter, 2008-11-13:
- echo Replaced %2 with %3, %1 with %2 and introduced %1 as the program_path
- echo argument. Made several changes that were needed because of the new
- echo order of the batch file parameters.
+ echo - Set directory names so that multiple EnergyPlus versions can run in
+ echo   parallel.
+ echo - Hard-coded path to EnergyPlus.exe. This is needed since there is no
+ echo   environment variable, such as the ENERGYPLUS_DIR variable on Mac.
  echo
  echo usage: %0 InputFileName (req) WeatherFileName (opt)
  echo Current Parameters:
@@ -49,7 +46,8 @@
 :   %maxcol%       contains "250" if limited to 250 columns otherwise contains
 :                  "nolimit" if unlimited (used when calling readVarsESO)
  echo ===== %0 (Run EnergyPlus) %1 %2 ===== Start =====
-  
+: Currently, there is no environment variable that points to the E+ directory.
+: We hard-code it here.  
  set program_path=C:\Program Files\EnergyPlusV3-0-0\
  set program_name=EnergyPlus.exe
 : Set the input_path to the current working directory
