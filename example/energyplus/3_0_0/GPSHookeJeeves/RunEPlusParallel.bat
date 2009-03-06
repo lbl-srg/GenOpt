@@ -188,8 +188,8 @@ IF EXIST "%output_path%%1.rvaudit" DEL "%output_path%%1.rvaudit"
 IF EXIST "%output_path%%1.sql" DEL "%output_path%%1.sql"
 
 :  3. Copy input data file to working directory
-copy "%program_path%Energy+.idd" Energy+.idd
-copy "%program_path%Energy+.ini" Energy+.ini
+copy "%program_path%Energy+.idd" "Energy+.idd"
+copy "%program_path%Energy+.ini" "Energy+.ini"
 if exist %1.imf copy %1.imf in.imf
 if exist in.imf "%program_path%EPMacro"
 if exist out.idf copy out.idf "%output_path%%1.epmidf"
