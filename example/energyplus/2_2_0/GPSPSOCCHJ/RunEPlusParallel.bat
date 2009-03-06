@@ -74,64 +74,64 @@
 :  11.  Clean up working directory.
 :
 :  1. Clean up working directory
-IF EXIST "%input_path%eplusout.inp"   DEL "%input_path%eplusout.inp"
-IF EXIST "%input_path%eplusout.end"   DEL "%input_path%eplusout.end"
-IF EXIST "%input_path%eplusout.eso"   DEL "%input_path%eplusout.eso"
-IF EXIST "%input_path%eplusout.rdd"   DEL "%input_path%eplusout.rdd"
-IF EXIST "%input_path%eplusout.mdd"   DEL "%input_path%eplusout.mdd"
-IF EXIST "%input_path%eplusout.dbg"   DEL "%input_path%eplusout.dbg"
-IF EXIST "%input_path%eplusout.eio"   DEL "%input_path%eplusout.eio"
-IF EXIST "%input_path%eplusout.err"   DEL "%input_path%eplusout.err"
-IF EXIST "%input_path%eplusout.dxf"   DEL "%input_path%eplusout.dxf"
-IF EXIST "%input_path%eplusout.csv"   DEL "%input_path%eplusout.csv"
-IF EXIST "%input_path%eplusout.tab"   DEL "%input_path%eplusout.tab"
-IF EXIST "%input_path%eplusout.txt"   DEL "%input_path%eplusout.txt"
-IF EXIST "%input_path%eplusmtr.csv"   DEL "%input_path%eplusmtr.csv"
-IF EXIST "%input_path%eplusmtr.tab"   DEL "%input_path%eplusmtr.tab"
-IF EXIST "%input_path%eplusmtr.txt"   DEL "%input_path%eplusmtr.txt"
-IF EXIST "%input_path%eplusout.sln"   DEL "%input_path%eplusout.sln"
-IF EXIST "%input_path%epluszsz.csv"   DEL "%input_path%epluszsz.csv"
-IF EXIST "%input_path%epluszsz.tab"   DEL "%input_path%epluszsz.tab"
-IF EXIST "%input_path%epluszsz.txt"   DEL "%input_path%epluszsz.txt"
-IF EXIST "%input_path%eplusssz.csv"   DEL "%input_path%eplusssz.csv"
-IF EXIST "%input_path%eplusssz.tab"   DEL "%input_path%eplusssz.tab"
-IF EXIST "%input_path%eplusssz.txt"   DEL "%input_path%eplusssz.txt"
-IF EXIST "%input_path%eplusout.mtr"   DEL "%input_path%eplusout.mtr"
-IF EXIST "%input_path%eplusout.mtd"   DEL "%input_path%eplusout.mtd"
-IF EXIST "%input_path%eplusout.bnd"   DEL "%input_path%eplusout.bnd"
-IF EXIST "%input_path%eplusout.dbg"   DEL "%input_path%eplusout.dbg"
-IF EXIST "%input_path%eplusout.sci"   DEL "%input_path%eplusout.sci"
-IF EXIST "%input_path%eplusmap.csv"   DEL "%input_path%eplusmap.csv"
-IF EXIST "%input_path%eplusmap.txt"   DEL "%input_path%eplusmap.txt"
-IF EXIST "%input_path%eplusmap.tab"   DEL "%input_path%eplusmap.tab"
-IF EXIST "%input_path%eplustbl.csv"   DEL "%input_path%eplustbl.csv"
-IF EXIST "%input_path%eplustbl.txt"   DEL "%input_path%eplustbl.txt"
-IF EXIST "%input_path%eplustbl.tab"   DEL "%input_path%eplustbl.tab"
-IF EXIST "%input_path%eplustbl.htm"   DEL "%input_path%eplustbl.htm"
-IF EXIST "%input_path%eplusout.log"   DEL "%input_path%eplusout.log"
-IF EXIST "%input_path%eplusout.svg"   DEL "%input_path%eplusout.svg"
-IF EXIST "%input_path%eplusout.shd"   DEL "%input_path%eplusout.shd"
-IF EXIST "%input_path%eplusout.wrl"   DEL "%input_path%eplusout.wrl"
-IF EXIST "%input_path%eplusout.delightin"   DEL "%input_path%eplusout.delightin"
-IF EXIST "%input_path%eplusout.delightout"  DEL "%input_path%eplusout.delightout"
-IF EXIST "%input_path%eplusout.delighteldmp"  DEL "%input_path%eplusout.delighteldmp"
-IF EXIST "%input_path%eplusout.delightdfdmp"  DEL "%input_path%eplusout.delightdfdmp"
-IF EXIST "%input_path%eplusout.sparklog"  DEL "%input_path%eplusout.sparklog"
-IF EXIST "%input_path%eplusscreen.csv"  DEL "%input_path%eplusscreen.csv"
-IF EXIST "%input_path%in.imf"         DEL "%input_path%in.imf"
-IF EXIST "%input_path%in.idf"         DEL "%input_path%in.idf"
-IF EXIST "%input_path%out.idf"        DEL "%input_path%out.idf"
-IF EXIST "%input_path%audit.out"      DEL "%input_path%audit.out"
-IF EXIST "%input_path%in.epw"         DEL "%input_path%in.epw"
-IF EXIST "%input_path%in.stat"        DEL "%input_path%in.stat"
-IF EXIST "%input_path%eplusout.audit" DEL "%input_path%eplusout.audit"
-IF EXIST "%input_path%test.mvi"       DEL "%input_path%test.mvi"
-IF EXIST "%input_path%audit.out" DEL "%input_path%audit.out"
-IF EXIST "%input_path%expanded.idf"   DEL "%input_path%expanded.idf"
-IF EXIST "%input_path%expandedidf.err"   DEL "%input_path%expandedidf.err"
-IF EXIST "%input_path%readvars.audit"   DEL "%input_path%readvars.audit"
-IF EXIST "%input_path%eplusout.sql"  DEL "%input_path%eplusout.sql"
-IF EXIST "%input_path%sqlite.err"  DEL "%input_path%sqlite.err"
+IF EXIST eplusout.inp   DEL eplusout.inp
+IF EXIST eplusout.end   DEL eplusout.end
+IF EXIST eplusout.eso   DEL eplusout.eso
+IF EXIST eplusout.rdd   DEL eplusout.rdd
+IF EXIST eplusout.mdd   DEL eplusout.mdd
+IF EXIST eplusout.dbg   DEL eplusout.dbg
+IF EXIST eplusout.eio   DEL eplusout.eio
+IF EXIST eplusout.err   DEL eplusout.err
+IF EXIST eplusout.dxf   DEL eplusout.dxf
+IF EXIST eplusout.csv   DEL eplusout.csv
+IF EXIST eplusout.tab   DEL eplusout.tab
+IF EXIST eplusout.txt   DEL eplusout.txt
+IF EXIST eplusmtr.csv   DEL eplusmtr.csv
+IF EXIST eplusmtr.tab   DEL eplusmtr.tab
+IF EXIST eplusmtr.txt   DEL eplusmtr.txt
+IF EXIST eplusout.sln   DEL eplusout.sln
+IF EXIST epluszsz.csv   DEL epluszsz.csv
+IF EXIST epluszsz.tab   DEL epluszsz.tab
+IF EXIST epluszsz.txt   DEL epluszsz.txt
+IF EXIST eplusssz.csv   DEL eplusssz.csv
+IF EXIST eplusssz.tab   DEL eplusssz.tab
+IF EXIST eplusssz.txt   DEL eplusssz.txt
+IF EXIST eplusout.mtr   DEL eplusout.mtr
+IF EXIST eplusout.mtd   DEL eplusout.mtd
+IF EXIST eplusout.bnd   DEL eplusout.bnd
+IF EXIST eplusout.dbg   DEL eplusout.dbg
+IF EXIST eplusout.sci   DEL eplusout.sci
+IF EXIST eplusmap.csv   DEL eplusmap.csv
+IF EXIST eplusmap.txt   DEL eplusmap.txt
+IF EXIST eplusmap.tab   DEL eplusmap.tab
+IF EXIST eplustbl.csv   DEL eplustbl.csv
+IF EXIST eplustbl.txt   DEL eplustbl.txt
+IF EXIST eplustbl.tab   DEL eplustbl.tab
+IF EXIST eplustbl.htm   DEL eplustbl.htm
+IF EXIST eplusout.log   DEL eplusout.log
+IF EXIST eplusout.svg   DEL eplusout.svg
+IF EXIST eplusout.shd   DEL eplusout.shd
+IF EXIST eplusout.wrl   DEL eplusout.wrl
+IF EXIST eplusout.delightin   DEL eplusout.delightin
+IF EXIST eplusout.delightout  DEL eplusout.delightout
+IF EXIST eplusout.delighteldmp  DEL eplusout.delighteldmp
+IF EXIST eplusout.delightdfdmp  DEL eplusout.delightdfdmp
+IF EXIST eplusout.sparklog  DEL eplusout.sparklog
+IF EXIST eplusscreen.csv  DEL eplusscreen.csv
+IF EXIST in.imf         DEL in.imf
+IF EXIST in.idf         DEL in.idf
+IF EXIST out.idf        DEL out.idf
+IF EXIST audit.out      DEL audit.out
+IF EXIST in.epw         DEL in.epw
+IF EXIST in.stat        DEL in.stat
+IF EXIST eplusout.audit DEL eplusout.audit
+IF EXIST test.mvi       DEL test.mvi
+IF EXIST audit.out DEL audit.out
+IF EXIST expanded.idf   DEL expanded.idf
+IF EXIST expandedidf.err   DEL expandedidf.err
+IF EXIST readvars.audit   DEL readvars.audit
+IF EXIST eplusout.sql  DEL eplusout.sql
+IF EXIST sqlite.err  DEL sqlite.err
 :if %pausing%==Y pause
 
 :  2. Clean up target directory
@@ -188,10 +188,8 @@ IF EXIST "%output_path%%1.rvaudit" DEL "%output_path%%1.rvaudit"
 IF EXIST "%output_path%%1.sql" DEL "%output_path%%1.sql"
 
 :  3. Copy input data file to working directory
-echo Copying "%program_path%Energy+.idd" In.idd
-copy "%program_path%Energy+.idd" In.idd
-echo Copying "%program_path%Energy+.ini" "Energy+.ini"
-copy "%program_path%Energy+.ini" "Energy+.ini"
+copy "%program_path%Energy+.idd" Energy+.idd
+copy "%program_path%Energy+.ini" Energy+.ini
 if exist %1.imf copy %1.imf in.imf
 if exist in.imf "%program_path%EPMacro"
 if exist out.idf copy out.idf "%output_path%%1.epmidf"
@@ -218,7 +216,7 @@ if not exist in.idf copy "%1.idf" In.idf
  echo Program path: %program_path%
  echo Input File  : %input_path%%1.idf
  echo Output Files: %output_path%
- echo IDD file    : "%input_path%Energy+.idd"
+ echo IDD file    : %program_path%Energy+.idd
  if NOT "%2" == "" echo Weather File: %weather_path%%2.epw
 dir
  if %pausing%==Y pause
