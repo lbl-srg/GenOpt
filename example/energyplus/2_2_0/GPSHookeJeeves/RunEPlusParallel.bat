@@ -190,13 +190,13 @@ IF EXIST "%output_path%%1.sql" DEL "%output_path%%1.sql"
 :  3. Copy input data file to working directory
 copy "%program_path%Energy+.idd" "Energy+.idd"
 copy "%program_path%Energy+.ini" "Energy+.ini"
-if exist %1.imf copy %1.imf in.imf
+if exist "%1.imf" copy "%1.imf" in.imf
 if exist in.imf "%program_path%EPMacro"
 if exist out.idf copy out.idf "%output_path%%1.epmidf"
 if exist audit.out copy audit.out "%output_path%%1.epmdet"
 if exist audit.out erase audit.out
 if exist out.idf MOVE out.idf in.idf
-if not exist in.idf copy %1.idf In.idf
+if not exist in.idf copy "%1.idf" In.idf
 if exist in.idf "%program_path%ExpandObjects"
 if exist expandedidf.err COPY expandedidf.err eplusout.end
 if exist expanded.idf COPY expanded.idf "%output_path%%1.expidf"
@@ -227,8 +227,8 @@ dir
  
 
 :  6&8. Copy Post Processing Program command file(s) to working directory
- IF EXIST %1.rvi copy %1.rvi eplusout.inp
- IF EXIST %1.mvi copy %1.mvi eplusmtr.inp
+ IF EXIST "%1.rvi" copy "%1.rvi" eplusout.inp
+ IF EXIST "%1.mvi" copy "%1.mvi" eplusmtr.inp
 
 :  7&9. Run Post Processing Program(s)
 if %maxcol%==250     SET rvset=
