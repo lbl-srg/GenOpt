@@ -148,26 +148,26 @@ public class OptimizationIni implements Cloneable
 	throws IOException
     {
 	// replace path by canonical path
-	SimulationInputTemplatePath = FileHandler.replacePathsByCanonicalPaths(SimulationInputTemplatePath,
-									       OptimizationInitializationPath);
-	SimulationInputPath = FileHandler.replacePathsByCanonicalPaths(SimulationInputPath,
-								       OptimizationInitializationPath);
-	SimulationInputSavePath = FileHandler.replacePathsByCanonicalPaths(SimulationInputSavePath,
-									   OptimizationInitializationPath);
-	SimulationOutputPath = FileHandler.replacePathsByCanonicalPaths(SimulationOutputPath,
-									OptimizationInitializationPath);
-	SimulationOutputSavePath = FileHandler.replacePathsByCanonicalPaths(SimulationOutputSavePath,
-									    OptimizationInitializationPath);
-	SimulationLogPath = FileHandler.replacePathsByCanonicalPaths(SimulationLogPath,
-								     OptimizationInitializationPath);
-	SimulationLogSavePath = FileHandler.replacePathsByCanonicalPaths(SimulationLogSavePath,
-									 OptimizationInitializationPath);
-	SimulationConfigPath = FileHandler.replacePathsByCanonicalPaths(SimulationConfigPath,
-									OptimizationInitializationPath);
-	OptimizationCommandPath = FileHandler.replacePathsByCanonicalPaths(OptimizationCommandPath,
-									   OptimizationInitializationPath);
+	SimulationInputTemplatePath = FileHandler.addCanonicalPaths(SimulationInputTemplatePath,
+								    OptimizationInitializationPath);
+	SimulationInputPath = FileHandler.addCanonicalPaths(SimulationInputPath,
+							    OptimizationInitializationPath);
+	SimulationInputSavePath = FileHandler.addCanonicalPaths(SimulationInputSavePath,
+								OptimizationInitializationPath);
+	SimulationOutputPath = FileHandler.addCanonicalPaths(SimulationOutputPath,
+							     OptimizationInitializationPath);
+	SimulationOutputSavePath = FileHandler.addCanonicalPaths(SimulationOutputSavePath,
+								 OptimizationInitializationPath);
+	System.err.println("OptimizationIni: " + SimulationOutputSavePath[0]);
+	SimulationLogPath = FileHandler.addCanonicalPaths(SimulationLogPath,
+							  OptimizationInitializationPath);
+	SimulationLogSavePath = FileHandler.addCanonicalPaths(SimulationLogSavePath,
+							      OptimizationInitializationPath);
+	SimulationConfigPath = FileHandler.addCanonicalPaths(SimulationConfigPath,
+							     OptimizationInitializationPath);
+	OptimizationCommandPath = FileHandler.addCanonicalPaths(OptimizationCommandPath,
+								OptimizationInitializationPath);
 	
-
 	objFunMapIsSet = false;
 	nInpFil = SimulationInputTemplateFileName.length;
 	nOutFil = SimulationOutputFileName.length;

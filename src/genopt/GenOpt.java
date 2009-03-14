@@ -117,6 +117,10 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2009, Mar. 13 wm Fixed problem with SavePath. Now, if SavePath is a
+                  relative path, then it is relative to the path
+                  where the optimization initialization file is,
+	          and not the directory from which GenOpt was started.
  2009, Feb. 23 wm Updated to 3.0.0 beta 2. (Fixed cfg files for Windows.)
  2009, Feb. 20 wm Updated to 3.0.0 beta 1
  2009, Jan  12 wm Updated to 3.0.0 alpha 4

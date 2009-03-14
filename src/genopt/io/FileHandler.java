@@ -239,7 +239,7 @@ public class FileHandler implements Cloneable{
     /** Replaces all paths with their canonical paths
      *
      *@param str The original string
-     *@return A copy of <tt>str</tt> with all paths replaced by their canonical path
+     *@return A copy of <tt>str</tt> with the path replaced by its canonical path
      *@exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
@@ -260,6 +260,54 @@ public class FileHandler implements Cloneable{
 	} 
 	return r;
     }
+
+
+    /** Adds the canonical path name to the string, unless the string is already a canonical path 
+     *  or is an empty character sequence
+     *
+     *@param str The original strings
+     *@return A copy of <tt>str</tt> that denotes a canonical path name that may not exist
+     *           on the file system
+     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
+     */
+    public static String[] addCanonicalPaths(final String str[], final String userDir)
+	throws IOException{
+	if ( str == null )
+	    return null;
+	String[] r = new String[str.length];
+	for(int i = 0; i < str.length; i++)
+	    r[i] = FileHandler.addCanonicalPaths(str[i], userDir);
+	return r;
+    }
+
+
+    /** Adds the canonical path name to the string, unless the string is already a canonical path
+     *  or is an empty character sequence
+     *
+     *@param str The original string
+     *@return A copy of <tt>str</tt> that denotes a canonical path name that may not exist
+     *           on the file system
+     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
+     *                        canonical pathname may require filesystem queries
+     */
+    public static String addCanonicalPaths(final String str, final String userDir)
+	throws IOException{
+	// Return empty characters. This is needed to preserve SavePath entries that are not set by the user
+	if ( str.trim().equals("") )
+	    return new String(str);
+
+	String r;
+	// First, replace all paths by their canonical paths
+	String str2 = replacePathsByCanonicalPaths(str, userDir);
+	File fil = new File(str2);
+	if (fil.isAbsolute())
+	    r = new String(str2);
+	else
+	    r = new String( (new File(userDir + FS + str2)).getCanonicalPath() );
+	return r;
+    }
+
 
     /** replaces all occurences of the String 'find' with 
      *    the String 'set' (even if 'find' appears several times
