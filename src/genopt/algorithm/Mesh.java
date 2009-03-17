@@ -187,26 +187,41 @@ public class Mesh extends Optimizer{
      * @exception OptimizerException
      */
     private void executeSimulations()
-	throws OptimizerException, Exception{
-	// execute the simulations
-	final int nPoi = poiVec.size();
-	Point[] p = new Point[nPoi];
-	for(int i = 0; i < nPoi; i++){
-	    p[i] = (Point)(poiVec.get(i));
-	}
-	super.getF(p, stopAtError);
-	p[0].setComment("Function evaluation successful.");
-	for(int i = 1; i < nPoi; i++){
-	    if ( p[i].getSimulationNumber() == p[i-1].getSimulationNumber() )
-		p[i].setComment("Point already evaluated.");
-	    else{
-		p[i].setComment("Function evaluation successful.");
-	    }
-	}
-	for(int i = 0; i < nPoi; i++){
-	    report(p[i], SUBITERATION);
-	    report(p[i], MAINITERATION);
-	}
+		throws OptimizerException, Exception{
+    	// execute the simulations
+    	final int nPoi = poiVec.size();
+    	final int nThr = Optimizer.getMaximumThreadPoolSize();
+	
+    	int iPoi = 0;	
+    	int simNum = 0;
+    	boolean firstPass = true;
+    	while(iPoi < nPoi){
+    		final int nLef = nPoi-iPoi; // number of points left for evaluation
+        	Point[] p = new Point[nThr < nLef ? nThr : nLef];
+ 
+        	for (int i = 0; i < p.length; i++, iPoi++){
+    			p[i] = (Point)(poiVec.get(iPoi));
+    		}
+    		// evaluate functions
+    		p = super.getF(p, stopAtError);
+    		// set comments and report results
+    		for(int i = 0; i < p.length; i++){
+    			if ( firstPass && i == 0 ){
+    				p[0].setComment("Function evaluation successful.");
+    				simNum = p[0].getSimulationNumber();
+    			}
+    			else{
+    				if ( p[i].getSimulationNumber() == simNum )
+    					p[i].setComment("Point already evaluated.");
+    				else{
+    					p[i].setComment("Function evaluation successful.");
+    					simNum = p[i].getSimulationNumber();
+    				}
+    			}
+    			report(p[i], SUBITERATION);
+    			report(p[i], MAINITERATION);
+    		} // for loop
+    	} // while loop
     }
 
     
