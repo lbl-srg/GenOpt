@@ -2,14 +2,13 @@ package genopt.algorithm;
 
 import genopt.GenOpt;
 import genopt.io.*;
-import genopt.db.OrderedMap;
 import genopt.simulation.*;
 import genopt.lang.*;
 import genopt.algorithm.util.math.Point;
-import genopt.algorithm.util.math.LinAlg;
 import genopt.algorithm.util.math.FunctionEvaluator;
+import genopt.db.ResultManager;
+
 import java.io.*;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.*;
@@ -191,9 +190,13 @@ abstract public class Optimizer
 	// initialize list with evaluated points
 	evaPoi = Collections.synchronizedMap(new TreeMap<Point, Double[]>());
 
-	// maximum number of threads int the pool
+	// maximum number of threads in the pool
 	maxThrPoo = data.OptSet.getMaxUnitsOfExecution();
-	println("Assigning " + maxThrPoo + " threads for simulations.");
+	if ( maxThrPoo == 1 )
+		println("Assigning " + maxThrPoo + " thread for simulations.");
+	else
+		println("Assigning " + maxThrPoo + " threads for simulations.");
+	
 	data.SimSta.setMaximumNumberOfThreads(maxThrPoo);
 	// flag, true 
 	functionValuesParsed = new AtomicBoolean(false);
@@ -297,7 +300,6 @@ abstract public class Optimizer
     private void _deleteRunFiles(final String[] path, final String[] name)
 	throws Exception
     {
-	File dir;
 	File f;
 	for (int iF=0; iF < path.length ; iF++){
 	    int iS = 1; // the simulation run number
@@ -678,7 +680,16 @@ abstract public class Optimizer
     }
     
 
-    /** Throws an input error. Use this method if the value that you got with
+    /** Returns the maximum size of the thread pool
+     * 
+	 * @return the maximum size of the thread pool
+	 */
+	public static int getMaximumThreadPoolSize() {
+		return maxThrPoo;
+	}
+
+
+	/** Throws an input error. Use this method if the value that you got with
      * one of the <CODE>getInputValue...</CODE> method is not valid.<BR>
      * <B>Note:</B> You have to call this
      * method immediately after getting the value so that the error message
@@ -932,7 +943,7 @@ abstract public class Optimizer
 	// check whether GenOpt has to be stopped due to a user interaction
 	if (data.mustStopOptimization()){
 	    reportCurrentLowestPoint();
-	    throw new OptimizerException(data.USER_STOP_MESSAGE);
+	    throw new OptimizerException(GenOpt.USER_STOP_MESSAGE);
 	}
 	// make sure step number is set to the current value
 	Point[] r = new Point[1];
@@ -1044,7 +1055,6 @@ abstract public class Optimizer
 	   then the optimization/simulation is very likely set up
 	   inproperly
 	*/
-	final int simNum = x.getSimulationNumber();
 	if ( firstSimulations )
 	    key = _evaluateSimulation((Point)x.clone());
 	else{
@@ -1097,14 +1107,14 @@ abstract public class Optimizer
 	// check whether GenOpt wants to be stopped by a user interaction
 	if (data.mustStopOptimization()){
 	    reportCurrentLowestPoint();
-	    throw new OptimizerException(data.USER_STOP_MESSAGE);
+	    throw new OptimizerException(GenOpt.USER_STOP_MESSAGE);
 	}
 	
 	String infMes = "Caught '" +
 	    t.getClass().getName() + "' with message:" +
 	    "   " + t.getMessage() + LS +
 	    "   Try to evaluate simulation a second time.";
-	if (data.DEBUG) data.printStackTrace(t);
+	if (GenOpt.DEBUG) GenOpt.printStackTrace(t);
 	setInfo(infMes, x.getSimulationNumber() );
 	return _evaluateSimulation(x);
     }
@@ -1305,7 +1315,7 @@ abstract public class Optimizer
 	    }
 	    else{  // check for errors
 		FileHandler logFil = new FileHandler(simLogFil[iLogFil]);
-		Vector simErrMes = data.ErrChe.check(logFil.getFileContentsString(),
+		Vector<String> simErrMes = data.ErrChe.check(logFil.getFileContentsString(),
 						     simLogFil[iLogFil] + 
 						     ": Following error was found:");
 		if (!simErrMes.isEmpty()){ // Simulation wrote error message
@@ -1904,8 +1914,8 @@ abstract public class Optimizer
      *
      * @return the number of simulation
      */
-    protected final int getSimulationNumber(){
-	return data.ResMan.getNumberOfSimulation();
+    static protected final int getSimulationNumber(){
+	return ResultManager.getNumberOfSimulation();
     }
 
     /** Gets the maximum number of allowed main iterations
@@ -2094,8 +2104,6 @@ abstract public class Optimizer
     static private ObjectiveFunctionLocation[] objFunObj;
     /** The number of the simulation input files */
     static private int nSimInpFil;
-    /** The number of function objects */
-    static private int nFunObj;
     /** The number of the simulation log files */
     static private int nSimLogFil;
     /** The number of the simulation output files */

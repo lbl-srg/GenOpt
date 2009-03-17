@@ -6,15 +6,11 @@ import genopt.io.*;
 import genopt.db.*;
 import genopt.simulation.*;
 import genopt.util.*;
-import genopt.gui.*;
-
 import java.io.*;
+
 import javax.swing.*;
-import java.awt.Dimension;
 import java.util.*;
 import java.lang.reflect.*;
-import java.lang.*;
-import java.security.SecureClassLoader;
 
 /** Object for optimizing an objective function computed by
   * a simulation program.
@@ -117,6 +113,9 @@ import java.security.SecureClassLoader;
 
 /* Revision history:
  *******************
+ 2009, Mar. 16 wm Parallelized initial function evaluations in InternalDivider.
+                  Refactored code.
+                  Changed Mesh to enable earlier drawing of graphical results.
  2009, Mar. 13 wm Fixed problem with SavePath. Now, if SavePath is a
                   relative path, then it is relative to the path
                   where the optimization initialization file is,
@@ -440,7 +439,6 @@ public class GenOpt extends Thread
 	int maxEquRes = 5; // default value, might be overwritten if specified by user
 
 	stopGenOpt = false; // reset of stop flag
-	int i;
 	int nErr = 0;     // counter for error messages
 
 	// get optimization ini name
@@ -870,7 +868,7 @@ public class GenOpt extends Thread
 	key = null; val = null;
 	key = new String[entries.size()]; // all keys
 	val = new String[key.length];
-	Enumeration enu = entries.keys();
+	Enumeration<String> enu = entries.keys();
 
 	for (int iVal = 0; iVal < key.length; iVal++){
 	    key[iVal] = (String)(enu.nextElement());
@@ -1138,7 +1136,7 @@ public class GenOpt extends Thread
 	    Token.skipJavaComments(st);
 	    st.nextToken();
 	    // check whether we are done
-	    if (st.ttype == st.TT_WORD){
+	    if (st.ttype == StreamTokenizer.TT_WORD){
 		do{
 		    key = new String(st.sval);
 		    // update the valid keywords in the Hashtable
@@ -1190,7 +1188,7 @@ public class GenOpt extends Thread
 				       "Keyword '" + key + "' specified twice.", fn);
 			return null;
 		    }
-		} while (st.ttype == st.TT_WORD);
+		} while (st.ttype == StreamTokenizer.TT_WORD);
 	    }
 	    else{ // we did not have any execution of the above section
 		for(int j = 0; j < keys.length; j++){
@@ -1229,7 +1227,7 @@ public class GenOpt extends Thread
 		}
 		return r;
 	    }
-	    else if (st.ttype != st.TT_WORD){
+	    else if (st.ttype != StreamTokenizer.TT_WORD){
 		String em = new String("String expected, got '");
 		if (st.ttype == StreamTokenizer.TT_WORD)
 		    em += st.sval;
@@ -1310,7 +1308,7 @@ public class GenOpt extends Thread
 			inpForExc.setThrowable(e);
 		    }
 
-		if (optCfgStrTok.ttype == optCfgStrTok.TT_WORD) // we got again a word
+		if (optCfgStrTok.ttype == StreamTokenizer.TT_WORD) // we got again a word
 		    {
 			if (optCfgStrTok.sval.equals(kwErrMes))   // and the right one
 			    {
@@ -1511,7 +1509,7 @@ public class GenOpt extends Thread
 	    //check for error
 	    if (nErr < inpForExc.getNumberOfErrors()) return;
 	    // determine next entry
-	    if (optComStrTok.ttype == optComStrTok.TT_WORD){ // we got again a word
+	    if (optComStrTok.ttype == StreamTokenizer.TT_WORD){ // we got again a word
 		if (optComStrTok.sval.equals("Parameter")){   // and the right one
 		    optComStrTok.pushBack();
 		    getPar = true;
@@ -1968,25 +1966,6 @@ public class GenOpt extends Thread
 	return parseDouble(st, varAndKey, value, minVal, maxVal, inpForExc, fileName);
     }
 
-    /** parses a String to a double and writes error into the InputFormatException
-	  * @param st the StreamTokenizer
-	  * @param variableName the variable name associated with the value <CODE>val</CODE>
-	  * @param keyWord the keyWord associated with the value <CODE>val</CODE>
-	  * @param value the value received for <CODE>keyWord</CODE>
-	  * @param inpForExc refernce to InputFormatException. InputFormatException will be
-	  *        written in this Object
-	  * @param fileName name of the file where input comes from
-	  * @return the <CODE>boolean</CODE> value of <CODE>val</CODE>
-	  */
-    private static boolean parseBoolean(StreamTokenizer st, String variableName, String keyWord, 
-				    String value, 
-				    InputFormatException inpForExc,
-				    String fileName){
-	String varAndKey = "Parameter '" + variableName + "', keyword '" + keyWord + "'";
-	return parseBoolean(st, varAndKey, value, inpForExc, fileName);
-    }
-
-
 
     /** parses a String to a double and writes error into the InputFormatException
 	  * @param st the StreamTokenizer
@@ -2210,7 +2189,6 @@ public class GenOpt extends Thread
 						      InputFormatException inpForExc, 
 						      String fileName){
 	int nErr = inpForExc.getNumberOfErrors();
-	int lineNumber = optComStrTok.lineno();
 	////////////////////////////////////
 	// if Values has an entry, Type could potentially be set to any junk.
 	// Make sure it is set to SET
@@ -2489,8 +2467,6 @@ public class GenOpt extends Thread
 		if (optIniPat != null && optIniFilNam != null)
 		    me += "Configuration file : " +
 			optIniPat + File.separator + optIniFilNam + LS;
-		String optComPat = OptIni.getOptComPat();
-		String OptComFilNam = OptIni.getOptComFilNam();
 		me += "Command file       : " +
 		    OptIni.getOptComPat() + File.separator +
 		    OptIni.getOptComFilNam() + LS + LS;
@@ -2858,7 +2834,6 @@ public class GenOpt extends Thread
 	System.out.println(DIVIDER);
 	if (DEBUG) System.err.println(DEBUG_WARNING);
 	try{
-	    int flag;
 	    String optIniFilNam;
 	    
 	    if (args.length > 0 && args[0] != null)

@@ -1,5 +1,4 @@
 package genopt.simulation;
-import genopt.*;
 import java.util.*;
 
 /** Object that scans a String array for any number of possible
@@ -121,7 +120,7 @@ public class ErrorChecker implements Cloneable
 	  *   a trimed Vector with all the error messages that were found and the string
 	  *   'ErrorMessage' as the first entry.
 	  */
-	public Vector check(String[] StringToCheck, String AdditionalErrorInformation)
+	public Vector<String> check(String[] StringToCheck, String AdditionalErrorInformation)
 	{
 		Vector<String> ErrMesVec = new Vector<String>();
 		int i, j;

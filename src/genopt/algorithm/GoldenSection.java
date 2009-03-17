@@ -2,7 +2,6 @@ package genopt.algorithm;
 
 import genopt.GenOpt;
 import genopt.lang.OptimizerException;
-import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.linesearch.ModelFiniteIntervalSearcher;
 import genopt.algorithm.util.linesearch.GoldenRatio;
 import genopt.io.InputFormatException;
