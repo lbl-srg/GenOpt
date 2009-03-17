@@ -132,6 +132,11 @@ public abstract class IntervalDivider
     {
         boolean terminate = false;
         boolean f1eqf2    = false;
+        // Vector of points, used for parallel computation
+        Point[] x = new Point[2];
+        x[0] = new Point(xS.getDimensionContinuous(), xS.getDimensionDiscrete(), xS.getDimensionF());
+        x[1] = (Point)x0.clone();
+        
         x0 = (Point)xS.clone();
         x3 = (Point)xE.clone();
         
@@ -139,14 +144,15 @@ public abstract class IntervalDivider
         double I = 1.; // interval length (in terms of alpha, which is normalized)
         nIntRed = 0;   // zero-based step of interval division
         I *= getReductionFactor();
-        x2.setX( LinAlg.add(x0.getX(), LinAlg.multiply(I, dx)) );
+        x[1].setX( LinAlg.add(x0.getX(), LinAlg.multiply(I, dx)) );
         nIntRed++;
         I *= getReductionFactor();
-        x1.setX( LinAlg.add(x0.getX(), LinAlg.multiply(I, dx)) );
+        x[0].setX( LinAlg.add(x0.getX(), LinAlg.multiply(I, dx)) );
         // initial function evaluation
-        
-	x1 = getF(x1);
-        x2 = getF(x2);
+
+        x = getF(x);
+    	x1 = (Point)x[0].clone();
+        x2 = (Point)x[1].clone();
 
         do
         {
@@ -284,8 +290,8 @@ public abstract class IntervalDivider
         return (dF < dFMin) ? true : false;
     }
 
-    /** Evaluates the objective function, reports the results, and checks for
-      * a null space of the objective function
+    /** Evaluates the objective function and reports the results
+      * 
       *@param x the point being evaluated
       *@exception OptimizerException if an OptimizerException occurs
       *@exception Exception if an Exception occurs
@@ -294,10 +300,25 @@ public abstract class IntervalDivider
     {
         Point r = opt.getF(x);
         r.setComment("Linesearch.");
-        opt.report(r, opt.SUBITERATION);
+        opt.report(r, Optimizer.SUBITERATION);
         return r;
     }
 
+    /** Evaluates the objective function and reports the results
+     * 
+     *@param x the point being evaluated
+     *@exception OptimizerException if an OptimizerException occurs
+     *@exception Exception if an Exception occurs
+     */
+   private Point[] getF(Point x[]) throws OptimizerException, Exception
+   {
+       Point[] r = opt.getF(x, true);
+       for(int i = 0; i < r.length; i++){
+    	   r[i].setComment("Linesearch.");
+    	   opt.report(r[i], Optimizer.SUBITERATION);
+       }
+       return r;
+   }
 
 
    /** The reference to the Optimizer object */
