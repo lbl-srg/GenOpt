@@ -248,7 +248,7 @@ public class SimOutputFileHandler extends FileHandler
 	 */	
     	private double getObjectiveFunctionValueNonEmpty() throws OptimizerException
 	{
-		int i, delPos, blaPos, tabPos, begInd, endInd;
+		int i, delPos, begInd, endInd;
 		String curLin;
 		
 		for (i = nLines - 1; i >= 0; i--)

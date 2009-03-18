@@ -142,7 +142,7 @@ public class GenOptFileFilter extends FileFilter
 	String r;
 	r = (des == null) ? "(" : des + " (";
 	// add extension list
-	Enumeration ext = fil.keys();
+	Enumeration<String> ext = fil.keys();
 	if(ext != null) {
 	    r += "*." + (String) ext.nextElement();
 	    while (ext.hasMoreElements()) {

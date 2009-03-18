@@ -68,6 +68,11 @@ package genopt.lang;
 
 public class OptimizerException extends Exception
 {
+	/** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** System dependent line separator */
 	private final static String LS = System.getProperty("line.separator");
 

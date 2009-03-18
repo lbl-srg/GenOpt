@@ -70,7 +70,7 @@ package genopt.algorithm.util.math;
   * or derivative works thereof, in binary and source code form. 
  */
 
-public class Point implements Comparable
+public class Point implements Comparable<Point>
 {
     /** Accuracy for testing of rounding errors */
     public static double EPSILON = 1E-12;
@@ -568,9 +568,9 @@ public class Point implements Comparable
       *        <CODE>-1</CODE> if the received object is the smaller one
       *        <CODE>+1</CODE> if the received object is the larger one
       */
-    public int compareTo(java.lang.Object o)
+    public int compareTo(Point pt)
     {
-	final Point pt = (Point)o;
+	//final Point pt = (Point)o;
 	// check step number first
 	int st = pt.getStepNumber();
 	if (steNum > st) return -1;
@@ -627,7 +627,7 @@ public class Point implements Comparable
      *        in the sense of the <CODE>compareTo(Object)</CODE> method,
      *        <CODE>false</CODE> otherwise
      */
-    public boolean equals(Object o){
+    public boolean equals(Point o){
 	return (compareTo(o) == 0) ? true : false;
     }
 
@@ -643,9 +643,9 @@ public class Point implements Comparable
      *        <CODE>+1</CODE> if o1 < o2,
      *        in the sense of the <CODE>compareTo(Object)</CODE> method
      */
-    public int compare(Object o1, Object o2){
-	final Point p = (Point)(o1);
-	return p.compareTo(o2);
+    public int compare(Point o1, Point o2){
+	//final Point p = (Point)(o1);
+	return o1.compareTo(o2);
     }
 
     /** Sets the maximum value for the index of the 

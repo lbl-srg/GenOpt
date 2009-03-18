@@ -1,7 +1,6 @@
 package genopt.gui;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.text.*;
 import java.awt.*;
 
@@ -74,6 +73,10 @@ import java.awt.*;
 
 public class FlowTextArea extends JTextArea
 {
+	/** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
  
     public FlowTextArea(PlainDocument document){
 	super(document);

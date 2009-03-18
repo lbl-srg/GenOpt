@@ -6,7 +6,6 @@ import genopt.lang.OptimizerException;
 import genopt.simulation.SimulationInputException;
 import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.math.*;
-import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
 
 /** Abstract class with model

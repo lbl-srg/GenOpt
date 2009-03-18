@@ -479,15 +479,12 @@ abstract public class ModelGPS extends Optimizer
 	Delta = 1. / StrictMath.pow(mesSizDiv, iniMesSizExp);
 	
         // optimization loop
-	iteration: do{
+	do{
 	    switch (step){
 	    case 0: // initialize
 		println("Initialize.");
 		// evaluate function at base point
-		final double[] f = new double[dimF];
-		// need to get index since this algo can be used in a hybrid algorithm
-		// which has continuous and discrete paramters.
-	        x[k] = (Point)xIni.clone();
+        x[k] = (Point)xIni.clone();
 		x[k] = this.getF(x[k]);
 		// need to set comment again because it may be overwritten
 		// if f is smoothed

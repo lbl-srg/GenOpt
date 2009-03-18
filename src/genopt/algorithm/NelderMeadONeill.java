@@ -5,8 +5,6 @@ import genopt.algorithm.util.math.*;
 import genopt.GenOpt;
 import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
-import genopt.simulation.SimulationInputException;
-import genopt.db.ContinuousParameter;
 import java.io.*;
 
 /** Class for minimizing a function using the Simplex algorithm 
@@ -185,7 +183,6 @@ public class NelderMeadONeill extends Optimizer
 	double dNewL2;                        // L2norm of dNew
 	int stepOld     = 0;                  // number of last step section
 	double cosMov = -1;                   // inner product of the last two directions
-	boolean directionTestReady   = false; // flag if direction test can be done or not
 	boolean insideContraction    = false; // flag whether we have just a inside contraction
 	// beyond us
 	int step = 0;                             // number of step

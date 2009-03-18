@@ -72,7 +72,13 @@ import javax.swing.JComponent;
 
 public class LineChart extends JComponent{
 
-    /** Natural logarithmus of 10 */
+    /** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	/** Natural logarithmus of 10 */
     private static final double LN10 = StrictMath.log(10.);
 
 
@@ -356,8 +362,6 @@ public class LineChart extends JComponent{
 	x1 = serie[0].getXMax();
 	xAxiLen = x1-x0;
 
-	// number of labels
-	int nMaxLab = 10;
 
 	int iLog = (int)  StrictMath.floor( StrictMath.log(x1) / LN10 );
 	double incr = StrictMath.pow(10., iLog);
@@ -369,7 +373,7 @@ public class LineChart extends JComponent{
 	for (int i = 1; i < nLabel; i++){
 	    xAxiTic[i] = xAxiTic[i-1] + incr;
 	}
-	// set lenght of x axis
+	// set length of x axis
 	x0      = xAxiTic[0];
 	x1      = xAxiTic[nLabel-1];
 	xAxiLen = x1-x0;
@@ -870,10 +874,7 @@ public class LineChart extends JComponent{
 
     /** the number of available colors */
     private static final int NUMBER_OF_COLORS = STANDARD_COLOR.length;
-    /** increment after how many simulations the whole 
-	graph is rescaled */
-    private int xUpdInc;
-        
+         
     /** x-axis lenght in x units */
     private double xAxiLen; 
         

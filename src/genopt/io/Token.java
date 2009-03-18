@@ -98,7 +98,7 @@ public class Token{
 	if (keyWord.length() == 1)
 	    r = (st.ttype == keyWord.charAt(0)) ? true : false;
 	else
-	    r = (st.ttype == st.TT_WORD && st.sval.equals(keyWord)) ?
+	    r = (st.ttype == StreamTokenizer.TT_WORD && st.sval.equals(keyWord)) ?
 		true : false;
 	st.pushBack();
 	return r;
@@ -183,7 +183,7 @@ public class Token{
 		//		System.err.println("AAAAAA " + st.ttype + '\t' 
 		//				   + st.sval + '\t' + st.nval  +
 		//				   '\t' + (char)(st.ttype) );
-		if ( st.ttype == st.TT_NUMBER ){
+		if ( st.ttype == StreamTokenizer.TT_NUMBER ){
 		    double num = st.nval;
 		    st.ordinaryChars('\0', ' ');
 		    st.nextToken();
@@ -465,7 +465,6 @@ public class Token{
         st.eolIsSignificant(false); // neglect EOL
         boolean er=false; // flag that we found an error
         String em = null;  // error message String
-        int i;
 
         skipJavaComments(st);
         st.nextToken();

@@ -108,7 +108,7 @@ public class SimulationThread implements Runnable
 	    opt.println("Skipping evaluation of simulation " + 
 			x.getSimulationNumber() + " because of previous simulation error.");
 	}
-	opt.done.countDown(); // count down the count down latch
+	Optimizer.done.countDown(); // count down the count down latch
     }
 
     /** Throws all exceptions that have been catched when running 

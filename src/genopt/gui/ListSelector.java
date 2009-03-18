@@ -1,7 +1,5 @@
 package genopt.gui;
 import javax.swing.*;
-import javax.swing.event.*;
-import genopt.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -74,8 +72,10 @@ import java.awt.event.*;
 public class ListSelector extends JPanel
     implements ActionListener
 {
-	/** System dependent line separator */
-	private final static String LS = System.getProperty("line.separator");
+	/** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	public ListSelector(Object[] choose, Object[] selected)
 	{

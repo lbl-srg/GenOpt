@@ -8,13 +8,11 @@ import genopt.util.*;
 import genopt.algorithm.util.math.Point;
 
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.lang.System;
-import java.util.Properties;
 import java.net.URL;
 
 /** Object for optimizing an objective function computed by
@@ -112,7 +110,12 @@ public class WinGenOpt extends JFrame
     implements  ActionListener, ItemListener, WindowListener
 
 {
-    /** System dependent line separator */
+    /** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** System dependent line separator */
     private final static String LS = System.getProperty("line.separator");
 
     private final static String SEELOGFILEFORERROR = new String(
@@ -397,7 +400,6 @@ public class WinGenOpt extends JFrame
 	int nNotDis  = nSer - nDisSer;
 	String[] cho = new String[nNotDis];
 	String[] sel = new String[nDisSer];
-	int[] notDis = new int[nNotDis];
 	boolean[] set = new boolean[nSer];
 	for(i = 0; i < nSer; i++)
 	    set[i] = false;

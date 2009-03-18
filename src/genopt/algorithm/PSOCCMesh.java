@@ -3,7 +3,6 @@ import java.io.IOException;
 import genopt.GenOpt;
 import genopt.simulation.SimulationInputException;
 import genopt.algorithm.util.math.*;
-import genopt.algorithm.util.pso.*;
 import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
 

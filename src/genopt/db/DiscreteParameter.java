@@ -1,9 +1,7 @@
 package genopt.db;
-import genopt.*;
+
 import genopt.db.IndependentParameter;
 import java.lang.StrictMath;
-import java.util.Vector;
-import genopt.lang.OptimizerException;
 
 /** Object that represents a discrete parameter of
   * the optimization process.

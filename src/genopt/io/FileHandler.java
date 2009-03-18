@@ -1,6 +1,5 @@
 package genopt.io;
 import java.io.*;
-import java.io.FileWriter;
 import java.util.StringTokenizer;
 
 /** Object that handles file reading and writing and offers
@@ -195,7 +194,7 @@ public class FileHandler implements Cloneable{
 	return ( ('\n' == c) || ('\r' == c) ) ? true : false;
     }
 
-    /** replaces all occurences of the String 'find' with 
+    /** replaces all occurrences of the String 'find' with 
 	  *    the String 'set' (even if 'find' appears several times
 	  *    on the same line and/or in the same file)
 	  * @param Find String that has to be found and replaced
@@ -495,7 +494,7 @@ public class FileHandler implements Cloneable{
 	if (!TemFil.exists())
 	    TemFil.mkdirs();
 	String FilNam = (path.equals(".")) ?
-	    new String(name) : new String(path + TemFil.separator + name);
+	    new String(name) : new String(path + File.separator + name);
 	FileWriter FilWri = new FileWriter(FilNam);
 	FilWri.write(text);
 	FilWri.close();
@@ -525,7 +524,7 @@ public class FileHandler implements Cloneable{
 	File TemFil = new File(path);
 	if (!TemFil.exists())
 	    TemFil.mkdirs();
-	String FilNam = TemFil.getAbsolutePath() + TemFil.separator + name;
+	String FilNam = TemFil.getAbsolutePath() + File.separator + name;
 	this.writeFile(FilNam);
     }
 

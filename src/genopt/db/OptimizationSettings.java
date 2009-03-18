@@ -1,6 +1,4 @@
 package genopt.db;
-import genopt.*;
-import java.util.Vector;
 
 /** Object for the specific settings of the
   * optimization process.

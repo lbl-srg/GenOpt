@@ -4,7 +4,6 @@ import genopt.lang.OptimizerException;
 import genopt.algorithm.DiscreteArmijoGradient;
 import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.math.*;
-import java.io.*;
 
 /** Class for doing a line search using
   * the Armijo algorithm with reset option for the step-size.
@@ -121,9 +120,8 @@ public class Armijo{
 		    final double del)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
 	       IllegalAccessException, Exception{
-	final boolean stopAtError = true;
-	xLS = new Point[2];
 
+    xLS = new Point[2];
 	xLS[0] = (Point)x.clone();
 	    
 	boolean resetK = false;
@@ -248,8 +246,6 @@ public class Armijo{
     private double Alp;
     /** Algorithm parameter */
     private double Bet;
-    /** Algorithm parameter */
-    private double Gam;
     /** Algorithm parameter */
     private int KSta;
     /** Algorithm parameter */

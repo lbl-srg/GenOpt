@@ -3,7 +3,6 @@ package genopt.algorithm.util.optimality;
 import genopt.lang.OptimizerException;
 import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.math.Point;
-import java.io.*;
 
 /** Class for checking the optimality condition of a point.<BR>
   * The optimality condition is checked by testing in each 
@@ -125,12 +124,12 @@ public class Perturber
 				xL.setX(i, xC.getX(i) + Math.exp(couExp) * s);
 				xL.setComment(com);
 				xL = o.getF(xL);
-				o.report(xL, o.SUBITERATION);
+				o.report(xL, Optimizer.SUBITERATION);
 				if (++couExp > COUEXPMAX)
 				{
 					String varNam = o.getVariableNameContinuous(i);
 					double xCO;
-					if (o.getMode() == o.TRANSFORMED)
+					if (o.getMode() == Optimizer.TRANSFORMED)
 					{
 					    xCO = genopt.db.ContinuousParameter.transformValue(x.getX(i), 
 											       o.getL(i), 
@@ -161,12 +160,12 @@ public class Perturber
 					xL.setX(i, xC.getX(i) - Math.exp(couExp) * s);
 					xL.setComment(com);
 					xL = o.getF(xL);
-					o.report(xL, o.SUBITERATION);
+					o.report(xL, Optimizer.SUBITERATION);
 					if (++couExp > COUEXPMAX)
 					{
 						String varNam = o.getVariableNameContinuous(i);
 						double xCO;
-						if (o.getMode() == o.TRANSFORMED)
+						if (o.getMode() == Optimizer.TRANSFORMED)
 						{
 						    xCO = genopt.db.ContinuousParameter.transformValue(x.getX(i), 
 												       o.getL(i), 

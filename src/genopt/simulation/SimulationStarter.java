@@ -1,9 +1,7 @@
 package genopt.simulation;
 
 import genopt.db.OptimizationIni;
-import genopt.io.FileHandler;
 import genopt.lang.OptimizerException;
-import java.util.Vector;
 import java.io.*;
 import java.util.concurrent.locks.*;
 import java.util.concurrent.atomic.AtomicBoolean;

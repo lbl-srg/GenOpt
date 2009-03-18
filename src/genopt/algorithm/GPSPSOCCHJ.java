@@ -3,10 +3,7 @@ import java.io.IOException;
 import genopt.GenOpt;
 import genopt.lang.OptimizerException;
 import genopt.simulation.SimulationInputException;
-import genopt.algorithm.util.pso.*;
-import genopt.algorithm.util.gps.*;
 import genopt.algorithm.util.math.*;
-import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
 
 /** Class for minimizing a function using a hybrid

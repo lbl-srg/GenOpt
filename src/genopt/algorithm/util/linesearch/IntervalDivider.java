@@ -5,10 +5,7 @@ import genopt.algorithm.Optimizer;
 import genopt.algorithm.util.math.LinAlg;
 import genopt.algorithm.util.math.Point;
 
-import java.io.IOException;
-
-/** Abstract class for doing a line search using
-  * an interval division method.
+/** Abstract class for doing a line search using an interval division method.
   * 
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">

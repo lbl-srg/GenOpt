@@ -700,7 +700,7 @@ public class LinAlg
 	  */
 	public static double[] gaussElimination(double[][] A, double[] f)
 	{
-		int i, j, k, l, piv, iMax, jMax;
+		int i, j, k, piv, iMax, jMax;
 		int dim = f.length;
 		int dimP1 = dim + 1;
 		double[]   r = new double[dim];
@@ -785,7 +785,7 @@ public class LinAlg
 	  */
 	public static double[] gaussEliminationTridiagonal(double[][] A, double[] f)
 	{
-		int i, j, k, l, piv, iMax, jMax;
+		int i, j, k, piv;
 		int dim = f.length;
 		int dimM1 = dim - 1;
 		double[]   r = new double[dim];

@@ -1,9 +1,7 @@
 package genopt.db;
-import genopt.*;
 import genopt.lang.ObjectiveFunctionLocation;
 import genopt.io.FileHandler;
 
-import java.util.*;
 import java.io.IOException;
 import java.io.File;
 
@@ -158,7 +156,6 @@ public class OptimizationIni implements Cloneable
 							     OptimizationInitializationPath);
 	SimulationOutputSavePath = FileHandler.addCanonicalPaths(SimulationOutputSavePath,
 								 OptimizationInitializationPath);
-	System.err.println("OptimizationIni: " + SimulationOutputSavePath[0]);
 	SimulationLogPath = FileHandler.addCanonicalPaths(SimulationLogPath,
 							  OptimizationInitializationPath);
 	SimulationLogSavePath = FileHandler.addCanonicalPaths(SimulationLogSavePath,

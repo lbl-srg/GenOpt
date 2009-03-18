@@ -3,7 +3,6 @@ import java.io.IOException;
 import genopt.GenOpt;
 import genopt.simulation.SimulationInputException;
 import genopt.algorithm.util.math.*;
-import genopt.algorithm.util.gps.*;
 import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
 
@@ -95,7 +94,6 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
     public GPSHookeJeeves(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
         super(genOptData);
-	dimF = getDimensionF();
     }
 
     /** Constructor used to run the algorithm in a hybrid algorithm for the
@@ -117,7 +115,6 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
         throws OptimizerException, IOException, Exception, InputFormatException {
         super(meshSizeDivider,
 	      initialMeshSizeExponent);
-	dimF = getDimensionF();
     }
 
      /** Method for the global search (this method returns always <code>null</code>.
@@ -175,8 +172,4 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
 	final Point[] r = super.localSearch(x, delta);
 	return r;
     }
-
-    /** The number of function values */
-    private int dimF;
-
 }

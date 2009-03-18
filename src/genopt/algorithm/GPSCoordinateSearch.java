@@ -95,11 +95,10 @@ public class GPSCoordinateSearch extends ModelGPS
         super(genOptData);
 
         dimX = getDimensionContinuous();
-	dimF = getDimensionF();
 
         cooPoi = new int[dimX];
-	for (int i = 0; i < dimX; i++)
-	    cooPoi[i] = 0;
+        for (int i = 0; i < dimX; i++)
+        	cooPoi[i] = 0;
     }
 
     /** Constructor used to run the algorithm in a hybrid algorithm for the
@@ -122,11 +121,10 @@ public class GPSCoordinateSearch extends ModelGPS
         super(meshSizeDivider,
 	      initialMeshSizeExponent);
         dimX = getDimensionContinuous();
-	dimF = getDimensionF();
 
         cooPoi = new int[dimX];
-	for (int i = 0; i < dimX; i++)
-	    cooPoi[i] = 0;
+        for (int i = 0; i < dimX; i++)
+        	cooPoi[i] = 0;
     }
 
 
@@ -298,6 +296,4 @@ public class GPSCoordinateSearch extends ModelGPS
 
     /** The number of independent variables */
     private int dimX;
-    /** The number of function values */
-    private int dimF;
 }

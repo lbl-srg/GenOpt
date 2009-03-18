@@ -5,7 +5,6 @@ import genopt.lang.OptimizerException;
 import genopt.simulation.SimulationInputException;
 import genopt.algorithm.util.math.*;
 import genopt.algorithm.util.linesearch.Armijo;
-import genopt.lang.OptimizerException;
 import genopt.io.InputFormatException;
 
 /** Class for minimizing a function using the 
@@ -99,8 +98,7 @@ public class DiscreteArmijoGradient extends Optimizer
         super(genOptData, Optimizer.TRANSFORMED);
 	ensureOnlyContinuousParameters();		
 	
-        dimX = getDimensionContinuous();
-	dimF = getDimensionF();
+    dimX = getDimensionContinuous();
 
 	/////////////////////////////////////////////////////
         // retrieve algorithm settings
@@ -469,8 +467,6 @@ public class DiscreteArmijoGradient extends Optimizer
 
     /** The number of independent variables */
     private int dimX;
-    /** The number of function values */
-    private int dimF;
 
     /** Algorithm parameter */
     private double Alp;

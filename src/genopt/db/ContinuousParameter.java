@@ -1,8 +1,7 @@
 package genopt.db;
-import genopt.*;
+
 import genopt.db.IndependentParameter;
 import java.lang.Math;
-import java.util.Vector;
 
 /** Object that represents a continuous parameter of
   * the optimization process.

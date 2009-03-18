@@ -70,6 +70,11 @@ import genopt.lang.OptimizerException;
 
 public class NoConvergenceException extends OptimizerException
 {
+	/** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** Constructs a NoConvergenceException with no detail message
 	  */
 	public NoConvergenceException() { super(); }

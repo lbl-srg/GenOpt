@@ -147,14 +147,14 @@ public class Binary{
 	return toBinaryChar( getGrayCode(n) ).length;
     }
 
-    /** Returns a <CODE>String</CODE> representation of the argument
+    /* Returns a <CODE>String</CODE> representation of the argument
      * that contains <CODE>0</CODE> or <CODE>1</CODE>.
      *
      *@param intArr an <CODE>int[]</CODE> array containing <CODE>0</CODE> or <CODE>1</CODE>
      *@return the <CODE>String</CODE> representation of the argument
      *@exception IllegalArgumentException if the argument contains non-binary
      *           numbers
-     */
+     
     static private final String binaryToString(final int[] intArr)
     throws IllegalArgumentException{
 	char[] r = new char[intArr.length];
@@ -171,7 +171,7 @@ public class Binary{
 	    }
 	return new String(r);
     }
-
+*/
     /** Returns a <CODE>String</CODE> representation of the argument
      * that contains <CODE>0</CODE> or <CODE>1</CODE>.
      *

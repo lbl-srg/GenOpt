@@ -70,6 +70,11 @@ import genopt.lang.OptimizerException;
 
 public class SimulationInputException extends OptimizerException
 {
+	/** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** Constructs a SimulationInputException with no detail message
 	  */
 	public SimulationInputException() { super(); }

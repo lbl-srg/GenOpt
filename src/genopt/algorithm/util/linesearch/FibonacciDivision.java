@@ -2,12 +2,8 @@ package genopt.algorithm.util.linesearch;
 
 import genopt.lang.OptimizerException;
 import genopt.algorithm.Optimizer;
-import genopt.algorithm.util.math.LinAlg;
 
-import java.io.*;
-
-/** Class for doing a line search using
-  * the Fibonacci division.
+/** Class for doing a line search using the Fibonacci division.
   * 
   * <P><I>This project was carried out at:</I>
   * <UL><LI><A HREF="http://www.lbl.gov">

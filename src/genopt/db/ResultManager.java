@@ -5,7 +5,6 @@ import genopt.*;
 import genopt.algorithm.util.math.Point;
 import java.io.IOException;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.LinkedList;
 
 /** Object that holds all Points of each main and sub iteration.
@@ -465,7 +464,6 @@ public class ResultManager
     ///////////////////////////////////////////////////////////////////////////////
     /** inner class with result point */
     protected class ResultPoint extends genopt.algorithm.util.math.Point
-	implements Comparable
     {
 	/** Constructor
 	 *@param x a ResultPoint
@@ -517,10 +515,10 @@ public class ResultManager
 	/** Compares this object with the specified object for order. 
 	 *	Returns a negative integer, zero, or a
 	 *	positive integer as this object is less than, equal to, or greater than the specified object.
-	 *@param o Object to be compared
+	 *@param rp Object to be compared
 	 */
-	public int compareTo(Object o){
-	    ResultPoint rp = (ResultPoint)o;
+	public int compareTo(ResultPoint rp){
+//	    ResultPoint rp = (ResultPoint)o;
 	    if ( getF(0) < rp.getF(0) )
 		return -1;
 	    else if (getF(0) > rp.getF(0))

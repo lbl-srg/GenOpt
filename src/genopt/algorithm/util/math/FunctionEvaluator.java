@@ -1,6 +1,5 @@
 package genopt.algorithm.util.math;
-import java.io.StringReader;
-import java.io.IOException;
+
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -262,8 +261,8 @@ public class FunctionEvaluator {
 	    parTyp[i] = double.class;
 	}
 	// check first in class 'Fun' for function
-	final Class c0 = Fun.class;
-	final Class c1 = StrictMath.class;
+	final Class<Fun> c0 = Fun.class;
+	final Class<StrictMath> c1 = StrictMath.class;
 	try{
 
 	    final Method meth = c0.getMethod(fun, parTyp);

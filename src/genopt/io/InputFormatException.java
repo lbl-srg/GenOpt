@@ -69,6 +69,11 @@ import genopt.lang.OptimizerException;
 
 public class InputFormatException extends OptimizerException
 {
+	/** The serial version number
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** Constructs a InputFormatException with no detail message
 	  */
 	public InputFormatException() { super(); }
