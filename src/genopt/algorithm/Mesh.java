@@ -182,7 +182,12 @@ public class Mesh extends Optimizer{
 	}
     }
 
-    /** Executes all simulations
+    /** Executes all simulations.
+     * 
+     *  At any time, only as many simulations will be started as there are
+     *  threads available. After these simulations finished, the results
+     *  are reported, and then the next simulations will be started.
+     *  
      * @exception Exception	  
      * @exception OptimizerException
      */
