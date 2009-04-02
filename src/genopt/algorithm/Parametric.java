@@ -156,7 +156,7 @@ public class Parametric extends Optimizer
 	Vector<Point> poiVec = new Vector<Point>(dimCon);
 	// vary continuous parameters
 	for(int iC = 0; iC < dimCon; iC++){
-	    // reset point to default values, so all coordinates are at their inital values
+	    // reset point to default values, so all coordinates are at their initial values
 	    Point poi = (Point)defPoi.clone();
 	    
 	    int nStep = Math.round( (float)getDx0(iC) );
