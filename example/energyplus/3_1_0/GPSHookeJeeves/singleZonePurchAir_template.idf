@@ -27,8 +27,8 @@
 !           Solar, visible, and thermal transmittance of shading device also design parameter
  
   Version,
-    3.0;                     !- Version Identifier
- 
+    3.1;                     !- Version Identifier
+
   HeatBalanceAlgorithm,
     ConductionTransferFunction;  !- Algorithm
  
@@ -348,11 +348,11 @@
     NoWind,                  !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    16.000000,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4
- 
+    16.000000,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
+
   BuildingSurface:Detailed,
     ZONE SURFACE EAST,       !- Name
     Wall,                    !- Surface Type
@@ -364,11 +364,11 @@
     WindExposed,             !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1
-    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4
- 
+    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
+
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 1 EAST WINDOW,  !- Name
     Window,                  !- Surface Type
@@ -380,20 +380,20 @@
     WinFrameAndDivider,      !- Frame and Divider Name
     1,                       !- Multiplier
     4,                       !- Number of Vertices
-    16.000000,0.000000,2.200000,  !- X,Y,Z ==> Vertex 1
-    16.000000,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 2
-    16.000000,%w_ea_win%,0.2000000,  !- X,Y,Z ==> Vertex 3
-    16.000000,%w_ea_win%,2.200000;  !- X,Y,Z ==> Vertex 4
+    16.000000,0.000000,2.200000,  !- X,Y,Z ==> Vertex 1 {m}
+    16.000000,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,%w_ea_win%,0.2000000,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,%w_ea_win%,2.200000;  !- X,Y,Z ==> Vertex 4 {m}
  
   Shading:Zone:Detailed,
     EAST WINDOW OVERHANG,    !- Name
     ZONE SURFACE EAST,       !- Base Surface Name
     ,                        !- Transmittance Schedule Name
     4,                       !- Number of Vertices
-    16.000000,0.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    17.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 2
-    17.0,%w_ea_win%,2.700000,  !- X,Y,Z ==> Vertex 3
-    16.000000,%w_ea_win%,2.700000;  !- X,Y,Z ==> Vertex 4
+    16.000000,0.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    17.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    17.0,%w_ea_win%,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,%w_ea_win%,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE SOUTH,      !- Name
@@ -406,11 +406,11 @@
     NoWind,                  !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    16.000000,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4
- 
+    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
+
   BuildingSurface:Detailed,
     ZONE SURFACE WEST,       !- Name
     Wall,                    !- Surface Type
@@ -422,11 +422,11 @@
     WindExposed,             !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4
- 
+    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
+
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 2 WEST WINDOW,  !- Name
     Window,                  !- Surface Type
@@ -438,20 +438,20 @@
     WinFrameAndDivider,      !- Frame and Divider Name
     1,                       !- Multiplier
     4,                       !- Number of Vertices
-    0.0000000E+00,%w_we_win%,2.200000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,%w_we_win%,0.2000000,  !- X,Y,Z ==> Vertex 2
-    0.0000000E+00,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,0.000000,2.200000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,%w_we_win%,2.200000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,%w_we_win%,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,0.000000,2.200000;  !- X,Y,Z ==> Vertex 4 {m}
  
   Shading:Zone:Detailed,
     WEST WINDOW OVERHANG,    !- Name
     ZONE SURFACE WEST,       !- Base Surface Name
     ,                        !- Transmittance Schedule Name
     4,                       !- Number of Vertices
-    0.0000000E+00,%w_we_win%,2.700000,  !- X,Y,Z ==> Vertex 1
-    -1.0,%w_we_win%,2.700000,  !- X,Y,Z ==> Vertex 2
-    -1.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,0.000000,2.700000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,%w_we_win%,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    -1.0,%w_we_win%,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,0.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE FLOOR,      !- Name
@@ -464,11 +464,11 @@
     NoWind,                  !- Wind Exposure
     0.0000000E+00,           !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    16.000000,0.0000000E+00,0.0000000E+00;  !- X,Y,Z ==> Vertex 4
- 
+    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,0.0000000E+00,0.0000000E+00;  !- X,Y,Z ==> Vertex 4 {m}
+
   BuildingSurface:Detailed,
     ZONE SURFACE CEILING,    !- Name
     Roof,                    !- Surface Type
@@ -480,11 +480,11 @@
     NoWind,                  !- Wind Exposure
     0.0000000E+00,           !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 2
-    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 3
-    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4
- 
+    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
+
 ! ----------------------------------------------------------
 ! Surface for internal mass, seperating the two office and hallway
  
@@ -1062,8 +1062,8 @@
     31;                      !- End Day 1
  
 ! ------------------------------------------------------------------
- 
-  ZoneInfiltration,
+
+  ZoneInfiltration:DesignFlowRate,
     INFILTRATION 1,          !- Name
     ZONE ONE,                !- Zone Name
     Sch 1,                   !- Schedule Name
