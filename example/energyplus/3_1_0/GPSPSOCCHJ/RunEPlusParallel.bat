@@ -11,6 +11,9 @@
  echo as long as they are in different directories.
  echo
  echo Modifications done by Michael Wetter, 2009-03-03:
+ echo - Updated file to reflect changes in RunEPlus.bat 
+ echo   between EnergyPlus 3.0.0 and 3.1.0
+ echo Modifications done by Michael Wetter, 2009-03-03:
  echo - Set directory names so that multiple EnergyPlus versions can run in
  echo   parallel.
  echo - Hard-coded path to EnergyPlus.exe. This is needed since there is no
@@ -177,6 +180,7 @@ IF EXIST "%output_path%%1.audit" DEL "%output_path%%1.audit"
 IF EXIST "%output_path%%1Table.csv" DEL "%output_path%%1Table.csv"
 IF EXIST "%output_path%%1Table.tab" DEL "%output_path%%1Table.tab"
 IF EXIST "%output_path%%1Table.txt" DEL "%output_path%%1Table.txt"
+IF EXIST "%output_path%%1Table.html" DEL "%output_path%%1Table.html"
 IF EXIST "%output_path%%1Table.htm" DEL "%output_path%%1Table.htm"
 IF EXIST "%output_path%%1DElight.in" DEL "%output_path%%1DElight.in"
 IF EXIST "%output_path%%1DElight.out" DEL "%output_path%%1DElight.out"
@@ -276,7 +280,7 @@ IF EXIST eplusout.bnd "%post_proc%HVAC-Diagram.exe"
  IF EXIST eplustbl.csv MOVE eplustbl.csv "%output_path%%1Table.csv"
  IF EXIST eplustbl.tab MOVE eplustbl.tab "%output_path%%1Table.tab"
  IF EXIST eplustbl.txt MOVE eplustbl.txt "%output_path%%1Table.txt"
- IF EXIST eplustbl.htm MOVE eplustbl.htm "%output_path%%1Table.htm"
+ IF EXIST eplustbl.htm MOVE eplustbl.htm "%output_path%%1Table.html"
  IF EXIST eplusout.delightin MOVE eplusout.delightin "%output_path%%1DElight.in"
  IF EXIST eplusout.delightout  MOVE eplusout.delightout "%output_path%%1DElight.out"
  IF EXIST eplusout.delighteldmp  MOVE eplusout.delighteldmp "%output_path%%1DElight.eldmp"
