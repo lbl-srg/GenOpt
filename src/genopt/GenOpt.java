@@ -108,11 +108,12 @@ import java.lang.reflect.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.0 beta 2 (February 23, 2009)<P>
+  * @version GenOpt(R) 3.0.0 (May 4, 2009)<P>
   */
 
 /* Revision history:
  *******************
+ 2009, Apr. 30 wm Updated to 3.0.0
  2009, Mar. 16 wm Parallelized initial function evaluations in InternalDivider.
                   Refactored code.
                   Changed Mesh to enable earlier drawing of graphical results.
@@ -249,7 +250,7 @@ import java.lang.reflect.*;
  2000, July    wm Release 1.1 beta2
  2000, May     wm Keyword "SavePath" implemented.
  2000, May     wm Class io.GenOptFileFilter rewritten.
- 2000, May        Release 1.1 beta2.
+ 2000, May        Release 1.1 beta1.
  2000, Jan.    wm implemented class Point.
                   Changed data management using class Point.
  1999, Sept.   wm Class EquMesh added.
@@ -316,20 +317,21 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "beta2";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "";//"alpha1 or -rc3";
+    //    public final static String VERSION_ID     = "beta2";//"alpha1 or -rc3";
                                                     
     /**
      * Describe constant <code>VERSION</code> here.
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", February 23, 2009";
+	VERSION_NUMBER + VERSION_ID + ", May 4, 2009";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
      */
     public final static String COPYRIGHT =
-	"GenOpt Copyright (c) 1998-2008, The Regents of the" + LS +
+	"GenOpt Copyright (c) 1998-2009, The Regents of the" + LS +
         "University of California, through Lawrence Berkeley" + LS +
         "National Laboratory (subject to receipt of any " + LS +
 	"required approvals from the U.S. Dept. of Energy)." + LS +
