@@ -51,7 +51,7 @@
  echo ===== %0 (Run EnergyPlus) %1 %2 ===== Start =====
 : Currently, there is no environment variable that points to the E+ directory.
 : We hard-code it here.  
- set program_path=C:\Program Files\EnergyPlusV3-0-0\
+ set program_path=C:\Program Files\EnergyPlusV3-1-0\
  set program_name=EnergyPlus.exe
 : Set the input_path to the current working directory
  for /F %%x in ('CHDIR') do set input_path=%%x\
