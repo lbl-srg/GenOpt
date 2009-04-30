@@ -39,7 +39,7 @@ import java.lang.reflect.*;
   *
   * <h3>Copyright Notice</h3>
   *
-  * GenOpt Copyright (c) 1998-2008, The Regents of the University of 
+  * GenOpt Copyright (c) 1998-2009, The Regents of the University of 
   * California, through Lawrence Berkeley National Laboratory (subject 
   * to receipt of any required approvals from the U.S. Dept. of Energy).  
   * All rights reserved.<p>
@@ -63,7 +63,7 @@ import java.lang.reflect.*;
   * 
   * <h3>License agreement</h3>
   *
-  * GenOpt Copyright (c) 1998-2008, The Regents of the University of
+  * GenOpt Copyright (c) 1998-2009, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
   * to receipt of any required approvals from the U.S. Dept. of Energy).  
   * All rights reserved.

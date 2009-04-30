@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
   * <LI>the <A HREF="http://www.snf.ch">
   * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
   *
-  * GenOpt Copyright (c) 1998-2008, The Regents of the University of
+  * GenOpt Copyright (c) 1998-2009, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
   * to receipt of any required approvals from the U.S. Dept. of Energy).  
   * All rights reserved.
