@@ -51,7 +51,7 @@
  set program_path=C:\Program Files\EnergyPlusV2-2-0\
  set program_name=EnergyPlus.exe
 : Set the input_path to the current working directory
- for /F %%x in ('CHDIR') do set input_path=%%x\
+ set input_path=%cd%\
  set output_path=%input_path%
  set post_proc=%program_path%PostProcess\
  set weather_path=%program_path%WeatherData\
