@@ -1,0 +1,23 @@
+Checklist for GenOpt release
+
+In manual.tex, update
+  version number
+  Java number
+  date
+  copyright and license year
+
+In Makefile, update
+  export genopt-version=3.0.0-beta2
+
+In GenOpt.java, update
+  revision history
+  VERSION_NUMBER
+  VERSION_ID
+  VERSION (date)
+  COPYRIGHT (year)
+
+Update bin/setupCode.sh, and run it.
+
+Run cleanfilesystem
+
+Run make dist
