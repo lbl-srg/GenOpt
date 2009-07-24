@@ -113,6 +113,9 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2009, Jul. 24 wm Bugfix: If the objective function delimiter was not found,
+                  GenOpt got into a deadlock which prevented the error message
+                  from being written.
  2009, Apr. 30 wm Updated to 3.0.0
  2009, Mar. 16 wm Parallelized initial function evaluations in InternalDivider.
                   Refactored code.
@@ -312,7 +315,7 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_NUMBER</code> here.
      *
      */
-    public final static String VERSION_NUMBER = "3.0.0";
+    public final static String VERSION_NUMBER = "3.0.1";
     /**
      * Describe constant <code>VERSION_ID</code> here.
      *
@@ -325,7 +328,7 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", May 4, 2009";
+	VERSION_NUMBER + VERSION_ID + ", July 24, 2009";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *

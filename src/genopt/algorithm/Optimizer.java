@@ -1376,7 +1376,12 @@ abstract public class Optimizer
 			    iFil = nSimOutFil; // to get out of the inner for loop
 			}
 			catch(OptimizerException e){
-			    if (iFil == (nSimOutFil-1)) throw e; // f(x) not found in any file
+			    if (iFil == (nSimOutFil-1)){
+				// the next two lines need to be present to avoid a deadlock
+				functionValuesParsed.set(true);
+				funValParLat.countDown();
+				throw e; // f(x) not found in any file
+			    }
 			}
 		    }
 		}
