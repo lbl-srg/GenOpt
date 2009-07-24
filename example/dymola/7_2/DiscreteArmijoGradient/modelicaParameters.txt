@@ -1,5 +1,5 @@
 // Parameter used in the Modelica model
-// Dymola 6.1 reads this file during model translation.
+// Dymola 7.2 reads this file during model translation.
 // Any changes to this file after the model has been
 // translated have no effect.
 TIni = 273.15+15;
