@@ -25,7 +25,7 @@ RUNDIR=`find example \( -name 'Output' \)`
 RUNDYMFIL=`find example/dymola \( -name 'dsres.mat' \
 	-or -name 'dslog.txt' -or -name 'dsmodel.c' -or -name 'dsfinal.txt' \
 	-or -name 'buildlog.txt' -or -name 'ObjectiveFunction.mat' \
-	-or -name 'request.' \)`
+	-or -name 'request.' -or -name 'status'  -or -name 'success' \)`
 
 # Directory where distributable will be copied
 DISDIR=dist
