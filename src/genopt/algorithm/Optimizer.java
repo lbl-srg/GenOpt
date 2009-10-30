@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.1 (August 14, 2009)<P>
+  * @version GenOpt(R) 3.0.2-rc1 (October 29, 2009)<P>
   */
 
 /*
@@ -1314,8 +1314,7 @@ abstract public class Optimizer
 		exit = true;
 	    }
 	    else{  // check for errors
-		FileHandler logFil = new FileHandler(simLogFil[iLogFil]);
-		Vector<String> simErrMes = data.ErrChe.check(logFil.getFileContentsString(),
+		Vector<String> simErrMes = data.ErrChe.check(simLogFil[iLogFil],
 						     simLogFil[iLogFil] + 
 						     ": Following error was found:");
 		if (!simErrMes.isEmpty()){ // Simulation wrote error message
@@ -1348,7 +1347,7 @@ abstract public class Optimizer
 
 	for (int iOutFil = 0; iOutFil < nSimOutFil; iOutFil++)
 	    simOutFilHan[iOutFil] = new SimOutputFileHandler(simOutFil[iOutFil],
-							     separator);
+								     separator);
 	
 	// in first function call, construct the pointer "funValPoi" that shows
 	// which function value is in what file

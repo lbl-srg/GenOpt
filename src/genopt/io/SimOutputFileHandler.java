@@ -28,7 +28,7 @@ import java.io.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.1 (August 14, 2009)<P>
+  * @version GenOpt(R) 3.0.2-rc1 (October 29, 2009)<P>
   */
 
 /*
@@ -71,43 +71,27 @@ import java.io.*;
   * or derivative works thereof, in binary and source code form. 
  */	
 
-public class SimOutputFileHandler extends FileHandler
+public class SimOutputFileHandler
 {
-	/** System dependent line separator */
-	private final static String LS = System.getProperty("line.separator");
+    /** System dependent line separator */
+    private final static String LS = System.getProperty("line.separator");
 
     /** separator after the objective function value (will be initialized below)*/
     private static String separator = "";
 
-	/** constructor
-	  * @param FileLines array of file lines
-	  */
-	public SimOutputFileHandler(String[] FileLines, String Separator)
-	{
-		super(FileLines);
-		ownConstructor(Separator);
-	}
-
-	/** constructor
-	  * @param path Path of file that has to be represented by this Object
-	  * @param name Name of file that has to be represented by this Object
+    /** Constructor.
+	  * @param fileName the file name
+	  * @param Separator the objective function delimiter
 	  * @exception IOException
+	  * @exception FileNotFoundException
+	  * @exception SecurityException	  
 	  */
-	public SimOutputFileHandler(String path, String name, String Separator) throws IOException
-	{
-		super(path, name);
-		ownConstructor(Separator);
-	}
-
-	/** constructor
-	  * @param file Path and name of file that has to be represented by this Object
-	  * @exception IOException
-	  */
-	public SimOutputFileHandler(String file, String Separator) throws IOException
-	{
-		super(file);
-		ownConstructor(Separator);
-	}
+    public SimOutputFileHandler(String fileName, String Separator) 
+	throws IOException, FileNotFoundException, SecurityException
+    {
+	filNam = fileName;
+	ownConstructor(Separator);
+    }
 
     private void ownConstructor(String Separator){
 	if (Separator != null){
@@ -121,14 +105,23 @@ public class SimOutputFileHandler extends FileHandler
 	  * (additional to the blank space) of the objective function value
 	  *@return value of the objective function
 	  *@exception OptimizerException if objective function value has not been found
+	  *@exception IOException if an IOException occurred while reading the file
 	  */
 	public double getObjectiveFunctionValue(String ObjectiveFunctiondelimiter)
 		throws OptimizerException
 	{
-		delimiter = new String(ObjectiveFunctiondelimiter);
+	    delimiter = new String(ObjectiveFunctiondelimiter);
 		delLen = delimiter.length();
-	    return (delimiter.equals(" ") || delimiter.equals("")) ?
-		getObjectiveFunctionValueEmpty() : getObjectiveFunctionValueNonEmpty();
+		double retVal = 0;
+		try{
+		    retVal =  (delimiter.equals(" ") || delimiter.equals("")) ?
+			getObjectiveFunctionValueEmpty() : getObjectiveFunctionValueNonEmpty();
+		}
+		catch(IOException e){
+		    String em =  "IOException while reading " + filNam + "': Message '" + e.getMessage() + "'." + LS;
+		    throw new OptimizerException(em);
+		}
+		return retVal;
 	}
 	
 	
@@ -137,7 +130,7 @@ public class SimOutputFileHandler extends FileHandler
 	  *@return the String with all space and tab characters at the beginning
 	  *        cutted away
 	 */	
-	public static final String cutBeginSpaceAndTab(String s)
+	protected static final String cutBeginSpaceAndTab(String s)
 	{
 	    String r = new String(s);
 	    while (r.startsWith(" ") || r.startsWith("\t"))
@@ -151,7 +144,7 @@ public class SimOutputFileHandler extends FileHandler
 	  *@return the String with all space and tab characters at the end
 	  *        cutted away
 	 */	
-	public static final String cutEndSpaceAndTab(String s)
+	protected static final String cutEndSpaceAndTab(final String s)
 	{
 	    String r = new String(s);
 	    while (r.endsWith(" ") || r.endsWith("\t"))
@@ -167,7 +160,7 @@ public class SimOutputFileHandler extends FileHandler
 	  *@return the first index of the space or tab character, 
 	  * or <CODE>-1</CODE> if non of them is found
 	  */
-	public static int getIndexOfSeparator(String s)
+	protected static int getIndexOfSeparator(String s)
 	{
 	    String ts = s.trim();
 	    // get the lowest index of the separator that is bigger than -1
@@ -219,23 +212,35 @@ public class SimOutputFileHandler extends FileHandler
 	/** gets the last number of the file content.<BR>
 	  * This method is used if the delimiter is either
 	  * a white space or an empty character
+	  *
 	  *@return value of the objective function
 	  *@exception OptimizerException
+	  *@exception IOException
 	  */
-	private double getObjectiveFunctionValueEmpty() throws OptimizerException
+	private double getObjectiveFunctionValueEmpty() 
+	    throws OptimizerException, IOException
 	{
-	    for (int i = nLines - 1; i >= 0; i--)
-	    {
-	        String curLin = new String(FileContents[i]);
-	        curLin = cutEndLineBreak(curLin);
+	    String lastFoundLine = null;
+	    final BufferedReader reader = new BufferedReader(new FileReader(new File(filNam)));
+	    String curLin = reader.readLine();
+	    while (curLin != null){
+		// read file from top to bottom, saving the line that could contain the 
+		// last objective function value
 	        curLin = cutEndSpaceAndTab(curLin);
-	        if (curLin.length() > 0)
-	        { // we found a line with something else than only spaces and tabs
-		    return (delimiter.length() == 0) ?
-			getFirstDouble(curLin) : 
-			getDoubleAfterLastSpace(curLin);
+	        if (curLin.length() > 0){ 
+		    // We found a line with something else than only spaces and tabs.
+		    // Save it, because it may not be the last objective function value
+		    lastFoundLine = curLin;
 	        }
+		curLin = reader.readLine();
 	    }
+	    // We found a line with the delimiter.
+	    if (lastFoundLine != null){
+		return (delimiter.length() == 0) ?
+		    getFirstDouble(lastFoundLine) : 
+		    getDoubleAfterLastSpace(lastFoundLine);
+	    }
+	    // We did not find any line with the delimiter
 	    throwObjectiveFunctionValueNotFound();
 	    return 999; // to satisfy compiler	    
 	}
@@ -245,53 +250,62 @@ public class SimOutputFileHandler extends FileHandler
 	  * a white space nor an empty character
 	  *@return value of the objective function
 	  *@exception OptimizerException
+	  *@exception IOException
 	 */	
-    	private double getObjectiveFunctionValueNonEmpty() throws OptimizerException
+    	private double getObjectiveFunctionValueNonEmpty() 
+	    throws OptimizerException, IOException
 	{
-		int i, delPos, begInd, endInd;
-		String curLin;
-		
-		for (i = nLines - 1; i >= 0; i--)
-		{
-		    curLin = new String(FileContents[i]);
-		    begInd = curLin.lastIndexOf(delimiter);
-		    if (begInd != -1)
-		    {   // we found the line with the keyword
-			curLin = curLin.trim(); // we need that to check curLin.lenght() == 0 below
-			curLin = cutEndLineBreak(curLin);
-			curLin = cutEndSpaceAndTab(curLin);
-			if (curLin.endsWith(delimiter))
-			{	// cut del. in case of xxx;xxxx;xxxx; and del. = ";"
-			    begInd = curLin.lastIndexOf(delimiter);
-			    curLin = new String(curLin.substring(0, begInd));
-			}
-			if (curLin.length() == 0) // we got only the delimiter on this line
-			{
-			    String errMes = 
-					"Error in the objective function value: " + LS + 
-					"  Delimiter '" + delimiter + "' was found on line " + (i+1) +
-				    " but no function value.";
-			    throw new OptimizerException(errMes);
-			}
-			begInd = curLin.lastIndexOf(delimiter); 
-			if (begInd == -1) // we got only a delimiter at the end of the line
-			{
-			    String errMes = 
-					"Error in the objective function value:" + LS + 
-					"  Delimiter '" + delimiter + "' was found at end of line " +
-				 (i+1) + " but no function value.";
-			    throw new OptimizerException(errMes);
-			}
-			
-			endInd = begInd + delLen;
-
-			curLin = new String(curLin.substring(endInd));
-			curLin = cutBeginSpaceAndTab(curLin);
-			delPos = getIndexOfSeparator(curLin);
-			if (delPos != -1)
-			    curLin = new String(curLin.substring(0, delPos));
-			return parseToDouble(curLin);
+	    int iLin = -1;
+	    int i = 1;
+	    String lastFoundLine = null;
+	    final BufferedReader reader = new BufferedReader(new FileReader(new File(filNam)));
+	    String curLin = reader.readLine();
+	    while (curLin != null){
+		int begInd = curLin.lastIndexOf(delimiter);
+		if (begInd != -1){  // we found a line with the delimiter
+		    lastFoundLine = curLin;
+		    iLin = i;
 		}
+		curLin = reader.readLine();
+		i++;
+	    }
+	    // if lastFoundLine != null, then we found the line with the objective function value,
+	    // and we parse it.
+	    if ( lastFoundLine != null){   // we found a line with the keyword
+		int begInd;
+		lastFoundLine = lastFoundLine.trim(); // we need that to check lastFoundLine.lenght() == 0 below
+		lastFoundLine = cutEndSpaceAndTab(lastFoundLine);
+		if (lastFoundLine.endsWith(delimiter))
+		    {	// cut del. in case of xxx;xxxx;xxxx; and del. = ";"
+			begInd = lastFoundLine.lastIndexOf(delimiter);
+			lastFoundLine = new String(lastFoundLine.substring(0, begInd));
+		    }
+		if (lastFoundLine.length() == 0) // we got only the delimiter on this line
+		    {
+			String errMes = 
+			    "Error in the objective function value: " + LS + 
+			    "  Delimiter '" + delimiter + "' was found on line " + iLin +
+			    " but no function value.";
+			throw new OptimizerException(errMes);
+		    }
+		begInd = lastFoundLine.lastIndexOf(delimiter); 
+		if (begInd == -1) // we got only a delimiter at the end of the line
+		    {
+			String errMes = 
+			    "Error in the objective function value:" + LS + 
+			    "  Delimiter '" + delimiter + "' was found at end of line " +
+			    iLin + " but no function value.";
+			throw new OptimizerException(errMes);
+		    }
+		
+		final int endInd = begInd + delLen;
+		
+		lastFoundLine = new String(lastFoundLine.substring(endInd));
+		lastFoundLine = cutBeginSpaceAndTab(lastFoundLine);
+		final int delPos = getIndexOfSeparator(lastFoundLine);
+		if (delPos != -1)
+		    lastFoundLine = new String(lastFoundLine.substring(0, delPos));
+		return parseToDouble(lastFoundLine);
 	    }
 	    // objective function value was not found in simulation output file
 	    throwObjectiveFunctionValueNotFound();
@@ -303,7 +317,7 @@ public class SimOutputFileHandler extends FileHandler
 	  * that the objective function value could not be found.
 	  *@exception OptimizerException
 	 */	
-	public void throwObjectiveFunctionValueNotFound()
+	protected void throwObjectiveFunctionValueNotFound()
 	    throws OptimizerException
 	{
 	    String ErrMes =
@@ -353,17 +367,28 @@ public class SimOutputFileHandler extends FileHandler
 	/** objective function delimiter */
 	protected String delimiter;
 	/** length of function delimiter */
-	protected int delLen;
+        protected int delLen;
 
-/*    	public static void main(String[] args) throws IOException, OptimizerException
-	{
-	    String dir = new String("/home/mwetter/proj/genopt/3_code/1.1/genopt/io/test.txt");
-	    genopt.io.SimOutputFileHandler s = new genopt.io.SimOutputFileHandler(dir, ";:,");
-	    
-	    System.out.println(s.getObjectiveFunctionValue("123,"));
-	    System.out.println("-------");
+        /* The file reader */
+    //    FileReader filRea;
+
+       /** The file name */
+       String filNam;
+
+    /** The main method.
+     *
+     * This method is used for testing only
+     */
+    public static void main(String[] args) 
+	throws IOException, OptimizerException{
+	if (args.length != 2){
+	    System.err.println("Error: Need two arguments, the first is the file name, the second the delimiter");
+	    System.exit(1);
 	}
-*/   
+	SimOutputFileHandler s = new SimOutputFileHandler(args[0],  ";:,");
+	System.out.println("Function value = " + s.getObjectiveFunctionValue(args[1]));
+	System.out.println("-------");
+    }
 
 }
 

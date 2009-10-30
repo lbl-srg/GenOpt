@@ -1,5 +1,9 @@
 package genopt.simulation;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.IOException;
 
 /** Object that scans a String array for any number of possible
   * error messages.
@@ -28,7 +32,7 @@ import java.util.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.1 (August 14, 2009)<P>
+  * @version GenOpt(R) 3.0.2-rc1 (October 29, 2009)<P>
   */
 
 /*
@@ -113,41 +117,46 @@ public class ErrorChecker implements Cloneable
 	  * an empty Vector. Otherwise, a Vector with all
 	  * found errors and an additional error information as the first entry are returned.
           *
-	  *@param StringToCheck Array of strings that has to be checked for errors
+	  *@param fileName Name of file that has to be checked for errors
 	  *@param AdditionalErrorInformation Additional string that is added at the beginning
 	  *   of the returned the error message
 	  *@return A trimed empty Vector if no error message could be found, otherwise
 	  *   a trimed Vector with all the error messages that were found and the string
 	  *   'ErrorMessage' as the first entry.
+	  * @exception IOException if the file cannot be read
 	  */
-	public Vector<String> check(String[] StringToCheck, String AdditionalErrorInformation)
-	{
-		Vector<String> ErrMesVec = new Vector<String>();
-		int i, j;
-		int k = 0;
-		int ResStrLen = StringToCheck.length;
-		String ErrMes = new String(AdditionalErrorInformation);
-		// check for error
-		for (i = 0; i < ResStrLen; i++)
-		{
-			for (j = 0; j < nErr; j++)
-			{
-				if (StringToCheck[i].indexOf(errInd[j]) != -1)
-				{	//error was found
-					if ( k == 0) ErrMesVec.addElement(ErrMes);
-					ErrMes = new String(LS + "Error on line " + i + ":" + LS + "   "
-						+ StringToCheck[i] + LS);
-					ErrMesVec.addElement(ErrMes);
-					k++;
-				}
-			}
+    public Vector<String> check(final String fileName, 
+				final String AdditionalErrorInformation)
+	throws IOException{
+	int k = 0;
+	int i = 1;
+	String ErrMes = new String(AdditionalErrorInformation);
+	Vector<String> ErrMesVec = new Vector<String>();
+	try{
+	    final BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
+	    String curLin = reader.readLine();
+	    while (curLin != null){
+		for (int j = 0; j < nErr; j++){
+		    if (curLin.indexOf(errInd[j]) != -1){ //error was found
+			if ( k == 0) 
+			    ErrMesVec.addElement(ErrMes);
+			ErrMes = new String(LS + "Error on line " + i + ":" + LS + "   "
+					    + curLin + LS);
+			ErrMesVec.addElement(ErrMes);
+			k++;
+		    }
 		}
-
-		ErrMesVec.trimToSize(); 
-
-		return ErrMesVec;
-
+		curLin = reader.readLine();
+		i++;
+	    }
 	}
+	catch(IOException e){
+	    final String em =  "IOException while reading " + fileName + "': Message '" + e.getMessage() + "'." + LS;
+	    throw new IOException(em);
+	}
+	ErrMesVec.trimToSize(); 
+	return ErrMesVec;
+    }
 
 	/** Gets the number of possible error strings.<br>
 	  *
@@ -180,12 +189,22 @@ public class ErrorChecker implements Cloneable
 	/** Number of error messages.  */
 	protected int nErr;
 
+    /** The main method.
+     *
+     * This method is used for testing only
+     */
+    public static void main(String[] args)
+	throws IOException{
+	if (args.length < 2){
+	    System.err.println("Error: Need at least two arguments, the first is the file name, then the error messages.");
+	    System.exit(1);
+	}
+	String[] err = new String[args.length-1];
+	System.arraycopy(args, 1, err, 0, args.length-1);
+	ErrorChecker s = new ErrorChecker(err);
+	System.out.println("Errors = " + s.check(args[0], "some comment"));
+	System.out.println("-------");
+    }
+
 
 }
-
-
-
-
-
-
-

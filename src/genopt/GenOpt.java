@@ -108,11 +108,17 @@ import java.lang.reflect.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.1 (August 14, 2009)<P>
+  * @version GenOpt(R) 3.0.2-rc1 (October 29, 2009)<P>
   */
 
 /* Revision history:
  *******************
+ 2009, Oct. 29 wm Revised SimOutputFileHandler.java and ErrorChecker.java to use a BufferedReader,
+                  based on the suggestion of Andreas Edqvist Kissavos at Equa.
+                  The old implementation required a long time to read IDA output file.
+		  With the new implementation, reading an output from a file that is 10 times 
+		  the length of a EPW file, the computing time has been reduced from
+		  63 seconds to 0.6 seconds.
  2009, Aug. 14 wm Released version 3.0.1
  2009, Jul. 24 wm Bugfix: If the objective function delimiter was not found,
                   GenOpt went into a deadlock which prevented the error message
@@ -316,12 +322,12 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_NUMBER</code> here.
      *
      */
-    public final static String VERSION_NUMBER = "3.0.1";
+    public final static String VERSION_NUMBER = "3.0.2";
     /**
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "-rc1";//"alpha1 or -rc3";
     //    public final static String VERSION_ID     = "beta2";//"alpha1 or -rc3";
                                                     
     /**
@@ -329,7 +335,7 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", August 14, 2009";
+	VERSION_NUMBER + VERSION_ID + ", October 29, 2009";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
