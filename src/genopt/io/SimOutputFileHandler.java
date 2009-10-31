@@ -90,10 +90,6 @@ public class SimOutputFileHandler
 	throws IOException, FileNotFoundException, SecurityException
     {
 	filNam = fileName;
-	ownConstructor(Separator);
-    }
-
-    private void ownConstructor(String Separator){
 	if (Separator != null){
 	    separator = new String(" \t" + Separator);
 	}
@@ -130,7 +126,7 @@ public class SimOutputFileHandler
 	  *@return the String with all space and tab characters at the beginning
 	  *        cutted away
 	 */	
-	protected static final String cutBeginSpaceAndTab(String s)
+	protected static final String cutBeginSpaceAndTab(final String s)
 	{
 	    String r = new String(s);
 	    while (r.startsWith(" ") || r.startsWith("\t"))
@@ -160,12 +156,11 @@ public class SimOutputFileHandler
 	  *@return the first index of the space or tab character, 
 	  * or <CODE>-1</CODE> if non of them is found
 	  */
-	protected static int getIndexOfSeparator(String s)
+	protected static int getIndexOfSeparator(final String s)
 	{
-	    String ts = s.trim();
+	    final String ts = s.trim();
 	    // get the lowest index of the separator that is bigger than -1
 	    int sepPos = -1;
-	    //System.out.println("****** getIndexOfSeparator:"+separator+"####"); 
 	    for(int i = 0; i < separator.length(); i++){
 		int p = ts.indexOf(separator.charAt(i));
 		if ( p > -1 ) // found a separator
@@ -369,11 +364,8 @@ public class SimOutputFileHandler
 	/** length of function delimiter */
         protected int delLen;
 
-        /* The file reader */
-    //    FileReader filRea;
-
-       /** The file name */
-       String filNam;
+        /** The file name */
+        String filNam;
 
     /** The main method.
      *
