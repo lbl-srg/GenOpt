@@ -26,11 +26,9 @@
 !           Overhang depth also design parameter (for West and East window separately)
 !           Solar, visible, and thermal transmittance of shading device also design parameter
  
-  Version,
-    3.1;                     !- Version Identifier
+  Version,4.0;
  
-  HeatBalanceAlgorithm,
-    ConductionTransferFunction;  !- Algorithm
+  HeatBalanceAlgorithm,ConductionTransferFunction;
  
   Site:Location,
     CHICAGO ILLINOIS,        !- Name
@@ -40,6 +38,7 @@
     190.0;                   !- Elevation {m}
  
   RunPeriod,
+    ,                        !- Name
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
     12,                      !- End Month
@@ -294,14 +293,11 @@
 ! ========================================================================
  Simulation Data;
  
-  Timestep,
-    4;                       !- Number of Timesteps per Hour
+  Timestep,4;
  
-  SurfaceConvectionAlgorithm:Inside,
-    1;                       !- Algorithm
+  SurfaceConvectionAlgorithm:Inside,1;
  
-  SurfaceConvectionAlgorithm:Outside,
-    1;                       !- Algorithm
+  SurfaceConvectionAlgorithm:Outside,1;
  
 ! -----------------------------------------------------------------------
  
@@ -327,8 +323,7 @@
     2.7000,                  !- Ceiling Height {m}
     259.2;                   !- Volume {m3}
  
-  ZoneCapacitanceMultiplier,
-    1.2;                     !- Multiplier
+  ZoneCapacitanceMultiplier,1.2;
  
 ! -----------------------------------------------------------------------
  
@@ -348,10 +343,10 @@
     NoWind,                  !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    16.000000,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4
+    16.000000,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE EAST,       !- Name
@@ -364,10 +359,10 @@
     WindExposed,             !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1
-    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4
+    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 1 EAST WINDOW,  !- Name
@@ -380,20 +375,20 @@
     WinFrameAndDivider,      !- Frame and Divider Name
     1,                       !- Multiplier
     4,                       !- Number of Vertices
-    16.000000,0.000000,2.200000,  !- X,Y,Z ==> Vertex 1
-    16.000000,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 2
-    16.000000,5.9,0.2000000,  !- X,Y,Z ==> Vertex 3
-    16.000000,5.9,2.200000;  !- X,Y,Z ==> Vertex 4
+    16.000000,0.000000,2.200000,  !- X,Y,Z ==> Vertex 1 {m}
+    16.000000,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,5.9,0.2000000,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,5.9,2.200000;  !- X,Y,Z ==> Vertex 4 {m}
  
   Shading:Zone:Detailed,
     EAST WINDOW OVERHANG,    !- Name
     ZONE SURFACE EAST,       !- Base Surface Name
     ,                        !- Transmittance Schedule Name
     4,                       !- Number of Vertices
-    16.000000,0.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    17.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 2
-    17.0,5.9,2.700000,  !- X,Y,Z ==> Vertex 3
-    16.000000,5.9,2.700000;  !- X,Y,Z ==> Vertex 4
+    16.000000,0.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    17.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    17.0,5.9,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,5.9,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE SOUTH,      !- Name
@@ -406,10 +401,10 @@
     NoWind,                  !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    16.000000,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE WEST,       !- Name
@@ -422,10 +417,10 @@
     WindExposed,             !- Wind Exposure
     0.5000000,               !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 2 WEST WINDOW,  !- Name
@@ -438,20 +433,20 @@
     WinFrameAndDivider,      !- Frame and Divider Name
     1,                       !- Multiplier
     4,                       !- Number of Vertices
-    0.0000000E+00,4.2,2.200000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,4.2,0.2000000,  !- X,Y,Z ==> Vertex 2
-    0.0000000E+00,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,0.000000,2.200000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,4.2,2.200000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,4.2,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,0.000000,2.200000;  !- X,Y,Z ==> Vertex 4 {m}
  
   Shading:Zone:Detailed,
     WEST WINDOW OVERHANG,    !- Name
     ZONE SURFACE WEST,       !- Base Surface Name
     ,                        !- Transmittance Schedule Name
     4,                       !- Number of Vertices
-    0.0000000E+00,4.2,2.700000,  !- X,Y,Z ==> Vertex 1
-    -1.0,4.2,2.700000,  !- X,Y,Z ==> Vertex 2
-    -1.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 3
-    0.0000000E+00,0.000000,2.700000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,4.2,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    -1.0,4.2,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.0000000E+00,0.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE FLOOR,      !- Name
@@ -464,10 +459,10 @@
     NoWind,                  !- Wind Exposure
     0.0000000E+00,           !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2
-    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3
-    16.000000,0.0000000E+00,0.0000000E+00;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,0.0000000E+00,0.0000000E+00;  !- X,Y,Z ==> Vertex 4 {m}
  
   BuildingSurface:Detailed,
     ZONE SURFACE CEILING,    !- Name
@@ -480,10 +475,10 @@
     NoWind,                  !- Wind Exposure
     0.0000000E+00,           !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1
-    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 2
-    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 3
-    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4
+    0.0000000E+00,6.000000,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
+    16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
  
 ! ----------------------------------------------------------
 ! Surface for internal mass, seperating the two office and hallway
@@ -593,12 +588,14 @@
  
   ScheduleTypeLimits,
     Cont Sch,                !- Name
-    0.0:1.0,                 !- Range
+    0.0,                     !- Lower Limit Value
+    1.0,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
  
   ScheduleTypeLimits,
     Disc Sch,                !- Name
-    0.0:1.0,                 !- Range
+    0.0,                     !- Lower Limit Value
+    1.0,                     !- Upper Limit Value
     Discrete;                !- Numeric Type
  
 ! ------------------------------------------------------------------
@@ -1119,7 +1116,8 @@
  
   ScheduleTypeLimits,
     Temperature,             !- Name
-    -60:200,                 !- Range
+    -60,                     !- Lower Limit Value
+    200,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1245,7 +1243,8 @@
  
   ScheduleTypeLimits,
     Control Type,            !- Name
-    0:4,                     !- Range
+    0,                       !- Lower Limit Value
+    4,                       !- Upper Limit Value
     Discrete;                !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1370,20 +1369,11 @@
 !report variable,,System Node Humidity Ratio,hourly;
 !report variable,,SimAir Iterations,hourly;
  
-  Output:Variable,
-    *,                       !- Key Value
-    Ideal Loads Air Sensible Cooling Energy,  !- Variable Name
-    Environment;             !- Reporting Frequency
+  Output:Variable,*,Ideal Loads Air Sensible Cooling Energy,Environment;
  
-  Output:Variable,
-    *,                       !- Key Value
-    Ideal Loads Air Heating Energy,  !- Variable Name
-    Environment;             !- Reporting Frequency
+  Output:Variable,*,Ideal Loads Air Heating Energy,Environment;
  
-  Output:Variable,
-    *,                       !- Key Value
-    Lights Electric Consumption,  !- Variable Name
-    Environment;             !- Reporting Frequency
+  Output:Variable,*,Lights Electric Consumption,Environment;
  
 !report variable dictionary;
 !report,surfaces,dxf;
