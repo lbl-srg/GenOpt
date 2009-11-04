@@ -26,11 +26,9 @@
 !           Overhang depth also design parameter (for West and East window separately)
 !           Solar, visible, and thermal transmittance of shading device also design parameter
  
-  Version,
-    3.1;                     !- Version Identifier
-
-  HeatBalanceAlgorithm,
-    ConductionTransferFunction;  !- Algorithm
+  Version,4.0;
+ 
+  HeatBalanceAlgorithm,ConductionTransferFunction;
  
   Site:Location,
     CHICAGO ILLINOIS,        !- Name
@@ -40,6 +38,7 @@
     190.0;                   !- Elevation {m}
  
   RunPeriod,
+    ,                        !- Name
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
     12,                      !- End Month
@@ -294,14 +293,11 @@
 ! ========================================================================
  Simulation Data;
  
-  Timestep,
-    4;                       !- Number of Timesteps per Hour
+  Timestep,4;
  
-  SurfaceConvectionAlgorithm:Inside,
-    1;                       !- Algorithm
+  SurfaceConvectionAlgorithm:Inside,1;
  
-  SurfaceConvectionAlgorithm:Outside,
-    1;                       !- Algorithm
+  SurfaceConvectionAlgorithm:Outside,1;
  
 ! -----------------------------------------------------------------------
  
@@ -327,8 +323,7 @@
     2.7000,                  !- Ceiling Height {m}
     259.2;                   !- Volume {m3}
  
-  ZoneCapacitanceMultiplier,
-    1.2;                     !- Multiplier
+  ZoneCapacitanceMultiplier,1.2;
  
 ! -----------------------------------------------------------------------
  
@@ -352,7 +347,7 @@
     16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     0.0000000E+00,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE EAST,       !- Name
     Wall,                    !- Surface Type
@@ -368,7 +363,7 @@
     16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 1 EAST WINDOW,  !- Name
     Window,                  !- Surface Type
@@ -410,7 +405,7 @@
     0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE WEST,       !- Name
     Wall,                    !- Surface Type
@@ -426,7 +421,7 @@
     0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     0.0000000E+00,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 2 WEST WINDOW,  !- Name
     Window,                  !- Surface Type
@@ -468,7 +463,7 @@
     0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,0.0000000E+00,0.0000000E+00;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE CEILING,    !- Name
     Roof,                    !- Surface Type
@@ -484,7 +479,7 @@
     0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
 ! ----------------------------------------------------------
 ! Surface for internal mass, seperating the two office and hallway
  
@@ -593,12 +588,14 @@
  
   ScheduleTypeLimits,
     Cont Sch,                !- Name
-    0.0:1.0,                 !- Range
+    0.0,                     !- Lower Limit Value
+    1.0,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
  
   ScheduleTypeLimits,
     Disc Sch,                !- Name
-    0.0:1.0,                 !- Range
+    0.0,                     !- Lower Limit Value
+    1.0,                     !- Upper Limit Value
     Discrete;                !- Numeric Type
  
 ! ------------------------------------------------------------------
@@ -1062,7 +1059,7 @@
     31;                      !- End Day 1
  
 ! ------------------------------------------------------------------
-
+ 
   ZoneInfiltration:DesignFlowRate,
     INFILTRATION 1,          !- Name
     ZONE ONE,                !- Zone Name
@@ -1119,7 +1116,8 @@
  
   ScheduleTypeLimits,
     Temperature,             !- Name
-    -60:200,                 !- Range
+    -60,                     !- Lower Limit Value
+    200,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1245,7 +1243,8 @@
  
   ScheduleTypeLimits,
     Control Type,            !- Name
-    0:4,                     !- Range
+    0,                       !- Lower Limit Value
+    4,                       !- Upper Limit Value
     Discrete;                !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1370,20 +1369,11 @@
 !report variable,,System Node Humidity Ratio,hourly;
 !report variable,,SimAir Iterations,hourly;
  
-  Output:Variable,
-    *,                       !- Key Value
-    Ideal Loads Air Sensible Cooling Energy,  !- Variable Name
-    Environment;             !- Reporting Frequency
+  Output:Variable,*,Ideal Loads Air Sensible Cooling Energy,Environment;
  
-  Output:Variable,
-    *,                       !- Key Value
-    Ideal Loads Air Heating Energy,  !- Variable Name
-    Environment;             !- Reporting Frequency
+  Output:Variable,*,Ideal Loads Air Heating Energy,Environment;
  
-  Output:Variable,
-    *,                       !- Key Value
-    Lights Electric Consumption,  !- Variable Name
-    Environment;             !- Reporting Frequency
+  Output:Variable,*,Lights Electric Consumption,Environment;
  
 !report variable dictionary;
 !report,surfaces,dxf;

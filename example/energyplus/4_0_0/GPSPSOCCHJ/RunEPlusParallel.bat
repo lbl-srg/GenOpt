@@ -51,7 +51,7 @@
  echo ===== %0 (Run EnergyPlus) %1 %2 ===== Start =====
 : Currently, there is no environment variable that points to the E+ directory.
 : We hard-code it here.  
- set program_path=C:\Program Files\EnergyPlusV3-1-0\
+ set program_path=C:\Program Files\EnergyPlusV4-0-0\
  set program_name=EnergyPlus.exe
 : Set the input_path to the current working directory
  set input_path=%cd%\
@@ -125,6 +125,7 @@ IF EXIST in.imf         DEL in.imf
 IF EXIST in.idf         DEL in.idf
 IF EXIST out.idf        DEL out.idf
 IF EXIST audit.out      DEL audit.out
+IF EXIST eplusout.inp   DEL eplusout.inp
 IF EXIST in.epw         DEL in.epw
 IF EXIST in.stat        DEL in.stat
 IF EXIST eplusout.audit DEL eplusout.audit
@@ -135,6 +136,7 @@ IF EXIST expandedidf.err   DEL expandedidf.err
 IF EXIST readvars.audit   DEL readvars.audit
 IF EXIST eplusout.sql  DEL eplusout.sql
 IF EXIST sqlite.err  DEL sqlite.err
+IF EXIST eplusout.edd DEL eplusout.edd
 :if %pausing%==Y pause
 
 :  2. Clean up target directory
@@ -190,6 +192,7 @@ IF EXIST "%output_path%%1Spark.log" DEL "%output_path%%1Spark.log"
 IF EXIST "%output_path%%1.expidf" DEL "%output_path%%1.expidf"
 IF EXIST "%output_path%%1.rvaudit" DEL "%output_path%%1.rvaudit"
 IF EXIST "%output_path%%1.sql" DEL "%output_path%%1.sql"
+IF EXIST "%output_path%%1.edd" DEL "%output_path%%1.edd"
 
 :  3. Copy input data file to working directory
 copy "%program_path%Energy+.idd" "Energy+.idd"
@@ -249,6 +252,8 @@ IF NOT EXIST eplusmtr.inp "%post_proc%ReadVarsESO.exe" test.mvi %rvset%
 IF EXIST eplusout.bnd "%post_proc%HVAC-Diagram.exe"
 
 :  10. Move output files to output path
+ IF EXIST %1.eso       MOVE %1.eso       "%output_path%%1.eso"
+ IF EXIST %1.err       MOVE %1.err       "%output_path%%1.err"
  IF EXIST eplusout.eso MOVE eplusout.eso "%output_path%%1.eso"
  IF EXIST eplusout.rdd MOVE eplusout.rdd "%output_path%%1.rdd"
  IF EXIST eplusout.mdd MOVE eplusout.mdd "%output_path%%1.mdd"
@@ -293,6 +298,7 @@ IF EXIST eplusout.bnd "%post_proc%HVAC-Diagram.exe"
  IF EXIST expandedidf.err copy expandedidf.err+eplusout.err "%output_path%%1.err"
  IF EXIST readvars.audit MOVE readvars.audit "%output_path%%1.rvaudit"
  IF EXIST eplusout.sql MOVE eplusout.sql "%output_path%%1.sql"
+ IF EXIST eplusout.edd MOVE eplusout.edd "%output_path%%1.edd"
 
 :   11.  Clean up directory.
  ECHO Removing extra files . . .
