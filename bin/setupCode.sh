@@ -2,9 +2,9 @@
 FILES=`find src -name *.java`
 for ff in $FILES; do
     echo $ff
-    sed -e 's/GenOpt(R) 3.0.1/GenOpt(R) 3.0.2-rc1/g' $ff > $ff.AAAA
+    sed -e 's/GenOpt(R) 3.0.2-rc1/GenOpt(R) 3.0.2/g' $ff > $ff.AAAA
     mv $ff.AAAA $ff
-    sed -e 's/(August 14, 2009)/(October 29, 2009)/g' $ff > $ff.AAAA
+    sed -e 's/(October 29, 2009)/(November 6, 2009)/g' $ff > $ff.AAAA
     mv $ff.AAAA $ff
 done
 
@@ -15,7 +15,7 @@ for ff in $FILES; do
 done
 
 FIL=install/info.html
-sed -e 's/3.0.1/3.0.2-rc1/g' $FIL > $FIL.AAAA
+sed -e 's/3.0.2-rc1/3.0.2/g' $FIL > $FIL.AAAA
 if [ "$?" != "0" ]; then
     echo "Error in replacing string in $FIL"
     echo "Exit with error"
@@ -25,7 +25,7 @@ mv $FIL.AAAA $FIL
 
 
 FIL=install/install.xml
-sed -e 's/3.0.1/3.0.2-rc1/g' $FIL > $FIL.AAAA
+sed -e 's/3.0.2-rc1/3.0.2/g' $FIL > $FIL.AAAA
 if [ "$?" != "0" ]; then
     echo "Error in replacing string in $FIL"
     echo "Exit with error"

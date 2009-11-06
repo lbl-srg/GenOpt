@@ -60,7 +60,7 @@ IZPACK=izpack
 endif
 
 #export genopt-version-dot=3.0.0-beta2
-export genopt-version-dot=3.0.2-rc1
+export genopt-version-dot=3.0.2
 
 export genopt-version-dash=$(shell echo $(genopt-version-dot) | sed -e 's/[.]/-/g')
 ### Targets of Makefile ###########################
