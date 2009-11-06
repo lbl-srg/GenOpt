@@ -1,0 +1,36 @@
+Vary{
+Parameter{  // overhang1
+     Name = eta;
+     Ini = 0;
+     Step = 0;
+     Min = 1;
+     Max = 10;
+  }
+}
+
+OptimizationSettings
+{
+	MaxIte = 500;
+	MaxEqualResults = 10;
+	WriteStepNumber = false;
+}
+
+Algorithm{
+  Main = GPSPSOCCHJ;
+  NeighborhoodTopology = vonNeumann;
+  NeighborhoodSize = 5;
+  NumberOfParticle = 10;
+  NumberOfGeneration = 10;
+  Seed = 1;
+  CognitiveAcceleration = 2.8;
+  SocialAcceleration = 1.3;
+  MaxVelocityGainContinuous = 0.5;
+  MaxVelocityDiscrete = 4;
+  ConstrictionGain = 0.5;
+  MeshSizeDivider = 2;
+  InitialMeshSizeExponent = 0;
+  MeshSizeExponentIncrement = 1;
+  NumberOfStepReduction = 4;
+}
+
+
