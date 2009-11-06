@@ -113,6 +113,9 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2009, Nov.  5 wm Added call to System.gc() in Optimizer.java before deleting the output and error
+                  files. Otherwise, Java may not release the files, and they cannot be deleted.
+                  This problem happened on Windows only.
  2009, Oct. 29 wm Revised SimOutputFileHandler.java and ErrorChecker.java to use a BufferedReader,
                   based on the suggestion of Andreas Edqvist Kissavos at Equa.
                   The old implementation required a long time to read IDA output file.

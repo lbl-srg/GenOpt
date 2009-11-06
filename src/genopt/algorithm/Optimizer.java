@@ -1417,6 +1417,11 @@ abstract public class Optimizer
 	_copyRunFiles(data.OptIni.getSimOutSavPat(), simOutPat, 
 		      data.OptIni.getSimOutFilNam(), simNum);
 
+
+	// Run the garbage collector. Otherwise, in EnergyPlus simulation under
+	// Windows XP, the .err and .eso file may not be released and hence
+	// it cannot be deleted by the lines below
+	System.gc();
 	// Delete temporary working directories
 	// First, we make sure that they are really temporary to prevent wipping out
 	// non-temporary files. This is more a prevention for developers, since
