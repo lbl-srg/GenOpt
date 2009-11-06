@@ -216,7 +216,8 @@ public class SimOutputFileHandler
 	    throws OptimizerException, IOException
 	{
 	    String lastFoundLine = null;
-	    final BufferedReader reader = new BufferedReader(new FileReader(new File(filNam)));
+	    final FileReader filRea = new FileReader(new File(filNam));
+	    final BufferedReader reader = new BufferedReader(filRea);
 	    String curLin = reader.readLine();
 	    while (curLin != null){
 		// read file from top to bottom, saving the line that could contain the 
@@ -231,11 +232,15 @@ public class SimOutputFileHandler
 	    }
 	    // We found a line with the delimiter.
 	    if (lastFoundLine != null){
+		reader.close();
+		filRea.close();
 		return (delimiter.length() == 0) ?
 		    getFirstDouble(lastFoundLine) : 
 		    getDoubleAfterLastSpace(lastFoundLine);
 	    }
 	    // We did not find any line with the delimiter
+	    reader.close();
+	    filRea.close();
 	    throwObjectiveFunctionValueNotFound();
 	    return 999; // to satisfy compiler	    
 	}
@@ -253,7 +258,8 @@ public class SimOutputFileHandler
 	    int iLin = -1;
 	    int i = 1;
 	    String lastFoundLine = null;
-	    final BufferedReader reader = new BufferedReader(new FileReader(new File(filNam)));
+	    final FileReader filRea = new FileReader(new File(filNam));
+	    final BufferedReader reader = new BufferedReader(filRea);
 	    String curLin = reader.readLine();
 	    while (curLin != null){
 		int begInd = curLin.lastIndexOf(delimiter);
@@ -300,9 +306,13 @@ public class SimOutputFileHandler
 		final int delPos = getIndexOfSeparator(lastFoundLine);
 		if (delPos != -1)
 		    lastFoundLine = new String(lastFoundLine.substring(0, delPos));
+		reader.close();
+		filRea.close();
 		return parseToDouble(lastFoundLine);
 	    }
 	    // objective function value was not found in simulation output file
+	    reader.close();
+	    filRea.close();
 	    throwObjectiveFunctionValueNotFound();
 	    return 999; // to satisfy compiler
 	}
