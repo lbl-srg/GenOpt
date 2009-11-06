@@ -113,15 +113,18 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
- 2009, Nov.  5 wm Added call to System.gc() in Optimizer.java before deleting the output and error
-                  files. Otherwise, Java may not release the files, and they cannot be deleted.
+ 2009, Nov.  6 wm Released version 3.0.2
+ 2009, Nov.  5 wm Added call to System.gc() in Optimizer.java before deleting 
+                  the output and error files. Otherwise, Java may not release 
+                  the files, and they cannot be deleted.
                   This problem happened on Windows only.
- 2009, Oct. 29 wm Revised SimOutputFileHandler.java and ErrorChecker.java to use a BufferedReader,
-                  based on the suggestion of Andreas Edqvist Kissavos at Equa.
+ 2009, Oct. 29 wm Revised SimOutputFileHandler.java and ErrorChecker.java 
+                  to use a BufferedReader, based on the suggestion of 
+                  Andreas Edqvist Kissavos at Equa.
                   The old implementation required a long time to read IDA output file.
-		  With the new implementation, reading an output from a file that is 10 times 
-		  the length of a EPW file, the computing time has been reduced from
-		  63 seconds to 0.6 seconds.
+		  With the new implementation, reading an output from a file that 
+                  is 10 times the length of a EPW file, the computing time 
+                  has been reduced from 63 seconds to 0.6 seconds.
  2009, Aug. 14 wm Released version 3.0.1
  2009, Jul. 24 wm Bugfix: If the objective function delimiter was not found,
                   GenOpt went into a deadlock which prevented the error message
@@ -330,7 +333,7 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_ID</code> here.
      *
      */
-    public final static String VERSION_ID     = "-rc1";//"alpha1 or -rc3";
+    public final static String VERSION_ID     = "";//"alpha1 or -rc3";
     //    public final static String VERSION_ID     = "beta2";//"alpha1 or -rc3";
                                                     
     /**
@@ -338,7 +341,7 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", October 29, 2009";
+	VERSION_NUMBER + VERSION_ID + ", November 6, 2009";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
