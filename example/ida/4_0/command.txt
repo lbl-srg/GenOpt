@@ -16,21 +16,6 @@ OptimizationSettings
 }
 
 Algorithm{
-  Main = GPSPSOCCHJ;
-  NeighborhoodTopology = vonNeumann;
-  NeighborhoodSize = 5;
-  NumberOfParticle = 10;
-  NumberOfGeneration = 10;
-  Seed = 1;
-  CognitiveAcceleration = 2.8;
-  SocialAcceleration = 1.3;
-  MaxVelocityGainContinuous = 0.5;
-  MaxVelocityDiscrete = 4;
-  ConstrictionGain = 0.5;
-  MeshSizeDivider = 2;
-  InitialMeshSizeExponent = 0;
-  MeshSizeExponentIncrement = 1;
-  NumberOfStepReduction = 4;
+ Main = GoldenSection;
+ IntervalReduction = 0.001;
 }
-
-
