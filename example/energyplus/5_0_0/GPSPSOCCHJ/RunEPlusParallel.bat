@@ -51,7 +51,7 @@
  echo ===== %0 (Run EnergyPlus) %1 %2 ===== Start =====
 : Currently, there is no environment variable that points to the E+ directory.
 : We hard-code it here.  
- set program_path=C:\Program Files\EnergyPlusV4-0-0\
+ set program_path=C:\Program Files\EnergyPlusV5-0-0\
  set program_name=EnergyPlus.exe
 : Set the input_path to the current working directory
  set input_path=%cd%\
@@ -137,6 +137,8 @@ IF EXIST readvars.audit   DEL readvars.audit
 IF EXIST eplusout.sql  DEL eplusout.sql
 IF EXIST sqlite.err  DEL sqlite.err
 IF EXIST eplusout.edd DEL eplusout.edd
+IF EXIST slab.int DEL slab.int
+IF EXIST BasementGHTIn.idf DEL BasementGHTIn.idf
 :if %pausing%==Y pause
 
 :  2. Clean up target directory
@@ -197,18 +199,18 @@ IF EXIST "%output_path%%1.edd" DEL "%output_path%%1.edd"
 :  3. Copy input data file to working directory
 copy "%program_path%Energy+.idd" "Energy+.idd"
 copy "%program_path%Energy+.ini" "Energy+.ini"
-if exist "%1.imf" copy "%1.imf" in.imf
+if exist "%input_path%%1.imf" copy "%input_path%%1.imf" in.imf
 if exist in.imf "%program_path%EPMacro"
 if exist out.idf copy out.idf "%output_path%%1.epmidf"
 if exist audit.out copy audit.out "%output_path%%1.epmdet"
 if exist audit.out erase audit.out
 if exist out.idf MOVE out.idf in.idf
-if not exist in.idf copy "%1.idf" In.idf
+if not exist in.idf copy "%input_path%%1.idf" In.idf
 if exist in.idf "%program_path%ExpandObjects"
 if exist expandedidf.err COPY expandedidf.err eplusout.end
 if exist expanded.idf COPY expanded.idf "%output_path%%1.expidf"
 if exist expanded.idf MOVE expanded.idf in.idf
-if not exist in.idf copy "%1.idf" In.idf
+if not exist in.idf copy "%input_path%%1.idf" In.idf
 
 :  4. Test for weather file parameter and copy to working directory
  if "%2" == ""  goto exe
@@ -218,14 +220,10 @@ if not exist in.idf copy "%1.idf" In.idf
 :  5. Execute the program
 :exe
  : Display basic parameters of the run
- echo Running "%program_path%%program_name%"
- cd 
- echo Program path: %program_path%
+ echo Running %program_path%%program_name%
  echo Input File  : %input_path%%1.idf
  echo Output Files: %output_path%
- echo IDD file    : %program_path%Energy+.idd
  if NOT "%2" == "" echo Weather File: %weather_path%%2.epw
-dir
  if %pausing%==Y pause
  
  ECHO Begin EnergyPlus processing . . . 
@@ -234,8 +232,8 @@ dir
  
 
 :  6&8. Copy Post Processing Program command file(s) to working directory
- IF EXIST "%1.rvi" copy "%1.rvi" eplusout.inp
- IF EXIST "%1.mvi" copy "%1.mvi" eplusmtr.inp
+ IF EXIST "%input_path%%1.rvi" copy "%input_path%%1.rvi" eplusout.inp
+ IF EXIST "%input_path%%1.mvi" copy "%input_path%%1.mvi" eplusmtr.inp
 
 :  7&9. Run Post Processing Program(s)
 if %maxcol%==250     SET rvset=
