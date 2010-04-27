@@ -7,7 +7,7 @@ In manual.tex, update
   copyright and license year
 
 In Makefile, update
-  export genopt-version=3.0.0-beta2
+  export genopt-version-dot=3.0.0-beta2
 
 In GenOpt.java, update
   revision history
