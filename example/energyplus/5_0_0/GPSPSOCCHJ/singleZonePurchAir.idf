@@ -26,7 +26,7 @@
 !           Overhang depth also design parameter (for West and East window separately)
 !           Solar, visible, and thermal transmittance of shading device also design parameter
  
-  Version,4.0;
+  Version,5.0;
  
   HeatBalanceAlgorithm,ConductionTransferFunction;
  
@@ -588,14 +588,14 @@
  
   ScheduleTypeLimits,
     Cont Sch,                !- Name
-    0.0,                     !- Lower Limit Value
-    1.0,                     !- Upper Limit Value
+    0.0,                     !- Lower Limit Value {A3}
+    1.0,                     !- Upper Limit Value {A3}
     Continuous;              !- Numeric Type
  
   ScheduleTypeLimits,
     Disc Sch,                !- Name
-    0.0,                     !- Lower Limit Value
-    1.0,                     !- Upper Limit Value
+    0.0,                     !- Lower Limit Value {A3}
+    1.0,                     !- Upper Limit Value {A3}
     Discrete;                !- Numeric Type
  
 ! ------------------------------------------------------------------
@@ -1116,8 +1116,8 @@
  
   ScheduleTypeLimits,
     Temperature,             !- Name
-    -60,                     !- Lower Limit Value
-    200,                     !- Upper Limit Value
+    -60,                     !- Lower Limit Value {A3}
+    200,                     !- Upper Limit Value {A3}
     Continuous;              !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1243,8 +1243,8 @@
  
   ScheduleTypeLimits,
     Control Type,            !- Name
-    0,                       !- Lower Limit Value
-    4,                       !- Upper Limit Value
+    0,                       !- Lower Limit Value {A3}
+    4,                       !- Upper Limit Value {A3}
     Discrete;                !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1323,8 +1323,8 @@
     Zone1Equipment,          !- Name
     ZoneHVAC:IdealLoadsAirSystem,  !- Zone Equipment 1 Object Type
     Zone1Air,                !- Zone Equipment 1 Name
-    1,                       !- Zone Equipment 1 Cooling Priority
-    1;                       !- Zone Equipment 1 Heating Priority
+    1,                       !- Zone Equipment 1 Cooling Sequence
+    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
  
 ! PURCHASED AIR, (unlimited heating/cooling capacity)
  
