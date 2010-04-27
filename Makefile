@@ -20,7 +20,7 @@ RUNFIL=`find example \( -name 'OutputListing*' -or -name 'GenOpt.log' \
         -or -name '*.err' -or -name '*.eio' -or -name '*.end' -or -name '*.csv' \
         -or -name '*.svg' -or -name '*.bnd' -or -name '*.mtd' \
         -or -name '*.audit' \)`
-RUNDIR=`find example \( -name 'Output' \)`
+RUNDIR=`find example \( -name 'Output' -or -name 'tmp-genopt-run*' \)`
 
 RUNDYMFIL=`find example/dymola \( -name 'dsres.mat' \
 	-or -name 'dslog.txt' -or -name 'dsmodel.c' -or -name 'dsfinal.txt' \
