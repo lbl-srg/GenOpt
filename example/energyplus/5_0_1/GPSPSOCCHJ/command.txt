@@ -1,0 +1,58 @@
+/* GenOpt example command file
+   MWetter@lbl.gov, 06/18/2003
+*/
+Vary{
+  Parameter{   // building azimuth
+    Name    = azimuth;
+    Min     =  -180;
+    Ini     =     0;
+    Max     =   180;
+    Step    =    10;
+  }
+  Parameter{    // window and overhang width
+    Name    = w_we_win;
+    Min     = 0.1;
+    Ini     = 3;
+    Max     = 5.9;
+    Step    = 0.2;
+  }
+  Parameter{
+    Name    = w_ea_win;
+    Min     = 0.1;
+    Ini     = 3;
+    Max     = 5.9;
+    Step    = 0.2;
+  }
+  Parameter{ // solar, visible, and thermal transmittance of shading device
+    Name    = tau;
+    Min     = 0.2;
+    Ini     = 0.5;
+    Max     = 0.8;
+    Step    = 0.1;
+  }
+}
+
+OptimizationSettings{
+  MaxIte = 2000;
+  MaxEqualResults = 100;
+  WriteStepNumber = false;
+  UnitsOfExecution = 0;
+}
+
+Algorithm{
+  Main = GPSPSOCCHJ;
+  NeighborhoodTopology = vonNeumann;
+  NeighborhoodSize = 5;
+  NumberOfParticle = 10;
+  NumberOfGeneration = 10;
+  Seed = 1;
+  CognitiveAcceleration = 2.8;
+  SocialAcceleration = 1.3;
+  MaxVelocityGainContinuous = 0.5;
+  MaxVelocityDiscrete = 4;
+  ConstrictionGain = 0.5;
+  MeshSizeDivider = 2;
+  InitialMeshSizeExponent = 0;
+  MeshSizeExponentIncrement = 1;
+  NumberOfStepReduction = 4;
+}
