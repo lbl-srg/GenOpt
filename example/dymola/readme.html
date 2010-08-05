@@ -55,10 +55,14 @@ If the file <code>dslog.txt</code> contains error messages,
 then GenOpt will stop.
 </p>
 <p>
-The optimization should fine a control sequence that looks as follows:<br>
+The optimization finds a control sequence that minimizes the squared difference between measured temperature and setpoint temperature for the model shown below:
+<img src="images/model.png">
+</p>
+<p>
+The optimized control sequence looks as follows:<br>
 <img src="images/optimalControlSequence.png">
 <br>
-This should yield the following temperature trajectory:<br>
+This control sequence yields the temperature trajectory labeled "optimized" in the figure below. The figure also shows the outside temperature, the temperature trajectory that corresponds to the initial non-optimized control input (labeled "initial setting") and the temperature setpoint.<br>
 <img src="images/temperatureTrajectory.png">
 </p>
 <p>
@@ -72,7 +76,7 @@ and the Dymola manual.
 Please send comments or questions to
 Michael Wetter, LBNL, <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A>
 <BR>
-February 20, 2009.
+August 4, 2010.
 </DIV>
 </BODY>
 </HTML>
