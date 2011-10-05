@@ -329,7 +329,7 @@ public class ResultManager
 	ResultPoint r = new ResultPoint((ResultPoint)ptsMai.get(ptsMai.size()-1));
 	int step = r.getStepNumber();
 	double fMin = r.getF(0);
-	
+        
 	for (int j = ptsMai.size()-1; j > -1; j--) {
 	    ResultPoint pt = (ResultPoint)(ptsMai.get(j));
 	    if (step == pt.getStepNumber()) {
@@ -338,13 +338,21 @@ public class ResultManager
 		    fMin = r.getF(0);
 		}
 	    }
-	    //	    else  we need to run through all steps because multi-start algo can
-	    //      set the step number to 1 if they start a new search
-		//		j = -1; // step number changed, break inner loop
 	}
-	return r;		
+	
+        //search subiterations as well
+        for (int j = ptsSub.size()-1; j > -1; j--) {
+	    ResultPoint pt = (ResultPoint)(ptsSub.get(j));
+	    if (step == pt.getStepNumber()) {
+		if (fMin > pt.getF(0)) {
+		    r = (ResultPoint)pt.clone();
+		    fMin = r.getF(0);
+		}
+	    }
+	}              
+	return r;                              
     }
-
+    
     /** Gets the absolute difference of the last objective function value and 
 	  *    the second last objective function value (but <b>not</b> the absolute value
 	  *    of the difference) where both are values of the a main iteration 

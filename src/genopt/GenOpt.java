@@ -113,6 +113,9 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2011, Oct.  5 wm Added bug fix that caused only the main iterations to be reported
+                  when requesting the minimum point. This affects the situation where
+                  a user stops the optimization. The bug was reported by Machairas Vasileios
  2009, Nov.  6 wm Released version 3.0.2
  2009, Nov.  5 wm Added call to System.gc() in Optimizer.java before deleting 
                   the output and error files. Otherwise, Java may not release 
