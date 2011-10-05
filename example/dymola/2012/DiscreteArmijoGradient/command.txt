@@ -1,0 +1,60 @@
+/* GenOpt command file
+   MWetter@lbl.gov 2008-11-11
+*/
+
+Vary{
+  Parameter{ Name = u00; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u01; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u02; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u03; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u04; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u05; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u06; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u07; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u08; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u09; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u10; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u11; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u12; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u13; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u14; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u15; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u16; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u17; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u18; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u19; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u20; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u21; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u22; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u23; Min = 20; Ini = 25; Max = 30; Step = 1; }
+  Parameter{ Name = u24; Min = 20; Ini = 25; Max = 30; Step = 1; }
+}
+
+OptimizationSettings{
+  MaxIte = 10000;
+  MaxEqualResults = 100;
+  WriteStepNumber = false;
+}
+
+Algorithm{
+  Main = DiscreteArmijoGradient;
+  Alpha = 0.5;
+  Beta  = 0.8;
+  Gamma = 0.1;
+  K0    = 10;
+  KStar = 0;
+  LMax  = 50;
+  Kappa = 50;
+  EpsilonM = 0.05;
+  EpsilonX = 0.05;
+}
+
+/*
+Algorithm{
+ Main = GPSHookeJeeves;
+ MeshSizeDivider = 2;
+ InitialMeshSizeExponent = 0;
+ MeshSizeExponentIncrement = 1;
+ NumberOfStepReduction = 4;
+}
+*/
