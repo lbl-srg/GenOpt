@@ -26,7 +26,7 @@
 !           Overhang depth also design parameter (for West and East window separately)
 !           Solar, visible, and thermal transmittance of shading device also design parameter
  
-  Version,5.0;
+  Version,6.0;
  
   HeatBalanceAlgorithm,ConductionTransferFunction;
  
@@ -295,9 +295,9 @@
  
   Timestep,4;
  
-  SurfaceConvectionAlgorithm:Inside,1;
+  SurfaceConvectionAlgorithm:Inside,Detailed;
  
-  SurfaceConvectionAlgorithm:Outside,1;
+  SurfaceConvectionAlgorithm:Outside,TARP;
  
 ! -----------------------------------------------------------------------
  
@@ -323,7 +323,10 @@
     2.7000,                  !- Ceiling Height {m}
     259.2;                   !- Volume {m3}
  
-  ZoneCapacitanceMultiplier,1.2;
+  ZoneCapacitanceMultiplier:ResearchSpecial,
+    1.2,                     !- Temperature Capacity Multiplier
+    1.2,                     !- Humidity Capacity Multiplier
+    1.2;                     !- Carbon Dioxide Capacity Multiplier
  
 ! -----------------------------------------------------------------------
  
@@ -494,7 +497,7 @@
  
   ElectricEquipment,
     ROOM ELE EQU,            !- Name
-    ZONE ONE,                !- Zone Name
+    ZONE ONE,                !- Zone or ZoneList Name
     Sch Equ,                 !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     768,                     !- Design Level {W}
@@ -507,7 +510,7 @@
  
   Lights,
     ROOM LIGHTS,             !- Name
-    ZONE ONE,                !- Zone Name
+    ZONE ONE,                !- Zone or ZoneList Name
     Sch Lig,                 !- Schedule Name
     LightingLevel,           !- Design Level Calculation Method
     1632.0,                  !- Lighting Level {W}
@@ -521,7 +524,7 @@
  
   People,
     ROOM PEOPLE,             !- Name
-    ZONE ONE,                !- Zone Name
+    ZONE ONE,                !- Zone or ZoneList Name
     Sch Peo,                 !- Number of People Schedule Name
     People,                  !- Number of People Calculation Method
     3.2,                     !- Number of People
@@ -588,14 +591,14 @@
  
   ScheduleTypeLimits,
     Cont Sch,                !- Name
-    0.0,                     !- Lower Limit Value {A3}
-    1.0,                     !- Upper Limit Value {A3}
+    0.0,                     !- Lower Limit Value
+    1.0,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
  
   ScheduleTypeLimits,
     Disc Sch,                !- Name
-    0.0,                     !- Lower Limit Value {A3}
-    1.0,                     !- Upper Limit Value {A3}
+    0.0,                     !- Lower Limit Value
+    1.0,                     !- Upper Limit Value
     Discrete;                !- Numeric Type
  
 ! ------------------------------------------------------------------
@@ -1062,7 +1065,7 @@
  
   ZoneInfiltration:DesignFlowRate,
     INFILTRATION 1,          !- Name
-    ZONE ONE,                !- Zone Name
+    ZONE ONE,                !- Zone or ZoneList Name
     Sch 1,                   !- Schedule Name
     Flow/Zone,               !- Design Flow Rate Calculation Method
     0.036,                   !- Design Flow Rate {m3/s}
@@ -1104,7 +1107,7 @@
  
   ZoneControl:Thermostat,
     Zone 1 Thermostat,       !- Name
-    ZONE ONE,                !- Zone Name
+    ZONE ONE,                !- Zone or ZoneList Name
     Zone Control Type Sched, !- Control Type Schedule Name
     ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
     Heating Cooling Setpoints;  !- Control 1 Name
@@ -1116,8 +1119,8 @@
  
   ScheduleTypeLimits,
     Temperature,             !- Name
-    -60,                     !- Lower Limit Value {A3}
-    200,                     !- Upper Limit Value {A3}
+    -60,                     !- Lower Limit Value
+    200,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
  
           ! Next Arguments represent each hour of day
@@ -1243,8 +1246,8 @@
  
   ScheduleTypeLimits,
     Control Type,            !- Name
-    0,                       !- Lower Limit Value {A3}
-    4,                       !- Upper Limit Value {A3}
+    0,                       !- Lower Limit Value
+    4,                       !- Upper Limit Value
     Discrete;                !- Numeric Type
  
           ! Next Arguments represent each hour of day
