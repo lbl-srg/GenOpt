@@ -113,6 +113,8 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2011, Nov. 30 wm Added new keyword firstCharacterAt, which is needed to parse the
+                  EnergyPlus eso files for version 7.0.
  2011, Oct.  5 wm Added bug fix that caused only the main iterations to be reported
                   when requesting the minimum point. This affects the situation where
                   a user stops the optimization. The bug was reported by Machairas Vasileios
@@ -980,8 +982,8 @@ public class GenOpt extends Thread
 	int nErr = ife.getNumberOfErrors();
 	final String secKey = new String("ObjectiveFunctionLocation");
 	Token.getSectionStart(st, secKey, ife, fn);
-	final String[] key = {"Name", "Delimiter", "Function"};
-	final boolean[] req = {true, false, false};
+	final String[] key = {"Name", "Delimiter", "FirstCharacterAt", "Function"};
+	final boolean[] req = {true, false, false, false};
 	String[] val;
 	OrderedMap objFunDelLis = new OrderedMap(); // don't use Hashtable here
 
@@ -989,45 +991,60 @@ public class GenOpt extends Thread
 	    // return if error
 	    if (nErr < ife.getNumberOfErrors())
 		return null;
-	    for(int iEnt = 0; iEnt < val.length / 3; iEnt++){
+	    for(int iEnt = 0; iEnt < val.length / 4; iEnt++){
 		// check that (i) name is set, and 
 		// (ii) either Delimiter or Function is set, but not both
-		if (val[0+3*iEnt] != null && val[0+3*iEnt].equals(""))
+		if (val[0+4*iEnt] != null && val[0+4*iEnt].equals(""))
 		    Token.setError(st, ife,
 				   "Value of '" + key[0] + (iEnt+1) + 
 				   "' must not be empty.", fn);
 		
 		
-		if (val[1+3*iEnt] == null && val[2+3*iEnt] == null )
+		if (val[1+4*iEnt] == null && val[3+4*iEnt] == null )
 		    Token.setError(st, ife,
 				   "Either '" + key[1] + (iEnt+1) + 
-				   "' or '" + key[2] + (iEnt+1) + 
+				   "' or '" + key[3] + (iEnt+1) + 
 				   "' must be set. Currently, none is set.", 
 				   fn);
 
 
-		if (val[1+3*iEnt] != null && val[1+3*iEnt].length() > 0 && 
-		    val[2+3*iEnt] != null && val[2+3*iEnt].length() > 0)
+		if (val[1+4*iEnt] != null && val[1+4*iEnt].length() > 0 && 
+		    val[3+4*iEnt] != null && val[3+4*iEnt].length() > 0)
 		    Token.setError(st, ife,
 				   "Either '" + key[1] + (iEnt+1) + 
-				   "' or '" + key[2] + (iEnt+1) + 
+				   "' or '" + key[3] + (iEnt+1) + 
 				   "' must be set, but not both. Currently, both are set.", 
 				   fn);
+		// set firstCharacterAt to 0 if empty
+		if (val[2+4*iEnt] == null)
+		    val[2+4*iEnt] = "0";
+		// parse firstCharacterAt to integer
+		int firstCharAt = 0;
+		try{
+		    firstCharAt = Integer.parseInt(val[2+4*iEnt], 10);
+		}
+		catch(NumberFormatException e){
+		    Token.setError(st, ife,
+				   "Failed to parse '" + key[2] + (iEnt+1) + 
+				   "' as it is not an integer. Received '" + val[2+4*iEnt] + "'", 
+				   fn);
+		}
 		// set function to null if empty
-		if (val[2+3*iEnt] != null && val[2+3*iEnt].trim().equals(""))
-		    val[2+3*iEnt] = null;
+		if (val[3+4*iEnt] != null && val[3+4*iEnt].trim().equals(""))
+		    val[3+4*iEnt] = null;
 		
 		// check for uniqueness of entries, and that name is not empty
-		if (val[0+3*iEnt] != null && objFunDelLis.containsKey(val[0+3*iEnt]))
+		if (val[0+4*iEnt] != null && objFunDelLis.containsKey(val[0+4*iEnt]))
 		    Token.setError(st, ife,
 				   "'" + key[0] + (iEnt+1) + 
 				   "' must not have the same value as a previous entry.", fn);
 		
 		if (nErr == ife.getNumberOfErrors()){
-		    objFunDelLis.put(val[0+3*iEnt], 
-				     new ObjectiveFunctionLocation(val[0+3*iEnt],
-								   val[1+3*iEnt],
-								   val[2+3*iEnt]));
+		    objFunDelLis.put(val[0+4*iEnt], 
+				     new ObjectiveFunctionLocation(val[0+4*iEnt],
+								   val[1+4*iEnt],
+								   firstCharAt,
+								   val[3+4*iEnt]));
 		}
 	    }
 	    if (nErr < ife.getNumberOfErrors())
@@ -1066,7 +1083,7 @@ public class GenOpt extends Thread
 	    j = 0;
 	    for(int i = 0; i < obj.length; i++){
 		if ( ptr[i] != -1 ){
-		    objFunDelLis.setValue(i, new ObjectiveFunctionLocation(nam[j], null, fun[j]));
+		    objFunDelLis.setValue(i, new ObjectiveFunctionLocation(nam[j], null, 0, fun[j]));
 		    j++;
 		}
 	    }

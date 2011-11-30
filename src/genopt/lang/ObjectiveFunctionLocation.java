@@ -80,13 +80,19 @@ public class ObjectiveFunctionLocation
 	 *@param name name of the function
 	 *@param delimiter objective function delimiter, or <code>null</code>
 	 *                 pointer
+	 *@param firstCharacterAt one-based index for the position
+         *          where the first character of the delimiter starts,
+         *          or 0 if unspecified
+	 *
 	 *@param function string representation of the function, or <code>null</code>
 	 *                 pointer
-	  */
+	 */
     public ObjectiveFunctionLocation(String name,
 				     String delimiter,
+				     int firstCharacterAt,
 				     String function){
 	Name = name;
+	firstCharAt = firstCharacterAt;
 	if ( delimiter == null && function != null && function.length() > 0){
 	    IsFunction = true;
 	    Delimiter = null;
@@ -114,13 +120,17 @@ public class ObjectiveFunctionLocation
     public String getName() { return new String(Name); }
     public String getDelimiter() { return new String(Delimiter); }
     public String getFunction() { return new String(Function); }
-    
+    public int getFirstCharAt() { return firstCharAt; }    
+
     /** The name of the objective function */
     protected String Name;
     /** The delimiter of the objective function, or <code>null</code> */
     protected String Delimiter;
     /** The function defining the objective function, or <code>null</code> */
     protected String Function;
+    /** One-based index for the position where the first character of the delimiter starts,
+	or 0 if unspecified */
+    protected int firstCharAt;
     /** Flag whether this instance is a function or not */
     protected boolean IsFunction;
 }

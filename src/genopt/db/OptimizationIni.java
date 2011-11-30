@@ -486,11 +486,6 @@ public class OptimizationIni implements Cloneable
      */
     public final String getOptComPat() {return new String(OptComPat) ;}
 
-    /* gets a <CODE>OrderedMap</CODE> with the delimiter of the objective function 
-     * in the simulation output file
-     *@return <CODE>OrderedMap</CODE> with the delimiter of the objective function 
-     */
-    //    public final OrderedMap getObjFunMap() {return objFunMap;}
 
     /**gets the delimiter of the objective function in the simulation output file
      *@param name name of the objective function

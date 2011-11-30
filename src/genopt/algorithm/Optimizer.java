@@ -1347,7 +1347,7 @@ abstract public class Optimizer
 
 	for (int iOutFil = 0; iOutFil < nSimOutFil; iOutFil++)
 	    simOutFilHan[iOutFil] = new SimOutputFileHandler(simOutFil[iOutFil],
-								     separator);
+							     separator);
 	
 	// in first function call, construct the pointer "funValPoi" that shows
 	// which function value is in what file
@@ -1355,8 +1355,10 @@ abstract public class Optimizer
 	    while( functionValuesParsed.get() == false ) { funValParLat.await(); }
 	    for (int iFx = 0; iFx < dimF; iFx++){
 		if ( ! objFunObj[iFx].isFunction() ){
-		    String del = objFunObj[iFx].getDelimiter();
-		    objFunVal[iFx] = simOutFilHan[funValPoi[iFx]].getObjectiveFunctionValue(del);
+		    final String del = objFunObj[iFx].getDelimiter();
+		    final int firstCharAt = objFunObj[iFx].getFirstCharAt();
+		    objFunVal[iFx] = simOutFilHan[funValPoi[iFx]].getObjectiveFunctionValue(del, 
+											    firstCharAt);
 		}
 	    }
 	} // simSum > 1
@@ -1368,9 +1370,11 @@ abstract public class Optimizer
 		}
 		else{
 		    final String del = objFunObj[iFx].getDelimiter();
+		    final int firstCharAt = objFunObj[iFx].getFirstCharAt();
 		    for(int iFil=0; iFil < nSimOutFil; iFil++){
 			try{
-			    objFunVal[iFx] = simOutFilHan[iFil].getObjectiveFunctionValue(del);
+			    objFunVal[iFx] = simOutFilHan[iFil].getObjectiveFunctionValue(del,
+											  firstCharAt);
 			    funValPoi[iFx] = iFil;
 			    iFil = nSimOutFil; // to get out of the inner for loop
 			}
