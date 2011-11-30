@@ -39,7 +39,7 @@ import java.lang.reflect.*;
   *
   * <h3>Copyright Notice</h3>
   *
-  * GenOpt Copyright (c) 1998-2010, The Regents of the University of 
+  * GenOpt Copyright (c) 1998-2011, The Regents of the University of 
   * California, through Lawrence Berkeley National Laboratory (subject 
   * to receipt of any required approvals from the U.S. Dept. of Energy).  
   * All rights reserved.<p>
@@ -63,7 +63,7 @@ import java.lang.reflect.*;
   * 
   * <h3>License agreement</h3>
   *
-  * GenOpt Copyright (c) 1998-2010, The Regents of the University of
+  * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
   * to receipt of any required approvals from the U.S. Dept. of Energy).  
   * All rights reserved.
@@ -108,11 +108,12 @@ import java.lang.reflect.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.0.3 (April 26, 2010)<P>
+  * @version GenOpt(R) 3.1.0 (November 30, 2011)<P>
   */
 
 /* Revision history:
  *******************
+ 2011, Nov. 30 wm Updated to 3.1.0
  2011, Nov. 30 wm Added new keyword firstCharacterAt, which is needed to parse the
                   EnergyPlus eso files for version 7.0.
  2011, Oct.  5 wm Added bug fix that caused only the main iterations to be reported
@@ -333,7 +334,7 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_NUMBER</code> here.
      *
      */
-    public final static String VERSION_NUMBER = "3.0.3";
+    public final static String VERSION_NUMBER = "3.1.0";
     /**
      * Describe constant <code>VERSION_ID</code> here.
      *
@@ -346,13 +347,13 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", April 26, 2010";
+	VERSION_NUMBER + VERSION_ID + ", November 30, 2011";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
      */
     public final static String COPYRIGHT =
-	"GenOpt Copyright (c) 1998-2010, The Regents of the" + LS +
+	"GenOpt Copyright (c) 1998-2011, The Regents of the" + LS +
         "University of California, through Lawrence Berkeley" + LS +
         "National Laboratory (subject to receipt of any " + LS +
 	"required approvals from the U.S. Dept. of Energy)." + LS +
