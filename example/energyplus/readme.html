@@ -12,6 +12,29 @@
 This directory contains example files that illustrate the use 
 of GenOpt in conjunction with the EnergyPlus simulation program.
 </p>
+<h4>Information for EnergyPlus, versions 7.0.0 or later</h4>
+<p>
+Due to changes in the EnergyPlus <code>*.eso</code> file format,
+it is now required to specify in the optimization initialization file,
+section <code>ObjectiveFunctionLocation</code>
+the entries
+<code>FirstCharacterAti</code> (i=1, 2, ...).
+For example, a specification may now look like
+<pre>
+ Name1             = Q_heat;
+ Delimiter1       = "170,";
+ FirstCharacterAt1 = 1;
+ 
+ Name2             = Q_cool;
+ Delimiter2        = "201,";
+ FirstCharacterAt2 = 1;
+</pre>
+Without the keyword <code>FirstCharacterAti</code>,
+the wrong numbers may be read from the EnergyPlus <code>*.eso</code> file.
+</p>
+<p>
+See the GenOpt manual for a description of this keyword.
+</p>
 <h4>Information for EnergyPlus on Windows, versions 5.0.1 or later</h4>
 <p>
 Because the Windows PATH variable does not contain the installation
@@ -55,7 +78,7 @@ and the EnergyPlus manual.
 Please send comments or questions to
 Michael Wetter, LBNL, <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A>
 <BR>
-November 23, 2011.
+November 30, 2011.
 </DIV>
 </BODY>
 </HTML>
