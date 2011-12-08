@@ -17,7 +17,7 @@
         <appname>GenOpt</appname>
         <appversion>3.1.0</appversion>
 	<appsubpath>genopt</appsubpath>
-	<javaversion>1.5</javaversion>
+	<javaversion>1.6</javaversion>
         <authors>
             <author name="Michael Wetter" email="MWetter@lbl.gov"/>
         </authors>
