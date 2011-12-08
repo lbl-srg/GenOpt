@@ -163,7 +163,7 @@ public class ErrorChecker implements Cloneable
 	  * <b>Note:</b> This method returns the number possible error strings
 	  *    that were set by the constructor {@link #ErrorChecker(String[] ErrorIndicator)}
           *    and not the number of found error strings passed by 
-          *    {@link #check(String[] StringToCheck, String AdditionalErrorInformation)}.
+          *    {@link #check(String StringToCheck, String AdditionalErrorInformation)}.
           *
 	  * @return Number of possible error strings
 	  */
@@ -174,7 +174,7 @@ public class ErrorChecker implements Cloneable
 	  * <b>Note:</b> This method returns a possible error string that was set
 	  *    that were set by the constructor {@link #ErrorChecker(String[] ErrorIndicator)}
           *    and not the number of found error Strings passed by 
-          *    {@link #check(String[] StringToCheck, String AdditionalErrorInformation)}.
+          *    {@link #check(String StringToCheck, String AdditionalErrorInformation)}.
           *
 	  * @param Position 0-based index of error string
 	  * @return A possible error string
