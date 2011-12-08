@@ -33,7 +33,7 @@ import genopt.io.InputFormatException;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.1.0 (November 30, 2011)<P>
+  * @version GenOpt(R) 3.1.0 (December 8, 2011)<P>
   */
 
 /*

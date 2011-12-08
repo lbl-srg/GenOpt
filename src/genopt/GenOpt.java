@@ -108,12 +108,12 @@ import java.lang.reflect.*;
   *
   * @author <A HREF="mailto:MWetter@lbl.gov">Michael Wetter</A>
   *
-  * @version GenOpt(R) 3.1.0 (November 30, 2011)<P>
+  * @version GenOpt(R) 3.1.0 (December 8, 2011)<P>
   */
 
 /* Revision history:
  *******************
- 2011, Nov. 30 wm Updated to 3.1.0
+ 2011, Dec.  8 wm Updated to 3.1.0
  2011, Nov. 30 wm Added new keyword firstCharacterAt, which is needed to parse the
                   EnergyPlus eso files for version 7.0.
  2011, Oct.  5 wm Added bug fix that caused only the main iterations to be reported
@@ -347,7 +347,7 @@ public class GenOpt extends Thread
      *
      */
     public final static String VERSION =
-	VERSION_NUMBER + VERSION_ID + ", November 30, 2011";
+	VERSION_NUMBER + VERSION_ID + ", December 8, 2011";
     /**
      * Describe constant <code>COPYRIGHT</code> here.
      *
