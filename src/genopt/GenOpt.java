@@ -113,6 +113,8 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2013, Jul.  3 wm In genopt.io.Token, prevented a NullPointerException that can be 
+                  caused by input such as "Min = ;"
  2011, Dec.  8 wm Updated to 3.1.0
  2011, Nov. 30 wm Added new keyword firstCharacterAt, which is needed to parse the
                   EnergyPlus eso files for version 7.0.

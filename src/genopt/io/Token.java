@@ -204,8 +204,17 @@ public class Token{
 			r = Double.toString( num );
 		    
 		}
-		else
-		    r = new String(st.sval);
+		else{
+		    // The test below is required to catch syntax error in the command file of the form
+                    //  Ini =   ;
+		    if (st.sval == null){
+			em = new String(fn) + new String
+			    ("(Line " + st.lineno() +"): InputFormatException: Expected a string, received nothing.");
+			throw new InputFormatException(em);
+		    }
+		    else
+			r = new String(st.sval);
+		}
 	    }
 	    else if (type.equals("Double")) {
 		// new code since Oct. 19, 2003
