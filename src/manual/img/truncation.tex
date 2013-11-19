@@ -1,0 +1,27 @@
+{\psset{xunit=3, yunit=15, arrowscale=2}
+\begin{pspicture}(-2.2, -0.22)(2, 0.2)%
+%\psgrid[subgriddiv=0, xunit=1, yunit=1, gridlabels=0](-2.3, -0.3)(2, 0.3)
+\fileplot[plotstyle=line, linecolor=black, linewidth=0.5pt]{img/truncation1.dat}%
+\fileplot[plotstyle=line, linecolor=red, linewidth=1pt]{img/truncation2.dat}%
+\psline{->}(-2.2,0)(1.9,0)
+\psline{->}(0,-0.22)(0,0.2)
+\uput[-90](1.85,-1ex){$x$}
+\uput[180](0, 0.18){$f(x)$}
+\multido{\n=-2+0.5}{8}{%
+  \psline[linewidth=1.5pt]{-}(\n,-2pt)(\n,2pt)%
+  \psline[linewidth=0.25pt]{-}(\n,-0.2)(\n,0.15)%
+}
+\rput(0,0){%
+  \multido{\n=-2.0+0.5}{8}{%
+    \uput[-45](\n, -1ex){$\n$}
+  }
+}
+\multido{\n=-0.20+0.05}{8}{%
+  \psline[linewidth=0.25pt]{-}(-2,\n)(1.5,\n)%
+  \psline[linewidth=1.5pt]{-}(-2pt,\n)(2pt,\n)%
+}
+\multido{\n=-0.2+0.1}{4}{%
+  \uput[120](-1ex,\n){$\n$}
+}
+\end{pspicture}
+}

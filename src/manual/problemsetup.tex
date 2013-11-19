@@ -1,0 +1,878 @@
+\chapter{Setting Up an Optimization Problem}
+\label{sec:SetUpOptPro}
+We will now discuss how to set up an optimization problem.\\
+
+
+First, define a cost function.
+The cost function is the function that needs to be minimized.
+It must be evaluated by an external simulation program
+that satisfies the requirements listed on page~\pageref{lis:simProIntReq}.
+To maximize a cost function, 
+change the sign of the cost function to turn the maximization problem
+into a minimization problem.
+
+Next,
+specify possible constraints on the independent variables
+or on dependent variables 
+(dependent variables are values that are computed in the simulation program).
+To do so,
+use the default scheme for box constraints on the 
+independent variables or
+add penalty or barrier functions to the cost function
+as described in Chapter~\ref{cha:conGen}.
+
+Next, make sure that the simulation program
+writes the cost function value to the simulation output file.
+\emph{It is important that the cost function value is written 
+to the output file without truncating any digits} 
+(see Section~\ref{sec:hanOfNulSpaGen}).
+For example, if the cost function is computed by a Fortran program
+in double precision, 
+it is recommended to use the \verb$E24.16$ format in the \text{write} statement.
+
+In the simulation output file, the cost function value must be indicated by a
+string that stands in front of the cost function value
+(see page~\pageref{ite:simFilOut}).
+
+Then, specify the files described in Section~\ref{sec:FilSpe} and, if required,
+implement pre- and post-processing, as described in Section~\ref{par:posPro}.\\
+
+% -------------------------------------------------------------------
+\section{File Specification}
+\label{sec:FilSpe}
+This section defines the file syntax for GenOpt.
+The directory \url{example} of the GenOpt installation contains several examples.\\
+
+The following notation will be used to explain the syntax:
+\begin{enumerate}
+\item Text that is part of the file is written in \verb$fixed width fonts$.
+\item \verb$|$ stands for possible entries. Only one of the entries that are separated by \verb$|$ is allowed.
+\item \verb$[ ]$ indicates optional values.
+\item The file syntax follows the Java convention. Hence,
+\begin{enumerate}
+\item \verb$//$ indicates a comment on a single line,
+\item \verb$/*$ and \verb$*/$ enclose a comment,
+\item the equal sign, \verb$=$, assigns values,
+\item a statement has to be terminated by a semi-colon, \verb$;$,
+\item curly braces, \verb${ }$, enclose a whole section of statements, and
+\item the syntax is case sensitive.
+\end{enumerate}
+\end{enumerate}
+
+\noindent The following basic types are used:\\[5mm]
+\begin{tabular}{|l|l|} \hline
+\verb$String$ & Any sequence of characters.\\ &
+  If the sequence contains a blank character,\\ &
+ it has to be enclosed in apostrophes (\verb$"$). \\
+  &  If there are apostrophes within quoted text,\\ &
+  they must be specified by a leading backslash (i.e., \verb$\"$). \\ &
+ Similarly, a backslash must be preceded by another \\ &
+ backslash (i.e., \verb$"c:\\go_prg"$).
+\\ \hline
+\verb$StringReference$  &  Any name of a variable that appears in the same section. \\ \hline
+\verb$Integer$  &  Any integer value. \\ \hline
+\verb$Double$  &  Any double value (including integer). \\ \hline
+\verb$Boolean$  &  Either \verb$true$ or \verb$false$ \\ \hline
+\end{tabular}
+~\\
+
+
+The syntax of the GenOpt files is structured into sections of parameters that belong to the same object. The sections have the form
+\begin{lstlisting}
+   ObjectKeyWord { Object }
+\end{lstlisting}
+where \verb$Object$ can either be another \verb$ObjectKeyWord$
+or an assignment of the form
+\begin{lstlisting}
+   Parameter = Value ;
+\end{lstlisting}
+
+Some variables can be referenced. 
+References have to be written in the form
+\begin{lstlisting}
+   Parameter = ObjectKeyWord1.ObjectKeyWord2.Value ;
+\end{lstlisting}
+where \verb$ObjectKeyWord1$ refers to the root of the object hierarchy as specified in the corresponding file.\\
+
+% ---------------------------
+\subsection{Initialization File}
+\label{sec:IniFilSyn}
+The initialization file specifies 
+\begin{enumerate}
+\item where the \emph{files} of the current optimization problems are located,
+\item which simulation files the user likes to have saved for later inspection,
+\item what additional strings have to be passed to the command that starts the simulation (such as the name of the simulation input file),
+\item what number in the simulation output file is a cost function value,
+\item whether and if so, how, the cost function value(s) have to be post-processed,
+and
+\item which simulation program is being used.
+\end{enumerate}
+
+The sections must be specified in the order shown below.
+The order of the keywords in each section is arbitrary, as long as the numbers that follow some keywords (such as \texttt{File1}) are in increasing order.\\
+
+\noindent The initialization file syntax is
+\begin{lstlisting}
+Simulation {
+  Files {
+    Template {
+      File1 = String | StringReference;
+    [ Path1 = String | StringReference; ]
+      [ File2 = String | StringReference;
+      [ Path2 = String | StringReference; ]
+        [ ... ] ]
+    }
+    Input { // the number of input file must be equal to
+            // the number of template files
+      File1     = String | StringReference;
+    [ Path1     = String | StringReference; ]
+    [ SavePath1 = String | StringReference; ]
+      [ File2     = String | StringReference;
+      [ Path2     = String | StringReference; ]
+      [ SavePath2 = String | StringReference; ]
+        [ ... ] ]
+    }
+    Log {
+    // The ``Log'' section has the same syntax as the ``Input'' section.
+    }
+    Output {
+   // The ``Output'' section has the same syntax as the ``Input'' section.
+    }
+    Configuration {
+      File1 = String | StringReference;
+    [ Path1 = String | StringReference; ]
+    }
+  } // end of section Simulation.Files
+  [CallParameter {
+    [Prefix = String | StringReference;]
+    [Suffix = String | StringReference;]
+  }]
+  [ObjectiveFunctionLocation {
+    Name1       = String;
+    Delimiter1  = String | StringReference;  |  Function1  = String;
+    [FirstCharacterAt1 = Integer;]
+
+    [ Name2       = String;
+      Delimiter2  = String | StringReference;  |  Function2  = String;
+      [FirstCharacterAt2 = Integer;]
+    [ ... ] ]
+
+  }]
+} // end of section Simulation
+Optimization {
+  Files {
+    Command {
+      File1 = String | StringReference;
+    [ Path1 = String | StringReference; ]
+    }
+  }
+} // end of section Optimization
+\end{lstlisting}
+\pagebreak
+\noindent The sections have the following meaning:
+\begin{codedescription}
+% -----------------------
+\item[Simulation.Files.Template]
+\label{sec:inpTemFil}
+GenOpt writes the value of the independent variables
+to the simulation input files.
+To do so, GenOpt reads the simulation input \emph{template} files, replaces each occurrence of \verb$%variableName%$ by the numerical value of the corresponding variable, and the resulting file contents are written as the simulation input files. The string \verb$%variableName%$ refers to the name of the variable as specified by the entry \verb$Name$ in the optimization command file on page~\pageref{par:comFil}.\\
+
+The independent variables can be written to several simulation input files if required.
+To do so, specify as many \verb$Filei$ and \verb$Pathi$ assignments as necessary
+(where \verb$i$ stands for a one-based counter of the file and path name).
+Note that there must obviously be the same number of files and paths in the \verb$Input$ section that follows this section.\\
+
+If there are multiple simulation input template files, each file will be written to the simulation input file whose keyword ends with the same number.\\ 
+
+\noindent The following rules are imposed:
+\begin{enumerate}
+\item \label{rul:simTemVar} Each variable name specified in the optimization command file \emph{must} occur in at least one simulation input template file or in at least one function that is specified in the section \texttt{ObjectiveFunctionLocation} below.
+\item \label{rul:simTemMul} Multiple occurrences of the same variable name are allowed in the same file and in the same function specification (as specified by the keyword \verb$Functioni$, \verb$i$ $= 1, 2, \ldots$).
+\item If the value \verb$WriteStepNumber$ in the section \verb$OptimizationSettings$ of the optimization command file is set to \verb$true$, then rule \ref{rul:simTemVar} and \ref{rul:simTemMul} apply also to \verb$%stepNumber%$. If \verb$WriteStepNumber$ is set to \verb$false$, then \verb$%stepNumber%$ can occur, but it will 
+be ignored.
+\end{enumerate}
+
+% -----------------------
+\item[Simulation.Files.Input]
+The simulation input file is generated by GenOpt based on the current parameter set and the corresponding simulation input \emph{template} file, as explained in the previous paragraph. Obviously, the number of simulation input files must be equal to the number of simulation input template files.\\
+
+The section \verb$Input$ has an optional keyword, called \verb$SavePath$. If \verb$SavePath$ is specified, then the corresponding input file will after each simulation be copied into the directory specified by \verb$SavePath$. The copied file will have the same name, but with the simulation number added as prefix. 
+% -----------------------
+\item [Simulation.Files.Log]
+GenOpt scans the simulation log file for error messages.
+The optimization terminates if any of the strings specified by the variable \verb$ErrorMessage$ in the \verb$SimulationError$ section of the GenOpt configuration file is found. 
+At least one simulation log file must be specified.\\
+
+The section \verb$Log$ also has the optional keyword \verb$SavePath$.
+It has the same functionality as explained in the previous section.
+
+% -----------------------
+\item[Simulation.Files.Output]
+\label{ite:simFilOut}
+GenOpt reads the cost function value from these files as described in 
+the item {\tt Simulation.ObjectiveFunctionLocation} below.
+The number of cost function values is arbitrary (but at least one must be specified). 
+The optimization algorithms minimize the first cost function value.
+The other values can be used for post-processing of the simulation output.
+They will also be reported to the output files and the online chart.\\
+
+\noindent GenOpt searches for the cost function value as follows:
+\begin{enumerate}
+\item 
+After the first simulation, GenOpt searches for the first cost function value in the first output file
+as described below in the description of
+{\tt Simulation.ObjectiveFunctionLocation}.
+If the first output file does not contain the first cost function value,
+then GenOpt reads the second output file (if present) and so on until 
+the last output file is read. 
+If GenOpt cannot find the cost function value in any of the output files or function definitions, it will terminate with an error. The same procedure is repeated with the second cost function value, if present, until all cost function values have been found.
+\item
+In the following iterations, GenOpt will only read the file(s) where it found the cost function value(s) after the first simulation.
+The files that did not contain a cost function value after the first simulation
+will not be read anymore.
+\end{enumerate}
+This section also contains the optional keyword \verb$SavePath$.
+If this keyword is specified, 
+then GenOpt copies the output file.
+This is particularly useful for doing parametric runs.
+% -----------------------
+\item[Simulation.Files.Configuration]
+The entries in this section specify the simulation configuration file, which contains information that is related to the simulation program only, but not related to the optimization problem. The simulation configuration file is explained below.
+% -----------------------
+\item[Simulation.CallParameter]
+Here, a prefix and suffix for the command that starts the simulation program can be added. With these entries, any additional information, 
+such as the name of the weather file,
+can be passed to the simulation program.
+To do so, one has to refer to either of these entries in the argument of the keyword \verb$Command$ (see page~\pageref{key:com}).
+% -----------------------
+\item[Simulation.ObjectiveFunctionLocation]
+\label{sec:objFunLoc}
+This section specifies where the cost function values 
+can be found in the simulation output files,
+and possibly how these values have to be post-processed before they will be passed to the optimization algorithm.\\
+
+To search for the cost function value, GenOpt reads the files
+{\tt Simulation.Output.File1}, {\tt Simulation.Output.File2}, etc. one by one.
+Each file is parsed starting at the last line and reading line-by-line towards 
+the first line.
+GenOpt assumes that the value that is written after the occurrence
+of the string specified by \verb$Delimiteri$ (\verb$i$ $=1, 2, \ldots$)
+is the cost function value.
+Optionally, the entry \verb$FirstCharacterAti$ (\verb$i$ $=1, 2, \ldots$) can be used.
+If \verb$FirstCharacterAti$ is greater than $0$, then delimiter \verb$Delimiteri$ must 
+start at this position, otherwise it will be ignored.
+
+For example, consider an output file that has the format
+\begin{lstlisting}
+5, 1.2345, 11
+6, 12.345, 22 
+\end{lstlisting}
+Then, the entries
+\begin{lstlisting}
+Delimiter1  = "5,";
+FirstCharacterAt1 = 0;
+\end{lstlisting}
+or, equivalently,
+\begin{lstlisting}
+Delimiter1  = "5,";
+\end{lstlisting}
+would cause GenOpt to return \verb$22$ as the objective function value, whereas 
+the specification
+\begin{lstlisting}
+Delimiter1  = "5,";
+FirstCharacterAt1 = 1;
+\end{lstlisting}
+would cause GenOpt to return \verb$1.2345$.\\
+
+Alternatively to the entry \verb$Delimiteri$, an entry \verb$Functioni$ can be specified to define how the cost function values should be post-processed. 
+If \verb$Functioni$ is specified, then \verb$FirstCharacterAti$ is ignored.
+See page~\pageref{par:posPro} for an example that uses \verb$Functioni$.
+
+For convenience, the section \verb$ObjectiveFunctionLocation$ can optionally be specified in the initialization file, but its specification is required in the configuration file. If this section is specified in both files, then the specification in the initialization file will be used.\\
+
+Specifying the section \verb$ObjectiveFunctionLocation$ in the initialization file is of interest if a simulation program is used for different problems that require different values of this section. Then, the same (simulation program specific) configuration file can be used for all runs and the different settings can be specified in the (project dependent) initialization file rather than in the configuration file.
+
+% -------------
+\item[Optimization.Files.Command]
+This section specifies where the optimization command file is located. This file contains the mathematical information of the optimization. See page~\pageref{par:comFil} for a description of this file.
+\end{codedescription}
+% -------------
+\subsection{Configuration File}
+The configuration file contains information related only to the simulation program used and not to the optimization problem. Hence, it has to be written only once for each simulation program and operating system.
+We recommend to put this file in the directory \url{cfg} so that it can be used for different optimization projects. Some configuration files are provided with the GenOpt installation.\\
+
+\pagebreak[4]
+\noindent The syntax is specified by
+\begin{lstlisting}
+// Error messages of the simulation program.
+SimulationError{
+   ErrorMessage = String;
+  [ErrorMessage = String;
+  [ ... ] ]
+}
+
+// Number format for writing simulation input files.
+IO{
+   NumberFormat = Float | Double;
+}
+
+// Specifying how to start the simulation program.
+SimulationStart{
+   Command = String; 
+   WriteInputFileExtension = Boolean;
+}
+
+// Specifying the location of the
+// cost function value in the simulation output file
+ObjectiveFunctionLocation{
+    Name1       = String;
+    Delimiter1  = String | StringReference;  |  Function1  = String;
+
+    [ Name2       = String;
+      Delimiter2  = String | StringReference;  |  Function2  = String;
+    [ ... ] ]
+}
+\end{lstlisting}
+
+\noindent The entries have the following meaning:
+\begin{codedescription}
+
+\item [SimulationError]
+The error messages that might be written by the simulation program must be assigned to the keyword \verb$ErrorMessage$ so that GenOpt can check whether the simulation has completed successfully. At least one entry for \verb$ErrorMessage$ must be given.
+
+\item[IO]
+The keyword \verb$NumberFormat$ specifies in what format the independent parameters will be written to the simulation input file. The setting \verb$Double$ is recommended, unless the simulation program cannot read this number format.\\
+
+\item[SimulationStart]
+\label{key:com}
+The keyword \verb$Command$ specifies what string must be used to start the simulation program.
+It is important that this command waits until the simulation terminates 
+(see the directory \texttt{cfg} for examples).
+The value of the variable \verb$Command$ is treated in a special way: 
+Any value of the optimization initialization file can be 
+automatically copied into the value of \verb$Command$. 
+To do so, surround the reference to the corresponding keyword with percent signs.
+For example, a reference to the keyword 
+\verb$Prefix$ of the initialization file looks like
+\begin{lstlisting}
+ %Simulation.CallParameter.Prefix%
+\end{lstlisting}
+
+By setting \verb$WriteInputFileExtension$ to \verb$false$, the value of the keyword \url{Simulation.Input.Filei} (where \verb$i$ stands for \verb$1$, \verb$2$, \verb$3$) is copied into \verb$Command$, and the file extension is removed.
+
+\item[ObjectiveFunctionLocation]
+Note that this section can also be specified in the initialization file.
+The section in this file is ignored if this section is also specified in the 
+configuration file.
+See page~\pageref{sec:objFunLoc} for a description.
+\end{codedescription}
+
+\subsection{Command File}
+\label{par:comFil}
+The command file specifies optimization-related settings such as 
+the independent parameters, 
+the stopping criteria and the optimization algorithm being used.
+The sequence of the entries in all sections of the command file is arbitrary.\\
+
+There are two different types of independent parameters, 
+{\em continuous parameters} and {\em discrete parameters}. 
+Continuous parameters can take on any values, 
+possibly constrained by a minimum and maximum value.
+Discrete parameters can take on only user-specified discrete values,
+to be specified in this file.\\
+
+Some algorithms require all parameters to be continuous, 
+or all parameters to be discrete, or allow both continuous and discrete parameters. 
+Please refer to the algorithm section on page~\pageref{sec:algImp}-\pageref{sec:algImpEnd}.\\
+
+%-----------------------------------
+\subsubsection{Specification of a Continuous Parameter}
+\label{subsubsec:SpeConPar}
+\noindent The structure for a continuous parameter is
+\begin{lstlisting}
+// Settings for a continuous parameter
+Parameter{
+   Name = String;
+   Ini  = Double;
+   Step = Double;
+   [ Min  = Double | SMALL; ]
+   [ Max  = Double | BIG; ]
+   [ Type = CONTINUOUS; ]
+}
+\end{lstlisting}
+The entries are:
+\begin{codedescription}
+\item [Name] 
+The name of the independent variable.
+GenOpt searches the simulation input template files for 
+this string -- surrounded by percent signs -- and replaces each occurrence 
+by its numerical value before it writes the simulation input files.
+\item [Ini] 
+Initial value of the parameter.
+\item [Step] 
+\label{ite:parStep}
+Step size of the parameter.
+How this variable is used depends on the optimization algorithm being used.
+See the optimization algorithm descriptions for details.
+\item [Min] 
+Lower bound of the parameter.
+If the keyword is omitted or set to \verb$SMALL$, the parameter has no lower bound.
+\item [Max] 
+Upper bound of the parameter. If the keyword is omitted or set to \verb$BIG$, the parameter has no upper bound.
+\item [Type] 
+Optional keyword that specifies that this parameter is continuous. By default, if neither \verb$Type$ nor \verb$Values$ (see below) are specified, then the parameter is considered to be continuous and the \verb$Parameter$ section must have the above format.
+\end{codedescription}
+
+%-----------------------------------
+\subsubsection{Specification of a Discrete Parameter}
+\label{subsubsec:SpeDisPar}
+For discrete parameters you need to 
+specify the set of admissible values.
+Alternatively, if a parameter is spaced either 
+linearly or logarithmically, 
+specify the minimum and maximum value of the parameter and the number of intervals.\\
+
+First, we list the entry for the case of specifying the set of admissible values:
+\begin{lstlisting}
+// Settings for a discrete parameter
+Parameter{
+   Name   = String;
+   Ini    = Integer;
+   Values = String;
+ [ Type   = SET; ]
+}
+\end{lstlisting}
+The entries are:
+\begin{codedescription}
+\item [Name] {\it As for the continuous parameter above.}
+
+\item [Ini] $1$-based index of the initial value. For example, if \verb$Values$ specifies three admissible values, then \verb$Ini$ can be either \verb$1$, \verb$2$, or \verb$3$.
+
+\item [Values] Set of admissible values. The entry must be of the form\\
+\verb$  Values = "value1, value2, value3";$\\
+i.e., the values are separated by a comma,
+and the list is enclosed in apostrophes (\verb$"$). 
+For \verb$value1$, \verb$value2$, etc., numbers and strings are allowed.\\
+If all entries of \verb$Values$ are numbers, then the result reports contain the actual values of this entry. Otherwise, the result reports contain the index of this value, i.e., \verb$1$ corresponds to \verb$value1$, \verb$2$ corresponds to \verb$value2$, etc.
+
+\item [Type] Optional keyword that specifies that this parameter is discrete. By default, if the entry \verb$Values$ is specified, a parameter is considered to be discrete, and the \verb$Parameter$ section must have the above format.
+\end{codedescription}
+%-----------------------------------
+\vspace{2\baselineskip}
+To obtain linear or logarithmic spacing between a minimum and maximum value,
+the \texttt{Parameter} section can be specified as
+\begin{lstlisting}
+// Settings for a discrete parameter, linearly or logarithmically spaced
+Parameter{
+   Name = String;
+   Ini  = Integer;
+   Type = SET;
+   Min  = Double;
+   Max  = Double;
+   Step = Integer;
+}
+\end{lstlisting}
+\begin{codedescription}
+  \item [Name] {\it As for the continuous parameter above.}
+
+\item [Ini] $1$-based index of the initial value. For example, if \verb$Step$ is set to $+2$ or to $-2$, then \verb$Ini$ can be set to any integer between $1$ and $3$.
+
+\item [Type] This variable must be equal to \verb$SET$.
+
+\item [Min] Minimum value of the spacing.
+
+\item [Max] Maximum value of the spacing.
+
+\item [Step] Number of intervals. If $\text{\texttt{Step}} < 0$, then the spacing is logarithmic, otherwise it is linear. Set $\text{\texttt{Step}} = 0$ to keep the parameter always fixed on its minimum value.
+\end{codedescription}
+The linear or logarithmic spacing is computed using \eqref{subeq:AlgParSpa} on page~\pageref{subeq:AlgParSpa}.\\
+
+%-----------------------------------
+
+\subsubsection{Specification of Input Function Objects}
+\label{subsubsec:InpFunObj}
+The specification of input function objects in optional.
+If any input function object is specified, then its name
+must appear either in another input function object, in
+a simulation input template file, or in
+an output function object.
+Otherwise, GenOpt terminates with an error message.
+See Section~\ref{par:posPro} on page~\pageref{par:posPro} for an explanation of input and output function
+objects.\\
+
+The syntax for input function objects is
+\begin{alltt}
+// Input function objects entry
+Function\{
+   Name     = String;
+   Function = String;
+\}
+\end{alltt}
+The entries are
+\begin{codedescription}
+\item [Name] A unique name that is not used for any other input function object
+and for any other independent parameter.
+\item [Function] A function object (see Section~\ref{par:posPro} on page~\pageref{par:posPro}).
+The string must be enclosed by apostrophes (\texttt{"}).
+\end{codedescription}
+
+%-----------------------------------
+
+\subsubsection{Structure of the Command File}
+\noindent Using above structures of the \verb$Parameter$ section, the command file has the structure
+\begin{alltt}
+// Settings of the independent parameters
+Vary\{
+   // Parameter entry
+    {\it List any of the} \texttt{Parameter} {\it sections as described}
+    {\it in the Sections \ref{par:comFil}.\ref{subsubsec:SpeConPar} and \ref{par:comFil}.\ref{subsubsec:SpeDisPar}.}
+
+   // Input function object
+    {\it List any of the} \texttt{Function} {\it sections as described}
+    {\it in the Section \ref{par:comFil}.\ref{subsubsec:InpFunObj}.}
+\}
+
+// General settings for the optimization process
+OptimizationSettings\{
+   MaxIte           = Integer;
+   WriteStepNumber  = Boolean;
+ [ MaxEqualResults  = Integer; ]
+ [ UnitsOfExecution = Integer; ]
+\}
+
+// Specification of the optimization algorithm
+Algorithm\{
+   Main = String;
+   ... // any other entries that are required
+       // by the optimization algorithm
+\}
+\end{alltt}
+The different sections are:
+\begin{codedescription}
+
+\item [Vary] This section contains the definition of the independent parameter
+and the input function objects.
+See Sections~\ref{par:comFil}.\ref{subsubsec:SpeConPar}, \ref{par:comFil}.\ref{subsubsec:SpeDisPar},
+and \ref{par:comFil}.\ref{subsubsec:InpFunObj} for possible entries.
+
+\item[OptimizationSettings] This section specifies general settings of the optimization. \verb$MaxIte$ is the maximum number of iterations.
+After \verb$MaxIte$ main iterations,
+GenOpt terminates with an error message.\\
+\verb$WriteStepNumber$ specifies whether the current step 
+of the optimization has to be written to the simulation input file or to a function object.
+The step number can be used to calculate a penalty or barrier function
+(see Section~\ref{sec:conDepVarGen} on page~\pageref{sec:conDepVarGen}).\\
+The optional parameter \verb$MaxEqualResults$ specifies how many times 
+the cost function value can be equal to a value that has previously been obtained 
+before GenOpt terminates. 
+This setting is used to terminate GenOpt if the cost function value
+is constant for several iterates (see Section~\ref{sec:hanOfNulSpaGen}).
+The default value of \verb$MaxEqualResults$ is $5$.\\
+The optional parameter \verb$UnitsOfExecution$ specifies the maximum number of simulations
+that may run in parallel. If this parameter is not specified or set to zero, then its value is set to
+the number of processors of the computer that runs GenOpt. In general, this parameter need
+not be specified.
+
+\item[Algorithm] The setting of \verb$Main$ specifies which algorithm is invoked for doing the optimization.
+Its value has to be equal to the class name that contains the algorithm. Note that additional parameters might be required depending on the algorithm used (see Section~\ref{sec:algImp} for the implemented algorithms).
+\end{codedescription}
+
+% =========================================================
+\subsection{Log File}
+GenOpt writes a log file to the directory that contains the initialization file. The name of the log file is \url{GenOpt.log}.
+
+The GenOpt log file contains general information about the optimization process. It also contains warnings and errors that occur during the optimization.\\
+
+% =========================================================
+\subsection{Output Files}
+In addition to \url{GenOpt.log}, GenOpt writes two output files to the directory
+where the optimization command file is located.
+(The location of the optimization command file is defined by 
+the variable \url{Optimization.Files.Command.Path1} in the optimization initialization file.)
+
+The iterations are written to the output files 
+\url{OutputListingMain.txt} 
+and \url{OutputListingAll.txt}.
+The file \url{OutputListingMain.txt} contains only the main iteration steps,
+whereas \url{OutputListingAll.txt} contains all iteration steps.\\
+
+Each time the method \url{genopt.algorithm.Optimizer.report()}
+is called from the optimization algorithm, 
+the current trial is reported in either one of the files.
+
+% =========================================================
+\section{Resolving Directory Names for Parallel Computing}
+To allow doing simulations using parallel computing, GenOpt will create a
+temporary directory for each simulation.
+This avoids different simulations writing to the
+same output or log files simultaneously. 
+The simulations will be done in subdirectories of the 
+directory that contains the optimization initialization file. 
+
+To explain which directories are created by GenOpt, suppose that GenOpt's 
+optimization initialization file is stored in the directory {\tt /data/optMacOSX.ini}.
+(For Windows, simply replace {\tt /data} with {\tt C:$\backslash$data} and replace all forwardslashes with
+backslashes.) Suppose that GenOpt's initialization file states that the simulation input file
+is {\tt /data/input/in.txt}, the simulation log file is {\tt /data/log.txt},
+and the simulation output file is {\tt /data/output/out.txt}. 
+Thus, in this example, the simulation will 
+read its input from {\tt input/in.txt}, 
+it will write its log messages to
+{\tt log.txt}, and it will write its output
+to {\tt output/out.txt}, where the directories {\tt input} and 
+{\tt output} are subdirectories of the directory in which
+the simulation was started.
+Then, for the first simulation, GenOpt will proceed as follows:
+\begin{enumerate}
+\item It will create the simulation input file {\tt /data/tmp-genopt-run-1/input/in.txt} (including the temporary directory {\tt tmp-genopt-run-1/input}).
+\item It will change the working directory for the simulation to the directory {\tt /data/tmp-genopt-run-1}.
+Hence, if the simulation program writes to the current directory,
+then it will write to {\tt /data/tmp-genopt-run-1}.
+\item GenOpt will read {\tt /data/tmp-genopt-run-1/log.txt} to retrieve the simulation log messages.
+\item If no error has been found in the log file, then 
+GenOpt will read the simulation output file {\tt /data/tmp-genopt-run-1/output/out.txt}.
+\item GenOpt will delete the directory {\tt /data/tmp-genopt-run-1} and all its subdirectories.
+\end{enumerate}
+For the second simulation, the same steps will be repeated, but the temporary directory will be
+{\tt /data/tmp-genopt-run-2}.\\
+
+To resolve the directory names, GenOpt uses the following rules. The rules are applied to 
+the directories of the simulation input files, simulation log files and simulation output files.
+They are also applied to the value of the keyword
+{\tt Command} in the section {\tt SimulationStart} of the optimization configuration file.
+\begin{enumerate}
+\item \label{en:rulPat1} 
+A period (``.'') is replaced by the path name of the optimization initialization file. 
+\item
+If the keywords {\tt Path1}, {\tt Path2} etc. are not specified in the optimization
+initialization file, then they will be set to the directory of the optimization initialization file.
+\item
+For the simulation input, the simulation log and the simulation output files, 
+the string {\tt tmp-genopt-run-\#}, where {\tt \#} is the number of the simulation,
+will be inserted between the name of the optimization initialization file 
+and the subdirectory name of the simulation input, log or output file.
+\item
+When resolving the file names, a path separator (``$\backslash$" on Windows or ``/'' on Mac OS X and Linux) will be appended if needed.
+\end{enumerate}
+
+These rules work for situations in which the simulation program uses the current
+directory, or subdirectories of the current directory,
+to read input and write output, provided that the optimization configuration file
+is also in the directory that contains the simulation input files.\\
+
+For the declaration of the {\tt Command} line in the GenOpt configuration file,
+we recommend using the full directory name. For example, we recommend using
+\begin{alltt}
+ Command = "./simulate.sh    [linebreak added]
+   %Simulation.Files.Log.Path1%/%Simulation.Files.Log.File1%";
+\end{alltt}
+instead of 
+\begin{alltt}
+ Command = "./simulate.sh ./%Simulation.Files.Log.File1%";
+\end{alltt}
+The first version ensures that the argument that is passed to {\tt simulate.sh} 
+is the simulation log file in the working directory that is used by the current simulation. 
+However, in the second version, because of rule \eqref{en:rulPat1} the simulation log file 
+will be in the directory of GenOpt's configuration file, 
+and thus different simulations may write to the same simulation log file 
+simultaneously, causing unpredictable behavior.
+
+% =========================================================
+\section{Pre-Processing and Post-Processing}
+\label{par:posPro}
+Some simulation programs do not have the capability to pre-process the independent variables,
+or to post-process values computed during the simulation.
+For such situations, GenOpt's {\it input function objects} and {\it output function objects} can be used.
+
+\subsubsection{Function Objects}
+Function objects are formulas whose arguments can be the independent variables,
+the keyword {\tt stepNumber}, and for post-processing,
+the result of the simulation.\\
+
+Following functions are implemented:\\[\baselineskip]
+\noindent
+\begin{tabular}[h]{l|l}
+Function & Returns \\ \hline
+\texttt{add(x0, x1)} & $x^0 + x^1$\\
+\texttt{add(x0, x1, x2)} & $x^0 + x^1 + x^2$ \\
+\texttt{subtract(x0, x1)} & $x^0 - x^1$\\
+\texttt{multiply(x0, x1)} & $x^0 \, x^1$ \\
+\texttt{multiply(x0, x1, x2)} & $x^0 \, x^1 \, x^2$\\
+\texttt{divide(x0, x1)}                & $x^0 / x^1$  \\
+\texttt{log10(x0)}                     & $\mathrm{log}_{10}(x^0)$
+\end{tabular}\\[\baselineskip]
+Furthermore, all functions that are defined in the class \texttt{java.lang.StrictMath} and whose arguments and return type are of type \texttt{double} can be accessed by typing their name (without the package and class name).\\
+
+In addition, users can implement any other static method with arguments 
+and return type \texttt{double} by adding the method to 
+\texttt{genopt/algorithm/util/math/Fun.java}. 
+The method must have the syntax
+\begin{alltt}
+  public static double {\it methodName}(double x0, double x1) \{
+    double r;
+    // {\it do any computations }
+    return r; 
+  \}
+\end{alltt}
+The number of arguments is arbitrary.
+
+Next, compile the file after adding new methods and recreate the file
+\texttt{genopt.jar}.
+This can be done by changing from a console window to the directory
+where the file \texttt{Makefile} is located, and then typing
+\begin{alltt}
+   make jar
+\end{alltt}
+provided that your computer has a make systems and a java compiler.
+If your computer does not have a make system, you may be able to enter the following commands from a console window:
+\begin{alltt}
+  cd src
+  javac -Xlint:unchecked LISTOFJAVAFILES
+  jar cfm ../genopt.jar genopt/Manifest.txt [continues on next line]
+          LISTOFJAVAFILES genopt/img/* ../legal.html
+  cd ..
+  jar -i genopt.jar 
+\end{alltt}
+where \texttt{LISTOFJAVAFILES} need to be replaced with all java files that are in the directory \texttt{src} and its subdirectories.
+\\
+
+Next, we present an example for pre-processing and afterwards an example for 
+post-processing.
+
+\subsubsection{Pre-Processing}
+\begin{example}
+{\em
+Suppose we want to find the optimal window width and height.
+Let {\tt w} and {\tt h} denote the window width and height, respectively.
+Suppose we want the window height to be $1/2$ times the window width,
+and the window width must be between $1$ and $2$ meters.
+Then, we could specify in the command file the section
+\begin{alltt}
+Parameter\{
+   Name =   w;
+   Ini  = 1.5;     Step = 0.05;
+   Min  =   1;     Max  =    2;
+   Type = CONTINUOUS;
+\}
+Function\{
+   Name =   h;     Function = "multiply( \%w\%, 0.5 )";
+\}
+\end{alltt}
+Then, in the simulation input template files, GenOpt will replace all occurrences of
+\texttt{\%w\%} by the window width and all occurences of \texttt{\%h\%} 
+by $1/2$ times the numerical value of \texttt{\%w\%}.
+}
+\rbox
+\label{ex:preProc}
+\end{example}
+
+GenOpt does not report values that are computed by input functions.
+To report such values, a user needs to specify them in the section 
+\texttt{ObjectiveFunctionLocation}, as shown in Example~\ref{ex:postProc} below.
+
+\subsubsection{Post-Processing}
+\begin{example}
+{\em
+Suppose we want to minimize the sum of annual heating and cooling energy consumption, 
+which we will call \emph{total energy}. 
+Some simulation programs cannot add different output variables.
+For example, EnergyPlus~\cite{Crawley2001:1}
+writes the heating and cooling energy consumption separately 
+to the output file. 
+In order to optimize the total energy, 
+the simulation output must be post-processed.\\
+
+To post-process the simulation results in GenOpt, we can proceed as follows:\\
+Suppose the cost function delimiter (see Section~\ref{sec:IniFilSyn}) 
+for the heating and cooling energy are, respectively, 
+\texttt{Eheat=} and \texttt{Ecool=}.
+In addition, suppose we want to report the value of the variable \texttt{h} that has been 
+computed by the input function object in Example~\ref{ex:preProc}.
+ 
+
+Then, in the optimization initialization file 
+(see Section~\ref{sec:IniFilSyn}) we can specify the section
+\begin{alltt}
+  ObjectiveFunctionLocation\{
+     Name1 = E_tot;  Function1 = "add( \%E_heat\%, \%E_cool\% )";
+     Name2 = E_heat; Delimiter2 = "Eheat=";  
+     Name3 = E_cool; Delimiter3 = "Ecool=";  
+     Name4 = height; Function4  = \%h\%; 
+  \}
+\end{alltt}
+This specification causes GenOpt to 
+(i) substitute the value of \texttt{h} in \texttt{Function4}, 
+(ii) read from the simulation output file(s) the numbers that occur after the 
+strings \texttt{Eheat=} and \texttt{Ecool=}, 
+(iii) substitute these numbers into the function
+\texttt{add( \%E\_heat\%, \%E\_cool\% )}, 
+(iv) evaluate the functions \texttt{Function1} and 
+\texttt{Function4},
+and (v) minimize the sum of heating and cooling energy.
+}
+\rbox
+\label{ex:postProc}
+\end{example}
+
+As arguments of the function defined above, we can use any name of an 
+independent variable, of an input function object,
+or the keyword \texttt{\%stepNumber\%}.\\
+
+% =========================================================
+\section{Truncation of Digits of the Cost Function Value}
+\label{sec:hanOfNulSpaGen}
+
+\begin{figure}[ht!]
+  \centering
+  \resizebox{\textwidth}{!}{%
+    \input{img/truncation.tex}%
+  }
+  \caption{Function~\eqref{eq:exFunTruDig} with machine precision and
+with truncated digits.
+The upper line shows the cost function value with machine precision, and
+the lower line shows the cost function value with only 
+two digits beyond the decimal point.}
+  \label{fig:truSigDig}
+\end{figure}
+For $x' \in \Re^n$ and $f \colon \Re^n \to \Re$, assume there exists a
+scalar $\delta > 0$ such that $f(x') = f(x'')$ for all 
+$x'' \in B(x', \delta)$, where 
+$B(x', \delta) \triangleq \{ x'' \in \Re^n \ | \
+\| x' - x'' \| < \delta \}$.
+Obviously, in $B(x', \delta)$, an optimization algorithm can fail
+because iterates in $B(x', \delta)$ contain no information about
+descent directions outside of $B(x', \delta)$.
+Furthermore, in absence of convexity of $f(\cdot)$, the optimality of
+$x'$ cannot be ascertain in general.
+
+Such situations can be generated if the simulation program
+writes the cost function value to the output file 
+with only a few digits.
+Fig.~\ref{fig:truSigDig} illustrates that truncating digits can cause 
+problems particularly in domains of $f(\cdot)$ where the slope of $f(\cdot)$
+is flat.
+In Fig.~\ref{fig:truSigDig}, we show the function
+\begin{equation}
+  f(x) \triangleq 0.1 \, x - 0.1 \, x^2 + 0.04 \, x^4.
+\label{eq:exFunTruDig}
+\end{equation}
+The upper line is the exact value of $f(\cdot)$, and the lower line is 
+the rounded value of $f(\cdot)$ such that it has only two digits 
+beyond the decimal point.
+If the optimization algorithm makes changes in $x$ in the size of $0.2$,
+then it may fail for $0.25 < x < 1$, which is far from the minimum.
+In this interval, no useful information about the descent of $f(\cdot)$ 
+can be obtained.
+Thus, the cost function must be written to the output file without truncating digits.\\
+
+To detect such cases, the optimization algorithm can cause GenOpt to check 
+whether a cost function values is equal to a previous cost function value.
+If the same cost function value is obtained more than a user-specified number
+of times, 
+then GenOpt terminates with an error message. 
+The maximum number of equal cost function values is specified 
+by the parameter \texttt{MaxEqualResults} in the command file (see page \pageref{par:comFil}).
+
+GenOpt writes an information to the user interface and to the log file if
+a cost function value is equal to a previous function value.

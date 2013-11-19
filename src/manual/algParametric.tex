@@ -1,0 +1,166 @@
+\chapter{Algorithms for Parametric Runs}
+\label{sec:algParRun}
+
+The here described algorithms for 
+parametric runs can be used to determine how sensitive a function is 
+with respect to a change in the independent variables.
+They can also be used to do a parametric
+sweep of a function over a set of parameters.
+The algorithm described in Section~\ref{sec:algParametric} varies one parameter at a time while holding all other parameters fixed at the value 
+specified by the keyword \texttt{Ini}. The algorithm described in Section~\ref{sec:algParRunGen}, in contrast, constructs a mesh in the space of the independent parameters, and evaluates the objective function at each mesh point.
+
+\section{Parametric Runs by Single Variation}
+\lab{sec:algParametric}
+\subsection{Algorithm Description}
+
+The \texttt{Parametric} algorithm allows doing parametric runs where
+one parameter at a time is varied and
+all other parameters are fixed at their initial values
+(specified by the keyword \texttt{Ini}).
+
+Each parameter must have a lower and upper bound.
+For the logarithmic scale, the lower and upper bounds must be bigger than zero.
+To allow negative increments, the lower bound can be larger than the upper bound.
+The absolute value of the keyword \texttt{Step} defines in how many intervals 
+each coordinate axis will be divided.
+If $\text{\texttt{Step}} < 0$, then the spacing is logarithmic; otherwise it is linear. Set $\text{\texttt{Step}} = 0$ to keep the parameter always fixed at the value
+specified by \texttt{Ini}.
+
+This algorithm can also be used with discrete parameters. This allows, for example, using a string to specify a window construction.
+\\
+
+
+The spacing is computed as follows:
+For simplicity, the explanation is done for one parameter.
+Let $l \triangleq \text{\texttt{Min}}$, $u \triangleq \text{\texttt{Max}}$ and $m \triangleq |\text{\texttt{Step}}|$,
+where \texttt{Min}, \texttt{Max} and \texttt{Step} are specified in the command file.\\
+
+\noindent
+If $\text{\texttt{Step}} < 0$, we compute, for $i \in \{0, \ldots , m \}$,
+\begin{subequations}
+  \begin{eqnarray}
+    p & = & \frac{1}{m} \, \log \frac{u}{l}, \\
+    x_i & = & l \, 10^{p \, i}.
+  \end{eqnarray}
+If $\text{\texttt{Step}} > 0$, we compute, for $i \in \{0, \ldots , m \}$,
+  \begin{equation}
+    x_i = l + \frac{i}{m} \, (u-l).
+  \label{eq:AlgParLinSpa}
+  \end{equation}
+  \label{subeq:AlgParSpa}
+\end{subequations}
+
+\begin{example}[Parametric run with logarithmic and linear spacing]
+{\em
+Suppose the parameter specification is of the form
+\vspace{-0.5\baselineskip}
+\begin{lstlisting}
+Vary{
+   Parameter{ Name = x1; Ini = 5; Step = -2; Min = 10; Max = 1000; }
+   Parameter{ Name = x2; Ini = 3; Step = 1;  Min = 2;  Max = 20;   }
+}
+\end{lstlisting}
+\vspace{-0.5\baselineskip}
+and the cost function takes two arguments, $x_1, x_2 \in \Re$.
+Then, the cost function will be evaluated at the points\\
+\noindent $(x_1, x_2) \in \{ (10,3), \ (100,3), \ (1000,3), \ (5,2), \ (5,20) \}$.\rbox \\
+}
+\end{example}
+
+\subsection{Keywords}
+For this algorithm, the command file (see page~\pageref{par:comFil}) can contain continuous and discrete parameters.\\
+
+The \texttt{Parametric} algorithm is invoked by the following specification in the command file:
+\begin{lstlisting}
+Algorithm{
+   Main = Parametric;
+   StopAtError = true | false;
+}
+\end{lstlisting}
+
+\noindent The keywords have the following meaning:
+\begin{codedescription}
+\item[Main]
+The name of the main algorithm.
+\item[StopAtError]
+If \texttt{true}, then the parametric run stops if a simulation error occurs. 
+If \texttt{false}, then the parametric run does not stop if a simulation error occurs.
+The failed function evaluation will be assigned the function value zero.
+For information, an error message will be written to the user interface
+and the optimization log file.
+\end{codedescription}
+
+% ===================================
+\section{Parametric Runs on a Mesh}
+\label{sec:algParRunGen}
+\subsection{Algorithm Description}
+
+In contrast to the algorithm \texttt{Parametric}, the algorithm \texttt{Mesh} spans a multi-dimensional grid in the space of the independent parameters, and it evaluates the objective function at each grid point.
+
+Note that the number of function evaluations increases exponentially with the number 
+of independent parameters.
+For example, a $5$-dimensional grid with $2$ intervals in each dimension requires $3^5=243$ function evaluations, whereas a $10$-dimensional grid would require $3^{10}=59049$ function evaluations.\\
+
+The values that each parameter can take on are computed in the same way
+as for the algorithm \texttt{Parametric}. Therefore, the specification of a
+\texttt{Parameter} underlies the same constraints as for the algorithm \texttt{Parametric}, which is described above.
+
+\begin{example}[Parametric run on a mesh]~\\
+{\em
+Suppose the parameter specification is of the form
+\vspace{-0.5\baselineskip}
+\begin{lstlisting}
+Vary{
+  Parameter{ Name = x1; Min = -10; Ini = 99; Max = 10; Step = 1; } 
+  Parameter{ Name = x2; Min = 1; Ini = 99; Max = 100; Step = -2; } 
+}
+\end{lstlisting}
+\vspace{-0.5\baselineskip}
+and the cost function takes two arguments, $x_1, x_2 \in \Re$.
+Then, the cost function will be evaluated at the points\\
+$(x_1, x_2) \in
+\{(-10,\,  1)$,
+$ ( 10, \, 1)$, 
+$ (-10, \,  10)$, 
+$ ( 10, \,  10)$, 
+$ (-10, \, 100)$, 
+$ ( 10, \, 100)\}$.
+
+An alternative specification for $x_2$ that uses a discrete parameter and gives the same result is
+\vspace{-0.5\baselineskip}
+\begin{lstlisting}
+Parameter{ 
+  Name = x2; 
+  Ini = "1"; 
+  Values = "1, 10, 100";
+} 
+\end{lstlisting}
+\vspace{-\baselineskip}
+\rbox
+}
+\end{example}
+
+
+\subsection{Keywords}
+
+The \texttt{Mesh} algorithm is invoked by the following specification in the command file:
+\begin{lstlisting}
+Algorithm{
+   Main        = Mesh;
+   StopAtError = true | false;
+}
+\end{lstlisting}
+
+\noindent The keywords have the following meaning:
+\begin{codedescription}
+\item[Main]
+The name of the main algorithm.
+\item[StopAtError]
+If \texttt{true}, then the parametric run stops if a simulation error occurs. 
+If \texttt{false}, then the parametric run does not stop if a simulation error occurs.
+The failed function evaluation will be assigned the function value zero.
+For information, an error message will be written to the user interface
+and the optimization log file.
+\end{codedescription}
+
+\label{sec:algImpEnd}

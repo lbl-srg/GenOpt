@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: manual.aux
+A level-1 auxiliary file: titlepage.aux
+A level-1 auxiliary file: disclaimer.aux
+A level-1 auxiliary file: introduction.aux
+A level-1 auxiliary file: problems.aux
+A level-1 auxiliary file: summary.aux
+A level-1 auxiliary file: algGPS.aux
+A level-1 auxiliary file: algDisArmGra.aux
+A level-1 auxiliary file: algParSwaOpt.aux
+A level-1 auxiliary file: algGPSPSO.aux
+A level-1 auxiliary file: algSimplex.aux
+A level-1 auxiliary file: algOneDim.aux
+A level-1 auxiliary file: algParametric.aux
+A level-1 auxiliary file: constraints.aux
+A level-1 auxiliary file: program.aux
+A level-1 auxiliary file: install.aux
+A level-1 auxiliary file: problemsetup.aux
+A level-1 auxiliary file: end.aux
+A level-1 auxiliary file: appendix.aux
+The style file: alpha.bst
+Database file #1: xbib.bib
+You've used 38 entries,
+            2543 wiz_defined-function locations,
+            839 strings with 11275 characters,
+and the built_in function-call counts, 17471 in all, are:
+= -- 1808
+> -- 799
+< -- 36
++ -- 272
+- -- 262
+* -- 1284
+:= -- 2769
+add.period$ -- 126
+call.type$ -- 38
+change.case$ -- 236
+chr.to.int$ -- 35
+cite$ -- 38
+duplicate$ -- 717
+empty$ -- 1255
+format.name$ -- 307
+if$ -- 3666
+int.to.chr$ -- 4
+int.to.str$ -- 0
+missing$ -- 39
+newline$ -- 195
+num.names$ -- 124
+pop$ -- 216
+preamble$ -- 1
+purify$ -- 279
+quote$ -- 0
+skip$ -- 617
+stack$ -- 0
+substring$ -- 1085
+swap$ -- 181
+text.length$ -- 36
+text.prefix$ -- 9
+top$ -- 0
+type$ -- 288
+warning$ -- 0
+while$ -- 178
+width$ -- 41
+write$ -- 530

@@ -1,0 +1,333 @@
+\chapter{Optimization Problems}
+\label{sec:optProGenOpt}
+\section{Classification of Optimization Problems}
+\label{sec:claOptPro}
+We will now classify some optimization problems that can be solved with GenOpt's 
+optimization algorithms. The classification will be used
+in Section~\ref{sec:AlgSel} to recommend suitable optimization algorithms.\\
+
+We distinguish between problems whose
+design parameters are continuous 
+variables\footnote{Continuous variables can take on any value on the real line, 
+possibly between lower and upper bounds.}, discrete variables\footnote{Discrete
+variables can take on only integer values.},
+or both.
+In addition, we distinguish between
+problems with and without inequality constraints on the dependent variables.
+
+% ----------------------------------------------------------------
+\subsection{Problems with Continuous Variables}
+To denote box-constraints on independent continuous variables,
+we will use the notation
+\begin{equation}
+  \mathbf X \triangleq \bigl\{ x \in \Re^n \ | \ 
+  l^i \le x^i \le u^i, \ i \in \{1, \ldots, n \} \bigr\},
+\label{eq:setXPc}
+\end{equation}
+where $ - \infty \le l^i < u^i \le \infty$ for $i \in \{1, \ldots, n \}$.\\
+
+We will consider optimization problems of the form
+\begin{eqnarray}
+\lefteqn{ \mathbf P_{c}   } \qquad && \min_{x \in \mathbf X} f(x),
+\label{sub:Proc}
+\end{eqnarray}
+where $f \colon \Re^n \to \Re$ is a once continuously differentiable cost function.
+
+\begin{subequations}
+Now, we add inequality constraints on the dependent variables to~\eqref{sub:Proc} and obtain
+\begin{eqnarray}
+\lefteqn{ \mathbf P_{cg}   } \qquad && \min_{x \in \mathbf X} f(x), \\
+&& g(x) \le 0,
+\end{eqnarray}
+where everything is as in \eqref{sub:Proc} and, in addition,
+$g \colon \Re^n \to \Re^m$ is a once continuously differentiable constraint function 
+(for some $m \in \Na$).
+We will assume that there exists an $x^* \in \mathbf X$ that satisfies $g(x^*) < 0$.\\
+\label{sub:Procg}
+\end{subequations}
+
+% ----------------------------------------------------------------
+\subsection{Problems with Discrete Variables}
+Next, we will discuss the situation where all design parameters
+can only take on user-specified discrete values.\\
+
+Let $\mathbf X_d \subset \Z^{n_d}$ denote the constraint set
+with a finite, non-zero number of integers for each variable.\\
+
+We will consider integer programming problems of the form
+\begin{eqnarray}
+\lefteqn{ \mathbf P_{d}   } \qquad && \min_{x \in \mathbf X_d} f(x).
+\label{sub:Prod}
+\end{eqnarray}
+
+
+% ----------------------------------------------------------------
+\subsection{Problems with Continuous and Discrete Variables}
+Next, we will allow for continuous and discrete independent variables.\\
+
+\begin{subequations}
+We will use the notation
+\begin{eqnarray}
+\mathbf X & \triangleq & \mathbf X_c \times \mathbf X_d, \\
+\mathbf X_c & \triangleq & \bigl\{ x \in \Re^{n_c} \ | \ 
+l^i \le x^i \le u^i, \ i \in \{1, \ldots, n_c \} \bigr\},
+\label{eq:feaSetXc}
+\end{eqnarray}
+where the bounds on the continuous independent variables satisfy
+$ - \infty \le l^i < u^i \le \infty$ for $i \in \{1, \ldots, n_c \}$,
+and the constraint set $\mathbf X_d \subset \Z^{n_d}$ for the discrete variables
+is a user-specified set with a finite, non-zero number of integers for each variable.\\
+\label{sub:setXd}
+\end{subequations}
+
+We will consider mixed-integer programming problems of the form
+\begin{subequations}
+\begin{eqnarray}
+\lefteqn{ \mathbf P_{cd}   } \qquad && \min_{x \in \mathbf X} f(x), \\
+\end{eqnarray}
+\label{sub:Procd}
+\end{subequations}
+where $x \triangleq (x_c, x_d) \in \Re^{n_c} \times \Z^{n_d}$,
+$f \colon \Re^{n_c} \times \Z^{n_d} \to \Re$ and $\mathbf X$ is as in~\eqref{sub:setXd}.
+
+\begin{subequations}
+Now, we add inequality constraints on the dependent variables to~\eqref{sub:Procd} and obtain
+\begin{eqnarray}
+\lefteqn{ \mathbf P_{cdg}   } \qquad && \min_{x \in \mathbf X} f(x), \\
+&& g(x) \le 0,
+\end{eqnarray}
+\label{sub:Procdg}
+\end{subequations}
+where everything is as in \eqref{sub:Procd} and in addition
+$g \colon \Re^{n_c} \times \Re^{n_d} \to \Re^m$ (for some $m \in \Na$).
+We will assume that there exists an $x^* \in \mathbf X$ that satisfies
+$g(x^*) < 0$.\\
+
+% ----------------------------------------------------------------
+\subsection[Problems that use a Building Simulation Program]{Problems whose Cost Function is Evaluated by a Building Simulation Program}
+\label{sec:proAppCosFun}
+Next, we will discuss problem $\mathbf P_{c}$ defined in~\eqref{sub:Proc} for
+the situation where the cost function $f \colon \Re^n \to \Re$
+cannot be evaluated, 
+but can be approximated numerically by approximating cost functions
+$f^* \colon \Re_+^p \times \Re^n \to \Re$,
+where the first argument is the precision parameter of the numerical solvers.
+This is typically the case when the cost is computed 
+by a thermal building simulation program,
+such as
+EnergyPlus~\cite{Crawley2001:1}, 
+TRNSYS~\cite{KleinDuffieBeckman1976}, or
+DOE-2~\cite{WinkelmannBirsdall1993}.
+In such programs,
+computing the cost involves 
+solving a system of partial and
+ordinary differential equations that are coupled to algebraic equations.
+In general, one cannot obtain an exact solution, but
+one can obtain an approximate numerical solution.
+Hence,
+the cost function $f(x)$ can only be approximated by an approximating cost function 
+$f^*(\epsilon,x)$,
+where $\epsilon \in \Re_+^q$ is a vector that contains precision parameters of 
+the numerical solvers.
+Consequently, the optimization algorithm can only be applied to $f^*(\epsilon,x)$ 
+and not to $f(x)$.\\
+
+In such thermal building simulation programs
+it is common that the termination criteria of the solvers that are used 
+to solve the partial differential equations, ordinary differential equations, and
+algebraic equations depend on the independent variable $x$.
+Therefore, a perturbation of $x$ can cause 
+a change in the sequence of solver iterations,
+which causes the approximating cost functions $f^*(\epsilon,x)$ 
+to be discontinuous in $x$.
+Furthermore, if variable step size integration methods are used,
+then the integration mesh can change from one simulation to the next.
+Therefore, part of the change in function values between different points is
+caused by a change of the number of solver iterations, and
+by a change of the integration mesh.
+Consequently, $f^*(\epsilon,\cdot)$ is discontinuous, and
+a descent direction for $f^*(\epsilon,\cdot)$ may not be a descent direction 
+for $f(\cdot)$.
+Therefore, optimization algorithms
+can terminate at points that are non-optimal.\\
+
+The best one can do in trying to solve optimization problems where the cost and constraint functions are evaluated by a thermal building simulation program
+that does not allow controlling the approximation error
+is to find points that are close to a local minimizer of $f(\cdot)$.
+Numerical experiments show that by using tight enough precision and 
+starting the optimization algorithm with coarse initial values,
+one often comes close to a minimizer of $f(\cdot)$.
+Furthermore, by selecting different initial iterates for the optimization,
+or by using different optimization algorithms, one can increase the chance of 
+finding a point that is close to a minimizer of $f(\cdot)$.
+However, even if the optimization terminates at a point 
+that is non-optimal for $f(\cdot)$,
+one may have obtained a better system performance compared to not doing any optimization.\\
+
+See~\cite{WetterPolak2003:1,WetterWright2003:1} for a further discussion 
+of optimization problems in which the cost function value is computed
+by a building simulation program.
+
+% ----------------------------------------------------------------
+\section{Algorithm Selection}
+\label{sec:AlgSel}
+In this section, we will discuss which of GenOpt's algorithms can be selected
+for the optimization problems that we introduced in Section~\ref{sec:claOptPro}.\\
+
+% ----------------------------------------------------------------
+\subsection{Problem $\mathbf P_{c}$ with $n>1$}
+To solve $\mathbf P_{c}$ with $n>1$, 
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg}) or
+the GPS implementation of the Hooke-Jeeves algorithm
+(Section~\ref{sec:GPSHooJeeImp}, page~\pageref{sec:GPSHooJeeImp}) can be used,
+possibly with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}).
+If $f(\cdot)$ is once continuously differentiable
+and has bounded level sets (or if the constraint set $\mathbf X$
+defined in~\eqref{eq:setXPc} is compact)
+then these algorithms construct for problem~\eqref{sub:Proc}
+a sequence of iterates with stationary accumulation points 
+(see Theorem~\ref{the:feaPoiConv}).
+
+Alternatively, the Discrete Armijo Gradient algorithm
+(Section~\ref{sec:DAG}, page~\pageref{sec:DAG}) can be used.
+Every accumulation point of the
+Discrete Armijo Gradient algorithm is a feasible stationary point.\\
+
+If $f(\cdot)$ is not continuously differentiable, or if
+$f(\cdot)$ must be approximated by an approximating cost function $f^*(\epsilon,\cdot)$
+where the approximation error cannot be controlled,
+as described in Section~\ref{sec:proAppCosFun}, then $\mathbf P_c$ can only be solved
+heuristically.
+We recommend using
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg}),
+the GPS implementation of the Hooke-Jeeves algorithm 
+(Section~\ref{sec:GPSHooJeeImp}, page~\pageref{sec:GPSHooJeeImp}), 
+possibly with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}),
+or a Particle Swarm Optimization algorithm
+(Section~\ref{sec:PSOAlg}, page~\pageref{sec:PSOAlg}).\\
+
+We do not recommend using the Nelder-Mead Simplex algorithm 
+(Section~\ref{sec:simAlgNelMea}, page~\pageref{sec:simAlgNelMea}) or
+the Discrete Armijo Gradient algorithm
+(Section~\ref{sec:DAG}, page~\pageref{sec:DAG}).\\
+
+The following approach reduces the risk of failing at a point which is 
+non-optimal and far from a minimizer of $f(\cdot)$:
+\begin{enumerate}
+\item 
+Selecting large values for the parameter \texttt{Step} in 
+the optimization command file (see page~\pageref{ite:parStep}).
+\item
+Selecting different initial iterates.
+\item
+Using the hybrid algorithm of Section~\ref{sec:GPSPSOAlg},
+the GPS implementation of the Hooke-Jeeves algorithm, 
+possibly with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}),
+and/or
+a Particle Swarm Optimization algorithm
+and select the best of the solutions.
+\item
+Doing a parametric study around the solution that has been obtained by
+any of the above optimization algorithms.
+The parametric study can be done using the algorithms \texttt{Parametric} 
+(Section~\ref{sec:algParametric}, page~\pageref{sec:algParametric})
+and/or
+\texttt{EquMesh} 
+(Section~\ref{sec:algParRunGen}, page~\pageref{sec:algParRunGen}).
+If the parametric study yields a further reduction in cost,
+then the optimization failed at a non-optimal point.
+In this situation, one may want to try another optimization algorithm.
+\end{enumerate}
+
+
+If $f(\cdot)$ is continuously differentiable but 
+must be approximated by approximating cost functions $f^*(\epsilon,\cdot)$
+where the approximation error can be controlled
+as described in Section~\ref{sec:proAppCosFun}, 
+then $\mathbf P_c$ can be solved using 
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg}) or
+the GPS implementation of the Hooke-Jeeves algorithm 
+(Section~\ref{sec:GPSHooJeeImp}, page~\pageref{sec:GPSHooJeeImp}), 
+both with the error control scheme described in 
+the Model GPS Algorithm~\ref{al:GPSImp}
+(page~\pageref{al:GPSImp}).
+The GPS implementation of the Hooke-Jeeves algorithm can be used
+with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}).
+The error control scheme can be implemented using the value of GenOpt's variable
+\texttt{stepNumber} (page~\pageref{sec:ImpWeiFac})
+and GenOpt's pre-processing capabilities
+(Section~\ref{par:posPro}, page~\pageref{par:posPro}).
+A more detailed description of how to use the error control scheme can
+be found in~\cite{PolakWetter2003:1,WetterPolak2003:1}.
+
+
+% ----------------------------------------------------------------
+\subsection{Problem $\mathbf P_{cg}$ with $n>1$}
+To solve $\mathbf P_{cg}$, 
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg})
+or
+the GPS implementation of the Hooke-Jeeves algorithm 
+(Section~\ref{sec:GPSHooJeeImp}, page~\pageref{sec:GPSHooJeeImp})
+can be used,
+possibly with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}).
+Constraints $g(\cdot) \le 0$ can be implemented
+using barrier and penalty functions
+(Section~\ref{cha:conGen}, page~\pageref{cha:conGen}).\\
+
+If $f(\cdot)$ or $g(\cdot)$ are not continuously differentiable,
+we recommend using 
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg})
+or
+the GPS implementation of the Hooke-Jeeves algorithm
+(Section~\ref{sec:GPSHooJeeImp}, page~\pageref{sec:GPSHooJeeImp}),
+possibly with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}),
+and implement the constraints $g(\cdot) \le 0$ 
+using barrier and penalty functions
+(Section~\ref{cha:conGen}, page~\pageref{cha:conGen}).
+To reduce the risk of terminating far from a minimum point of $f(\cdot)$,
+we recommend the same measures as for solving $\mathbf P_c$.\\
+
+% ----------------------------------------------------------------
+\subsection{Problem $\mathbf P_{c}$ with $n=1$}
+To solve $\mathbf P_c$ with $n=1$, 
+any of the interval division algorithms can be used
+(Section~\ref{sec:IntDivAlg}, page~\pageref{sec:IntDivAlg}).
+Since only a few function evaluations are required for parametric studies
+in one dimension, the algorithm \texttt{Parametric} can also be used for this problem
+(Section~\ref{sec:algParametric}, page~\pageref{sec:algParametric}).
+We recommend doing a parametric study if $f(\cdot)$ is expected to have 
+several local minima.
+
+% ----------------------------------------------------------------
+\subsection{Problem $\mathbf P_{cg}$ with $n=1$}
+To solve $\mathbf P_{cg}$ with $n=1$, 
+the same applies as for $\mathbf P_{c}$ with $n=1$.
+Constraints $g(\cdot) \le 0$ can be implemented by setting 
+the penalty weighting factor $\mu$ in~\eqref{eq:penFun} to a large value.
+This may still cause small constraint violations, 
+but it is easy to check whether the violation is acceptable.
+
+% ----------------------------------------------------------------
+\subsection{Problem $\mathbf P_{d}$}
+To solve $\mathbf P_{d}$,
+a Particle Swarm Optimization algorithm can be used
+(Section~\ref{sec:PSOAlg}, page~\pageref{sec:PSOAlg}).
+
+% ----------------------------------------------------------------
+\subsection{Problem $\mathbf P_{cd}$ and $\mathbf P_{cdg}$}
+To solve $\mathbf P_{cd}$, or $\mathbf P_{cdg}$,
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg})
+or
+a Particle Swarm Optimization algorithm can be used
+(Section~\ref{sec:PSOAlg}, page~\pageref{sec:PSOAlg}).
+
+
+% ----------------------------------------------------------------
+\subsection{Functions with Several Local Minima}
+If the problem has several local minima, we recommend using 
+the GPS implementation of the Hooke-Jeeves algorithm
+with multiple starting points (Section~\ref{sec:GPSMulSta}, page~\pageref{sec:GPSMulSta}),
+the hybrid algorithm (Section~\ref{sec:GPSPSOAlg}, page~\pageref{sec:GPSPSOAlg}), or
+a Particle Swarm Optimization algorithm
+(Section~\ref{sec:PSOAlg}, page~\pageref{sec:PSOAlg}).
+

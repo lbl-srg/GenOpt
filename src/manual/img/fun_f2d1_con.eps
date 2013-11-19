@@ -1,0 +1,675 @@
+%!PS-Adobe-3.0 EPSF
+%%Title: Maple plot
+%%Creator: MapleV 
+%%Pages:  1
+%%BoundingBox: (atend)
+%%DocumentNeededResources: font Times-Roman
+%%+ font Times-Roman
+%%EndComments
+20 dict begin
+gsave
+/drawborder false def
+/m {moveto} def
+/l {lineto} def
+/C {setrgbcolor} def
+/Y /setcmykcolor where { %%ifelse Use built-in operator
+       /setcmykcolor get
+   }{ %%ifelse Emulate setcmykcolor with setrgbcolor
+       { %%def
+           1 sub 3 { %%repeat
+               3 index add neg dup 0 lt { pop 0 } if 3 1 roll
+           } repeat setrgbcolor
+       } bind
+   } ifelse def
+/G {setgray} def
+/S {stroke} def
+/NP {newpath} def
+%%%%This draws a filled polygon and avoids bugs/features
+%%%%   of some postscript interpreters
+%%%%GHOSTSCRIPT: has a bug in reversepath - removing
+%%%%the call to reversepath is a sufficient work around
+/P {gsave fill grestore reversepath stroke} def
+%%%%This function is needed for drawing text
+/stringbbox {gsave NP 0 0 m false charpath flattenpath
+   pathbbox 4 2 roll pop pop 1.1 mul cvi exch 1.1 mul 
+   cvi exch grestore} def
+/thin 3 def
+/medium 7 def
+/thick 16 def
+/boundarythick 20 def % thichess of bounding box
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Times-Roman
+20.000000 72.000000 translate
+0 rotate
+/defaultTitleFont {/Times-Roman findfont 219 scalefont setfont} def
+/defaultFont {/Times-Roman findfont 233 scalefont setfont} def
+/userFont1 {/Times-Roman findfont 212 scalefont setfont} def
+0.0936 0.0936 scale
+1 setlinejoin
+1 setlinecap
+0.0 setgray
+/inch {72 mul} def
+/fheight 0.35 inch neg def
+    0 G
+medium setlinewidth
+[] 0 setdash userFont1
+% bug patch -- we have a problem
+NP 4919 730 m 4844 839 l
+S
+NP 4919 730 m 5005 614 l
+S
+NP 5032 576 m 5005 614 l
+S
+NP 4640 3806 m 4631 3824 l
+S
+NP 4640 3806 m 4639 3800 l
+S
+NP 4677 3652 m 4639 3800 l
+S
+NP 4677 3652 m 4679 3618 l
+S
+NP 4689 3498 m 4679 3618 l
+S
+NP 4689 3498 m 4691 3455 l
+S
+NP 4696 3345 m 4691 3455 l
+S
+NP 4696 3345 m 4700 3295 l
+S
+NP 4694 3191 m 4700 3295 l
+S
+NP 4694 3191 m 4702 3139 l
+S
+NP 4665 3037 m 4702 3139 l
+S
+NP 4665 3037 m 4672 3007 l
+S
+NP 4631 2939 m 4672 3007 l
+S
+NP 4633 1192 m 4631 1196 l
+S
+NP 4633 1192 m 4635 1189 l
+S
+NP 4716 1038 m 4635 1189 l
+S
+NP 4716 1038 m 4788 924 l
+S
+NP 4813 884 m 4788 924 l
+S
+NP 4844 839 m 4813 884 l
+S
+NP 4472 3960 m 4418 3998 l
+S
+NP 4631 3824 m 4472 3960 l
+S
+NP 4631 2939 m 4610 2899 l
+S
+NP 4584 2883 m 4610 2899 l
+S
+NP 4584 2883 m 4551 2787 l
+S
+NP 4491 2729 m 4551 2787 l
+S
+NP 4491 2729 m 4488 2679 l
+S
+NP 4453 2576 m 4488 2679 l
+S
+NP 4453 2576 m 4457 2548 l
+S
+NP 4462 2422 m 4457 2548 l
+S
+NP 4462 2422 m 4470 2384 l
+S
+NP 4486 2268 m 4470 2384 l
+S
+NP 4486 2268 m 4496 2212 l
+S
+NP 4503 2114 m 4496 2212 l
+S
+NP 4503 2114 m 4513 2046 l
+S
+NP 4509 1960 m 4513 2046 l
+S
+NP 4509 1960 m 4518 1889 l
+S
+NP 4509 1807 m 4518 1889 l
+S
+NP 4509 1807 m 4519 1734 l
+S
+NP 4511 1653 m 4519 1734 l
+S
+NP 4511 1653 m 4528 1574 l
+S
+NP 4529 1499 m 4528 1574 l
+S
+NP 4529 1499 m 4560 1396 l
+S
+NP 4569 1345 m 4560 1396 l
+S
+NP 4631 1196 m 4569 1345 l
+S
+NP 4418 3998 m 4344 4013 l
+S
+NP 4205 4038 m 4344 4013 l
+S
+NP 4205 4038 m 4090 4043 l
+S
+NP 3992 4024 m 4090 4043 l
+S
+NP 3992 4024 m 3907 4021 l
+S
+NP 3779 3972 m 3907 4021 l
+S
+NP 3779 3972 m 3763 3972 l
+S
+NP 3733 3960 m 3763 3972 l
+S
+NP 3733 3960 m 3607 3931 l
+S
+NP 3566 3898 m 3607 3931 l
+S
+NP 3566 3898 m 3465 3879 l
+S
+NP 3353 3809 m 3465 3879 l
+S
+NP 3353 3809 m 3350 3808 l
+S
+NP 3343 3806 m 3350 3808 l
+S
+NP 3343 3806 m 3197 3765 l
+S
+NP 3141 3729 m 3197 3765 l
+S
+NP 3141 3729 m 3038 3726 l
+S
+NP 2928 3702 m 3038 3726 l
+S
+NP 3002 2729 m 2928 2848 l
+S
+NP 3002 2729 m 2997 2680 l
+S
+NP 3049 2576 m 2997 2680 l
+S
+NP 3049 2576 m 3043 2492 l
+S
+NP 3058 2422 m 3043 2492 l
+S
+NP 3058 2422 m 3053 2331 l
+S
+NP 3053 2268 m 3053 2331 l
+S
+NP 3053 2268 m 3048 2181 l
+S
+NP 3041 2114 m 3048 2181 l
+S
+NP 3041 2114 m 3037 2035 l
+S
+NP 3010 1960 m 3037 2035 l
+S
+NP 3010 1960 m 3007 1903 l
+S
+NP 2928 1831 m 3007 1903 l
+S
+NP 2928 3702 m 2819 3731 l
+S
+NP 2715 3749 m 2819 3731 l
+S
+NP 2817 2883 m 2715 2932 l
+S
+NP 2928 2848 m 2817 2883 l
+S
+NP 2928 1831 m 2911 1818 l
+S
+NP 2860 1807 m 2911 1818 l
+S
+NP 2860 1807 m 2768 1768 l
+S
+NP 2715 1763 m 2768 1768 l
+S
+NP 2612 3806 m 2502 3867 l
+S
+NP 2715 3749 m 2612 3806 l
+S
+NP 2715 2932 m 2661 2922 l
+S
+NP 2524 2883 m 2661 2922 l
+S
+NP 2524 2883 m 2505 2881 l
+S
+NP 2502 2880 m 2505 2881 l
+S
+NP 2526 1807 m 2502 1812 l
+S
+NP 2715 1763 m 2526 1807 l
+S
+NP 2381 3960 m 2289 4032 l
+S
+NP 2502 3867 m 2381 3960 l
+S
+NP 2502 2880 m 2365 2828 l
+S
+NP 2289 2741 m 2365 2828 l
+S
+NP 2502 1812 m 2440 1852 l
+S
+NP 2289 1943 m 2440 1852 l
+S
+NP 2199 4113 m 2076 4227 l
+S
+NP 2289 4032 m 2199 4113 l
+S
+NP 2289 2741 m 2281 2735 l
+S
+NP 2279 2729 m 2281 2735 l
+S
+NP 2279 2729 m 2185 2651 l
+S
+NP 2161 2576 m 2185 2651 l
+S
+NP 2161 2576 m 2131 2536 l
+S
+NP 2109 2422 m 2131 2536 l
+S
+NP 2109 2422 m 2106 2400 l
+S
+NP 2106 2268 m 2106 2400 l
+S
+NP 2106 2268 m 2117 2238 l
+S
+NP 2150 2114 m 2117 2238 l
+S
+NP 2150 2114 m 2252 1987 l
+S
+NP 2268 1960 m 2252 1987 l
+S
+NP 2289 1943 m 2268 1960 l
+S
+NP 1883 4421 m 1936 4368 l
+S
+NP 2036 4267 m 1936 4368 l
+S
+NP 2076 4227 m 2036 4267 l
+S
+NP 6026 1038 m 5909 1108 l
+S
+NP 6122 982 m 6026 1038 l
+S
+NP 5768 1192 m 5696 1237 l
+S
+NP 5909 1108 m 5768 1192 l
+S
+NP 5556 3191 m 5483 3245 l
+S
+NP 5556 3191 m 5580 3120 l
+S
+NP 5605 3037 m 5580 3120 l
+S
+NP 5605 3037 m 5608 2947 l
+S
+NP 5581 2883 m 5608 2947 l
+S
+NP 5581 2883 m 5573 2818 l
+S
+NP 5499 2729 m 5573 2818 l
+S
+NP 5499 2729 m 5498 2719 l
+S
+NP 5483 2702 m 5498 2719 l
+S
+NP 5520 1345 m 5483 1371 l
+S
+NP 5696 1237 m 5520 1345 l
+S
+NP 5326 3345 m 5270 3358 l
+S
+NP 5483 3245 m 5326 3345 l
+S
+NP 5483 2702 m 5435 2610 l
+S
+NP 5377 2576 m 5435 2610 l
+S
+NP 5377 2576 m 5350 2518 l
+S
+NP 5270 2461 m 5350 2518 l
+S
+NP 5285 1499 m 5270 1511 l
+S
+NP 5483 1371 m 5285 1499 l
+S
+NP 5270 3358 m 5251 3358 l
+S
+NP 5057 3384 m 5251 3358 l
+S
+NP 5270 2461 m 5247 2438 l
+S
+NP 5210 2422 m 5247 2438 l
+S
+NP 5210 2422 m 5157 2350 l
+S
+NP 5057 2285 m 5157 2350 l
+S
+NP 5068 1653 m 5057 1664 l
+S
+NP 5270 1511 m 5068 1653 l
+S
+NP 5057 3384 m 5000 3386 l
+S
+NP 4844 3393 m 5000 3386 l
+S
+NP 5057 2285 m 5045 2277 l
+S
+NP 5025 2268 m 5045 2277 l
+S
+NP 5025 2268 m 4960 2184 l
+S
+NP 4868 2114 m 4960 2184 l
+S
+NP 4868 2114 m 4866 2098 l
+S
+NP 4844 2039 m 4866 2098 l
+S
+NP 4885 1807 m 4844 1891 l
+S
+NP 5057 1664 m 4885 1807 l
+S
+NP 4844 3393 m 4775 3395 l
+S
+NP 4631 3398 m 4775 3395 l
+S
+NP 4844 2039 m 4817 1980 l
+S
+NP 4797 1960 m 4817 1980 l
+S
+NP 4844 1891 m 4797 1960 l
+S
+NP 4631 3398 m 4553 3401 l
+S
+NP 4418 3397 m 4553 3401 l
+S
+NP 4418 3397 m 4336 3404 l
+S
+NP 4205 3379 m 4336 3404 l
+S
+NP 4256 1960 m 4205 1987 l
+S
+NP 4256 1960 m 4247 1930 l
+S
+NP 4205 1822 m 4247 1930 l
+S
+NP 4205 3379 m 4147 3386 l
+S
+NP 4018 3345 m 4147 3386 l
+S
+NP 4018 3345 m 4000 3339 l
+S
+NP 3992 3333 m 4000 3339 l
+S
+NP 4084 2114 m 3992 2139 l
+S
+NP 4205 1987 m 4084 2114 l
+S
+NP 4205 1822 m 4204 1808 l
+S
+NP 4203 1807 m 4204 1808 l
+S
+NP 4203 1807 m 4131 1707 l
+S
+NP 4025 1653 m 4131 1707 l
+S
+NP 4025 1653 m 4007 1642 l
+S
+NP 3992 1639 m 4007 1642 l
+S
+NP 3992 3333 m 3837 3303 l
+S
+NP 3779 3270 m 3837 3303 l
+S
+NP 3992 2139 m 3961 2137 l
+S
+NP 3779 2194 m 3961 2137 l
+S
+NP 3992 1639 m 3899 1567 l
+S
+NP 3779 1541 m 3899 1567 l
+S
+NP 3779 3270 m 3673 3267 l
+S
+NP 3566 3247 m 3673 3267 l
+S
+NP 3779 2194 m 3677 2188 l
+S
+NP 3566 2216 m 3677 2188 l
+S
+NP 3779 1541 m 3749 1521 l
+S
+NP 3629 1499 m 3749 1521 l
+S
+NP 3629 1499 m 3586 1485 l
+S
+NP 3566 1484 m 3586 1485 l
+S
+NP 3566 3247 m 3479 3254 l
+S
+NP 3353 3257 m 3479 3254 l
+S
+NP 3566 2216 m 3431 2212 l
+S
+NP 3353 2220 m 3431 2212 l
+S
+NP 3566 1484 m 3414 1455 l
+S
+NP 3353 1455 m 3414 1455 l
+S
+NP 3353 3257 m 3244 3270 l
+S
+NP 3141 3278 m 3244 3270 l
+S
+NP 3353 2220 m 3212 2217 l
+S
+NP 3141 2216 m 3212 2217 l
+S
+NP 3353 1455 m 3201 1455 l
+S
+NP 3141 1459 m 3201 1455 l
+S
+NP 3141 3278 m 3000 3292 l
+S
+NP 2928 3295 m 3000 3292 l
+S
+NP 3141 2216 m 3005 2212 l
+S
+NP 2928 2208 m 3005 2212 l
+S
+NP 2945 1499 m 2928 1502 l
+S
+NP 3141 1459 m 2945 1499 l
+S
+NP 2928 3295 m 2765 3308 l
+S
+NP 2715 3307 m 2765 3308 l
+S
+NP 2928 2208 m 2802 2205 l
+S
+NP 2715 2189 m 2802 2205 l
+S
+NP 2928 1502 m 2919 1506 l
+S
+NP 2715 1575 m 2919 1506 l
+S
+NP 2715 3307 m 2537 3319 l
+S
+NP 2502 3317 m 2537 3319 l
+S
+NP 2715 2189 m 2615 2186 l
+S
+NP 2502 2124 m 2615 2186 l
+S
+NP 2591 1653 m 2502 1737 l
+S
+NP 2715 1575 m 2591 1653 l
+S
+NP 2502 3317 m 2304 3333 l
+S
+NP 2289 3332 m 2304 3333 l
+S
+NP 2502 2124 m 2489 2124 l
+S
+NP 2480 2114 m 2489 2124 l
+S
+NP 2480 2114 m 2405 2030 l
+S
+NP 2388 1960 m 2405 2030 l
+S
+NP 2388 1960 m 2424 1863 l
+S
+NP 2437 1807 m 2424 1863 l
+S
+NP 2502 1737 m 2437 1807 l
+S
+NP 2191 3345 m 2076 3362 l
+S
+NP 2289 3332 m 2191 3345 l
+S
+NP 2076 3362 m 2037 3373 l
+S
+NP 1863 3410 m 2037 3373 l
+S
+NP 1863 3410 m 1702 3461 l
+S
+NP 1650 3476 m 1702 3461 l
+S
+NP 1587 3498 m 1437 3556 l
+S
+NP 1650 3476 m 1587 3498 l
+S
+NP 1437 3556 m 1240 3641 l
+S
+NP 1224 3647 m 1240 3641 l
+S
+NP 1214 3652 m 1011 3746 l
+S
+NP 1224 3647 m 1214 3652 l
+S
+NP 888 3806 m 798 3850 l
+S
+NP 1011 3746 m 888 3806 l
+S
+medium setlinewidth
+NP 3460 500 m 3460 4500 l
+S
+thin setlinewidth
+NP 3423 576 m 3460 576 l
+S
+NP 3441 769 m 3460 769 l
+S
+NP 3441 961 m 3460 961 l
+S
+NP 3441 1153 m 3460 1153 l
+S
+NP 3441 1345 m 3460 1345 l
+S
+NP 3423 1538 m 3460 1538 l
+S
+NP 3441 1730 m 3460 1730 l
+S
+NP 3441 1922 m 3460 1922 l
+S
+NP 3441 2114 m 3460 2114 l
+S
+NP 3441 2306 m 3460 2306 l
+S
+NP 3423 2499 m 3460 2499 l
+S
+NP 3441 2691 m 3460 2691 l
+S
+NP 3441 2883 m 3460 2883 l
+S
+NP 3441 3075 m 3460 3075 l
+S
+NP 3441 3268 m 3460 3268 l
+S
+NP 3423 3460 m 3460 3460 l
+S
+NP 3441 3652 m 3460 3652 l
+S
+NP 3441 3844 m 3460 3844 l
+S
+NP 3441 4037 m 3460 4037 l
+S
+NP 3441 4229 m 3460 4229 l
+S
+NP 3423 4421 m 3460 4421 l
+S
+medium setlinewidth
+NP 692 2499 m 6230 2499 l
+S
+thin setlinewidth
+NP 798 2471 m 798 2499 l
+S
+NP 1064 2485 m 1064 2499 l
+S
+NP 1331 2485 m 1331 2499 l
+S
+NP 1597 2485 m 1597 2499 l
+S
+NP 1863 2485 m 1863 2499 l
+S
+NP 2129 2471 m 2129 2499 l
+S
+NP 2395 2485 m 2395 2499 l
+S
+NP 2661 2485 m 2661 2499 l
+S
+NP 2928 2485 m 2928 2499 l
+S
+NP 3194 2485 m 3194 2499 l
+S
+NP 3726 2485 m 3726 2499 l
+S
+NP 3992 2485 m 3992 2499 l
+S
+NP 4258 2485 m 4258 2499 l
+S
+NP 4525 2485 m 4525 2499 l
+S
+NP 4791 2471 m 4791 2499 l
+S
+NP 5057 2485 m 5057 2499 l
+S
+NP 5323 2485 m 5323 2499 l
+S
+NP 5589 2485 m 5589 2499 l
+S
+NP 5855 2485 m 5855 2499 l
+S
+NP 6122 2471 m 6122 2499 l
+S
+medium setlinewidth
+(\2614) dup stringbbox 2 idiv 576 exch sub exch 3407 exch sub exch m show
+(\2612) dup stringbbox 2 idiv 1538 exch sub exch 3407 exch sub exch m show
+(2) dup stringbbox 2 idiv 3460 exch sub exch 3407 exch sub exch m show
+(4) dup stringbbox 2 idiv 4421 exch sub exch 3407 exch sub exch m show
+(x2) dup stringbbox 2 idiv 3499 exch sub exch 3238 exch sub exch m show
+(\2614) dup stringbbox 2459 exch sub exch 2 idiv 798 exch sub exch m show
+(\2612) dup stringbbox 2459 exch sub exch 2 idiv 2129 exch sub exch m show
+(2) dup stringbbox 2459 exch sub exch 2 idiv 4791 exch sub exch m show
+(4) dup stringbbox 2459 exch sub exch 2 idiv 6122 exch sub exch m show
+(x1) dup stringbbox 2239 exch sub exch 2 idiv 4845 exch sub exch m show
+boundarythick setlinewidth
+% The following draws a box around the plot,
+% if the variable drawborder is true
+drawborder { 
+/bd boundarythick 2 idiv def
+[] 0 setdash 
+NP bd bd m bd 5000 bd sub l 
+6923 bd sub 5000 bd sub l 
+6923 bd sub bd l 
+bd bd l S
+} if % end of if to draw the border
+
+showpage
+grestore
+end
+%%Trailer
+%%BoundingBox: 72 72 719 540 
+%%EOF

@@ -1,0 +1,238 @@
+\chapter{Abstract}
+GenOpt is an optimization program for the minimization 
+of a cost function that is evaluated by an external simulation program.
+It has been developed for optimization problems where the cost function
+is computationally expensive and its derivatives are not available or
+may not even exist.
+GenOpt can be coupled to any simulation program 
+that reads its input from text files
+and writes its output to text files.
+The independent variables can be continuous variables 
+(possibly with lower and upper bounds), discrete variables, or both, 
+continuous and discrete variables.
+Constraints on dependent variables can be implemented using penalty 
+or barrier functions.
+GenOpt uses parallel computing to evaluate the simulations.
+
+GenOpt has a library with local and global multi-dimensional and 
+one-dimensional optimization algorithms, 
+and algorithms for doing parametric runs.
+An algorithm interface allows adding
+new minimization algorithms without
+knowing the details of the program structure.
+
+GenOpt is written in Java so that it is platform independent.
+The platform independence and the general interface make GenOpt applicable 
+to a wide range of optimization problems.
+
+GenOpt has not been designed for linear programming problems,
+quadratic programming problems, and problems 
+where the gradient of the cost function is available. For such problems,
+as well as for other problems,
+special tailored software exists that is more efficient.
+
+% ---------------------------------------------------------------
+\chapter{Notation}
+\begin{enumerate}
+\item
+We use the notation $a \triangleq b$ to denote that $a$ is equal to $b$ by definition.
+We use the notation $a \leftarrow b$ to denote that $a$ is assigned the value
+of $b$.
+\item 
+$\Re^n$ denotes the Euclidean space of $n$-tuplets of real numbers. 
+Vectors $x \in \Re^n$ are always column vectors, 
+and their elements are denoted by superscripts. 
+The inner product in $\Re^n$ is denoted by $\langle \cdot, \cdot \rangle$ and 
+for $x,y \in \Re^n$ 
+defined by $\langle x, y \rangle \triangleq \sum_{i=1}^n x^i \, y^i$. 
+The norm in $\Re^n$ is denoted by $\|\cdot\|$ and 
+for $x \in \Re^n$ defined by $\|x\|\triangleq \langle x, x \rangle^{1/2}$.
+\item 
+We denote by $\mathbb Z$ the set of integers, by $\mathbb Q$ 
+the set of rational numbers, and by $\mathbb N \triangleq \{0, \, 1,
+\, \ldots \}$ the set of natural numbers. The set
+$\mathbb N_+$ is defined as $\mathbb N_+ \triangleq \{1, \, 2, \,
+\ldots \}$.
+Similarly, vectors in $\Re^n$ with strictly positive elements are denoted by 
+$\Re_+^n \triangleq \{ x
+\in \Re^n \ | \  x^i > 0, \ i \in \{ 1, \ldots , n \} \, \}$ 
+and the set $\mathbb Q_+$
+is defined as $\mathbb Q_+ \triangleq \{ q \in \mathbb Q \ | \ q > 0 \}$.
+\item
+Let $\mathbb W$ be a set containing a sequence
+$\{ w_i \}_{i=0}^k$.
+Then, we denote by $\underline w_k$ the sequence 
+$\{ w_i \}_{i=0}^k$ and by $\underline{\mathbf W}_k$ the set
+of all $k+1$ element sequences in $\mathbb W$.
+\item 
+If $\mathbf A$ and $\mathbf B$ are sets, 
+we denote by $\mathbf A \cup \mathbf B$ the union of $\mathbf A$ and $\mathbf B$ and
+by $\mathbf A \cap \mathbf B$ the intersection of $\mathbf A$ and $\mathbf B$.
+\item
+If $\mathbf S$ is a set, 
+we denote by $\overline {\mathbf S}$ the closure of $\mathbf S$ and
+by $2^{\mathbf S}$ the set of all
+nonempty subsets of $\mathbf S$.
+\item
+If $\widehat D \in \mathbb Q^{n \times q}$ is a matrix, 
+we will use the notation $\widehat d \in \widehat D$ 
+to denote the fact that $\widehat d \in \mathbb Q^n$ is a 
+column vector of the matrix $\widehat D$. Similarly, by 
+$D \subset \widehat D$ we mean that $D \in
+\mathbb Q^{n \times p}$ ($1 \le p \le q$) is a matrix containing only
+columns of $\widehat D$. Further, $\operatorname{card}(D)$ denotes the number
+of columns of $D$.
+\item
+$f(\cdot)$ denotes a function where $(\cdot)$ stands for the undesignated variables. $f(x)$ denotes the value of $f(\cdot)$ at the point $x$. $f\colon A \rightarrow B$ indicates that the domain of $f(\cdot)$ is in the space $A$ and its range in the space $B$.
+\item 
+We say that a function $f \ \colon \ \Re^n \to \Re$ is once continuously differentiable
+if $f(\cdot)$ is defined on $\Re^n$,
+and if $f(\cdot)$ has continuous derivatives on $\Re^n$.
+\item
+For $x^* \in \Re^n$ and $f \colon \Re^n \to \Re$ continuously differentiable, 
+we say that $x^*$ is stationary if $\nabla f(x^*) = 0$.
+\item
+We denote by $\{ e_i \}_{i=1}^n$ the unit vectors in $\mathbb R^n$.
+\item
+We denote by $\rho \sim U(0,1)$ that $\rho \in \Re$ 
+is a uniformly distributed random number, with $0 \le \rho \le 1$.
+\end{enumerate}
+% ---------------------------------------------------------------
+
+\chapter{Introduction}
+The use of system simulation for analyzing complex engineering problems is increasing.
+Such problems typically involve many independent variables\footnote{The independent 
+variables are the variables that are varied by the optimization algorithm
+from one iteration to the next.
+They are also called design parameters or free parameters.},
+and can only be optimized by
+means of numerical optimization.
+Many designers use parametric studies to achieve better performance 
+of such systems, 
+even though such studies typically yield only partial improvement while requiring 
+high labor time.
+In such parametric studies, one usually fixes all but one variable 
+and tries to optimize a cost function\footnote{The cost function is the function being optimized.
+The cost function measures a quantity that should be minimized, such as
+a building's annual operation cost,
+a system's energy consumption, or
+a norm between simulated and measured values in a data fitting process.
+The cost function is also called objective function.}
+with respect to the non-fixed variable.
+The procedure is repeated iteratively by varying another variable.
+However, every time a variable is varied, all other variables typically become non-optimal and hence need also to be adjusted.
+It is clear that such a manual procedure is very time-consuming and often impractical for more than two or three independent variables.\\
+
+
+GenOpt, a generic optimization program, has been developed
+to find with less labor time the independent variables that 
+yield better performance of such systems. 
+GenOpt does optimization of a user-supplied cost function,
+using a user-selected optimization algorithm.\\
+
+In the most general form, the optimization problems addressed by GenOpt
+can be stated as follows:
+Let $\mathbf X$ be a user-specified constraint set, and 
+let $f \colon \mathbf X \to \Re$ be a user-defined cost function
+that is bounded from below.
+The constraint set $\mathbf X$ consists of all possible design options,
+and the cost function $f(\cdot)$ measures the system performance.
+GenOpt tries to find a solution to the problem\footnote{
+If $f(\cdot)$ is discontinuous, it may only have an infimum 
+(i.e., a greatest lower bound) but no minimum even if the constraint set
+$\mathbf X$ is compact.
+Thus, to be correct,~\eqref{eq:optProMosGen}
+should be replaced by $\inf_{x \in \mathbf X} f(x)$. 
+For simplicity, we will not make this distinction.}
+\begin{equation}
+  \min_{x \in \mathbf X} f(x).
+\label{eq:optProMosGen}
+\end{equation}
+This problem is usually ``solved'' by iterative methods,
+which construct infinite sequences, of progressively better approximations
+to a ``solution'', i.e., a point that satisfies an optimality condition.
+If $\mathbf X \subset \Re^n$, with some $n \in \Na$,
+and $\mathbf X$ or $f(\cdot)$ is not convex, 
+we do not have a test for global optimality,
+and the most one can obtain is a point that satisfies a local optimality condition.
+Furthermore, for $\mathbf X \subset \Re^n$, tests for optimality are based on 
+differentiability assumptions of the cost function.
+Consequently,
+optimization algorithms can fail, possibly far from a solution,
+if $f(\cdot)$ is not differentiable in the continuous independent variables.
+Some optimization algorithms are more likely to fail at discontinuities than others.
+GenOpt has algorithms that are not very sensitive to (small) discontinuities
+in the cost function, such as Generalized Pattern Search algorithms,
+which can also be used in conjunction with heuristic global optimization algorithms.\\
+
+Since one of GenOpt's main application fields is building energy use or 
+operation cost optimization, 
+GenOpt has been designed such that it addresses the special properties 
+of optimization problems in this area.
+In particular, GenOpt is designed for optimization problems with the following properties:
+\begin{enumerate}
+\item
+The cost function may have to be defined on
+approximate numerical solutions of 
+differential algebraic equations,
+which may fail to be continuous
+(see Section~\ref{sec:proAppCosFun}).
+\item
+The number of independent variables is small.\footnote{By small, 
+we mean on the order of $10$, but the maximum number of independent variables 
+is not restricted in GenOpt.}
+\item 
+Evaluating the cost function requires much more computation time 
+than determining the values for the next iterate.
+\item 
+Analytical properties of the cost function 
+(such as formula for the gradient) are not available.
+\end{enumerate}
+
+\noindent GenOpt has the following properties:
+\begin{enumerate}
+\item 
+GenOpt can be coupled to any simulation program that calculates 
+the cost function 
+without having to modify or recompile either program,
+provided that the simulation program reads its input from text files 
+and writes its output to text files.
+\item 
+The user can select an optimization algorithm from an algorithm library, 
+or implement a custom algorithm without having 
+to recompile and understand the whole optimization environment.
+\item
+GenOpt does not require an expression for the gradient of the cost function.
+\end{enumerate}
+
+With GenOpt, it is easy to couple a new simulation program, 
+specify the optimization variables and minimize the cost function. 
+Therefore, in designing complex systems, as well as in system analysis, 
+a generic optimization program like GenOpt offers valuable assistance.
+Note, however, that optimization is not easy:
+The efficiency and success of an optimization is strongly affected by the properties and 
+the formulation of the cost function, and by the selection of an appropriate optimization algorithm.\\
+
+This manual is structured as follows:
+In Section~\ref{sec:optProGenOpt}, we classify optimization problems 
+and discuss which of GenOpt's algorithms can be used for each of these problems.
+Next, we explain the algorithms that are implemented in GenOpt:
+In Section~\ref{sec:algImp}, we discuss the algorithms 
+for multi-dimensional optimization;
+in Section~\ref{sec:algOneDimOpt} the algorithms for 
+one-dimensional optimization;
+and
+in Section~\ref{sec:algParRun} the algorithms for parametric runs.
+In Section~\ref{cha:conGen}, we discuss how constraints on independent variables are
+implemented, and how constraints on dependent variables can be implemented.
+In Section~\ref{sec:proIns}, we explain 
+the structure of the GenOpt software,
+the interface for the simulation program and 
+the interface for the optimization algorithms.
+How to install and start GenOpt is described in Section~\ref{sec:InsAndRunGen}.
+Section~\ref{sec:SetUpOptPro} shows how to set up the configuration and input files,
+and how to use GenOpt's pre- and post-processing capabilities.
+% ---------------------------------------------------------------
+
+
+

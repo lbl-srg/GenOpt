@@ -1,0 +1,175 @@
+\chapter{Program}
+\label{sec:proIns}
+GenOpt is divided into a kernel part and an optimization part.
+The kernel reads the input files,
+calls the simulation program,
+stores the results,
+writes output files, etc.
+The optimization part contains the optimization algorithms.
+It also contains classes of mathematical functions such as those used in linear algebra.\\
+
+Since there is a variety of simulation programs and optimization algorithms, 
+GenOpt has a simulation program interface and an optimization algorithm interface.
+The simulation program interface allows using any simulation software to evaluate the cost function (see below for the requirements on the simulation program), and
+allows implementing new optimization algorithms with little effort.
+
+\section{Interface to the Simulation Program}
+\begin{figure}
+\centering
+\scalebox{0.8}{ \input{prg_flow.pstex_t} }
+\caption{Interface between GenOpt and the simulation program that evaluates the cost function.}
+\end{figure}
+
+Text files are used to exchange data with the simulation program and to specify how 
+to start the simulation program.
+This makes it possible to couple any simulation program to GenOpt without requiring code adaptation on either the GenOpt side or the simulation program side.
+The simulation program must satisfy the following requirements:
+\begin{enumerate}
+\label{lis:simProIntReq}
+\item 
+The simulation program must read its input from one or more text files,
+must write the value of the cost function to a text file, 
+and must write error messages to a text file.
+\item
+It must be able to start the simulation program by a command and 
+the simulation program must terminate automatically.
+This means that the user does not have to open the input file manually 
+and shut down the simulation program once the simulation is finished.
+\end{enumerate}
+
+The simulation program may be a commercially available program or one written by the user.
+% -------------------------------------------------------------------------
+
+% -------------------------------------------------------------------------
+\section{Interface to the Optimization Algorithm}
+\begin{figure}
+\centering
+\scalebox{0.8}{ \input{alg_inte.pstex_t} }
+\caption{Implementation of optimization algorithms into GenOpt.}
+\label{fig:algImp}
+\end{figure}
+The large variety of optimization algorithms led to the development of
+an open interface that allows easy implementation of optimization algorithms.
+Users can implement their own algorithms and add them to the library of available optimization algorithms without having to adapt and recompile GenOpt.
+To implement a new optimization algorithm,
+the optimization algorithm must be written according to the guidelines 
+of Section~\ref{sec:impNewOptAlg}.
+Thus, GenOpt can not only be used to do optimization with built-in algorithms, 
+but it can also be used as a framework for developing, testing and comparing 
+optimization algorithms.\\
+
+Fig.~\ref{fig:algImp} shows GenOpt's program structure.
+The class \texttt{Optimizer} is the superclass of each optimization algorithm. 
+It offers all the functions required for retrieval of parameters that specify 
+the optimization settings, performing the evaluation of the cost function and reporting results. 
+For a listing of its methods, 
+see \url{http://SimulationResearch.lbl.gov} or the Javadoc code documentation 
+that comes with GenOpt's installation.
+
+% ------------
+\section{Package \texttt{genopt.algorithm}}
+The Java package \texttt{genopt.algorithm} consists of all classes that contain
+mathematical formulas that are used by the optimization algorithm.
+The following packages belong to \texttt{genopt.algorithm}.
+\begin{codedescription}
+\item[genopt.algorithm]
+This package contains all optimization algorithms. 
+The abstract class \texttt{Optimizer}, which must be inherited 
+by each optimization algorithm, is part of this package.
+
+\item[genopt.algorithm.util.gps] contains 
+a model Generalized Pattern Search optimization algorithm.
+
+\item[genopt.algorithm.util.linesearch] contains 
+classes for doing a line search along a given direction.
+
+\item[genopt.algorithm.util.math] contains 
+classes for mathematical operations.
+
+\item[genopt.algorithm.util.optimality] contains 
+classes that can be used to check 
+whether a variable value is at a minimum point or not.
+
+\item[genopt.algorithm.util.pso] contains 
+a model Particle Swarm Optimization algorithm.
+
+\end{codedescription}
+These packages are documented in the Javadoc source code documentation
+that comes with GenOpt's.
+
+% -------------------------------------------------------------
+\section{Implementing a New Optimization Algorithm}
+\label{sec:impNewOptAlg}
+To implement a new optimization algorithm,
+you must write a Java class that has 
+the syntax shown in Fig. \ref{fig:codAlgStrGen}.
+The class must use the methods of the abstract class \texttt{Optimizer} 
+to evaluate the cost function and to report the optimization steps.
+The methods of the \texttt{Optimizer} class are documented
+in the Javadoc source code documentation.\\
+
+Follow these steps to implement and use your own optimization algorithm:
+\begin{enumerate}
+\item 
+Put the byte-code (\texttt{{\it ClassName}.class}) in the directory \texttt{genopt/algorithm}.
+\item 
+Set the value of the keyword \texttt{Main} in the \texttt{Algorithm} section of the optimization command file to the name of the optimization class (without file extension).
+\item 
+Add any further keywords that the algorithm requires 
+to the \texttt{Algorithm} section. 
+The keywords must be located \emph{after} the entry \texttt{Main} of the optimization command file. The keywords must be in the same sequence as they are called in the optimization code.
+\item 
+Call the method \texttt{Optimizer.report(final Point, final boolean)} 
+after evaluating the cost function. 
+Otherwise, the result will not be reported.
+\item 
+Call either the method \texttt{Optimizer.increaseStepNumber()}
+or the method
+\texttt{Optimizer.increaseStepNumber(final Point)}
+after the optimization algorithm converged to some point.
+These methods increase a counter that can be used to add penalty or 
+barrier functions to the cost function.
+In particular, the methods \url{Optimizer.increaseStepNumber()}
+and \url{Optimizer.increaseStepNumber(final Point)} increase the
+variable \texttt{stepNumber} (see Section~\ref{cha:conGen}) by one.
+\end{enumerate}
+
+
+\begin{figure}[ht!]
+\centering
+\begin{alltt}
+\codeem{package genopt.algorithm;
+
+import genopt.GenOpt;
+import genopt.lang.OptimizerException;
+import genopt.io.InputFormatException;
+
+public class ClassName extends Optimizer\{
+
+   public ClassName (GenOpt genOptData)
+      throws InputFormatException, OptimizerException, 
+             IOException, Exception
+   \{ }
+      // set the mode to specify whether the
+      // default transformations for the box
+      // constraints should be used or not \codeem{
+      int constraintMode = xxxx;
+      super(genOptData, constraintMode);}
+
+      // remaining code of the constructor
+   \codeem{\}
+
+   public int run() throws OptimizerException, IOException
+   \{ }
+      // the code of the optimization algorithm \codeem{
+   \}}
+
+   // add any further methods and data members
+\codeem{\}}
+\end{alltt}
+   \caption{Code snippet that specifies how to implement an optimization algorithm.}
+   \label{fig:codAlgStrGen}
+\end{figure}
+
+
+

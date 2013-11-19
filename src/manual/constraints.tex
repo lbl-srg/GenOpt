@@ -1,0 +1,220 @@
+\chapter{Constraints}
+\label{cha:conGen}
+For some optimization problems it is necessary to impose constraints 
+on the independent variables and/or the dependent variables, as the following example shows.
+
+\begin{example}{\em
+Suppose we want to minimize the heating energy of a building, and suppose that
+the normalized mass flow $\dot m$ of the heating system is an independent variable, with constraints
+$0 \le \dot m \le 1$.
+Without using constraints, the minimum energy consumption would be achieved 
+for $\dot m = 0$, since then the heating system is switched off.
+To solve this problem, we can impose a constraint on a dependent variable.
+One possibility is to add a ``penalty'' term to the energy consumption. 
+This could be such that every time a thermal comfort criterion 
+(which is a dependent variable)
+is violated, a large positive number is added to the energy consumption.
+Thus, if $\mathrm{ppd}(x)$, with $\mathrm{ppd} \colon \Re^n \to \Re$, 
+denotes the predicted percent of dissatisfied people (in percentage), and
+if we require that $\mathrm{ppd}(x) \le 10 \%$, we could use the inequality constraint
+$g(x) \triangleq \mathrm{ppd}(x) - 10 \le 0$.
+}
+\phantom{abc} \rbox
+\end{example}
+
+In Section~\ref{sec:boxConFre}, the method that is used in GenOpt to implement box constraints is 
+described.
+In Section~\ref{sec:conDepVarGen}, penalty and barrier methods that can be used to 
+implement constraints on dependent variables are described.
+They involve reformulating the cost function and, hence, are problem specific and 
+have to be implemented by the user.
+
+% ============================================
+\section{Constraints on Independent Variables}
+\label{sec:conFreParGen}
+\subsection{Box Constraints}
+\label{sec:boxConFre}
+
+Box constraints are constant inequality constraints that define a feasible set as
+\begin{equation}
+\mathbf X \triangleq \bigl\{ x \in \Re^n \ | \ 
+l^i \le x^i \le u^i, \ i \in \{1, \ldots, n \} \bigr\},
+\end{equation}
+where $-\infty \le l^i < u^i \le \infty$ for $i \in \{1, \ldots, n \}$.
+
+In GenOpt, box constraints are either implemented directly 
+in the optimization algorithm by setting $f(x) = \infty$ for unfeasible iterates,
+or, for some algorithms, the independent variable $x \in \mathbf X$ is transformed 
+to a new unconstrained variable which we will denote in this section by $t \in \Re^n$.
+
+\begin{subequations}
+Instead of optimizing the constrained variable $x \in \mathbf X$, 
+we optimize with respect to the unconstrained variable $t \in \Re^n$.
+The transformation ensures that all variables stay feasible during the iteration process.
+In GenOpt, the following transformations are used:\\
+
+\noindent
+If $l^i \le x^i$, for some $i \in \{1, \ldots, n\}$,
+\begin{eqnarray}
+  t^i & = &\sqrt{x^i - l^i}, \\
+  x^i & = &l^i + (t^i)^2.
+\end{eqnarray}
+If $l^i \le x^i \le u^i$, for some $i \in \{1, \ldots, n\}$, 
+\begin{eqnarray}
+  t^i & = & \arcsin\left( 
+    \sqrt{\frac{x^i - l^i}{u^i-l^i}}
+    \right), \\
+ x^i & = &l^i + (u^i - l^i) \, \sin^2 t^i.
+\end{eqnarray}
+If $x^i \le u^i$, for some $i \in \{1, \ldots, n\}$,
+\begin{eqnarray}
+  t^i & = & \sqrt{u^i - x^i}, \\
+   x^i & = & u^i - (t^i)^2.
+\end{eqnarray}
+\label{sub:traBoxCon}
+\end{subequations}
+% ----------------------------
+\subsection{Coupled Linear Constraints}
+In some cases the constraints have to be formulated in terms of a linear system of equations of the form
+\begin{equation}
+   A \, x = b,
+\end{equation}
+where $A \in \Re^m \times \Re^n$, $x \in \Re^n$, $b \in \Re^m$, and $\mathrm{rank}(A) = m$.\\
+
+There are various algorithms that take this kind of restriction into account. However, such restrictions are rare in building simulation and thus not implemented in GenOpt. If there is a need to impose such restrictions, they can be included by adding an appropriate optimization algorithm and retrieving the coefficients by using the methods offered in GenOpt's class \texttt{Optimizer}.
+
+% -----------------------------------------
+
+\section{Constraints on Dependent Variables}
+\label{sec:conDepVarGen}
+We now discuss the situation where the constraints are non-linear and 
+defined by
+\begin{equation}
+   g(x) \le 0,
+\label{eq:conFunG}
+\end{equation}
+where $g \colon \Re^n \rightarrow \Re^m$ is once continuously differentiable.
+\eqref{eq:conFunG} also allows formulating equality constraints of the form
+\begin{equation}
+  h(x) = 0,
+\label{eq:equCon}
+\end{equation}
+for $h \colon \Re^n \to \Re^m$, which can be implemented by using penalty functions.
+In example, one can define $g^i(x) \triangleq h^i(x)^2$ for $i \in \{ 1, \ldots, m \}$. Then, since $g^i(\cdot)$ is non-negative, the only feasible value is $g(\cdot) = 0$.
+Thus, we will only discuss the case of inequality constraints of the form~\eqref{eq:conFunG}.\\
+
+Such a constraint can be taken into account by adding \emph{penalty} or \emph{barrier} functions to the cost function, which are multiplied by a positive weighting factor $\mu$
+that is monotonically increased (for penalty functions) or monotonically decreased to zero (for barrier functions).\\
+
+We now discuss the implementation of barrier and penalty functions.
+% ---------------------------
+\subsection{Barrier Functions}
+Barrier functions impose a punishment if the dependent variable gets close to the 
+boundary of the feasible region.
+The closer the variable is to the boundary, 
+the higher the value of the barrier function becomes.
+
+\noindent To implement a barrier function for $g(x) \le 0$,
+where $g \colon \Re^n \to \Re^m$ is a continuously differentiable function whose
+elements are strictly monotone increasing,
+the cost function $f \colon \Re^n \to \Re$ can
+be modified to
+\begin{equation}
+\widetilde f(x, \mu) \triangleq f(x) + \mu  \frac{1}{\sum_{i=1}^m g^i(x)}
+\label{eq:barFun}
+\end{equation}
+where $\widetilde f \colon \Re^n \times \Re \to \Re$.
+The optimization algorithm is then applied to the new function $\widetilde f(x,\mu)$.
+Note that~\eqref{eq:barFun} requires that $x$ is in the interior of the feasible set\footnote{I.e., $x$ satisfies the strict inequality $g(x) > 0$.}.
+
+\indent A drawback of barrier functions is that the boundary of the feasible set
+can not be reached.
+By selecting the weighting factors small, one can get close to the boundary. 
+However, too small a weighting factor can cause the cost function to be ill-conditioned,
+which can cause problems for the optimization algorithm.
+
+Moreover, if the variation of the iterates between successive iterations is too big,
+then the feasible boundary can be crossed. Such a behavior must be prevented
+by the optimization algorithm, which can produce additional problems.\\
+
+
+For barrier functions, one can start with a moderately large weighting factor $\mu$ 
+and let $\mu$ tend to zero during the optimization process. 
+That is, one constructs a sequence
+\begin{equation}
+  \mu_0 > \ldots > \mu_i > \mu_{i+1} > \ldots > 0.
+  \label{eq:barFunWeiFac}
+\end{equation}
+Section~\ref{sec:ImpWeiFac} shows how $\mu_i$ can be computed in the coarse of the optimization.
+
+Barrier functions do not allow formulating equality constraints of the form~\eqref{eq:equCon}.
+
+% --------------------
+\subsection{Penalty Functions}
+
+In contrast to barrier functions, 
+penalty functions allow crossing the boundary of the feasible set, and they allow
+implementation of equality constraints of the form~\eqref{eq:equCon}. 
+Penalty functions add a positive term to the cost function if a constraint is violated.
+
+\noindent To implement a penalty function for $g(x) \le 0$, where
+$g \colon \Re^n \to \Re^m$ is once continuously differentiable and each element is strictly
+monotone decreasing,
+the cost function $f \colon \Re^n \to \Re$ can
+be modified to
+\begin{equation}
+\widetilde f(x, \mu) \triangleq f(x) + \mu  \sum_{i=1}^m \max(0,  g^i(x))^2,
+\label{eq:penFun}
+\end{equation}
+where $\widetilde f \colon \Re^n \times \Re \to \Re$ is once continuously differentiable in $x$.
+The optimization algorithm is then applied to the new function $\widetilde f(x,\mu)$.
+
+As for the barrier method, selecting the weighting factor $\mu$ is not trivial.
+Too small a value for $\mu$ produces too big a violation of the constraint.
+Hence, the boundary of the feasible set can be exceeded by an unacceptable amount.
+Too large a value of $\mu$ can lead to ill-conditioning of the cost function,
+which can cause numerical problems.\\
+
+The weighting factors have to satisfy
+\begin{equation}
+   0 < \mu_0 < \ldots < \mu_i < \mu_{i+1} < \ldots,
+  \label{eq:penFunWeiFac}
+\end{equation}
+with $\mu_i \to \infty$, as $i \to \infty$.
+See Section~\ref{sec:ImpWeiFac} for how to adjust $\mu_i$.
+% ---------------------------------------
+
+\subsection{Implementation of Barrier and Penalty Functions}
+\label{sec:ImpWeiFac}
+
+We now discuss how the weighting factors $\mu_i$ can be adjusted.
+For $i \in \Na$, let $x^*(\mu_i)$ be defined as the solution
+\begin{equation}
+ x^*(\mu_i) \triangleq \arg \min_{x \in \mathbf X} \widetilde f(x, \mu_i),
+\end{equation}
+where $\widetilde f(x, \mu_i)$ is as in~\eqref{eq:barFun} or~\eqref{eq:penFun}, respectively.
+Then, we initialize $i=0$, select an initial value $\mu_0 > 0$ and compute $x^*(\mu_0)$.
+Next, we select a $\mu_{i+1}$ such that it satisfies~\eqref{eq:barFunWeiFac}
+(for barrier functions) or~\eqref{eq:penFunWeiFac} (for penalty functions),
+and compute $x^*(\mu_{i+1})$, using the initial iterate $x^*(\mu_i)$, and increase the counter 
+$i$ to $i+1$.
+This procedure is repeated until $\mu_i$ is sufficiently close to zero (for barrier functions)
+or sufficiently large (for penalty functions).\\
+
+To recompute the weighting factors $\mu_i$, 
+users can request GenOpt to write a counter to the simulation input file, and then compute
+$\mu_i$ as a function of this counter.
+The value of this counter can be retrieved by 
+setting the keyword \texttt{WriteStepNumber} in the optimization command file to \texttt{true},
+and specifying the string \texttt{\%stepNumber\%} in the simulation input template file. 
+GenOpt will replace the string \texttt{\%stepNumber\%} with the current counter value 
+when it writes the simulation input file.
+The counter starts with the value $1$ and its increment is $1$.\\
+
+Users who implement their own optimization algorithm in GenOpt can call the method
+\texttt{increaseStepNumber(...)} in the class \texttt{Optimizer} to increase the counter.
+If the keyword \texttt{WriteStepNumber} in the optimization command file is set to \texttt{true}, the method calls the simulation to evaluate the cost function for the new value of this counter. If \texttt{WriteStepNumber} is \texttt{false}, no new function evaluation is performed by this method since the cost function does not depend on this counter.\\
+
+
+
+

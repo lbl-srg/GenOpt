@@ -1,0 +1,250 @@
+\section{Discrete Armijo Gradient}
+\lab{sec:DAG}
+The Discrete Armijo Gradient algorithm can be used to solve
+problem $\mathbf P_c$ defined in~\eqref{sub:Proc} where
+$f(\cdot)$ is continuously differentiable.\\
+
+The Discrete Armijo Gradient algorithm approximates gradients by finite differences.
+It can be used for problems where the cost function is evaluated by
+computer code that defines a continuously differentiable function but for
+which obtaining analytical expressions for the gradients is impractical
+or impossible.\\
+
+Since the Discrete Armijo Gradient algorithm is sensitive to discontinuities in
+the cost function, we recommend not to use this algorithm if the simulation program
+contains adaptive solvers with loose precision settings, such as
+EnergyPlus~\cite{Crawley2001:1}.
+On such functions, the algorithm is likely to fail. 
+In Section~\ref{sec:AlgSel}, we recommend algorithms that
+are better suited for such situations.\\
+
+We will now present the Discrete Armijo Gradient algorithm and the
+Armijo step-size subprocedure.
+
+\noindent
+\begin{minipage}[b]{\textwidth}
+\begin{algorithm}
+[Discrete Armijo Gradient Algorithm]
+~\\
+{\em
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+\hline \\[-2ex]
+ \textbf{Data}:
+     & Initial iterate $x_0 \in \mathbf X$.\\ 
+     & $\alpha, \beta \in (0, 1)$, $\gamma \in (0, \infty)$, $k^*, k_0 \in \mathbb Z$,\\
+     & $l_{max}, \kappa \in \Na$ (for reseting the step-size calculation).\\
+     & Termination criteria $\epsilon_m, \epsilon_x \in \Re_+$, 
+     $i_{max} \in \Na$.\\
+  \textbf{Step 0}: 
+     & Initialize $i=0$ and $m = 0$.\\
+  \textbf{Step 1}:
+     & \underline{Compute the {\it search direction} $h_i$.}\\
+     & If $\beta^m < \epsilon_m$, stop.\\
+     & Else, set $\epsilon = \beta^{k_0 + m }$ and compute, for $j \in \{1, \ldots, n\}$,\\
+     & $h_i^j = - \left({f(x_i + \epsilon \, e_j ) - f(x_i)}\right)/{\epsilon}$.\\
+\textbf{Step 2} : 
+     & \underline{Check descent.} \\
+     & Compute $\Delta(x_i; h_i) = 
+     \left( f(x_i + \epsilon \, h_i ) - f(x_i) \right) / \epsilon$.\\
+     & If $\Delta(x_i; h_i) < 0$, go to Step 3.\\
+     & Else, replace $m$ by $m+1$ and go to Step 1.\\
+\textbf{Step 3} :
+     & \underline{Line search.}\\
+     & Use Algorithm~\ref{al:ArmijoSubPro} (which requires $k^*, l_{max}$ and $\kappa$) 
+     to compute $k_i$.\\
+     & Set 
+\end{tabularx}
+\vspace{-1ex}
+ \begin{equation}
+   \hspace{3cm} \lambda_i = \argmin_{\lambda \in \{\beta^{k_i}, \beta^{k_i-1} \}  } 
+     f(x_i + \lambda \, h_i).
+\end{equation}
+\vspace{-1ex}
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\textbf{Step 4} :
+     & If $f(x_i + \lambda_i \, h_i) - f(x_i) > - \gamma \, \epsilon$, 
+     replace $m$ by $m+1$ and go to Step 1.\\
+\textbf{Step 5} :
+     & Set $x_{i+1} = x_i + \lambda_i \, h_i$.\\
+     & If $\| \lambda_i \, h_i \| < \epsilon_x$, stop. Else, replace $i$ by $i+1$ and go to Step 1.\\ 
+\hline
+\end{tabularx}
+}
+~\\ \lab{al:DAG}
+\end{algorithm}
+\end{minipage}
+
+\noindent
+\begin{minipage}[b]{\textwidth}
+\begin{subequations}
+\begin{algorithm}
+[Armijo Step-Size Subprocedure]
+~\\
+{\em
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+\hline \\[-2ex]
+ \textbf{Data}:
+     & Iteration number $i \in \Na$, iterate $x_i \in \Re^n$, 
+     search direction $h_i \in \Re^n$,\\ 
+     & $k^*, k_{i-1} \in \mathbb Z$, $\alpha, \beta \in (0, \ 1)$, and 
+     $\Delta(x_i;h_i) \in \Re$ with $\Delta(x_i;h_i) < 0$,\\
+     & parameter for restart $l_{max}, \kappa \in \Na$.\\
+\textbf{Step 0}:
+     & Initialize $l=0$.\\
+     & If $i = 0$, set $k' = k^*$, else set $k' = k_{i-1}$.\\
+\textbf{Step 1}:
+     & Replace $l$ by $l+1$, and test the conditions
+\end{tabularx}
+\vspace{-1ex}
+\begin{eqnarray}
+\hspace{2cm}     f(x_i + \beta^{k'} \, h_i ) - f(x_i) & \le &
+     \beta^{k'} \, \alpha \, \Delta(x_i; h_i), \label{eq:ArmSteSizPro1} \\
+\hspace{2cm}     f(x_i + \beta^{k' - 1} \, h_i ) - f(x_i) & > &
+     \beta^{k' - 1} \, \alpha \, \Delta(x_i; h_i).
+\label{eq:ArmSteSizPro2}
+\end{eqnarray}
+\vspace{-1ex}
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\textbf{Step 2}:
+& If $k'$ satisfies \eqref{eq:ArmSteSizPro1} and 
+ \eqref{eq:ArmSteSizPro2}, return $k'$.\\
+\textbf{Step 3}:
+   & If $k'$ satisfies \eqref{eq:ArmSteSizPro2} 
+     but not \eqref{eq:ArmSteSizPro1},\\
+   & \hspace{1cm} replace $k'$ by $k'+1$.\\
+   & else,\\
+   & \hspace{1cm} replace $k'$ by $k'-1$.\\
+   & If $l < l_{max}$ or $k_{i-1} \le  k^* + \kappa$, go to Step 1. Else, go to Step 4.\\
+\textbf{Step 4}:
+     & Set $\mathbf K \triangleq \{ k \in \mathbb Z \ | \ k \ge k^* \}$,
+     and compute\\
+     & $k'
+     \triangleq \min_{k \in \mathbf K} \{ k \ | \
+     f(x_i + \beta^k \, h_i ) - f(x_i) \le \beta^k \, \alpha \, \Delta(x_i; h_i) \}$.\\
+     & Return $k'$.\\
+\hline
+\end{tabularx}
+}
+\lab{al:ArmijoSubPro}
+\end{algorithm}
+\end{subequations}
+\end{minipage}
+~\\
+Note that in Algorithm~\ref{al:ArmijoSubPro}, as $\beta \to 1$, 
+the number of tries to compute the Armijo step-size is likely to go to infinity.
+Under appropriate assumptions one can show that $\alpha = 1/2$ yields 
+fastest convergence~\cite{Pol97:1}.\\
+
+The step-size Algorithm~\ref{al:ArmijoSubPro} requires often only a small number
+of function evaluations.
+However, occasionally, once a very small step-size has occurred,
+Algorithm~\ref{al:ArmijoSubPro} can trap the Discrete Armijo Gradient algorithm
+into using a very small step-size for all subsequent iterations.
+Hence, if $k_{i-1} >  k^* + \kappa$, we reset the step-size by computing Step 4.\\
+
+Algorithm~\ref{al:DAG} together with the step-size Algorithm~\ref{al:ArmijoSubPro}
+have the following convergence properties~\cite{Pol97:1}.
+
+\begin{theorem}
+Let $f \colon \Re^n \to \Re$ be continuously differentiable and bounded below.
+\begin{enumerate}
+\item 
+If Algorithm~\ref{al:DAG} jams at $x_i$, cycling indefinitely in the loop
+defined by Steps 1-2 or in the loop defined by Steps 1-4,
+then $\nabla f(x_i) = 0$.
+\item
+If $\{ x_i \}_{i=0}^\infty$ is an infinite sequence constructed by
+Algorithm~\ref{al:DAG} and Algorithm~\ref{al:ArmijoSubPro}
+in solving~\eqref{sub:Proc},
+then every accumulation point $\widehat x$ of $\{ x_i \}_{i=0}^\infty$
+satisfies $\nabla f(\widehat x) = 0$.
+\end{enumerate}
+\rbox
+\end{theorem}
+
+
+Note that $\epsilon \, h_i$ has the same units as the cost function,
+and the algorithm evaluates $x_i + \lambda \, h_i$ for some $\lambda \in \Re_+$.
+Thus, the algorithm is sensitive to the scaling of the problem variables,
+a rather undesirable effect.
+Therefore, in the implementation of 
+Algorithm~\ref{al:DAG} and Algorithm~\ref{al:ArmijoSubPro},
+we normalize the cost function values by replacing, for all $x \in \Re^n$,
+$f(x)$ by $f(x)/f(x_0)$, where $x_0$ is the initial iterate.
+Furthermore, we set $x_0 = 0$ and evaluate the cost function for the values
+$\chi^j + x^j \, s^j$, $j \in \{1, \ldots, n\}$, where
+$x^j \in \Re$ is the $j$-th component of the design parameter computed in
+Algorithm~\ref{al:DAG} or Algorithm~\ref{al:ArmijoSubPro} and
+$\chi^j \in \Re$ and $s^j \in \Re$ are the setting of the parameters
+\texttt{Ini} and \texttt{Step}, respectively, for
+the $j$-th design parameter in the optimization command file 
+(see page~\pageref{par:comFil}).
+
+In view of the sensitivity of the Discrete Armijo Gradient algorithm
+to the scaling of the problem variables and the cost function values,
+the implementation of penalty and barrier functions may cause
+numerical problems if the penalty is large compared to the unpenalized
+cost function value.
+
+If box-constraints for the independent parameters are specified,
+then the transformations~\eqref{sub:traBoxCon} are used.
+
+%-------------------------
+\subsection{Keywords}
+For the Discrete Armijo Gradient algorithm, the command file (see page~\pageref{par:comFil}) must only contain continuous parameters.\\
+
+To invoke the algorithm, 
+the \texttt{Algorithm} section of the GenOpt command file must have the following form:
+\begin{lstlisting}
+Algorithm{
+   Main  = DiscreteArmijoGradient;
+   Alpha = Double;     // 0 < Alpha < 1
+   Beta  = Double;     // 0 < Beta  < 1
+   Gamma = Double;     // 0 < Gamma
+   K0    = Integer;
+   KStar = Integer;
+   LMax  = Integer;    // 0 <= LMax
+   Kappa = Integer;    // 0 <= LMax
+   EpsilonM = Double;  // 0 < EpsilonM
+   EpsilonX = Double;  // 0 < EpsilonX
+}
+\end{lstlisting}
+The entries are defined as follows:
+\begin{codedescription}
+\item [Main]
+The name of the main algorithm.
+\item [Alpha]
+The variable $\alpha$ used in Step 1 and in Step 4 of Algorithm~\ref{al:ArmijoSubPro}.
+A typical value is $\alpha = 1/2$.
+\item [Beta]
+The variable $\beta$ used in approximating
+the gradient and doing the line search.
+A typical value is $\beta = 0.8$.
+\item [Gamma]
+The variable $\gamma$ used in Step 4 of Algorithm~\ref{al:DAG} 
+to determine
+whether the accuracy of the gradient approximation will be increased.
+\item [K0]
+The variable $k_0$ that determines the initial accuracy
+of the gradient approximation.
+\item [KStar]
+The variable $k^*$ used to initialize the line search.
+\item [LMax]
+The variable $l_{max}$ used in Step 3 of Algorithm~\ref{al:ArmijoSubPro}
+to determine whether the line search needs to be reinitialized.
+\item [Kappa]
+The variable $\kappa$ used in Step 3 of Algorithm~\ref{al:ArmijoSubPro}
+to determine whether the line search needs to be reinitialized.
+\item [EpsilonM]
+The variable $\epsilon_m$ used in the determination criteria
+$\beta^m < \epsilon_m$ in Step 1 of Algorithm~\ref{al:DAG}.
+\item [EpsilonX]
+The variable $\epsilon_x$ used in the determination criteria
+$\| \lambda_i \, h_i \| < \epsilon_x$ in Step 5 of Algorithm~\ref{al:DAG}.
+\end{codedescription}
+
+
+% ===============================================
+

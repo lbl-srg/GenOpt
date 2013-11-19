@@ -1,0 +1,165 @@
+\appendix
+
+\chapter{Benchmark Tests}
+This section lists the settings used in the benchmark tests 
+on page~\pageref{sec:algSimBenTes}.\\
+
+The settings in \texttt{OptimizationsSettings} and \texttt{Algorithm} 
+are the same for all runs expect for \texttt{Accuracy},
+which is listed in the result chart on page~\pageref{tab:nelMeaBenMarRes}.\\
+
+\noindent The common settings were:
+\begin{alltt}
+OptimizationSettings\{
+    MaxIte          = 1500;
+    WriteStepNumber = false;
+\}
+
+Algorithm\{
+   Main = NelderMeadONeill;
+   Accuracy = {\rm{} see page \pageref{tab:nelMeaBenMarRes}};
+   StepSizeFactor = 0.001;
+   BlockRestartCheck = 5;
+   ModifyStoppingCriterion  = {\rm{} see page \pageref{tab:nelMeaBenMarRes}};
+\}
+\end{alltt}
+The benchmark functions and the \texttt{Parameter} settings in the \texttt{Vary} section are shown below.
+
+\section{Rosenbrock}
+\begin{figure}
+\centering
+\epsfig{file=img/fun_rosen.eps, bb=130 90 725 505, width=0.7\headwidth}
+\caption{Rosenbrock function.}
+\label{fig:funRosBro}
+\end{figure}
+
+The Rosenbrock function that is shown in Fig \ref{fig:funRosBro} is defined as
+\begin{equation}
+   f(x) \triangleq 100 \, \bigl(x^2 - (x^1)^2\bigr)^2 + (1 - x^1)^2,
+\end{equation}
+where $x \in \Re^2$.
+The minimum is at $x^* = (1, \, 1)$, with $f(x^*) = 0$.\\
+
+\pagebreak[3]
+\noindent The section \texttt{Vary} of the optimization command file was set to
+\begin{lstlisting}
+Vary{
+   Parameter{
+      Name =   x1; Min = SMALL; 
+      Ini  = -1.2; Max = BIG; 
+      Step =    1;
+      }
+   Parameter{
+      Name =   x2; Min = SMALL;
+      Ini  =    1; Max = BIG;
+      Step =    1;
+      }
+}
+\end{lstlisting}
+\section{Function 2D1}
+\begin{figure}
+\centering
+\epsfig{file=img/fun_f2d1_con.eps, bb=75 110 615 505, width=0.5\headwidth}
+\caption{Contour plot of $\frac{\partial d f(x)}{\partial x^1}=0$ and $\frac{\partial d f(x)}{\partial x^2}=0$, where $f(x)$ is as in (\ref{eq:defF2D1}).}
+\label{fig:funTwoDOne}
+\end{figure}
+
+This function has only one minimum point.
+The function is defined as
+\begin{equation}
+   f(x) \triangleq \sum_{i=1}^3 f^i(x),
+  \label{eq:defF2D1}
+\end{equation}
+with
+\begin{eqnarray}
+  f^1(x) & \triangleq & \langle b, \, x \rangle + \frac{1}{2} \langle x, \, Q \, x \rangle, \quad b \triangleq 
+\begin{pmatrix}  1 \\ 2 \end{pmatrix}, \quad
+ Q \triangleq \begin{pmatrix} 10 & 6 \\ 6 & 8 \end{pmatrix},  \\
+  f^2(x) & \triangleq & 100 \, \arctan \bigl( (2-x^1)^2 + (2 - x^2 )^2 \bigr), \\
+   f^3(x) & \triangleq & 50 \, \arctan \bigl( (0.5 + x^1)^2 + (0.5 + x^2)^2   \bigr),
+\end{eqnarray}
+where $x \in \Re^2$.
+The function has a minimum at $x^* = (1.855340, \, 1.868832)$,
+with $f(x^*) = -12.681271$.
+It has two regions where the gradient is very small (see Fig. \ref{fig:funTwoDOne}).\\
+
+\pagebreak[4]
+\noindent The section \texttt{Vary} of the optimization command file is
+\begin{lstlisting}
+Vary{
+   Parameter{
+      Name = x0; Min = SMALL;
+      Ini  = -3; Max = BIG;
+      Step = 0.1;
+   }
+   Parameter{
+      Name =  x1; Min = SMALL;
+      Ini  =  -3; Max = BIG;
+      Step = 0.1;
+   }
+}
+\end{lstlisting}
+
+\section{Function Quad}
+
+The function ``Quad'' is defined as
+\begin{equation}
+   f(x) \triangleq \langle b, \, x \rangle + \frac{1}{2} \langle x, \, M \, x \rangle,
+\end{equation}
+where $b, x \in \Re^{10}$, $M \in \Re^{10 \times 10}$, and
+\begin{equation}
+   b \triangleq (10, \, 10, \, \ldots \, , \, 10 )^T.
+\end{equation}
+This function is used in the benchmark test with two different positive definite matrices $M$.
+In one test case, $M$ is the identity matrix $I$ 
+and in the other test case $M$ is a matrix, called $Q$, 
+with a large range of eigenvalues. The matrix $Q$ has elements~\\[\baselineskip]
+\begin{tabular}{*{10}{>{\tiny$} r <{$}} }
+579.7818 & -227.6855 & 49.2126 & -60.3045 & -152.4101 & -207.2424 & 8.0917 & 33.6562 & 204.1312 & -3.7129 \\
+-227.6855 & 236.2505 & -16.7689 & -40.3592 & 179.8471 & 80.0880 & -64.8326 & 15.2262 & -92.2572 & 40.7367 \\
+49.2126 & -16.7689 & 84.1037 & -71.0547 & 20.4327 & 5.1911 & -58.7067 & -36.1088 & -62.7296 & 7.3676 \\
+-60.3045 & -40.3592 & -71.0547 & 170.3128 & -140.0148 & 8.9436 & 26.7365 & 125.8567 & 62.3607 & -21.9523 \\
+-152.4101 & 179.8471 & 20.4327 & -140.0148 & 301.2494 & 45.5550 & -31.3547 & -95.8025 & -164.7464 & 40.1319 \\
+-207.2424 & 80.0880 & 5.1911 & 8.9436 & 45.5550 & 178.5194 & 22.9953 & -39.6349 & -88.1826 & -29.1089 \\
+8.0917 & -64.8326 & -58.7067 & 26.7365 & -31.3547 & 22.9953 & 124.4208 & -43.5141 & 75.5865 & -32.2344 \\
+33.6562 & 15.2262 & -36.1088 & 125.8567 & -95.8025 & -39.6349 & -43.5141 & 261.7592 & 86.8136 & 22.9873 \\
+204.1312 & -92.2572 & -62.7296 & 62.3607 & -164.7464 & -88.1826 & 75.5865 & 86.8136 & 265.3525 & -1.6500 \\
+-3.7129 & 40.7367 & 7.3676 & -21.9523 & 40.1319 & -29.1089 & -32.2344 & 22.9873 & -1.6500 & 49.2499
+\end{tabular}
+\\[5mm]
+The eigenvalues of $Q$ are in the range of $1$ to $1000$.\\
+
+The functions have minimum points $x^*$ at\\
+
+\begin{tabular}{ >{$} l <{$}  >{$} r <{$} >{$} r <{$} }
+\multicolumn{1}{r}{\text{Matrix} M:} & \multicolumn{1}{c}{I}   & \multicolumn{1}{c}{Q} \\ \hline
+x^{*^0}  &  -10  &  -2235.1810 \\
+x^{*^1}  &  -10  &  -1102.4510 \\
+x^{*^2}  &  -10  &  790.6100 \\
+x^{*^3}  &  -10  &  -605.2480 \\
+x^{*^4}  &  -10  &  -28.8760 \\
+x^{*^5}  &  -10  &  228.7640 \\
+x^{*^6}  &  -10  &  -271.8830 \\
+x^{*^7}  &  -10  &  -3312.3890 \\
+x^{*^8}  &  -10  &  -2846.7870 \\
+x^{*^9}  &  -10  &  -718.1490 \\ 
+f(x^*)  &  -500  &  0 \\ \hline
+\end{tabular}
+\\[10mm]
+Both test functions have been optimized with the same parameter settings.
+The settings for the parameters \texttt{x0} to \texttt{x9} are all the same,
+and given by
+\begin{lstlisting}
+Vary{
+   Parameter{
+      Name = x0; Min = SMALL;
+      Ini  =  0; Max = BIG;
+      Step =  1;
+   }
+}
+\end{lstlisting}
+
+
+
+
+

@@ -1,0 +1,745 @@
+\section{Particle Swarm Optimization}
+\label{sec:PSOAlg}
+Particle Swarm Optimization (PSO) algorithms are population-based
+probabilistic optimization algorithms first proposed by 
+Kennedy and Eberhart~\cite{EberhartKennedy1995,KennedyEberhart1995}
+to solve problem $\mathbf P_c$ defined in~\eqref{sub:Proc} with 
+possibly discontinuous cost function $f \colon \Re^n \to \Re$.
+In Section~\ref{sec:PSOBin}, we will present a PSO algorithm 
+for discrete independent variables
+to solve problem $\mathbf P_d$ defined in~\eqref{sub:Prod},
+and in Section~\ref{sec:PSOConDis} we will present a PSO algorithm for 
+continuous and discrete independent variables
+to solve problem $\mathbf P_{cd}$ defined in~\eqref{sub:Procd}.
+To avoid ambiguous notation, we always denote the dimension of the 
+continuous independent variable by $n_c \in \Na$ 
+and the dimension of the 
+discrete independent variable by
+$n_d \in \Na$.\\
+
+PSO algorithms exploit a set of potential solutions 
+to the optimization problem.
+Each potential solution is called a {\em particle}, and the set
+of potential solutions in each iteration step is called a {\em population}.
+PSO algorithms are global optimization algorithms and
+do not require nor approximate gradients of the cost function.
+The first population is typically initialized using a random number generator to
+spread the particles uniformly in a user-defined hypercube.
+A particle update equation, which is modeled 
+on the social behavior of members
+of bird flocks or fish schools,
+determines the location of each particle in the next generation.\\
+
+A survey of PSO algorithms can be found in 
+Eberhart and Shi~\cite{EberhartShi2001}.
+Laskari et. al. present a PSO algorithm for 
+minimax problems~\cite{LaskariEtAl2002:1} and for
+integer programming~\cite{LaskariEtAl2002:2}.
+In~\cite{ParsopoulosVrahatis2002:2}, Parsopoulos and Vrahatis discuss the
+implementation of inequality and equality constraints
+to solve problem $\mathbf P_{cg}$ defined in~\eqref{sub:Procg}.\\
+
+We first discuss the case where the independent variable is continuous,
+i.e., the case of problem $\mathbf P_c$ defined in~\eqref{sub:Proc}.
+
+% --------------------------------------------
+\subsection{PSO for Continuous Variables}
+
+We will first present the initial version of the PSO algorithm
+which is the easiest to understand.
+
+In the initial version of the PSO 
+algorithm~\cite{EberhartKennedy1995,KennedyEberhart1995},
+the update equation for the particle location is as follows:
+Let $k \in \Na$ denote the generation number,
+let $n_P \in \Na$ denote the number of particles in each generation,
+let $x_i(k) \in \Re^{n_c}$, $i \in \{ 1, \ldots, n_P\}$, 
+denote the $i$-th particle of the $k$-th generation,
+let $v_i(k) \in \Re^{n_c}$ denote its velocity,
+let $c_1, c_2 \in \Re_+$ and let
+$\rho_1(k), \rho_2(k) \sim U(0,1)$ be uniformly distributed random numbers 
+between $0$ and $1$.
+Then, the update equation is, for all $i \in \{1, \ldots, n_P\}$ and
+all $k \in \Na$,
+\begin{subequations}
+\begin{eqnarray}
+  v_i(k+1) & = & v_i(k) + c_1 \, \rho_1(k) \, \bigl( p_{l,i}(k) - x_i(k) \bigr)
+ \nonumber \\
+&& 
+  + c_2 \, \rho_2(k) \, \bigr( p_{g,i}(k) - x_i(k) \bigr), \\
+  x_i(k+1) & = & x_i(k) + v_i(k+1),
+\end{eqnarray}
+  \label{sub:psoOriUpdEqn}
+\end{subequations}
+where $v_i(0) \triangleq 0$ and 
+\begin{subequations}
+  \begin{eqnarray}
+    p_{l,i}(k) & \triangleq & \argmin_{x \in \{ x_i(j) \}_{j=0}^k} f(x), \\
+    p_{g,i}(k) & \triangleq & \argmin_{x \in \{ \{ x_i(j) \}_{j=0}^k \}_{i=1}^{n_P} } f(x).
+\label{eq:PSOGloBesIni}
+  \end{eqnarray}
+\end{subequations}
+Thus, $p_{l,i}(k)$ is the location that for the $i$-th particle yields the lowest
+cost over all generations,
+and $p_{g,i}(k)$ is the location of the best particle over all generations.
+The term $c_1 \,  \, \rho_1(k) \, ( p_{l,i}(k) - x_i(k) )$ is associated
+with cognition since it takes into account the particle's own experience,
+and the term 
+$c_2 \, \rho_2(k) \, ( p_{g,i}(k) - x_i(k))$ is associated with
+social interaction between the particles.
+In view of this similarity, $c_1$ is called 
+{\it cognitive acceleration constant} and 
+$c_2$ is called {\it social acceleration constant}.\\
+
+% ----------------------------
+\subsubsection{Neighborhood Topology}
+\begin{subequations}
+The minimum in~\eqref{eq:PSOGloBesIni} need not be taken over all
+points in the population.
+The set of points over which the minimum is taken is defined by
+the {\it neighborhood topology}.
+In PSO, the neighborhood topologies are usually defined
+using the particle index, and not the particle location.
+We will use the {\it lbest}, {\it gbest}, and the {\it von Neumann}
+neighborhood topology, which we will now define.\\
+
+In the {\it lbest} topology of size $l \in \Na$, with $l > 1$, 
+the neighborhood of a particle with index $i \in \{1, \ldots, n_P \}$ 
+consist of all particles whose index are in the set
+\begin{equation}
+  \mathcal N_i \triangleq \{ i-l, \ldots i, \ldots , i+l \},  
+\label{eq:defLBestNeiHoo}
+\end{equation}
+where we assume that the indices wrap around, i.e., we replace
+$-1$ by $n_P-1$, replace $-2$ by $n_P-2$, etc.\\
+
+In the {\it gbest} topology, the neighborhood contains all
+points of the population, i.e., 
+\begin{equation}
+\mathcal N_i \triangleq \{ 1, \ldots , n_P \},  
+\end{equation}
+for all $i \in \{1, \ldots, n_P \}$.\\
+
+For the {\it von Neumann} topology, 
+consider a $2$-dimensional lattice, 
+with the lattice points enumerated as shown in Figure~\ref{fig:PSOTopology}.
+We will use the von Neumann topology of range $1$, which is defined,
+for $i,j \in \mathbb Z$, as the set
+of points whose indices belong to the set
+\begin{equation}
+\mathcal N_{(i,j)}^v \triangleq \left\{(k,l) \ \Bigl| \ | k - i | + | l - j | \le 1,
+ \ k,l \in \mathbb Z \right\}.
+\label{eq:defVonNeuNei}
+\end{equation}
+The gray points in Figure~\ref{fig:PSOTopology} are $\mathcal N_{(1,2)}^v$.
+For simplicity, we round in GenOpt the user-specified number of 
+particles $n_P' \in \mathbb N$
+to the next biggest integer $n_P$ such that 
+$\sqrt n_P \in \Na$ and $n_P \ge n_P'$.\footnote{In principle, 
+the lattice need not be a square, 
+but we do not see any computational disadvantage of selecting a square lattice.}
+Then, we can wrap the indices by replacing, for $k \in \mathbb Z$,
+$(0,k)$ by $(\sqrt n_P, k)$, 
+$(\sqrt n_P + 1,k)$ by $(1, k)$, and similarly by replacing
+$(k,0)$ by $(k, \sqrt n_P)$ and
+$(k, \sqrt n_P + 1)$ by $(k, 1)$.
+Then, a particle with indices $(k,l)$,
+with $1 \le k \le \sqrt n_P$ and $1 \le l \le \sqrt n_P$, 
+has in the PSO algorithm the index $i = (k-1) \, \sqrt n_P + l$, and 
+hence $i \in \{1, \ldots, n_P \}$.\\
+\label{sub:PSONeiHooDef}
+\end{subequations}
+
+\begin{figure}
+\centering
+\begin{pspicture}(-1, 1)(7,-5)
+%%\psgrid
+% draw dots
+{\psset{fillcolor=lightgray, fillstyle=solid}
+ \multido{\iX=0+1}{3}{%
+   \rput(4,-\iX){%
+     \rput(0,-\iX){%
+       \pscircle(0,0){0.5}%
+     }%
+   }%
+ }%
+ \multido{\iX=1+1}{3}{%
+   \rput(\iX,-2){%
+     \rput(\iX,0){%
+       \pscircle(0,0){0.5}%
+     }%
+   }%
+ }%
+}
+\multido{\iX=1+1}{2}{%
+  \multido{\iY=1+1}{3}{%
+    \rput(\iY,-\iX){%
+      \rput(\iY,-\iX){%
+        \pscircle(0,0){0.5}%
+        \psline(0,-0.5)(0,-1)%
+        \psline(0,0.5)(0,1)%
+        \psline(-0.5,0)(-1,0)%
+        \psline(0.5,0)(1,0)%
+      }%
+    }
+  }%
+}%
+\multido{\iX=0+1}{3}{%
+  \multido{\iY=0+1}{4}{%
+    \rput(\iY,-\iX){%
+      \rput(\iY,-\iX){%
+        \rput(0,0){\iX,\iY}%
+      }%
+    }
+  }%
+}%
+ {%
+   \psset{linestyle=dashed}%
+   \multido{\iX=0+1}{4}{%
+     \rput(\iX,0){%
+     \rput(\iX,0){%
+       \pscircle(0,0){0.5}%
+       \psline(0,-0.5)(0,-1)%
+       \psline(0,0.5)(0,1)%
+       \psline(-0.5,0)(-1,0)%
+       \psline(0.5,0)(1,0)%
+     }%
+   }%
+ }%
+ \multido{\iX=0+1}{3}{%
+   \rput(0,-\iX){%
+     \rput(0,-\iX){%
+       \pscircle(0,0){0.5}%
+       \psline(0,-0.5)(0,-1)%
+       \psline(0,0.5)(0,1)%
+       \psline(-0.5,0)(-1,0)%
+       \psline(0.5,0)(1,0)%
+     }%
+   }%
+ }%
+}%
+\end{pspicture}
+\caption{Section of a $2$-dimensional lattice of particles with $\sqrt n_P \ge 3$.
+The particles belonging to the von Neumann neighborhood 
+$\mathcal N_{(1,2)}^v$ with range $1$,
+defined in~\eqref{eq:defVonNeuNei},
+are colored gray.
+Indicated by dashes are the particles that are generated by wrapping the indices.}
+\lab{fig:PSOTopology}
+\end{figure}
+
+
+Kennedy and Mendes~\cite{KennedyMendes2002} show that greater connectivity of
+the particles speeds up convergence, but it does not tend to improve
+the population's ability to discover the global optimum.
+Best performance has been achieved with the von Neumann topology, whereas
+neither the {\it gbest} nor the {\it lbest} topology seemed especially good in
+comparison with other topologies.
+
+Carlisle and Dozier~\cite{CarlisleDozier2001} achieve on unimodal
+and multi-modal functions for the
+{\it gbest} topology better results than for the {\it lbest} topology.
+
+
+% ----------------------------
+\subsubsection{Model PSO Algorithm}
+
+We will now present the Model PSO Algorithm that is implemented in GenOpt.
+
+\begin{subequations}
+\noindent
+\begin{minipage}[b]{\textwidth}
+\begin{algorithm}
+[Model PSO Algorithm for Continuous Variables]
+~\\
+{\em
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+\hline \\[-2ex]
+ \textbf{Data}:
+     & Constraint set $\mathbf X$, as defined in~\eqref{eq:setXPc},\\
+     & but with finite lower and upper bound for each independent variable.\\ 
+     & Initial iterate $x_0 \in \mathbf X$.\\
+     & Number of particles $n_P \in \Na$ and number of generations $n_G \in \Na$.\\
+  \textbf{Step 0}: 
+     & Initialize $k=0$, $x_0(0) = x_0$ and
+     the neighborhoods $\{ \mathcal N_i \}_{i=1}^{n_P}$ .\\
+  \textbf{Step 1}:
+     & Initialize $\{ x_i(0) \}_{i=2}^{n_P} \subset \mathbf X$ randomly distributed.\\
+  \textbf{Step 2}:
+     & For $i \in \{1, \ldots, n_P\}$, determine
+     the local best particles
+\end{tabularx}
+\vspace{-1ex}
+\begin{equation}
+\hspace{2cm}  p_{l,i}(k) \triangleq \argmin_{x \in \{ x_i(m) \}_{m=0}^k} f(x)
+\end{equation}
+\vspace{-1ex}
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+ & and the global best particle
+\end{tabularx}
+\vspace{-1ex}
+\begin{equation}
+\hspace{2cm}  p_{g,i}(k) \triangleq \argmin_{x \in \{ x_j(m) \ | \ j \in \mathcal N_i \}_{m=0}^k} f(x).
+\end{equation}
+\vspace{-1ex}
+\begin{tabularx}{\headwidth}{m{2cm}l}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+  \textbf{Step 3}:
+     & Update the particle location $\{ x_i(k+1) \}_{i=1}^{n_P}\subset \mathbf X$.\\
+  \textbf{Step 4}:
+     & If $k = n_G$, stop. Else, go to Step 2.\\
+  \textbf{Step 5}:
+     & Replace $k$ by $k + 1$, and go to Step 1.\\
+    \hline \\
+\end{tabularx}
+}
+~\\ \lab{al:PSOImp}
+\end{algorithm}
+\end{minipage}
+We will now discuss the different implementations of the 
+Model PSO Algorithm~\ref{al:PSOImp} in GenOpt.\\
+\lab{sub:PSOImp}
+\end{subequations}
+
+% ---------------------------------
+\subsubsection{Particle Update Equation}
+
+% ------------------------------
+\paragraph[Inertia Weight]{Version with Inertia Weight}
+Eberhart and Shi~\cite{ShiEberhart1998,ShiEberhart1999} introduced
+an {\it inertia weight} $w(k)$ which improves the performance of the
+original PSO algorithm.
+In the version with inertia weight, the particle update equation is,
+for all $i \in \{1, \ldots, n_P\}$, for $k \in \Na$ and
+$x_i(k) \in \Re^{n_c}$, with $v_i(0) = 0$,
+\begin{subequations}
+\begin{eqnarray}
+ \widehat v_i(k+1) & = &  w(k) \, v_i(k) + 
+ c_1 \, \rho_1(k) \, \bigl( p_{l,i}(k) - x_i(k) \bigr) \nonumber \\
+ &&   
+  + c_2 \, \rho_2(k) \, \bigr( p_{g,i}(k) - x_i(k) \bigr), 
+  \label{eq:psoUpdEqn1IneWei} \\
+  v_i^j(k+1) & = &  \mathrm{sign}( \widehat v_i^j(k+1) ) \, 
+  \min\{ | \widehat v_i^j(k+1) | , v_{max}^j \}, \nonumber \\
+  && \qquad \qquad j \in \{1, \ldots, n_c \}, 
+\label{eq:psoUpdEqn2IneWei} \\
+  x_i(k+1) & = & x_i(k) + v_i(k+1),
+\end{eqnarray}
+where
+\begin{equation}
+  v_{max}^j \triangleq \lambda \, (u^j - l^j),
+  \label{eq:PSOMaxVelCon}
+\end{equation}
+with $\lambda \in \Re_+$,
+for all $j \in \{1, \ldots, n_c \}$,
+and $l,u \in \Re^{n_c}$ are the lower and upper bound of the independent variable.
+A common value is $\lambda = 1/2$.
+In GenOpt, if $\lambda \le 0$,
+then no velocity clamping is used, and hence, $v_i^j(k+1) = \widehat v_i^j(k+1)$,
+for all $k \in \Na$, all $i \in \{1, \ldots, n_P \}$ and all
+$j \in \{1, \ldots, n_c \}$.
+
+We compute the inertia weight as
+\begin{equation}
+  w(k) = w_0 - \frac{k}{K} \, ( w_0 - w_1 ),
+\label{eq:PSOIneWeiLin}
+\end{equation}
+where $w_0 \in \Re$ is the initial inertia weight, 
+$w_1 \in \Re$ is the inertia weight for the last generation,
+with $0 \le w_1 \le w_0$,
+and $K \in \Na$ is the maximum number of generations.
+$w_0 = 1.2$ and $w_1 = 0$ can be considered as 
+good choices~\cite{ParsopoulosVrahatis2002:1}.
+\label{sub:psoUpdEqnIneWei}
+\end{subequations}
+
+% ------------------------------
+\paragraph[Constriction Coefficient]{Version with Constriction Coefficient}
+Clerc and Kennedy~\cite{ClercKennedy2002} introduced
+a version with a constriction coefficient that reduces 
+the velocity.
+In their Type 1'' implementation, the particle update equation is,
+for all $i \in \{1, \ldots, n_P\}$, for $k \in \Na$
+and $x_i(k) \in \Re^{n_c}$, with $v_i(0) = 0$,
+\begin{subequations}
+\begin{eqnarray}
+ \widehat v_i(k+1) & = & \chi(\kappa, \varphi) \, \bigl( v_i(k) + 
+ c_1 \, \rho_1(k) \, \bigl( p_{l,i}(k) - x_i(k) \bigr) \nonumber \\
+ &&   
+  + c_2 \, \rho_2(k) \, \bigr( p_{g,i}(k) - x_i(k) \bigr) \bigr),
+  \label{eq:psoUpdEqn1ConCoe} \\
+  v_i^j(k+1) & = &  \mathrm{sign}( \widehat v_i^j(k+1) ) \, 
+  \min\{ | \widehat v_i^j(k+1) | , v_{max}^j \}, \nonumber \\
+  && \qquad \qquad j \in \{1, \ldots, n_c\}, 
+\label{eq:psoUpdEqn2ConCoe} \\
+  x_i(k+1) & = & x_i(k) + v_i(k+1),
+\end{eqnarray}
+where
+\begin{equation}
+  v_{max}^j \triangleq \lambda \, (u^j - l^j),
+  \label{eq:PSOMaxVelConConCoe}
+\end{equation}
+is as in~\eqref{eq:PSOMaxVelCon}.
+
+In \eqref{eq:psoUpdEqn1ConCoe}, 
+$\chi(\kappa, \varphi)$ is called {\it constriction coefficient}, defined as
+\begin{equation}
+  \chi(\kappa, \varphi) \triangleq
+  \begin{cases}
+     \frac{ 2 \, \kappa }{ | 2 - \varphi - \sqrt{\varphi^2 - 4 \, \varphi} |}, &
+      \text{if } \varphi > 4, \\
+     \kappa , & \text{otherwise},
+  \end{cases}
+\label{eq:PSOConCoeChi}
+\end{equation}
+where 
+$\varphi \triangleq {c_1 + c_2}$
+and $\kappa \in (0, 1]$ control how fast the population collapses
+into a point. If $\kappa = 1$, the space is thoroughly searched, which
+yields slower convergence.
+
+Equation~\eqref{sub:psoUpdEqnConCoe} can be used with or without 
+velocity clamping~\eqref{eq:psoUpdEqn2ConCoe}.
+If velocity clamping~\eqref{eq:psoUpdEqn2ConCoe} is used,
+Clerc and Kennedy use
+$\varphi = 4.1$, otherwise they use $\varphi = 4$. In either case, they
+set $c_1 = c_2 = \varphi / 2$ and a population size of $n_P = 20$.\\
+
+Carlisle and Dozier~\cite{CarlisleDozier2001} recommend the settings
+$n_P = 30$, no velocity clamping, $\kappa = 1$, $c_1 = 2.8$
+and $c_2 = 1.3$.\\
+
+
+Kennedy and Eberhart~\cite{KennedyEberhartShi2001} report that
+using velocity clamping \eqref{eq:psoUpdEqn2ConCoe} 
+and a constriction coefficient
+shows faster convergence for some test problems compared to using
+an inertia weight,
+but the algorithm tends to get stuck in local minima. 
+\label{sub:psoUpdEqnConCoe}
+\end{subequations}
+
+% ---------------------------------
+\subsection{PSO for Discrete Variables}
+\label{sec:PSOBin}
+Kennedy and Eberhart~\cite{KennedyEberhart1997} introduced
+a binary version of the PSO algorithm to solve problem $\mathbf P_d$
+defined in~\eqref{sub:Prod}.\\
+
+The binary PSO algorithm encodes the discrete independent variables in a string of
+binary numbers and then operates with this binary string.
+For some $i \in \{1, \ldots, n_d\}$,
+let $x_i \in \Na$ be the component of a discrete independent variable,
+and let $\psi_i \in \{0, 1 \}^{m_i}$ be its 
+binary representation (with $m_i \in \Na_+$ bits),
+obtained using Gray encoding~\cite{Gray1993}, and
+let $\pi_{l,i}(k)$ and $\pi_{g,i}(k)$ be the binary
+representation of $p_{l,i}(k)$ and $p_{g,i}(k)$, respectively,
+where $p_{l,i}(k)$ and $p_{g,i}(k)$ are defined in~\eqref{sub:PSOImp}.
+
+Then, for
+$i \in \{1, \ldots, n_d\}$ and $j \in \{1, \ldots, m_i\}$
+we initialize randomly
+$\psi_i^j(0) \in \{0, 1 \}$,
+and compute, for $k \in \Na$,
+\begin{subequations}
+\begin{eqnarray}
+ \widehat v_i^j(k+1) & = & v_i^j(k) + 
+ c_1 \, \rho_1(k) \, \bigl( \pi_{l,i}^j(k) - \psi_i^j(k) \bigr) \nonumber \\
+ &&   
+  + c_2 \, \rho_2(k) \, \bigr( \pi_{g,i}^j(k) - \psi_i^j(k) \bigr) \bigr),
+  \label{eq:psoUpdEqn1Bin} \\
+  v_i^j(k+1) & = &  \mathrm{sign}( \widehat v_i^j(k+1) ) \, 
+  \min\{ | \widehat v_i^j(k+1) | , v_{max} \}, 
+  \label{eq:psoUpdEqn2Bin}
+ \\
+  \psi_i^j(k+1) & = & 
+  \begin{cases}
+    0, & \text{if } \rho_{i,j}(k) \ge s\bigl( v_i^j(k+1)  \bigr),\\
+    1, & \text{otherwise,}
+  \end{cases}
+\end{eqnarray}
+where
+\begin{equation}
+  s(v) \triangleq \frac{1}{1+e^{-v}}
+\end{equation}
+is the sigmoid function shown in Fig.~\ref{fig:PSOSigFun}
+and $\rho_{i,j}(k) \sim U(0,1)$,
+for all $i \in \{1, \ldots, n_d\}$ and for all
+$j \in \{1, \ldots, m_i\}$.
+\label{sub:psoUpdEqnBin}
+\end{subequations}
+
+\begin{figure}
+\centering
+{\psset{yunit=2.5, arrowscale=2}
+\begin{pspicture}(-5, -0.1)(5,1.5)
+%\showgrid
+\multido{\iX=-4+1}{9}{%
+  \rput(\iX,0){\psline[linewidth=0.2pt]{-}(0,0)(0,1)}
+  \rput(\iX,0){\psline{-}(0,-2pt)(0,2pt)}
+  \uput[-90](\iX,0){$\iX$}
+}
+{\psset{yunit=0.1}%
+  \multido{\iX=2+2}{4}{%
+    \rput(0,\iX){\psline[linewidth=0.2pt]{-}(-4,0)(4,0)}
+    \rput(0,\iX){\psline{-}(-2pt,0)(2pt,0)}
+    \uput[180](0,\iX){$0.\iX$}
+  }
+}
+  \rput(0,1){\psline[linewidth=0.2pt]{-}(-4,0)(4,0)}
+  \rput(0,1){\psline{-}(-2pt,0)(2pt,0)}
+  \uput[180](0,1){$1$}
+\psplot[plotpoints=25]{-4}{4}{ 1 2.71828 x neg exp 1 add div }
+\psline{->}(-4.5,0)(4.7,0)
+\psline{->}(0,0)(0,1.3)
+\uput[-90](4.5,-0.1){$v$}
+\uput[0](0,1.3){$s(v) = {1} / {( 1 + e^{-v} )}$}
+\end{pspicture}
+}
+\caption{Sigmoid function.}
+\label{fig:PSOSigFun}
+\end{figure}
+
+In~\eqref{eq:psoUpdEqn2Bin}, $v_{max} \in \Re_+$ is often set to $4$ to prevent a
+saturation of the sigmoid function,
+and $c_1,c_2 \in \Re_+$ are often such that $c_1+c_2=4$ (see~\cite{KennedyEberhartShi2001}).
+
+Notice that $s(v) \to 0.5$, as $v \to 0$, 
+and consequently the probability of flipping a bit goes to $0.5$.
+Thus, in the binary PSO, a small $v_{max}$ causes a large exploration, whereas in the
+continuous PSO, a small $v_{max}$ causes a small exploration of the search space.\\
+
+Any of the above neighborhood topologies can be used,
+and Model Algorithm~\ref{al:PSOImp} applies if we replace
+the constraint set $\mathbf X$ by the user-specified set
+$\mathbf X_d \subset \mathbb Z^{n_d}$.
+
+% --------------------------------------------
+\subsection{PSO for Continuous and Discrete Variables}
+\lab{sec:PSOConDis}
+For problem $\mathbf P_{cd}$ defined in~\eqref{sub:Procd}, 
+we treat the continuous 
+independent variables as in~\eqref{sub:psoUpdEqnIneWei} 
+or~\eqref{sub:psoUpdEqnConCoe}, and the discrete independent variables as
+in~\eqref{sub:psoUpdEqnBin}.
+Any of the above neighborhood topologies can be used,
+and Model Algorithm~\ref{al:PSOImp} applies if we define the constraint
+set $\mathbf X$ as in~\eqref{sub:setXd}.
+
+% --------------------------------------------
+\subsection{PSO on a Mesh}
+\label{sec:PSOMes}
+We now present a modification to the previously discussed PSO
+algorithms.
+For evaluating the cost function, we will modify the continuous
+independent variables such that they belong to a fixed mesh in $\Re^{n_c}$.
+Since the iterates of PSO algorithms typically cluster during the last
+iterations, this reduces in many cases the number of simulation calls
+during the optimization. The modification is done by replacing the cost
+function $f \colon \Re^{n_c} \times \mathbb Z^{n_d} \to \Re$ in 
+Model Algorithm~\ref{al:PSOImp} as follows:
+Let $x_0 \triangleq (x_{c,0}, x_{d,0} ) \in \Re^{n_c} \times \mathbb Z^{n_c}$
+denote the initial iterate,
+let $\mathbf X_c$ be the feasible set for the continuous independent variables
+defined in~\eqref{eq:feaSetXc},
+let $r, s \in \Na$, with $r>1$, be user-specified parameters, let
+\begin{equation}
+  \Delta \triangleq \frac{1}{r^s}
+\label{eq:PSOMeshDiv}
+\end{equation}
+and let the mesh be defined as
+\begin{equation}
+  \mathbb M(x_{c,0}, \Delta, s) \triangleq \left\{ x_{c,0} + \Delta \,
+  \sum_{i=1}^n m^i \,
+  s^i \, e_i \ | \ m \in \mathbb Z^{n_c} \right\},
+\label{eq:PSODefMesh}
+\end{equation}
+where $s \in \Re^{n_c}$ is equal to the value defined by the variable
+\texttt{Step} in GenOpt's command file (see page~\pageref{par:comFil}).
+Then, we replace $f(\cdot, \cdot)$ by 
+$\widehat f \colon \Re^{n_c} \times \mathbb Z^{n_d} \times \Re^{n_c} \times \Re  \times \Re^{n_c} \to \Re$, defined by
+\begin{equation}
+  \widehat f( x_c, x_d; x_{c,0}, \Delta, s) \triangleq 
+  f( \gamma( x_c ), x_d),
+\end{equation}
+where $\gamma \colon \Re^{n_c} \to \Re^{n_c}$ is the projection of the
+continuous independent variable to the closest feasible mesh point,
+i.e., $\gamma(x_c) \in \mathbb M(x_{c,0}, \Delta, s) \cap \mathbf X_c$.
+Thus, for evaluating the cost function, 
+the continuous independent variables are replaced by the closest
+feasible mesh point, and the discrete independent variables
+remain unchanged.\\
+
+Good numerical results have been obtained by selecting $s \in \Re^{n_c}$ and
+$r, s \in \Na$ such that 
+about $50$ to $100$ mesh points are located
+along each coordinate direction.
+
+
+% --------------------------------------------
+\subsection{Population Size and Number of Generations}
+Parsopoulos and Vrahatis~\cite{ParsopoulosVrahatis2002:1} use
+for $x \in \Re^{n_c}$ a population size of about $5 \, n$ up to $n = 15$.
+For $n \approx 10 \ldots 20$, they use $n_P \approx 10 \, n$.
+They set the number of generations to $n_G = 1000$ up to $n = 20$ and
+to $n_G = 2000$ for $n = 30$.
+
+Van den Bergh and Engelbrecht~\cite{VanDenBerghEngelbrecht2001}
+recommend using more than $20$ particles
+and $2000$ to $5000$ generations.\\
+
+Kennedy and Eberhart~\cite{KennedyEberhartShi2001} use, for
+test cases with the {\it lbest} neighborhood topology of size $l=2$
+and $n=2$ and $n=30$,
+a population size of $n_P = 20 \ldots 30$. They report that $10 \ldots 50$
+particles usually work well.
+As a rule of thumb, they recommend for the {\it lbest} neighborhood to
+select the neighborhood size such that each neighborhood consists of $10 \ldots 20\%$
+of the population.
+ 
+% --------------------------------------------
+\subsection{Keywords}
+For the Particle Swarm algorithm, 
+the command file (see page~\pageref{par:comFil})
+can contain continuous and discrete independent variables.\\
+
+The different specifications for the \texttt{Algorithm} section 
+of the GenOpt command file are as follows:\\
+
+\noindent
+PSO algorithm with inertia weight:
+\begin{lstlisting}
+Algorithm{
+  Main                      = PSOIW;
+  NeighborhoodTopology      = gbest | lbest | vonNeumann;
+  NeighborhoodSize          = Integer;  // 0 < NeighborhoodSize
+  NumberOfParticle          = Integer;
+  NumberOfGeneration        = Integer;
+  Seed                      = Integer;
+  CognitiveAcceleration     = Double;   // 0 < CognitiveAcceleration
+  SocialAcceleration        = Double;   // 0 < SocialAcceleration
+  MaxVelocityGainContinuous = Double;
+  MaxVelocityDiscrete       = Double;   // 0 < MaxVelocityDiscrete
+  InitialInertiaWeight      = Double;   // 0 < InitialInertiaWeight
+  FinalInertiaWeight        = Double;   // 0 < FinalInertiaWeight
+}
+\end{lstlisting}
+
+\noindent
+PSO algorithm with constriction coefficient:
+\begin{lstlisting}
+Algorithm{
+  Main                      = PSOCC;
+  NeighborhoodTopology      = gbest | lbest | vonNeumann;
+  NeighborhoodSize          = Integer;  // 0 < NeighborhoodSize
+  NumberOfParticle          = Integer;
+  NumberOfGeneration        = Integer;
+  Seed                      = Integer;
+  CognitiveAcceleration     = Double;   // 0 < CognitiveAcceleration
+  SocialAcceleration        = Double;   // 0 < SocialAcceleration
+  MaxVelocityGainContinuous = Double;
+  MaxVelocityDiscrete       = Double;   // 0 < MaxVelocityDiscrete
+  ConstrictionGain          = Double;   // 0 < ConstrictionGain <= 1
+}
+\end{lstlisting}
+
+\noindent
+PSO algorithm with constriction coefficient and 
+continuous independent variables
+restricted to a mesh:
+\label{algSec:PSOCCMesh}
+\begin{lstlisting}
+Algorithm{
+  Main                      = PSOCCMesh;
+  NeighborhoodTopology      = gbest | lbest | vonNeumann;
+  NeighborhoodSize          = Integer;  // 0 < NeighborhoodSize
+  NumberOfParticle          = Integer;
+  NumberOfGeneration        = Integer;
+  Seed                      = Integer;
+  CognitiveAcceleration     = Double;   // 0 < CognitiveAcceleration
+  SocialAcceleration        = Double;   // 0 < SocialAcceleration
+  MaxVelocityGainContinuous = Double;
+  MaxVelocityDiscrete       = Double;   // 0 < MaxVelocityDiscrete
+  ConstrictionGain          = Double;   // 0 < ConstrictionGain <= 1
+  MeshSizeDivider           = Integer;  // 1 < MeshSizeDivider
+  InitialMeshSizeExponent   = Integer;  // 0 <= InitialMeshSizeExponent
+}
+\end{lstlisting}
+
+\noindent
+The entries that are common to all implementations are defined as follows:
+\begin{codedescription}
+\item [Main]
+The name of the main algorithm.
+The implementation \texttt{PSOIW} uses the location update 
+equation~\eqref{sub:psoUpdEqnIneWei} 
+for the continuous independent variables,
+and the implementation \texttt{PSOCC} 
+uses~\eqref{sub:psoUpdEqnConCoe}
+for the continuous independent variables.
+All implementations use~\eqref{sub:psoUpdEqnBin} for the discrete independent variables.
+\item [NeighborhoodTopology]
+This entry defines what neighborhood topology is being used.
+\item [NeighborhoodSize]
+For the {\it lbest} neighborhood topology, 
+this entry is equal to $l$ in \eqref{eq:defLBestNeiHoo}.
+For the {\it gbest} and the {\it von Neumann} neighborhood topology, 
+the value of \texttt{NeighborhoodSize} is ignored.
+\item [NumberOfParticle]
+This is equal to the variable $n_P \in \Na$.
+\item [NumberOfGeneration]
+This is equal to the variable $n_G \in \Na$ in Algorithm~\ref{al:PSOImp}.
+\item [Seed]
+This value is used to initialize the random number generator.
+\item [CognitiveAcceleration]
+This is equal to the variable $c_1 \in \Re_+$.
+\item [SocialAcceleration]
+This is equal to the variable $c_2 \in \Re_+$.
+\item [MaxVelocityGainContinuous]
+This is equal to the variable $\lambda \in \Re_+$ in~\eqref{eq:PSOMaxVelCon}
+and in~\eqref{eq:PSOMaxVelConConCoe}.
+If \texttt{MaxVelocityGainContinuous} is set to zero or to a negative value,
+then no velocity clamping is used, and hence, $v_i^j(k+1) = \widehat v_i^j(k+1)$,
+for all $k \in \Na$, all $i \in \{1, \ldots, n_P \}$ and all
+$j \in \{1, \ldots, n_c \}$.
+\item [MaxVelocityDiscrete]
+This is equal to the variable $v_{max} \in \Re_+$ in~\eqref{eq:psoUpdEqn2Bin}.
+\end{codedescription}
+
+\vspace{2\baselineskip}
+\noindent
+For the \texttt{PSOIW} implementation, following additional entries must be
+specified:
+\begin{codedescription}
+\item [InitialInertiaWeight]
+This is equal to $w_0 \in \Re_+$ in~\eqref{eq:PSOIneWeiLin}.
+\item [FinalInertiaWeight]
+This is equal to $w_1 \in \Re_+$ in~\eqref{eq:PSOIneWeiLin}.
+\end{codedescription}
+
+\vspace{2\baselineskip}
+\noindent
+For the \texttt{PSOCC} implementation, following additional entries must be
+specified:
+\begin{codedescription}
+\item [ConstrictionGain]
+This is equal to $\kappa \in (0, 1]$ in~\eqref{eq:PSOConCoeChi}.
+\end{codedescription}
+Notice that for discrete independent variables, the entries of
+\texttt{InitialInertiaWeight}, \texttt{FinalInertiaWeight}, and \texttt{ConstrictionGain}
+are ignored.\\
+
+\vspace{2\baselineskip}
+\noindent
+For the \texttt{PSOCCMesh} implementation, following additional entries must be
+specified:
+\begin{codedescription}
+\item [MeshSizeDivider]
+This is equal to $r \in \Na$, with $r > 1$, used in~\eqref{eq:PSOMeshDiv}.
+\item [InitialMeshSizeExponent]
+This is equal to $s \in \Na$ used in~\eqref{eq:PSOMeshDiv}.
+\end{codedescription}
+

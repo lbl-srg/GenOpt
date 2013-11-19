@@ -1,0 +1,277 @@
+\documentclass[11pt]{report}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+%\usepackage{fleqn} %sets equation to left
+\usepackage{fancyhdr}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{xcolor}
+\usepackage{multido}
+\usepackage{vmargin}
+%\usepackage{floatflt}
+\usepackage{subfigure}
+\usepackage{epsfig}
+\usepackage{tabularx}
+\usepackage{xr} % for cross reference to external documents
+\usepackage{alltt}
+\usepackage{url}
+\usepackage{pstricks,pst-node,pst-tree,pst-plot}
+\usepackage{listings}
+% Figure and table caption in italic fonts
+\makeatletter
+\renewcommand{\fnum@figure}[1]{\small \textit{\figurename~\thefigure}: \it }
+\renewcommand{\fnum@table}[1]{\small \textit{\tablename~\thetable}: \it }
+\makeatother
+% Fuzz -------------------------------------------------------------------
+\hfuzz4pt % Don't bother to report over-full boxes if over-edge is < 2pt
+\vfuzz=\hfuzz
+% THEOREM Environments ---------------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{assumption}[theorem]{Assumption}
+
+
+% \renewcommand{\epsilon}{{\red \varepsilon}}
+% \renewcommand{\cdot}{{\red \bullet}}
+% List for code description ---------------------------------------------
+% MWetter@lbl.gov
+\makeatletter
+\newenvironment{codedescription}
+               {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+                        \let\makelabel\codedescriptionlabel}}
+               {\endlist}
+\newcommand*\codedescriptionlabel[1]{\hspace\labelsep
+                                \hspace{1em}\normalfont\ttfamily#1}
+
+% Section formats ------------------------------- --------------------
+% MWetter@lbl.gov
+\renewcommand{\chapter}{\@startsection
+  {chapter}%                          % the name
+  {0}%                                % the level
+  {0mm}%                            % the indent
+  {2\baselineskip}%                   % the beforeskip
+  {\baselineskip}%                 % the afterskip
+%  {\normalfont\fontfamily{phv}\fontseries{b}\fontsize{9}{11}\selectfont}}%  % the style
+  {\pagebreak \normalfont\sffamily\huge\bfseries \raggedright}}%  % the style
+
+\renewcommand{\section}{\@startsection
+  {section}%                          % the name
+  {1}%                                % the level
+  {0mm}%                            % the indent
+  {\baselineskip}%                   % the beforeskip
+  {\baselineskip}%                 % the afterskip
+  {\normalfont\sffamily\Large\bfseries \raggedright}}%  % the style
+
+\renewcommand{\subsection}{\@startsection
+  {subsection}%                          % the name
+  {2}%                                % the level
+  {0mm}%                            % the indent
+  {\baselineskip}%                   % the beforeskip
+  {0.5\baselineskip}%                 % the afterskip
+  {\normalfont\sffamily\large\bfseries \raggedright}}%  % the style
+
+\renewcommand{\subsubsection}{\@startsection
+  {subsubsection}%                          % the name
+  {3}%                                % the level
+  {0mm}%                            % the indent
+  {\baselineskip}%                   % the beforeskip
+  {0.5\baselineskip}%                 % the afterskip
+  {\normalfont\sffamily\bfseries \raggedright}}%  % the style
+
+\makeatother
+% end of list ---------------------------------------------
+
+\newcommand{\clarify}[1]{\colorbox{yellow}{ #1 }}
+
+\newcommand{\lab}[1]{\label{#1} \hfill \mbox{\tiny {\tt [#1]}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Remove comment of next line for the final print out
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\lab}[1]{\label{#1}}
+
+
+% Page layout -------------------------------------------------------------
+%\setlength{\textwidth}{14cm} 
+\pagestyle{fancy}
+\setlength{\textwidth}{12cm} 
+\setlength{\textheight}{20cm}
+\setlength{\headheight}{35mm}
+\setlength{\headwidth}{\textwidth}
+\setlength{\headsep}{5mm}
+\setlength{\oddsidemargin}{3.7cm}
+\setlength{\evensidemargin}{\oddsidemargin}
+% next lines from 'The LaTeX Companion', Sec. 4.3
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+
+% -------------------------------------------------------------------
+% Code formatting
+\lstset{ %
+language=Java,                % the language of the code
+stringstyle=\ttfamily,
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+%numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+%stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                % will be numbered
+commentstyle=\color{ForestGreen},
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{gray!10},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=false,                % sets automatic line breaking
+linewidth=\headwidth,
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                % also try caption instead of title
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+morekeywords={*,...}            % if you want to add more keywords to the set
+}
+% Depth of table of contents -----------------------------------------
+\setcounter{tocdepth}{4}
+
+
+% PDF Links --------------------------------------------------------
+\usepackage[ps2pdf,colorlinks]{hyperref}
+  \hypersetup{backref, %
+    colorlinks=true, %
+    linkcolor=black, %
+    anchorcolor=black, %
+    citecolor=black, %
+    filecolor=black, % Color for URLs which open local files. 
+    menucolor=black, % Color for Acrobat menu items.
+    pagecolor=black, % Color for links to other pages. 
+    urlcolor=black, %
+    pdftitle={GenOpt manual}, %
+    pdfauthor={Michael Wetter}, %
+    pdfsubject={}, %
+    pdfkeywords={}%
+  }
+
+% commands for mathematical description ------------------------------
+\renewcommand{\Re}{{\mathbb R}}
+\newcommand{\Rep}{{\Re_{+}}}
+\newcommand{\Na}{{\mathbb N}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\Co}{{\mathbb C}}
+
+\newcommand{\codi}[2]{{\mathcal{C}^{#1}(#2)}}
+
+\newcommand{\depd}{(\cdot)}
+\newcommand{\depdd}{(\cdot, \cdot)}
+\newcommand{\depddd}{(\cdot, \cdot, \cdot)}
+\newcommand{\depdddd}{(\cdot, \cdot, \cdot, \cdot)}
+\newcommand{\RR}{\Re \times \Re}
+\newcommand{\RRR}{\Re \times \Re \times \Re}
+
+\newcommand{\vect}[1]{\mathtt{vect}\left( #1 \right) }
+\newcommand{\vectp}[1]{\mathop{\mathtt{vect}}_{p}\left( #1 \right) }
+\newcommand{\vectcwwi}[1]{\mathop{\mathtt{vect}}_{i, \, i \neq p, \, j}\left( #1 \right) }
+\newcommand{\diag}[1]{\mathtt{diag}\left( #1 \right) }
+\newcommand{\argmin}{\mathop{\arg \min}}
+\newcommand{\argmax}{\mathop{\arg \max}}
+
+\hyphenation{Torczon}
+
+%QED box, from the TeXbook, p. 106. ----------------------------------
+%\newcommand\qed{{\unskip\nobreak\hfil\penalty50\hskip2em\vadjust{}
+%    \nobreak\hfil$\Box$\parfillskip=0pt\finalhyphendemerits=0\par}}
+\newcommand{\rbox}{{ \hfill \framebox{} }}
+% Depth of section numbering and table of contents -------------------
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{4}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+\renewcommand{\theparagraph}{(\roman{paragraph})}
+
+% commands for physical description ----------------------------------
+
+\newcommand{\depx}{(x)}
+
+% Line spacing -----------------------------------------------------------
+\newlength{\defbaselineskip}
+\setlength{\defbaselineskip}{\baselineskip}
+%\newcommand{\setlinespacing}[1]%
+%           {\setlength{\baselineskip}{#1 \defbaselineskip}}
+\newcommand{\doublespacing}{\setlength{\baselineskip}
+                           {2.0 \defbaselineskip}}
+\newcommand{\singlespacing}{\setlength{\baselineskip}{\defbaselineskip}}
+\newcommand{\onehalfspacing}{\setlength{\baselineskip}
+                           {1.5 \defbaselineskip}}
+
+\newcommand{\codeem}[1]{{\fontfamily{pcr}\fontseries{b}\fontsize{10}{12}\selectfont #1}}
+
+%\newcommand{\genoptversion}{3.0.0\@$\beta$2\@ }
+\newcommand{\genoptversion}{3.1.0\@ }
+\newcommand{\javaversion}{2 v1.6.0\@ }
+\renewcommand{\date}{December 8, 2011\@}
+%%\renewcommand{\date}{\today}
+\newcommand{\copyrightyears}{1998-2011}
+% Headings ---------------------------------------------------------------
+% right header entry
+\lhead{GenOpt\\Generic Optimization Program\\Version \genoptversion}
+\rhead{Lawrence Berkeley National Laboratory\\Building Technologies Department\\Simulation Research Group}
+\lfoot{\tiny{Copyright (c) \copyrightyears\\The Regents of the University of California (through Lawrence Berkeley National Laboratory),\\subject to receipt of any required approvals from U.S. Department of Energy. All rights reserved.}}
+\cfoot{}
+\rfoot{\thepage}
+% line at header and footer
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+% select Helvetica as default roman font --------------------------------
+\renewcommand\sfdefault{phv}
+
+% external documents, for cross reference --------------------------------
+\externaldocument{introduction}
+\externaldocument{problems}
+\externaldocument{summary}
+\externaldocument{algGPS}
+\externaldocument{algDisArmGra}
+\externaldocument{algParSwaOpt}
+\externaldocument{algGPSPSO}
+% no longer part of GenOpt since 3.0.0 \externaldocument{algHooJee}
+\externaldocument{algSimplex}
+\externaldocument{algOneDim}
+\externaldocument{algParametric}
+\externaldocument{constraints}
+\externaldocument{program}
+\externaldocument{install}
+\externaldocument{problemsetup}
+\externaldocument{end}
+\externaldocument{appendix}
+% Begin of document -------------------------------------------------------
+\begin{document}
+% Contents ----------------------------------------------------------------
+\include{titlepage}
+\include{disclaimer}
+\tableofcontents
+\vfill
+\small{\vspace{2mm} \noindent Product and company names mentioned herein may be the trademarks of their respective owners. Any rights not expressly granted herein are reserved.}
+\include{introduction}
+\include{problems}
+%\onehalfspacing
+\include{summary}
+\include{algGPS}
+\include{algDisArmGra}
+\include{algParSwaOpt}
+\include{algGPSPSO}
+% no longer part of GenOpt since 3.0.0 \include{algHooJee}
+\include{algSimplex}
+\include{algOneDim}
+\include{algParametric}
+\include{constraints}
+\include{program}
+\include{install}
+\include{problemsetup}
+\include{end}
+\include{appendix}
+\bibliographystyle{alpha}
+\bibliography{xbib}
+\end{document}

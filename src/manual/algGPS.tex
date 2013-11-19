@@ -1,0 +1,854 @@
+\chapter{Algorithms for Multi-Dimensional Optimization}
+\label{sec:algImp}
+\section{Generalized Pattern Search Methods (Analysis)}
+Generalized Pattern Search (GPS) algorithms are 
+derivative free optimization algorithms for the minimization of
+problem $\mathbf P_c$ and $\mathbf P_{cg}$, defined in~\eqref{sub:Proc}
+and~\eqref{sub:Procg}, respectively.
+We will present the GPS algorithms for the case where 
+the function $f(\cdot)$ cannot be evaluated exactly,
+but can be approximated by functions $f^* \colon \Re_+^q \times \Re^n \to \Re$, 
+where the first argument $\epsilon \in \Re_+^q$ is 
+the precision parameter of PDE, ODE, and algebraic equation solvers.
+Obviously, the explanations are similar for problems where
+$f(\cdot)$ can be evaluated exactly, except that the scheme to
+control $\epsilon$ is not applicable, and that
+the approximate functions $f^*(\epsilon,\cdot)$ are replaced by $f(\cdot)$.\\
+
+Under the assumption that the cost function is continuously
+differentiable, all the accumulation points constructed by
+the GPS algorithms are stationary.\\
+
+What GPS algorithms have in common is that they define the construction
+of a mesh $\mathbb M_k$ in $\Re^n$, 
+which is then explored according to some rules
+that differ among the various members of the family of GPS algorithms.
+If no decrease in cost is obtained on mesh points around the current iterate,
+then the distance between the mesh points is reduced,
+and the process is repeated.\\
+
+We will now explain the framework of GPS algorithms that will be used
+to implement different instances of GPS algorithms in GenOpt.
+The discussion follows the more detailed description of~\cite{PolakWetter2003:1}.\\
+\pagebreak
+
+\subsection{Assumptions}
+We will assume that $f(\cdot)$ and its 
+approximating functions $\{ f^*(\epsilon,\cdot) \}_{\epsilon \in \Re_+^q}$ 
+have the following properties.
+
+\begin{assumption} ~\\
+\\[-2.5\baselineskip]
+\begin{enumerate}
+\item There exists an error bound function $\varphi \colon \Re_+^q
+  \to \Re_+$ such that for any bounded set $\mathbf S \subset \mathbf
+  X$, there exists an $\epsilon_{\mathbf S} \in \Re_+^q$ and a scalar 
+  $K_{\mathbf S} \in
+  (0, \, \infty)$ such that for all $x \in \mathbf S$ and for all
+  $\epsilon \in \Re_+^q$, 
+with $\epsilon \le \epsilon_{\mathbf S}$,\footnote{For 
+$\epsilon \in \Re_+^q$, by $\epsilon \le 
+\epsilon_{\mathbf S}$, 
+we mean that $0 < \epsilon^i \le \epsilon_{\mathbf S}^i$, for all 
+$i \in \{ 1, \ldots ,q \}$.}
+  \begin{equation}
+    | \, f^*(\epsilon,x) - f(x) | \le K_{\mathbf S} \, \varphi(\epsilon).
+  \lab{eq:fefPhi}
+  \end{equation}
+Furthermore, 
+\begin{equation}
+\lim_{\| \epsilon \| \to 0} \varphi(\epsilon) = 0.
+\end{equation}
+\item  The function $f \colon \Re^n \to \Re$ is once continuously differentiable.
+\rbox
+\end{enumerate}
+\lab{as:FFeps}
+\end{assumption}
+
+\begin{remark}~\\
+\\[-2.5\baselineskip] {\em
+\begin{enumerate}
+\item
+The functions $\{ f^*(\epsilon,\cdot) \}_{\epsilon \in \Re_+^q}$ may be
+discontinuous.
+\item
+See~\cite{PolakWetter2003:1} for the situation where $f(\cdot)$ is
+only locally Lipschitz continuous.
+\rbox
+\end{enumerate}
+}
+\end{remark}
+
+%--------------------------------------------
+Next, we state an assumption on the level sets of the family of
+approximate functions. To do so, we first define the notion of a level 
+set.
+
+\begin{definition}[Level Set]
+Given a function $f \colon \Re^n \to \Re$ and an $\alpha \in
+\Re$, such that $\alpha > \inf_{x \in \Re^n} f(x)$, we will say that
+the set $\mathbf L_\alpha (f) \subset \Re^n$, defined as
+\begin{equation}
+  \mathbf L_\alpha(f) \triangleq \{ x \in \Re^n \ | \  f(x) \le \alpha \}, 
+\end{equation}
+ is a {\em level set} of $f(\cdot)$, parametrized by $\alpha$.
+\rbox
+\end{definition}
+
+\begin{assumption}[Compactness of Level Sets]
+Let $\{ f^*(\epsilon,\cdot) \}_{\epsilon \in \Re_+^q}$ be as in 
+Assumption~\ref{as:FFeps} and let $\mathbf X \subset \Re^n$ be the 
+constraint set. Let $x_0 \in \mathbf X$ be the 
+initial iterate and $\epsilon_0 \in \Re_+^q$ be the
+initial precision setting of the numerical solvers.
+Then, we assume that there exists a
+compact set $\mathbf C \subset \Re^n$ such that
+\begin{equation}
+  \mathbf L_{f^*(\epsilon_0,x_0)} (f^*(\epsilon,\cdot)) \cap \mathbf X
+  \subset \mathbf C, \qquad \forall \, \epsilon \le \epsilon_0.
+\end{equation}
+\rbox
+\lab{as:LevSetBou}
+\end{assumption}
+
+% ===============================================
+\subsection{Characterization of GPS Algorithms}
+There exist different geometrical explanations for pattern search algorithms, and 
+a generalization is given in the review~\cite{KoldaLewisTorczon2003:1}.
+We will use a simple implementation of the pattern search algorithms
+in~\cite{PolakWetter2003:1} where we restrict the search directions to
+be the positive and negative coordinate directions.
+Thus, the search directions are the columns of the matrix
+\begin{equation}
+  D \triangleq [-e_1, \, +e_1, \, \ldots \, , -e_n, \, +e_n] 
+  \in \mathbb Z^{n \times 2n},
+\end{equation}
+which suffices for box-constrained problems. Furthermore, we
+construct the sequence of mesh size parameters that parametrizes
+the minimum distance between iterates
+such that it satisfies the following assumption.
+\begin{subequations}
+\begin{assumption}[$k$-th Mesh Size Parameter]
+Let $r, s_0, k \in \mathbb N$, with $r > 1$,
+and $\{ t_i \}_{i=0}^{k-1} \subset \mathbb N$.
+We will assume that the sequence of mesh size parameters satisfies
+\begin{equation}
+\Delta_k \triangleq \frac {1}{r^{s_k}},
+\label{eq:GPSDelDef}
+\end{equation}
+where for $k > 0$
+\begin{equation}
+s_k \triangleq s_0 + \sum_{i=0}^{k-1} t_i.
+\label{eq:GPSDelDefSk}
+\end{equation}
+\lab{ass:MeshSizePara}
+\rbox
+\end{assumption}
+\end{subequations}
+With this construction, all iterates lie on a rational mesh of the form
+\begin{equation}
+  \mathbb M_k \triangleq \{ x_0 + \Delta_k \, D \, m \ | \ m \in \mathbb N^{2 n} \}.
+\lab{eq:Mesh} 
+\end{equation}
+
+
+% -------- Global and Local Search Set ---------
+We will now characterize the set-valued maps that determine the mesh
+points for the ``global'' and ``local'' searches.  Note that the images
+of these maps may depend on the entire history of the computation.
+
+\begin{subequations}
+\begin{definition}
+Let $\underline{\mathbf X}_k \subset \Re^n$ and
+$\underline {\boldsymbol \Delta}_k \subset \mathbb Q_+$
+be the sets of all sequences containing $k+1$ elements, 
+let $\mathbb M_k$ be the current mesh,
+and let $\epsilon \in \Re_+^q$ be the solver tolerance.
+\begin{enumerate}
+\item
+We define the {\em global search set map} 
+to be any set-valued map
+\begin{equation}
+  \gamma_k \colon \underline{\mathbf X}_k \times \underline
+  {\boldsymbol \Delta}_k  \times \Re_+^q \to 
+  \bigl( 2^{\mathbb M_k} \cap \mathbf X \bigr) \cup \emptyset
+\end{equation}
+whose image 
+$\gamma_k(\underline x_k, \underline \Delta_k, \epsilon)$
+contains only a finite number of mesh points.
+\item
+We will call $\mathcal G_k \triangleq 
+\gamma_k (\underline x_k, \underline \Delta_k, \epsilon)$ 
+the {\em global search set}.
+\item
+We define the directions for the local search as
+\begin{equation}
+ D \triangleq  [-e_1, \, +e_1, \, \ldots \, , -e_n, \, +e_n].  
+\end{equation}
+\item
+We will call
+\begin{equation}
+  \mathcal L_k \triangleq \bigl \{ x_k + \Delta_k \, D \, e_i \ | \ 
+  i \in \{ 1, \ldots , \, 2 \, n \} \bigr \}
+  \cap \mathbf X
+\lab{eq:defLK}
+\end{equation}
+the {\em local search set}.
+\rbox
+\end{enumerate}
+\lab{def:algFunGamDel}
+\end{definition}
+\lab{sub:mapfp}
+\end{subequations}
+
+\vspace{-\baselineskip}
+\begin{remark}~\\
+\\[-2.5\baselineskip] {\em
+\begin{enumerate}
+\item
+The map $\gamma_k(\cdot, \cdot, \cdot)$ 
+can be dynamic in the sense that if $\{ x_{k_i} \}_{i=0}^I \triangleq 
+\gamma_k(\underline x_k, \underline \Delta_k, \epsilon)$, 
+then the rule for selecting
+$x_{k_{\widehat i}}$, $1 \le \widehat i \le I$, can depend on 
+$\{ x_{k_i} \}_{i=0}^{\widehat i - 1}$ and
+$\{ f^*(\epsilon, x_{k_i}) \}_{i=0}^{\widehat i - 1}$. 
+It is only important that the global search terminates after 
+a finite number of computations, and that  
+$\mathcal G_k \subset (2^{\mathbb M_k} \cap \mathbf X) \cup \emptyset$.
+\item
+As we shall see, the global search affects only the efficiency of the
+algorithm but not its convergence properties. Any heuristic procedure
+that leads to a finite number of function evaluations can be used
+for $\gamma_k(\cdot, \cdot, \cdot)$. 
+\item
+The empty set is included in the range of $\gamma_k(\cdot, \cdot, \cdot)$ 
+to allow omitting the global search.
+\end{enumerate}
+\rbox
+}
+\end{remark}
+
+% ===========================================
+\subsection{Model Adaptive Precision GPS Algorithm}
+We will now present our model GPS algorithm
+with adaptive precision cost function evaluations.\\
+
+\noindent
+\begin{minipage}[b]{\textwidth}
+\begin{algorithm}
+[Model GPS Algorithm]
+~\\
+{\em
+\begin{tabular}{ll}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+\hline \\[-2ex]
+ \textbf{Data}:
+     & Initial iterate $x_0 \in \mathbf X$;\\ 
+     & Mesh size divider $r \in \mathbb N$, with $r > 1$;\\
+     & Initial mesh size exponent $s_0 \in \mathbb N$.\\
+ \textbf{Maps}:
+     & Global search set map 
+       $\gamma_k \colon \underline{\mathbf X_k} 
+       \times \underline
+       {\boldsymbol \Delta}_k  \times \Re_+^q \to \bigl( 
+       2^{\mathbb M_k} \cap \mathbf X \bigr) \cup \emptyset$; \\ 
+     & Function $\rho \colon \Re_+ \to \Re_+^q$ (to assign $\epsilon$),
+       such that the composition \\
+     & $\varphi \circ \rho \colon \Re_+ \to \Re_+$
+       is strictly monotone decreasing and satisfies\\
+     & $\varphi(\rho(\Delta))/\Delta \to 0$, as $\Delta \to 0$.\\
+  \textbf{Step 0}: 
+     & Initialize $k=0$, $\Delta_0 = 1 / r^{s_0}$, and $\epsilon=\rho(1)$.\\
+  \textbf{Step 1}:
+     & \underline{Global Search}\\
+     & Construct the global search set
+       $\mathcal G_k = \gamma_k(\underline x_k, \underline \Delta_k,
+        \epsilon)$.\\
+     & If $f^*(\epsilon, x') - f^*(\epsilon, x_k) < 0$
+       for any $x' \in \mathcal G_k$, go to Step 3;\\
+       & else, go to Step 2.\\
+  \textbf{Step 2}:
+     & \underline{Local Search}\\
+     & Evaluate $f^*(\epsilon, \cdot)$ for any $x' \in \mathcal L_k$ until
+       some $x' \in \mathcal L_k$\\
+     & satisfying 
+       $f^*(\epsilon, x') - f^*(\epsilon, x_k) < 0$
+       is obtained, 
+       or until all points\\
+     & in $\mathcal L_k$ are evaluated.\\
+  \textbf{Step 3}:
+     & \underline{Parameter Update}\\
+     & If there exists an $x' \in \mathcal G_k \cup \mathcal L_k$
+       satisfying
+       $f^*(\epsilon, x') - f^*(\epsilon, x_k) < 0$,\\
+     & set  $x_{k+1} = x'$, $s_{k+1}= s_k$, $\Delta_{k+1} = \Delta_k$,
+       and do not change $\epsilon$;\\
+     & else, set $x_{k+1} = x_k$, $s_{k+1} = s_k + t_k$, with $t_k \in
+       \mathbb N_+$ arbitrary,\\
+     & $\Delta_{k+1} = 1/r^{s_{k+1}}$, 
+       $\epsilon = \rho(\Delta_{k+1} / \Delta_0)$.\\
+  \textbf{Step 4}:
+     & Replace $k$ by $k + 1$, and go to Step 1.\\
+    \hline \\
+\end{tabular}
+}
+~\\ \label{al:GPSImp}
+\end{algorithm}
+\end{minipage}
+% ===========================================
+\newpage
+\begin{remark}~\newline 
+\vspace{-1.5\baselineskip}
+{ \em 
+\begin{enumerate} 
+\item
+To ensure that $\epsilon$ does not depend on the scaling of $\Delta_0$,
+we normalized the argument of $\rho(\cdot)$.
+In particular, we want to decouple $\epsilon$ from
+the user's choice of the initial mesh parameter.
+\item
+In Step 2, once a decrease of the cost function is obtained, one
+can proceed to Step 3. However, one is allowed to evaluate $f^*(\epsilon,\cdot)$
+at more points in $\mathcal L_k$ in an
+attempt to obtain a bigger reduction in cost.  However,
+one is allowed to proceed to Step 3 only after 
+either a cost decrease has been found, or after {\em all} points in 
+$\mathcal L_k$ are tested.
+\item
+In Step 3, we are not restricted to accepting the
+$x' \in \mathcal G_k \cup \mathcal L_k$ that gives lowest cost value.
+But the mesh size parameter $\Delta_k$ is reduced {\em only}
+if there exists no $x' \in \mathcal G_k \cup \mathcal L_k$ satisfying
+$f^*(\epsilon, x') - f^*(\epsilon, x_k) < 0$.
+\item
+To simplify the explanations, we do
+not increase the mesh size parameter if the cost has been reduced.
+However, our global search allows searching on a coarser mesh 
+$\widehat {\mathbb M} \subset \mathbb M_k$,
+and hence, our algorithm can easily be extended to include a rule for increasing
+$\Delta_k$ for a finite number of iterations.
+\item
+Audet and Dennis~\cite{AudetDennis2003} update the mesh size parameter 
+using the formula $\Delta_{k+1} = \tau^m \, \Delta_k$, 
+where $\tau \in \mathbb Q$, $\tau > 1$, and $m$ is any
+element of $\mathbb Z$. Thus, our update rule for $\Delta_k$ is a special case of
+Audet's and Dennis' construction since we set $\tau = 1/r$, with
+$r \in \mathbb N_+$, $r \ge 2$ (so that $\tau < 1$) and $m \in 
+\mathbb N$. We prefer our construction because we do not think it negatively affects
+the computing performance, but it leads to simpler convergence proofs.
+\rbox
+\end{enumerate}
+}
+\end{remark}
+
+% ===========================================
+\subsection{Convergence Results}
+We will now present the convergence results for our Model GPS algorithm.
+See~\cite{PolakWetter2003:1} for a detailed discussion and convergence proofs.
+
+\subsubsection{Unconstrained Minimization}
+
+We will first present the convergence properties of the Model GPS
+Algorithm~\ref{al:GPSImp} on unconstrained minimization problems, i.e., for 
+$\mathbf X = \Re^n$.\\
+
+First, we will need the notion of a {\em refining subsequence},
+which we define as follows:
+\begin{definition}[Refining Subsequence]
+Consider a sequence $\{x_k\}_{k=0}^\infty$ constructed by Model GPS
+Algorithm~\ref{al:GPSImp}.  We will say that the subsequence $\{ x_k \}_{k \in 
+\mathbf K}$ is the {\em refining subsequence}, if $\Delta_{k+1} < 
+\Delta_k$ for all $k \in \mathbf K$, and $\Delta_{k+1} = \Delta_k$
+for all $k \notin \mathbf K$.
+\rbox
+\end{definition}
+
+We now state that pattern search algorithms with adaptive precision
+function evaluations construct sequences with stationary accumulation points.
+\begin{theorem}[Convergence to a Stationary Point]
+Suppose that Assumptions~\ref{as:FFeps} and \ref{as:LevSetBou} are
+satisfied and that $\mathbf X = \Re^n$.
+Let $x^* \in \Re^n$ be an accumulation point of the refining 
+subsequence $\{ x_k \}_{k \in \mathbf K}$, constructed by Model GPS
+Algorithm~\ref{al:GPSImp}. Then,
+\begin{equation}
+  \nabla f(x^*) = 0.
+\lab{eq:GradConv}
+\end{equation}
+\lab{the:GradConv}
+\rbox
+\end{theorem}
+% ===========================================
+\subsubsection{Box-Constrained Minimization}
+We now present the convergence results for the box-constrained
+problem~\eqref{sub:Proc}.
+See~\cite{AudetDennis2003, PolakWetter2003:1, KoldaLewisTorczon2003:1}
+for the more general case of linearly-constrained problems and for the convergence
+proofs.\\
+
+First, we introduce the notion of a tangent cone and a normal cone,
+which are defined as follows: 
+\begin{definition}[Tangent and Normal Cone] ~\\
+\\[-2.5\baselineskip]
+\begin{enumerate}
+\item
+Let $\mathbf X \subset \Re^n$. Then, we define the {\em tangent cone} to
+$\mathbf X$ at a point $x^* \in \mathbf X$ by
+\begin{subequations}
+  \begin{equation}
+    \mathbf T_{\mathbf X}(x^*) \triangleq 
+    \overline{ \{ \mu \, (x - x^*) \ | \  \mu \ge 0, 
+      \, x \in \mathbf X \}}.
+  \end{equation}
+\item
+Let $\mathbf T_{\mathbf X}(x^*)$ be as above. Then, we define the 
+{\em normal cone} to $\mathbf X$ at $x^* \in \mathbf X$ by
+\begin{equation}
+      \mathbf N_{\mathbf X}(x^*) \triangleq \{ v \in \Re^n \ | \ 
+      \forall \, t \in \mathbf T_{\mathbf X}(x^*), \, \langle v, \, t
+      \rangle \le 0 \}.
+    \end{equation}
+\end{subequations}
+\rbox
+\end{enumerate}
+\end{definition}
+
+We now state that the accumulation
+points generated by Model GPS Algorithm~\ref{al:GPSImp} 
+are feasible stationary points of problem~\eqref{sub:Proc}.
+\begin{theorem}[Convergence to a Feasible Stationary Point]~\\
+\noindent
+Suppose Assumptions~\ref{as:FFeps} and \ref{as:LevSetBou} are
+satisfied.
+Let $x^* \in \mathbf X$ be an accumulation point of a 
+refining subsequence $\{ x_k \}_{k \in \mathbf K}$ constructed by Model
+GPS Algorithm~\ref{al:GPSImp} in solving problem~\eqref{sub:Proc}.
+Then,
+\begin{subequations}
+ \begin{equation}
+   \langle \nabla f(x^*), \, t \rangle \ge 0, \qquad \forall \, t \in
+   \mathbf T_{\mathbf X}(x^*),
+   \lab{eq:feaPoiConv}
+ \end{equation}
+and
+ \begin{equation}
+   - \nabla f(x^*) \in \mathbf N_{\mathbf X}(x^*).
+ \end{equation}
+\end{subequations}
+\lab{the:feaPoiConv}
+\end{theorem}
+
+% ===========================================
+\section{Generalized Pattern Search Methods (Implementations)}
+We will now present different implementations of the Generalized
+Pattern Search (GPS) algorithms.
+They all use the Model GPS Algorithm~\ref{al:GPSImp} to solve
+problem $\mathbf P_{c}$ defined in~\eqref{sub:Proc}.
+The problem $\mathbf P_{cg}$ defined in~\eqref{sub:Procg} can be solved
+by using penalty functions as described in Section~\ref{sec:conDepVarGen}.\\
+
+We will discuss the implementations for the case where
+the function $f(\cdot)$ cannot be evaluated exactly,
+but will be approximated by functions $f^* \colon \Re_+^q \times \Re^n 
+\to \Re$, where the first argument $\epsilon \in \Re_+^q$ is 
+the precision parameter of the 
+PDE, ODE, and algebraic equation solvers.
+This includes the case where $\epsilon$ 
+is not varied during the optimization, in which case
+the explanations are identical, except that the scheme to
+control $\epsilon$ is not applicable, and that
+the approximate functions $f^*(\epsilon,\cdot)$ are replaced by $f(\cdot)$.\\
+
+
+If the cost function $f(\cdot)$ is approximated by
+functions $\{ f^*(\epsilon,\cdot)\}_{\epsilon \in \Re_+^q}$
+with adaptive precision $\epsilon$, then
+the function $\rho \colon \Re_+ \to \Re_+^q$ (to assign $\epsilon$)
+can be implemented by using GenOpt's pre-processing capability
+(see Section~\ref{par:posPro}).\\
+
+% ===========================================
+\subsection{Coordinate Search Algorithm}
+We will now present the implementation of the Coordinate Search 
+algorithm
+with adaptive precision function evaluations
+using the Model GPS Algorithm~\ref{al:GPSImp}.
+To simplify the implementation, we assign
+$f^*(\epsilon,x) = \infty$ for all $x \not \in \mathbf X$ where
+$\mathbf X$ is defined in~\eqref{eq:setXPc}.
+
+%-------------------------
+\subsubsection{Algorithm Parameters}
+\lab{sec:AlgParCooSea}
+The search direction matrix is defined as 
+\begin{equation}
+   D \triangleq [+s^1 \, e_1, \, -s^1 \, e_1, \ldots , 
+\, +s^n \, e_n, \, -s^n \, e_n]
+\label{eq:defDMatGPSCooSea}
+\end{equation}
+where $s^i \in \Re$, $i \in \{1, \ldots, n \}$, is a scaling for each parameter
+(specified by GenOpt's parameter \texttt{Step}).\\
+
+The parameter $r \in \Na$, $r>1$, which is used to compute the mesh size parameter
+$\Delta_k$,
+is defined by the parameter \texttt{MeshSizeDivider},
+the initial value for the mesh size exponent $s_0 \in \Na$
+is defined by the parameter \texttt{InitialMeshSizeExponent},
+and the mesh size exponent increment $t_k$ is, for the
+iterations that do not reduce the cost,
+defined by the parameter \texttt{MeshSizeExponentIncrement}.
+
+%-------------------------
+\subsubsection{Global Search}
+\lab{sec:GloSeaCooSea}
+
+In the Coordinate Search Algorithm, there is no global search.
+Thus, $\mathcal G_k = \emptyset$ for all $k \in \Na$.
+
+%-------------------------
+\subsubsection{Local Search}
+\lab{sec:locSeaCooSea}
+
+The local search set $\mathcal G_k$ is constructed using the
+set-valued map $E_k \colon \Re^n \times \mathbb Q_+ \times \Re_+^q \to 2^{\mathbb M_k}$,
+which is defined as follows:\\[\baselineskip]
+\noindent
+\begin{minipage}[b]{\textwidth}
+\begin{algorithm}
+[Map 
+$E_k \colon \Re^n \times \mathbb Q_+ \times \Re_+^q \rightarrow 2^{\mathbb M_k}$
+for ``Coordinate Search'']
+~\\
+{\em
+\begin{tabular}{ ll }
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+\hline \\[-2ex]
+\textbf{Parameter}:
+    & Search direction matrix $D 
+      =  [+s^1 \, e_1, \, -s^1 \, e_1, \ldots , 
+\, +s^n \, e_n, \, -s^n \, e_n]$.\\
+    & Vector $\mu \in \Na^n$.\\
+\textbf{Input}: 
+    & Iteration number $k \in \Na$.\\
+    & Base point $x \in \Re^n$.\\
+    & Mesh divider $\Delta_k \in \mathbb Q_+$. \\
+\textbf{Output}:
+    & Set of trial points $\mathcal T$.\\
+\textbf{Step 0}:
+    & Initialize $\mathcal T = \emptyset$.\\
+    & If $k = 0$, initialize , $\mu^i=0$ for all $i \in \{1, \ldots, n\}$.\\
+\textbf{Step 1}:
+    & For $i = 1, \ldots , n$\\
+    & \hspace{1cm} Set $\widetilde x = x + \Delta_k \, 
+      D \, e_{2 \, i - 1 + \mu^i}$ and
+      $\mathcal T \leftarrow \mathcal T \cup \{ \widetilde x \}$.\\
+    & \hspace{1cm} If $f^*(\epsilon,\widetilde x) < f^*(\epsilon,x)$\\
+    & \hspace{2cm} Set $x = \widetilde x$.\\
+    & \hspace{1cm} else \\
+    & \hspace{2cm} If $\mu^i = 0$, set $\mu^i = 1$, else set $\mu^i = 0$.\\
+    & \hspace{2cm} Set $\widetilde x = x + \Delta_k \, 
+                        D \, e_{2 \, i -1 + \mu_i}$ and
+                   $\mathcal T \leftarrow \mathcal T \cup \{
+                   \widetilde x \}$.\\
+    & \hspace{2cm} If $f^*(\epsilon,\widetilde x) < f^*(\epsilon,x)$\\
+    & \hspace{3cm} Set $x = \widetilde x$.\\
+    & \hspace{2cm} else\\
+    & \hspace{3cm} If $\mu^i = 0$, set $\mu^i = 1$, else set $\mu^i = 0$.\\
+    & \hspace{2cm} end if.\\
+    & \hspace{1cm} end if.\\  
+    & end for.\\
+\textbf{Step 2}:
+    & Return $\mathcal T$.\\
+    \hline \\
+\end{tabular}
+}
+\lab{al:CooSeaLocSea}
+\end{algorithm}
+\end{minipage}
+Thus, $E_k(x, \Delta_k, \epsilon) = \mathcal T$ for all $k \in \Na$.
+\begin{remark}
+{\em 
+In Algorithm~\ref{al:CooSeaLocSea},
+the vector $\mu \in \Na^n$ contains for
+each coordinate direction an integer $0$ or $1$ that indicates 
+whether a step in the positive or
+in the negative coordinate direction yield a decrease in cost in the previous
+iteration. This reduces the number of exploration steps.
+}
+\rbox
+\end{remark}
+
+%-------------------------
+\subsubsection{Parameter Update}
+The point $x'$ in Step 3 of the GPS Model Algorithm~\ref{al:GPSImp} 
+corresponds to 
+$x' \triangleq \arg \min_{x \in E_k(x_k, \Delta_k, \epsilon)} f^*(\epsilon,x)$
+in the Coordinate Search algorithm.
+
+%-------------------------
+\subsubsection{Keywords}
+\label{sec:GPSCooSeaKeyWor}
+For the GPS implementation of the Coordinate Search Algorithm, 
+the command file (see page~\pageref{par:comFil}) must only contain continuous parameters.\\
+
+To invoke the algorithm, 
+the \texttt{Algorithm} section of the GenOpt command file must have the following form:
+\begin{lstlisting}
+Algorithm{
+   Main                      = GPSCoordinateSearch;
+   MeshSizeDivider           = Integer; // 1 <  MeshSizeDivider
+   InitialMeshSizeExponent   = Integer; // 0 <= InitialMeshSizeExponent
+   MeshSizeExponentIncrement = Integer; // 0 <  MeshSizeExponentIncrement
+   NumberOfStepReduction     = Integer; // 0 <  NumberOfStepReduction
+}
+\end{lstlisting}
+The entries are defined as follows:
+\begin{codedescription}
+\item [Main]
+The name of the main algorithm.
+\item [MeshSizeDivider]
+The value for $r \in \Na$, $r>1$, used to compute 
+$\Delta_k \triangleq  {1} / {r^{s_k}}$ (see equation~\eqref{eq:GPSDelDef}).
+A common value is $r = 2$.
+
+\item [InitialMeshSizeExponent]
+The value for $s_0 \in \Na$ in~\eqref{eq:GPSDelDefSk}.
+A common value is $s_0 = 0$.
+
+\item [MeshSizeExponentIncrement]
+The value for $t_i \in \Na$ (for the iterations that do not yield
+a decrease in cost) in~\eqref{eq:GPSDelDefSk}.
+A common value is $t_i = 1$.
+
+\item [NumberOfStepReduction]
+The maximum number of step reductions before the algorithm stops.
+Thus, if we use the notation $m \triangleq \text{\texttt{NumberOfStepReduction}}$, then
+we have for the last iterations $\Delta_k = {1} / {r^{s_0 + m\, t_k}}$.
+A common value is $m = 4$.
+\end{codedescription}
+
+% ===========================================
+\subsection{Hooke-Jeeves Algorithm}
+\lab{sec:GPSHooJeeImp}
+We will now present the implementation of the Hooke-Jeeves algorithm~\cite{HookeJee1961}
+with adaptive precision function evaluations
+using the Model GPS Algorithm~\ref{al:GPSImp}.
+The modifications of Smith~\cite{Smith1969},
+Bell and Pike~\cite{BellPik1966} and
+De Vogelaere~\cite{DeVogelaere1968}
+are implemented in this algorithm.\\
+
+ 
+To simplify the implementation, we assign
+$f^*(\epsilon,x) = \infty$ for all $x \not \in \mathbf X$ where
+$\mathbf X$ is defined in~\eqref{eq:setXPc}.
+
+%-------------------------
+\subsubsection{Algorithm Parameters}
+The algorithm parameters $D$, $r$, $s_0$, and $t_k$ are defined 
+as in the Coordinate Search algorithm 
+(see page~\pageref{sec:AlgParCooSea}).
+
+
+%-------------------------
+\subsubsection{Map for Exploratory Moves}
+To facilitate the algorithm explanation, we use
+the set-valued map 
+$E_k \colon \Re^n \times \mathbb Q_+ \times \Re_+^q \to 2^{\mathbb M_k}$, 
+as defined in Algorithm~\ref{al:CooSeaLocSea}.
+The map $E_k(\cdot,\cdot,\cdot)$ defines the
+``exploratory moves'' in~\cite{HookeJee1961}, and
+will be used in Section~\ref{sec:GloSeaSetMapHJ}
+to define the global search set map and,
+under conditions to be seen in Section~\ref{sec:locSeaDirMapHJ},
+the local search direction map as well.\\
+%-------------------------
+%-------------------------
+\subsubsection{Global Search Set Map}
+\lab{sec:GloSeaSetMapHJ}
+
+The global search set map
+$\gamma_k(\cdot, \cdot, \cdot)$ is defined as follows. Because
+$\gamma_0(\cdot, \cdot, \cdot)$ depends on $x_{-1}$, we need to introduce
+$x_{-1}$, which we define as $x_{-1} \triangleq x_0$.\\
+
+\noindent
+\begin{minipage}{\textwidth}
+\begin{algorithm}
+[Global Search Set Map $\gamma_k \colon \underline{\mathbf X}_k 
+\times \underline {\boldsymbol \Delta}_k \times \Re_+^q
+\rightarrow 2^{\mathbb M_k} $]
+~\\
+{\em
+\begin{tabular}{ll}
+\multicolumn{2}{l}{\hspace{\textwidth}~} \\ \\[-8ex]\\
+\hline \\[-2ex]
+\textbf{Map}:
+    & Map for ``exploratory moves'' 
+    $E_k \colon \Re^n \times \mathbb Q_+ \times \Re_+^q \to 2^{\mathbb M_k}$.\\
+\textbf{Input}: 
+    & Previous and current iterate, $x_{k-1} \in \Re^n$ 
+      and $x_k \in \Re^n$.\\
+    & Mesh divider $\Delta_k \in \mathbb Q_+$.\\
+    & Solver precision $\epsilon \in \Re_+^q$.\\
+\textbf{Output}:
+    & Global search set $\mathcal G_k$.\\
+\textbf{Step 1}:
+    & Set $x = x_k + (x_k - x_{k-1})$.\\
+\textbf{Step 2}:
+    & Compute $\mathcal G_k = E_k(x, \Delta_k, \epsilon)$.\\
+\textbf{Step 3}:
+    & If $\bigl(\min_{x \in \mathcal G_k} 
+         f^*(\epsilon,x)\bigr) > f^*(\epsilon,x_k)$\\
+    & \hspace{1cm} Set $\mathcal G_k \leftarrow \mathcal G_k \cup 
+                       E_k(x_k, \Delta_k, \epsilon)$.\\
+    & end if.\\
+\textbf{Step 4}:
+    & Return $\mathcal G_k$.\\
+    \hline \\
+\end{tabular}
+}
+\lab{al:HJGloSeaSetMap}
+\end{algorithm}
+\end{minipage}
+Thus, $\gamma_k(\underline x_k, \underline \Delta_k, \epsilon) = \mathcal G_k$.\\
+
+%-------------------------
+\subsubsection{Local Search Direction Map}
+\lab{sec:locSeaDirMapHJ}
+If the global search, as defined by 
+Algorithm~\ref{al:HJGloSeaSetMap}, has failed in reducing
+$f^*(\epsilon,\cdot)$, then Algorithm~\ref{al:HJGloSeaSetMap} has
+constructed a set $\mathcal G_k$ that contains the set 
+$\{ x_k + \Delta_k \, D \, e_i \ | \ i = 1, \ldots , \, 2 n \}$.
+This is because in the evaluation of
+$E_k(x_k, \Delta_k, \epsilon)$, defined in Algorithm~\ref{al:CooSeaLocSea}, all 
+``If $f^*(\epsilon,\widetilde x) < f^*(\epsilon,x)$'' statements yield
+{\tt false}, and, hence, one has constructed 
+$\{ x_k + \Delta_k \, D \, e_i \ | \ i = 1, \ldots , \, 2 n
+\} = E_k(x_k, \Delta_k, \epsilon)$.
+
+Because the columns of 
+$D$ span $\Re^n$ positively, it follows that
+the search on the set  $\{ x_k + \Delta_k \, D \, e_i \ | \ i = 1, \ldots , \, 2 n
+\}$ is a local search. Hence, the constructed set
+\begin{equation}
+\mathcal L_k \triangleq \{ x_k + \Delta_k \, D \, e_i \ | \
+i = 1, \ldots , \, 2 n \} \subset \mathcal G_k
+\lab{eq:LkHJ}
+\end{equation}
+is a local search set.
+Consequently, $f^*(\epsilon,\cdot)$ has already been evaluated
+at all points of $\mathcal L_k$ (during the construction of $\mathcal
+G_k$) and, hence, one does not need to evaluate $f^*(\epsilon,\cdot)$ 
+again in a local search.
+
+%-------------------------
+\subsubsection{Parameter Update}
+The point $x'$ in Step 3 of the GPS Model Algorithm~\ref{al:GPSImp} 
+corresponds to $x' \triangleq \arg \min_{x \in \mathcal G_k} 
+f^*(\epsilon,x)$ in the Hooke-Jeeves algorithm. (Note that 
+$\mathcal L_k \subset \mathcal G_k$ if a local search has been done as
+explained in the above paragraph.)
+
+%-------------------------
+\subsubsection{Keywords}
+For the GPS implementation of the Hooke-Jeeves algorithm, the command file (see page~\pageref{par:comFil}) must only contain continuous parameters.\\
+
+To invoke the algorithm, 
+the \texttt{Algorithm} section of the GenOpt command file must have the following form:
+\label{algSec:GPSHookeJeeves}
+\begin{lstlisting}
+Algorithm{
+   Main                      = GPSHookeJeeves;
+   MeshSizeDivider           = Integer;   // bigger than 1
+   InitialMeshSizeExponent   = Integer;   // bigger than or equal to 0
+   MeshSizeExponentIncrement = Integer;   // bigger than 0
+   NumberOfStepReduction     = Integer;   // bigger than 0
+}
+\end{lstlisting}
+The entries are the same as for the Coordinate Search algorithm, and explained
+on page~\pageref{sec:GPSCooSeaKeyWor}.
+
+
+% ===========================================
+\subsection{Multi-Start GPS Algorithms}
+\lab{sec:GPSMulSta}
+All GPS algorithms can also be run using multiple initial points.
+Using multiple initial points increases the chance of finding 
+the global minimum if the cost function has several local minima,
+and furthermore, it decreases the risk of not finding a minimum if the
+cost function is not continuously differentiable, which 
+is the case if building simulation programs, such as
+EnergyPlus or TRNSYS, are used to compute the cost function
+(see the discussion in Section~\ref{sec:proAppCosFun}).\\
+
+The values that are specified
+by GenOpt's parameter \texttt{Ini} in GenOpt's command file
+(see Section~\ref{par:comFil}) are used to initialize
+the first initial point.
+The other initial points are randomly distributed, with
+a uniform distribution,
+between the lower
+and upper bounds of the feasible domain. 
+They are, however, set to the mesh $\mathbb M_0$, defined in~\eqref{eq:Mesh},
+which reduces the number of cost function evaluations if
+the optimization algorithm converges 
+from different initial points to the same minimizer.\\
+
+In GenOpt's command file, a lower and an upper bound must be specified
+for each independent variable
+using the keywords \texttt{Min} and \texttt{Max}.\\
+
+To use the \texttt{GPSCoordinateSearch} algorithm with multiple
+starting points,
+the \texttt{Algorithm} section of the GenOpt command file 
+must have the following form:
+\begin{lstlisting}
+Algorithm{
+   Main                      = GPSCoordinateSearch;
+   MultiStart                = Uniform;
+   Seed                      = Integer;
+   NumberOfInitialPoint      = Integer; // bigger than or equal to 1
+   MeshSizeDivider           = Integer; // 1 <  MeshSizeDivider
+   InitialMeshSizeExponent   = Integer; // 0 <= InitialMeshSizeExponent
+   MeshSizeExponentIncrement = Integer; // 0 <  MeshSizeExponentIncrement
+   NumberOfStepReduction     = Integer; // 0 <  NumberOfStepReduction
+}
+\end{lstlisting}
+The entries are defined as follows:
+\begin{codedescription}
+\item [Main]
+The name of the main algorithm.
+\item [MultiStart]
+Keyword to invoke the multi-start algorithm. 
+The only valid value is \texttt{Uniform}.
+\item [Seed]
+This value is used to initialize the random number generator.
+\item [NumberOfInitialPoint]
+The number of initial points.
+\end{codedescription}
+The other entries are the same as for the Coordinate Search algorithm, 
+and are explained on page~\pageref{sec:GPSCooSeaKeyWor}.\\
+
+To use the \texttt{GPSHookeJeeves} algorithm with multiple
+starting points,
+the \texttt{Algorithm} section of the GenOpt command file 
+must have the following form:
+\begin{lstlisting}
+Algorithm{
+   Main                      = GPSHookeJeeves;
+   MultiStart                = Uniform;
+   Seed                      = Integer;
+   NumberOfInitialPoint      = Integer; // 0 <  NumberOfInitialPoint
+   MeshSizeDivider           = Integer; // 1 <  MeshSizeDivider
+   InitialMeshSizeExponent   = Integer; // 0 <= InitialMeshSizeExponent
+   MeshSizeExponentIncrement = Integer; // 0 <  MeshSizeExponentIncrement
+   NumberOfStepReduction     = Integer; // 0 <  NumberOfStepReduction
+}
+\end{lstlisting}
+The entries are the same as for the
+multi-start Coordinate Search algorithm above.
+
+% ===============================================

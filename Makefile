@@ -98,7 +98,7 @@ doc:
 	TARGET=_top>LBL SRG</A> | <A HREF="http://www.lbl.gov" \
 	TARGET=_top>LBL</A> </CENTER> <HR WIDTH="100%"> \
 	<BR> Contact: <A HREF="mailto:MWetter@lbl.gov">MWetter@lbl.gov</A> </DIV>" -d ../documentation/jdoc $(SRC))
-	cp -v ../../../1_report/1_manual/$(genopt-version-dot)/manual.pdf documentation
+	cp -v src/manual/manual.pdf documentation
 	@echo "==== Made documentation"
 
 ### Copies the files to the web directory

@@ -1,0 +1,193 @@
+\section[Hybrid GPS Algorithm with PSO Algorithm]{Hybrid Generalized Pattern Search Algorithm with Particle Swarm Optimization Algorithm}
+\label{sec:GPSPSOAlg}
+This hybrid global optimization algorithm can be used to solve problem
+$\mathbf P_{c}$ defined in~\eqref{sub:Proc} and problem
+$\mathbf P_{cd}$ defined in~\eqref{sub:Procd}.
+Problem $\mathbf P_{cg}$ defined in~\eqref{sub:Procg} and problem
+$\mathbf P_{cdg}$ defined in~\eqref{sub:Procdg} can be solved
+if the constraint functions $g(\cdot)$ are implemented as described
+in Section~\ref{sec:conDepVarGen}.\\
+
+This hybrid global optimization algorithm starts by doing a Particle Swarm
+Optimization (PSO) on a mesh, as described in
+Section~\ref{sec:PSOMes}, for a user-specified number of generations $n_G \in \Na$.
+Afterwards, it initializes the Hooke-Jeeves Generalized Pattern Search (GPS)
+algorithm, described in Section~\ref{sec:GPSHooJeeImp}, using
+the continuous independent variables of the particle 
+with the lowest cost function value.
+If the optimization problem has continuous and discrete independent variables, 
+then the discrete independent variables will for the GPS algorithm
+be fixed at the value of the particle 
+with the lowest cost function value.\\
+
+We will now explain the hybrid algorithm for the case where 
+all independent variables are continuous,
+and then for the case with mixed continuous and discrete 
+independent variables.
+Throughout this section, we will denote the dimension
+of the continuous independent variables by $n_c \in \Na$
+and the dimension of the discrete independent variables by 
+$n_d \in \Na$.
+
+% ----------------------------------------
+\subsection[For Continuous Variables]{Hybrid Algorithm for Continuous Variables}
+We will now discuss the hybrid algorithm to solve 
+problem $\mathbf P_{c}$ defined in~\eqref{sub:Proc}.
+However, we require the constraint set $\mathbf X \subset \Re^{n_c}$ 
+defined in~\eqref{eq:setXPc} to have finite lower and upper bounds
+$l^i, u^i \in \Re$, for all $i \in \{1, \ldots, n_c\}$.\\
+
+First, we run the PSO algorithm~\ref{al:PSOImp}, 
+with user-specified initial iterate $x_0 \in \mathbf X$
+for a user-specified number of generations $n_G \in \Na$
+on the mesh defined in~\eqref{eq:PSODefMesh}.
+Afterwards, we run the GPS algorithm~\ref{al:GPSImp}
+where the initial iterate $x_0$ is equal to the location of the particle with 
+the lowest cost function value, i.e.,
+\begin{equation}
+  x_0 \triangleq p \triangleq \argmin_{x \in \{ x_j(k) \ | \ j \in \{1, \ldots, n_P \}, \
+k \in \{1, \ldots, n_G \} \} } f(x),
+\label{eq:hyGPSPSODefP}
+\end{equation}
+where $n_P \in \Na$ denotes the number of particles and
+$x_j(k)$, $j \in \{1, \ldots, n_P \}$, $k \in \{1, \ldots, n_G \}$
+are as in Algorithm~\ref{al:PSOImp}.\\
+
+Since the PSO algorithm terminates after a finite number of iterations,
+all convergence results of the GPS algorithm hold.
+In particular, if the cost function is once continuously differentiable,
+then the hybrid algorithm constructs accumulation points that
+are feasible stationary points of problem~\eqref{sub:Proc}
+(see Theorem~\ref{the:feaPoiConv}).\\
+
+Since the PSO algorithm is a global optimization algorithm,
+the hybrid algorithm is, compared to the Hooke-Jeeves algorithm,
+less likely to be attracted by a local minimum that is not global.
+Thus, the hybrid algorithm combines the global features of the
+PSO algorithm with the provable convergence properties
+of the GPS algorithm.\\
+
+If the cost function is discontinuous, then the hybrid algorithm is, 
+compared to the Hooke-Jeeves algorithm,
+less likely to jam at a discontinuity far from a solution.
+
+
+% ----------------------------------------
+\subsection[For Continuous and Discrete Variables]{Hybrid Algorithm for Continuous and Discrete Variables}
+For problem $\mathbf P_{cd}$ defined in~\eqref{sub:Procd}
+with continuous and discrete independent variables,
+we run the PSO algorithm~\ref{al:PSOImp}, 
+with user-specified initial iterate 
+$x_0 \in \mathbf X \triangleq \mathbf X_c \times \mathbf X_d \subset \Re^{n_c} \times \mathbb Z^{n_d}$
+for a user-specified number of generations $n_G \in \Na$, where the continuous 
+independent variables are restricted to the 
+mesh defined in~\eqref{eq:PSODefMesh}.
+We require the constraint set $\mathbf X_c \subset \Re^{n_c}$ 
+defined in~\eqref{eq:feaSetXc} to have finite lower and upper bounds
+$l^i, u^i \in \Re$, for all $i \in \{1, \ldots, n_c\}$.\\
+
+Afterwards, we run the GPS algorithm~\ref{al:GPSImp},
+where the initial iterate $x_0 \in \mathbf X_c$ 
+is equal to $p_c \in \mathbf X_c$, which we
+define as the continuous independent variables of the particle with the lowest cost
+function value, i.e., $p \triangleq (p_c, p_d) \in \mathbf X_c \times \mathbf X_d$,
+where $p$ is defined in~\eqref{eq:hyGPSPSODefP}.
+In the GPS algorithm, we fix the discrete components at $p_d \in \mathbf X_d$
+for all iterations.
+Thus, we use the GPS algorithm to refine the continuous components of the independent variables, 
+and fix the discrete components of the independent variables.
+
+
+% ----------------------------------------
+\subsection{Keywords}
+For this algorithm, 
+the command file (see page~\pageref{par:comFil})
+can contain continuous and discrete independent variables.
+It must contain at least one continuous parameter.\\
+
+The specifications of the \texttt{Algorithm} section 
+of the GenOpt command file is as follows:\\
+
+Note that the first entries are as for the PSO algorithm
+on page~\pageref{algSec:PSOCCMesh} and the last entries
+are as for GPS implementation of the Hooke-Jeeves algorithm 
+on page~\pageref{algSec:GPSHookeJeeves}.
+\begin{lstlisting}
+Algorithm{
+  Main                      = GPSPSOCCHJ;
+  NeighborhoodTopology      = gbest | lbest | vonNeumann;
+  NeighborhoodSize          = Integer;  // 0 <  NeighborhoodSize
+  NumberOfParticle          = Integer;
+  NumberOfGeneration        = Integer;
+  Seed                      = Integer;
+  CognitiveAcceleration     = Double;   // 0 <  CognitiveAcceleration
+  SocialAcceleration        = Double;   // 0 <  SocialAcceleration
+  MaxVelocityGainContinuous = Double;
+  MaxVelocityDiscrete       = Double;   // 0 <  MaxVelocityDiscrete
+  ConstrictionGain          = Double;   // 0 <  ConstrictionGain <= 1
+  MeshSizeDivider           = Integer;  // 1 <  MeshSizeDivider
+  InitialMeshSizeExponent   = Integer;  // 0 <= InitialMeshSizeExponent
+  MeshSizeExponentIncrement = Integer;  // 0 <  MeshSizeExponentIncrement
+  NumberOfStepReduction     = Integer;  // 0 <  NumberOfStepReduction
+}
+\end{lstlisting}
+
+The entries are defined as follows:
+\begin{codedescription}
+\item [Main]
+The name of the main algorithm.
+\item [NeighborhoodTopology]
+This entry defines what neighborhood topology is being used.
+\item [NeighborhoodSize]
+This entry is equal to $l$ in \eqref{sub:PSONeiHooDef}.
+For the {\it gbest} neighborhood topology, the value of \texttt{NeighborhoodSize}
+will be ignored.
+\item [NumberOfParticle]
+This is equal to the variable $n_P \in \Na$.
+\item [NumberOfGeneration]
+This is equal to the variable $n_G \in \Na$ in Algorithm~\ref{al:PSOImp}.
+\item [Seed]
+This value is used to initialize the random number generator.
+\item [CognitiveAcceleration]
+This is equal to the variable $c_1 \in \Re_+$ used by the PSO algorithm.
+\item [SocialAcceleration]
+This is equal to the variable $c_2 \in \Re_+$ used by the PSO algorithm.
+\item [MaxVelocityGainContinuous]
+This is equal to the variable $\lambda \in \Re_+$ in~\eqref{eq:PSOMaxVelCon}
+and in~\eqref{eq:PSOMaxVelConConCoe}.
+If \texttt{MaxVelocityGainContinuous} is set to zero or to a negative value,
+then no velocity clamping is used, and hence, $v_i^j(k+1) = \widehat v_i^j(k+1)$,
+for all $k \in \Na$, all $i \in \{1, \ldots, n_P \}$ and all
+$j \in \{1, \ldots, n_c \}$.
+\item [MaxVelocityDiscrete]
+This is equal to the variable $v_{max} \in \Re_+$ in~\eqref{eq:psoUpdEqn2Bin}.
+\item [ConstrictionGain]
+This is equal to $\kappa \in (0, 1]$ in~\eqref{eq:PSOConCoeChi}.
+\item [MeshSizeDivider]
+This is equal to $r \in \Na$, with $r > 1$, used 
+by the PSO algorithm
+in~\eqref{eq:PSOMeshDiv} and used 
+by the GPS algorithm
+to compute 
+$\Delta_k \triangleq  {1} / {r^{s_k}}$ 
+(see equation~\eqref{eq:GPSDelDef}).
+A common value is $r = 2$.
+\item [InitialMeshSizeExponent]
+This is equal to $s \in \Na$ used 
+by the PSO algorithm
+in~\eqref{eq:PSOMeshDiv} 
+and used 
+by the GPS algorithm
+in~\eqref{eq:GPSDelDef}.
+A common value is $s_0 = 0$.
+\item [MeshSizeExponentIncrement]
+The value for $t_k \in \Na$ (fixed for all $k \in \Na$) used 
+by the GPS algorithm
+in~\eqref{eq:GPSDelDef}.
+A common value is $t_k = 1$.
+\item [NumberOfStepReduction]
+The maximum number of step reductions before the GPS algorithm stops.
+Thus, if we use the notation $m \triangleq \text{\texttt{NumberOfStepReduction}}$, then
+we have for the last iterations $\Delta_k = {1} / {r^{s_0 + m\, t_k}}$.
+A common value is $m = 4$.
+\end{codedescription}

@@ -1,0 +1,126 @@
+\contentsline {chapter}{\numberline {1}Abstract}{6}{chapter.1}
+\contentsline {chapter}{\numberline {2}Notation}{7}{chapter.2}
+\contentsline {chapter}{\numberline {3}Introduction}{8}{chapter.3}
+\contentsline {chapter}{\numberline {4}Optimization Problems}{11}{chapter.4}
+\contentsline {section}{\numberline {4.1}Classification of Optimization Problems}{11}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Problems with Continuous Variables}{11}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Problems with Discrete Variables}{11}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Problems with Continuous and Discrete Variables}{12}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Problems that use a Building Simulation Program}{12}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Algorithm Selection}{13}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Problem $\mathbf P_{c}$ with $n>1$}{13}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Problem $\mathbf P_{cg}$ with $n>1$}{14}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Problem $\mathbf P_{c}$ with $n=1$}{15}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Problem $\mathbf P_{cg}$ with $n=1$}{15}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Problem $\mathbf P_{d}$}{15}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}Problem $\mathbf P_{cd}$ and $\mathbf P_{cdg}$}{15}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}Functions with Several Local Minima}{15}{subsection.4.2.7}
+\contentsline {chapter}{\numberline {5}Algorithms for Multi-Dimensional Optimization}{16}{chapter.5}
+\contentsline {section}{\numberline {5.1}Generalized Pattern Search Methods (Analysis)}{16}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Assumptions}{17}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Characterization of GPS Algorithms}{18}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Model Adaptive Precision GPS Algorithm}{19}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Convergence Results}{20}{subsection.5.1.4}
+\contentsline {subsubsection}{\numberline {a)}Unconstrained Minimization}{20}{subsubsection.5.1.4.1}
+\contentsline {subsubsection}{\numberline {b)}Box-Constrained Minimization}{21}{subsubsection.5.1.4.2}
+\contentsline {section}{\numberline {5.2}Generalized Pattern Search Methods (Implementations)}{21}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Coordinate Search Algorithm}{22}{subsection.5.2.1}
+\contentsline {subsubsection}{\numberline {a)}Algorithm Parameters}{22}{subsubsection.5.2.1.1}
+\contentsline {subsubsection}{\numberline {b)}Global Search}{22}{subsubsection.5.2.1.2}
+\contentsline {subsubsection}{\numberline {c)}Local Search}{22}{subsubsection.5.2.1.3}
+\contentsline {subsubsection}{\numberline {d)}Parameter Update}{23}{subsubsection.5.2.1.4}
+\contentsline {subsubsection}{\numberline {e)}Keywords}{23}{subsubsection.5.2.1.5}
+\contentsline {subsection}{\numberline {5.2.2}Hooke-Jeeves Algorithm}{24}{subsection.5.2.2}
+\contentsline {subsubsection}{\numberline {a)}Algorithm Parameters}{24}{subsubsection.5.2.2.1}
+\contentsline {subsubsection}{\numberline {b)}Map for Exploratory Moves}{24}{subsubsection.5.2.2.2}
+\contentsline {subsubsection}{\numberline {c)}Global Search Set Map}{24}{subsubsection.5.2.2.3}
+\contentsline {subsubsection}{\numberline {d)}Local Search Direction Map}{25}{subsubsection.5.2.2.4}
+\contentsline {subsubsection}{\numberline {e)}Parameter Update}{25}{subsubsection.5.2.2.5}
+\contentsline {subsubsection}{\numberline {f)}Keywords}{25}{subsubsection.5.2.2.6}
+\contentsline {subsection}{\numberline {5.2.3}Multi-Start GPS Algorithms}{26}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}Discrete Armijo Gradient}{28}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Keywords}{30}{subsection.5.3.1}
+\contentsline {section}{\numberline {5.4}Particle Swarm Optimization}{32}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}PSO for Continuous Variables}{32}{subsection.5.4.1}
+\contentsline {subsubsection}{\numberline {a)}Neighborhood Topology}{33}{subsubsection.5.4.1.1}
+\contentsline {subsubsection}{\numberline {b)}Model PSO Algorithm}{35}{subsubsection.5.4.1.2}
+\contentsline {subsubsection}{\numberline {c)}Particle Update Equation}{35}{subsubsection.5.4.1.3}
+\contentsline {paragraph}{\numberline {(i)}Inertia Weight}{35}{paragraph.5.4.1.3.1}
+\contentsline {paragraph}{\numberline {(ii)}Constriction Coefficient}{36}{paragraph.5.4.1.3.2}
+\contentsline {subsection}{\numberline {5.4.2}PSO for Discrete Variables}{37}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}PSO for Continuous and Discrete Variables}{38}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}PSO on a Mesh}{38}{subsection.5.4.4}
+\contentsline {subsection}{\numberline {5.4.5}Population Size and Number of Generations}{38}{subsection.5.4.5}
+\contentsline {subsection}{\numberline {5.4.6}Keywords}{39}{subsection.5.4.6}
+\contentsline {section}{\numberline {5.5}Hybrid GPS Algorithm with PSO Algorithm}{42}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}For Continuous Variables}{42}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}For Continuous and Discrete Variables}{43}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {5.5.3}Keywords}{43}{subsection.5.5.3}
+\contentsline {section}{\numberline {5.6}Simplex Algorithm of Nelder and Mead}{45}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}Main Operations}{45}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}Basic Algorithm}{47}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}Stopping Criteria}{49}{subsection.5.6.3}
+\contentsline {subsection}{\numberline {5.6.4}O'Neill's Modification}{50}{subsection.5.6.4}
+\contentsline {subsection}{\numberline {5.6.5}Modification of Stopping Criteria}{50}{subsection.5.6.5}
+\contentsline {subsection}{\numberline {5.6.6}Benchmark Tests}{52}{subsection.5.6.6}
+\contentsline {subsection}{\numberline {5.6.7}Keywords}{55}{subsection.5.6.7}
+\contentsline {chapter}{\numberline {6}Algorithms for One-Dimensional Optimization}{56}{chapter.6}
+\contentsline {section}{\numberline {6.1}Interval Division Algorithms}{56}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}General Interval Division}{56}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Golden Section Interval Division}{57}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}Fibonacci Division}{58}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}Comparison of Efficiency}{59}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}Master Algorithm for Interval Division}{59}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}Keywords}{60}{subsection.6.1.6}
+\contentsline {chapter}{\numberline {7}Algorithms for Parametric Runs}{62}{chapter.7}
+\contentsline {section}{\numberline {7.1}Parametric Runs by Single Variation}{62}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Algorithm Description}{62}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}Keywords}{63}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}Parametric Runs on a Mesh}{63}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Algorithm Description}{63}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Keywords}{64}{subsection.7.2.2}
+\contentsline {chapter}{\numberline {8}Constraints}{65}{chapter.8}
+\contentsline {section}{\numberline {8.1}Constraints on Independent Variables}{65}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}Box Constraints}{65}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}Coupled Linear Constraints}{66}{subsection.8.1.2}
+\contentsline {section}{\numberline {8.2}Constraints on Dependent Variables}{66}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Barrier Functions}{67}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}Penalty Functions}{67}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.3}Implementation of Barrier and Penalty Functions}{68}{subsection.8.2.3}
+\contentsline {chapter}{\numberline {9}Program}{69}{chapter.9}
+\contentsline {section}{\numberline {9.1}Interface to the Simulation Program}{69}{section.9.1}
+\contentsline {section}{\numberline {9.2}Interface to the Optimization Algorithm}{70}{section.9.2}
+\contentsline {section}{\numberline {9.3}Package \texttt {genopt.algorithm}}{70}{section.9.3}
+\contentsline {section}{\numberline {9.4}Implementing a New Optimization Algorithm}{72}{section.9.4}
+\contentsline {chapter}{\numberline {10}Installing and Running GenOpt}{74}{chapter.10}
+\contentsline {section}{\numberline {10.1}System Requirements}{74}{section.10.1}
+\contentsline {section}{\numberline {10.2}Installing and uninstalling GenOpt}{74}{section.10.2}
+\contentsline {section}{\numberline {10.3}Running GenOpt}{74}{section.10.3}
+\contentsline {subsection}{\numberline {10.3.1}Running GenOpt from the file explorer}{74}{subsection.10.3.1}
+\contentsline {subsection}{\numberline {10.3.2}Running GenOpt from the command line}{74}{subsection.10.3.2}
+\contentsline {chapter}{\numberline {11}Setting Up an Optimization Problem}{77}{chapter.11}
+\contentsline {section}{\numberline {11.1}File Specification}{77}{section.11.1}
+\contentsline {subsection}{\numberline {11.1.1}Initialization File}{78}{subsection.11.1.1}
+\contentsline {subsection}{\numberline {11.1.2}Configuration File}{84}{subsection.11.1.2}
+\contentsline {subsection}{\numberline {11.1.3}Command File}{86}{subsection.11.1.3}
+\contentsline {subsubsection}{\numberline {a)}Specification of a Continuous Parameter}{86}{subsubsection.11.1.3.1}
+\contentsline {subsubsection}{\numberline {b)}Specification of a Discrete Parameter}{87}{subsubsection.11.1.3.2}
+\contentsline {subsubsection}{\numberline {c)}Specification of Input Function Objects}{88}{subsubsection.11.1.3.3}
+\contentsline {subsubsection}{\numberline {d)}Structure of the Command File}{89}{subsubsection.11.1.3.4}
+\contentsline {subsection}{\numberline {11.1.4}Log File}{90}{subsection.11.1.4}
+\contentsline {subsection}{\numberline {11.1.5}Output Files}{90}{subsection.11.1.5}
+\contentsline {section}{\numberline {11.2}Resolving Directory Names for Parallel Computing}{91}{section.11.2}
+\contentsline {section}{\numberline {11.3}Pre-Processing and Post-Processing}{92}{section.11.3}
+\contentsline {subsubsection}{\numberline {a)}Function Objects}{92}{subsubsection.11.3.0.1}
+\contentsline {subsubsection}{\numberline {b)}Pre-Processing}{94}{subsubsection.11.3.0.2}
+\contentsline {subsubsection}{\numberline {c)}Post-Processing}{94}{subsubsection.11.3.0.3}
+\contentsline {section}{\numberline {11.4}Truncation of Digits of the Cost Function Value}{95}{section.11.4}
+\contentsline {chapter}{\numberline {12}Conclusions}{97}{chapter.12}
+\contentsline {chapter}{\numberline {13}Acknowledgments}{98}{chapter.13}
+\contentsline {chapter}{\numberline {14}Legal}{99}{chapter.14}
+\contentsline {section}{\numberline {14.1}Copyright Notice}{99}{section.14.1}
+\contentsline {section}{\numberline {14.2}License agreement}{99}{section.14.2}
+\contentsline {chapter}{\numberline {A}Benchmark Tests}{101}{appendix.A}
+\contentsline {section}{\numberline {A.1}Rosenbrock}{101}{section.A.1}
+\contentsline {section}{\numberline {A.2}Function 2D1}{102}{section.A.2}
+\contentsline {section}{\numberline {A.3}Function Quad}{103}{section.A.3}
