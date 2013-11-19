@@ -8,16 +8,6 @@ downloaded from
 
 * * * * *
 
-Contents
---------
-
-* [Running GenOpt](#run)
-* [Directories](#dire)
-* [Copyright Notice](#copyright)
-* [License Agreement](#license)
-
-* * * * *
-
 Running GenOpt
 --------------
 
