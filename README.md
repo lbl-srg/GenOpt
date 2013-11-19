@@ -170,5 +170,4 @@ For more information, visit the GenOpt [web
 pages](http://simulationresearch.lbl.gov/GO).
 
 Please send comments or questions to Michael Wetter, LBNL,
-[MWetter@lbl.gov](mailto:MWetter@lbl.gov) \
- May 4, 2009.
+[MWetter@lbl.gov](mailto:MWetter@lbl.gov) May 4, 2009.
