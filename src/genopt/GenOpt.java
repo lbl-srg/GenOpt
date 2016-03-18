@@ -113,6 +113,9 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2016, Mar. 18 wm In genopt.algorithm.Optimizer, corrected bug that in error reporting
+                  for situation where all independent parameters are discrete.
+                  This is for https://github.com/lbl-srg/GenOpt/issues/2
  2013, Jul.  3 wm In genopt.io.Token, prevented a NullPointerException that can be 
                   caused by input such as "Min = ;"
  2011, Dec.  8 wm Updated to 3.1.0
