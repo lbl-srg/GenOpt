@@ -882,13 +882,17 @@ abstract public class Optimizer
 		    String em = "Exception in evaluating x = ( ";
 		    for (int i=0; i < dimCon-1; i++)
 		        em += x[iT].getX(i) + ", ";
-		    if (dimDis == 0)
+		    if (dimDis == 0){ // no discrete variables, close bracket
 			em += x[iT].getX(dimCon-1) + ")." + LS;
-		    else{
-			em += x[iT].getX(dimCon-1) + "; ";
+                    }
+		    else{ // have discrete vars
+                        if (dimCon > 0)
+                            em += x[iT].getX(dimCon-1) + "; ";
+                        // Write the discrete variables
 			for (int i=0; i < dimDis-1; i++)
 			    em += x[iT].getIndex(i) + ", ";
-			em += x[iT].getIndex(dimDis-1) + ")." + LS;
+                        if (dimDis > 0)
+                            em += x[iT].getIndex(dimDis-1) + ")." + LS;
 		    }
 		    setWarning( em + e.getMessage(), x[iT].getSimulationNumber() );
 		    double[] f = new double[dimF];
