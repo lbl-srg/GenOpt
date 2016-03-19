@@ -128,8 +128,8 @@ public class SimOutputFileHandler
 	
 	
  	/** cuts all space and tab characters at the beginning of the String
-	  *@param s the String to be cutted
-	  *@return the String with all space and tab characters at the beginning
+	  * @param s the String to be cutted
+	  * @return the String with all space and tab characters at the beginning
 	  *        cutted away
 	 */	
 	protected static final String cutBeginSpaceAndTab(final String s)
@@ -142,8 +142,8 @@ public class SimOutputFileHandler
 	    return r;
 	}	
  	/** cuts all space and tab characters at the end of the String
-	  *@param s the String to be cutted
-	  *@return the String with all space and tab characters at the end
+	  * @param s the String to be cutted
+	  * @return the String with all space and tab characters at the end
 	  *        cutted away
 	 */	
 	protected static final String cutEndSpaceAndTab(final String s)
@@ -158,8 +158,8 @@ public class SimOutputFileHandler
 	
  	/** gets the first index of the space character, tab character,
 	  * semi-colon, colon, or comma 
-	  *@param s the String to be tested
-	  *@return the first index of the space or tab character, 
+	  * @param s the String to be tested
+	  * @return the first index of the space or tab character, 
 	  * or <CODE>-1</CODE> if non of them is found
 	  */
 	protected static int getIndexOfSeparator(final String s)
@@ -179,9 +179,9 @@ public class SimOutputFileHandler
 	}
 
  	/** gets the double that occurs after the <I>last</I> blank character
-	  *@param s the String containing the double
-	  *@return the double
-	  *@exception OptimizerException	  
+	  * @param s the String containing the double
+	  * @return the double
+	  * @exception OptimizerException	  
 	  */
 	private double getDoubleAfterLastSpace(String s) throws OptimizerException
 	{
@@ -196,9 +196,9 @@ public class SimOutputFileHandler
  	/** gets the <I>first</I> double that occurs in the String (which is
 	  * separated from the next entries by either a space character, 
 	  * a tab, a comma, or a semicolon, or a double dot)
-	  *@param s the String containing the double
-	  *@return the double
-	  *@exception OptimizerException	  
+	  * @param s the String containing the double
+	  * @return the double
+	  * @exception OptimizerException	  
 	  */
 	private double getFirstDouble(String s) throws OptimizerException
 	{
@@ -214,9 +214,9 @@ public class SimOutputFileHandler
 	  * This method is used if the delimiter is either
 	  * a white space or an empty character
 	  *
-	  *@return value of the objective function
-	  *@exception OptimizerException
-	  *@exception IOException
+	  * @return value of the objective function
+	  * @exception OptimizerException
+	  * @exception IOException
 	  */
 	private double getObjectiveFunctionValueEmpty() 
 	    throws OptimizerException, IOException
@@ -254,9 +254,9 @@ public class SimOutputFileHandler
 	/** gets the last number of the file content.<BR>
 	  * This method is used if the delimiter is neither
 	  * a white space nor an empty character
-	  *@return value of the objective function
-	  *@exception OptimizerException
-	  *@exception IOException
+	  * @return value of the objective function
+	  * @exception OptimizerException
+	  * @exception IOException
 	 */	
     	private double getObjectiveFunctionValueNonEmpty() 
 	    throws OptimizerException, IOException
@@ -339,7 +339,7 @@ public class SimOutputFileHandler
 
 	/** Throws an <CODE>OptimizerException</CODE> with the error message
 	  * that the objective function value could not be found.
-	  *@exception OptimizerException
+	  * @exception OptimizerException
 	 */	
 	protected void throwObjectiveFunctionValueNotFound()
 	    throws OptimizerException
@@ -361,9 +361,9 @@ public class SimOutputFileHandler
 	}
 
 	/** parses a String to a double value
-	  *@param s the String to be parsed
-	  *@return value of the objective function
-	  *@exception OptimizerException if the String is not a number or
+	  * @param s the String to be parsed
+	  * @return value of the objective function
+	  * @exception OptimizerException if the String is not a number or
 	  *     if it is infinite
 	 */	
 	private double parseToDouble(String s) throws OptimizerException

@@ -80,13 +80,13 @@ public class GoldenRatio extends IntervalDivider
     public GoldenRatio(Optimizer opt) { super(opt); }
 
 	/** Gets the reduction factor q = I(n+1)/I(n)
-	  *@return the reduction factor q = I(n+1)/I(n)
+	  * @return the reduction factor q = I(n+1)/I(n)
 	  */
 	protected double getReductionFactor() { return gr; }
 
  
     /** Sets the fraction of the desired uncertainty interval (0..1)
-      *@param dx the normalized fraction of the uncertainty interval
+      * @param dx the normalized fraction of the uncertainty interval
       */
     public void setUncertaintyInterval(double dx)
     {

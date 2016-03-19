@@ -87,7 +87,7 @@ public class Parametric extends Optimizer
      *              Hence, the datas of GenOpt are modified
      *              by this Class.
      * @exception OptimizerException
-     *@exception IOException if an I/O exception occurs
+     * @exception IOException if an I/O exception occurs
      * @exception Exception
      * @exception InputFormatException
      */
@@ -211,13 +211,13 @@ public class Parametric extends Optimizer
     }
 
     /** Evaluates a simulation and reports result
-     *@param pt point to be evaluated 
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param pt point to be evaluated 
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Point getF(final Point pt)
 	throws SimulationInputException, OptimizerException, Exception

@@ -109,8 +109,8 @@ public class LinAlg
 	}
 
 	/** calculates the absoulte value of a vector
-	  *@param x the vector
-	  *@return the absolute value of <CODE>x = ((sum(x(i)**2)**(1/2), i = 0..N-1)</CODE>
+	  * @param x the vector
+	  * @return the absolute value of <CODE>x = ((sum(x(i)**2)**(1/2), i = 0..N-1)</CODE>
 	 */
 	public static double abs(double[] x)
 	{
@@ -453,7 +453,7 @@ public class LinAlg
 	  * <b>Note:</b> If the dimension dx of x is bigger than the dimension
 	  *              dy of y, then only dx elements are subtracted.
 	  * @param x Vector of size dx
-	  * @param y Vector of size dy (dy >= dx)
+	  * @param y Vector of size dy (dy &ge; dx)
 	  * @return z Vector of size dx
 	  */
 	public static double[] subtract(double[] y, double[] x)
@@ -469,7 +469,7 @@ public class LinAlg
 	  * <b>Note:</b> If the dimension dx of x is bigger than the dimension
 	  *              dy of y, then only dx elements are subtracted.
 	  * @param x Vector of size dx
-	  * @param y Vector of size dy (dy >= dx)
+	  * @param y Vector of size dy (dy &ge; dx)
 	  * @return z Vector of size dx
 	  */
 	public static int[] subtract(int[] y, int[] x)
@@ -485,7 +485,7 @@ public class LinAlg
 	  * <b>Note:</b>If the dimension dx of x is bigger than the dimension
 	  *             dy of y, then only dx elements are added.
 	  * @param x Vector of size dx
-	  * @param y Vector of size dy (dy >= dx)
+	  * @param y Vector of size dy (dy &ge; dx)
 	  * @return z Vector of size dx
 	  */
 	public static double[] add(double[] y, double[] x)
@@ -669,9 +669,9 @@ public class LinAlg
 	}
 
 	/** multiplicates a matrix with a matrix: C = A * B;
-	  *@param A n x m matrix
-	  *@param B m x n matrix
-	  *@return C m x m matrix
+	  * @param A n x m matrix
+	  * @param B m x n matrix
+	  * @return C m x m matrix
 	  */
 	public static double[][] multiply(double[][] A, double[][] B)
 	{

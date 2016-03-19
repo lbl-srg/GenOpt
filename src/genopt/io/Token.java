@@ -84,11 +84,11 @@ public class Token{
 	
     /** checks whether the next Token is equal to the passed String.<br>
      * <B>Note:</B> after this method, the StreamTokenizer is pushed back
-     *@param st Reference to StreamTokenizer
-     *@param keyWord the keyword that has to be searched for
-     *@return <CODE>true</CODE> if the next Token equals the value of <CODE>keyWord</CODE>,
+     * @param st Reference to StreamTokenizer
+     * @param keyWord the keyword that has to be searched for
+     * @return <CODE>true</CODE> if the next Token equals the value of <CODE>keyWord</CODE>,
      *        <CODE>false</CODE> otherwise
-     *@exception IOException
+     * @exception IOException
      */
     public static boolean isNextToken(StreamTokenizer st, String keyWord) throws IOException
     {
@@ -106,12 +106,12 @@ public class Token{
 
 
     /** gets a <I>single Object</I> from the current position in the stream.
-     *@param st Reference to StreamTokenizer
-     *@param expectedString String representation of Token that has 
+     * @param st Reference to StreamTokenizer
+     * @param expectedString String representation of Token that has 
      *       been expected but not received
-     *@param e reference to InputFormatException. Error message is written into 
+     * @param e reference to InputFormatException. Error message is written into 
      *         this Object	  
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void setErrorWrongToken(StreamTokenizer st, String expectedString,
 					  InputFormatException e, String fn)
@@ -138,16 +138,16 @@ public class Token{
 
 
     /** gets a <I>single Object</I> from the current position in the stream.
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param type Type specification of the object (either <CODE>String</CODE>,
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param type Type specification of the object (either <CODE>String</CODE>,
      *                 <CODE>Double</CODE> or <CODE>Integer</CODE>
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the object between <CODE>firstDelimiter</CODE> and
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the object between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
-     *@exception InputFormatException if the input is mal formatted
+     * @exception IOException
+     * @exception InputFormatException if the input is mal formatted
      */
     private static Object _getValue(StreamTokenizer st, char firstDelimiter,
 				   char secondDelimiter, String type, String fn) 
@@ -292,16 +292,16 @@ public class Token{
     /** gets a <I>single keyword value</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param keyWord the keyword that has to be searched for
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param keyWord the keyword that has to be searched for
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the String between <CODE>firstDelimiter</CODE> and
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the String between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
+     * @exception IOException
      */
     public static int getIntegerValue(StreamTokenizer st, char firstDelimiter, 
 				      char secondDelimiter, String keyWord, InputFormatException e, String fn)
@@ -318,16 +318,16 @@ public class Token{
     /** gets a <I>single keyword value</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param keyWord the keyword that has to be searched for
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param keyWord the keyword that has to be searched for
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the String between <CODE>firstDelimiter</CODE> and
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the String between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
+     * @exception IOException
      */
     public static double getDoubleValue(StreamTokenizer st, char firstDelimiter, 
 					char secondDelimiter, String keyWord, InputFormatException e, String fn)
@@ -344,16 +344,16 @@ public class Token{
     /** gets a <I>single keyword value</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param keyWord the keyword that has to be searched for
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param keyWord the keyword that has to be searched for
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the boolean value between <CODE>firstDelimiter</CODE> and
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the boolean value between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
+     * @exception IOException
      */
     public static boolean getBooleanValue(StreamTokenizer st, char firstDelimiter, 
 					  char secondDelimiter, String keyWord, InputFormatException e, String fn)
@@ -372,16 +372,16 @@ public class Token{
     /** gets a <I>single keyword value</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param keyWord the keyword that has to be searched for
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param keyWord the keyword that has to be searched for
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the String between <CODE>firstDelimiter</CODE> and
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the String between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
+     * @exception IOException
      */
     public static String getStringValue(StreamTokenizer st, char firstDelimiter, 
 					char secondDelimiter, String keyWord, 
@@ -399,14 +399,14 @@ public class Token{
     /** gets a <I>single String</I> from the current position in the stream.<BR>
      * The String must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the String between <CODE>firstDelimiter</CODE> and
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the String between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
-     *@exception InputFormatException if the input is mal formatted
+     * @exception IOException
+     * @exception InputFormatException if the input is mal formatted
      */
     private static String _getStringValue(StreamTokenizer st, char firstDelimiter,
 					 char secondDelimiter, String fn)
@@ -421,12 +421,12 @@ public class Token{
      * the <CODE>keyWord</CODE>.<BR>
      * If the <CODE>keyWord</CODE> is not found, an error message is written into
      * the InputFormatException
-     *@param st Reference to StreamTokenizer
-     *@param keyWord the keyword to be found
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param keyWord the keyword to be found
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@exception IOException
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @exception IOException
      */
     public static void spoolTo(StreamTokenizer st, String keyWord, 
 			       InputFormatException e, String fn)
@@ -459,12 +459,12 @@ public class Token{
      *     or until end-of-file occurs.<BR>
      * The pointer in the StreamTokenizer is moved beyond the section start
      * character ('{')
-     *@param st Reference to StreamTokenizer
-     *@param keyWord the keyword of the section
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param keyWord the keyword of the section
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@exception IOException
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @exception IOException
      */
     public static void getSectionStart(StreamTokenizer st, String keyWord, 
 				       InputFormatException e, String fn)
@@ -531,25 +531,25 @@ public class Token{
 
     /** gets <I>various keyword values</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
-     *        <CODE>secondDelimiter</CODE><LI>
+     *        <CODE>secondDelimiter</CODE><p>
      * The StreamTokenizer is read until either all keywords are read, the end of 
-     * a section occurs or until end-of-file occurs.<LI>
-     * All found keywords are written into sk.<LI>
+     * a section occurs or until end-of-file occurs.<p>
+     * All found keywords are written into sk.<p>
      * Multiple occurences of a keyword leads to an error report 
-     *       whereas the last occured value is written into sk.</LI>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param sk array with all keywords.
-     *@param sv array where all found values of the keyword will be written in
+     *       whereas the last occured value is written into sk.
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param sk array with all keywords.
+     * @param sv array where all found values of the keyword will be written in
      *          (sk and sv must have the same length)
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@param flag flag whether necessarily all values must be set or not.<BR>
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param flag flag whether necessarily all values must be set or not.<BR>
      *            (If all values must be set, pass the constant Token.ALL, otherwise pass
      *            Token.PART)
-     *@exception IOException
+     * @exception IOException
      */
     public static void getDoubleValue(StreamTokenizer st, char firstDelimiter, 
 				      char secondDelimiter, String[] sk, Double[] sv, InputFormatException e, 
@@ -561,25 +561,25 @@ public class Token{
 
     /** gets <I>various keyword values</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
-     *        <CODE>secondDelimiter</CODE><LI>
+     *        <CODE>secondDelimiter</CODE><p>
      * The StreamTokenizer is read until either all keywords are read, the end of 
-     * a section occurs or until end-of-file occurs.<LI>
-     * All found keywords are written into sk.<LI>
+     * a section occurs or until end-of-file occurs.<p>
+     * All found keywords are written into sk.<p>
      * Multiple occurences of a keyword leads to an error report 
-     *       whereas the last occured value is written into sk.</LI>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param sk array with all keywords.
-     *@param sv array where all found values of the keyword will be written in
+     *       whereas the last occured value is written into sk.
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param sk array with all keywords.
+     * @param sv array where all found values of the keyword will be written in
      *          (sk and sv must have the same length)
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@param flag flag whether necessarily all values must be set or not.<BR>
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param flag flag whether necessarily all values must be set or not.<BR>
      *            (If all values must be set, pass the constant Token.ALL, otherwise pass
      *            Token.PART)
-     *@exception IOException
+     * @exception IOException
      */
     public static void getBooleanValue(StreamTokenizer st, char firstDelimiter, 
 				       char secondDelimiter, String[] sk, Boolean[] sv, InputFormatException e, 
@@ -593,25 +593,25 @@ public class Token{
 
     /** gets <I>various keyword values</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
-     *        <CODE>secondDelimiter</CODE><LI>
+     *        <CODE>secondDelimiter</CODE><p>
      * The StreamTokenizer is read until either all keywords are read, the end of 
-     * a section occurs or until end-of-file occurs.<LI>
-     * All found keywords are written into sk.<LI>
+     * a section occurs or until end-of-file occurs.<p>
+     * All found keywords are written into sk.<p>
      * Multiple occurences of a keyword leads to an error report 
-     *       whereas the last occured value is written into sk.</LI>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param sk array with all keywords.
-     *@param sv array where all found values of the keyword will be written in
+     *       whereas the last occured value is written into sk.
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param sk array with all keywords.
+     * @param sv array where all found values of the keyword will be written in
      *          (sk and sv must have the same length)
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@param flag flag whether necessarily all values must be set or not.<BR>
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param flag flag whether necessarily all values must be set or not.<BR>
      *            (If all values must be set, pass the constant Token.ALL, otherwise pass
      *            Token.PART)
-     *@exception IOException
+     * @exception IOException
      */
     public static void getIntegerValue(StreamTokenizer st, char firstDelimiter, 
 				       char secondDelimiter, String[] sk, Integer[] sv, InputFormatException e, 
@@ -622,25 +622,25 @@ public class Token{
 
     /** gets <I>various keyword values</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
-     *        <CODE>secondDelimiter</CODE><LI>
+     *        <CODE>secondDelimiter</CODE><p>
      * The StreamTokenizer is read until either all keywords are read, the end of 
-     * a section occurs or until end-of-file occurs.<LI>
-     * All found keywords are written into sk.<LI>
+     * a section occurs or until end-of-file occurs.<p>
+     * All found keywords are written into sk.<p>
      * Multiple occurences of a keyword leads to an error report 
-     *       whereas the last occured value is written into sk.</LI>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param sk String array with all keywords.
-     *@param sv String array where all found values of the keyword will be written in
+     *       whereas the last occured value is written into sk.
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param sk String array with all keywords.
+     * @param sv String array where all found values of the keyword will be written in
      *          (sk and sv must have the same length)
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@param flag flag whether necessarily all values must be set or not.<BR>
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param flag flag whether necessarily all values must be set or not.<BR>
      *            (If all values must be set, pass the constant Token.ALL, otherwise pass
      *            Token.PART)
-     *@exception IOException
+     * @exception IOException
      */
     public static void getStringValue(StreamTokenizer st, char firstDelimiter, 
 				      char secondDelimiter, String[] sk, String[] sv, InputFormatException e, 
@@ -651,11 +651,11 @@ public class Token{
 
 
     /** moves the pointer in the StreamTokenizer beyond the next <CODE>'}'</CODE> sign
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@exception IOException
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @exception IOException
      */
     public static void moveToSectionEnd(StreamTokenizer st, 
 					InputFormatException e, String fn) throws IOException
@@ -679,8 +679,8 @@ public class Token{
     }
 
     /** moves the pointer in the StreamTokenizer beyond the next <CODE>end-of-line</CODE>
-     *@param st Reference to StreamTokenizer
-     *@exception IOException
+     * @param st Reference to StreamTokenizer
+     * @exception IOException
      */
     private static void moveToEOL(StreamTokenizer st) throws IOException
     {
@@ -705,8 +705,8 @@ public class Token{
 
     /** skips the pointer of the StreamTokenizer beyond the next <CODE>/*..*'/</CODE>
      * comment section if there is any.
-     *@param st Reference to StreamTokenizer
-     *@exception IOException
+     * @param st Reference to StreamTokenizer
+     * @exception IOException
      */
     public static void skipSlashStarComments(StreamTokenizer st) throws IOException
     {
@@ -726,8 +726,8 @@ public class Token{
 
     /** skips the pointer of the StreamTokenizer beyond the next <CODE>/*..*'/</CODE> or
      * <CODE>//..</CODE> comment section if there is any.
-     *@param st Reference to StreamTokenizer
-     *@exception IOException
+     * @param st Reference to StreamTokenizer
+     * @exception IOException
      */
     public static void skipJavaComments(StreamTokenizer st) throws IOException
     {
@@ -751,8 +751,8 @@ public class Token{
 
     /** skips the pointer of the StreamTokenizer beyond the next <CODE>//..//</CODE>
      * comment section if there is any.
-     *@param st Reference to StreamTokenizer
-     *@exception IOException
+     * @param st Reference to StreamTokenizer
+     * @exception IOException
      */
     public static void skipSlashSlashComments(StreamTokenizer st) throws IOException
     {
@@ -768,12 +768,12 @@ public class Token{
     /** checks if all values of <CODE>val</CODE> are set.
      * For each value that is not set, an error message is written to
      * the InputFormatException
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName names of the variable (for error report only)
-     *@param variableValue values of the variables corresponding to 'variableName'
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName names of the variable (for error report only)
+     * @param variableValue values of the variables corresponding to 'variableName'
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkVariableSetting(StreamTokenizer st, InputFormatException e, 
 					    String[] variableName, 
@@ -785,12 +785,12 @@ public class Token{
     /** checks if the value of <CODE>val</CODE> is set.
      * If the value is not set, an error message is written to
      * the InputFormatException
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable (for error report only)
-     *@param variableValue value of the variables corresponding to 'variableName'
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable (for error report only)
+     * @param variableValue value of the variables corresponding to 'variableName'
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkVariableSetting(StreamTokenizer st, InputFormatException e, 
 					    String variableName, String variableValue, 
@@ -803,13 +803,13 @@ public class Token{
     /** checks if the value of <CODE>val</CODE> is set.
      * If the value is not set, an error message is written to
      * the InputFormatException
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable (for error report only)
-     *@param keyWord keyword that is being tested (for error report only)
-     *@param variableValue value of the variables corresponding to 'variableName'
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable (for error report only)
+     * @param keyWord keyword that is being tested (for error report only)
+     * @param variableValue value of the variables corresponding to 'variableName'
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkVariableSetting(StreamTokenizer st, InputFormatException e, 
 					    String variableName, String keyWord,
@@ -822,12 +822,12 @@ public class Token{
     /** checks if the value of <CODE>val</CODE> is empty.
      * If the value is not empty, an error message is written to
      * the InputFormatException
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable (for error report only)
-     *@param variableValue value of the variables corresponding to 'variableName'
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable (for error report only)
+     * @param variableValue value of the variables corresponding to 'variableName'
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkVariableSettingEmpty(StreamTokenizer st, InputFormatException e, 
 						 String variableName, String variableValue, 
@@ -839,13 +839,13 @@ public class Token{
     /** checks if the value of <CODE>val</CODE> is empty.
      * If the value is not empty, an error message is written to
      * the InputFormatException
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable (for error report only)
-     *@param keyWord keyword that is being tested (for error report only)
-     *@param variableValue value of the variables corresponding to 'variableName'
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable (for error report only)
+     * @param keyWord keyword that is being tested (for error report only)
+     * @param variableValue value of the variables corresponding to 'variableName'
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkVariableSettingEmpty(StreamTokenizer st, InputFormatException e, 
 						 String variableName, String keyWord,
@@ -858,11 +858,11 @@ public class Token{
 
     /** sets a specified error message into the InputFormatException 
      * with the current line number and file name
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param errorMessage error message to be written in the expection object
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param errorMessage error message to be written in the expection object
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void setError(StreamTokenizer st, InputFormatException e, 
 				String errorMessage, String fileName)
@@ -881,11 +881,11 @@ public class Token{
 
 
     /** writes an error message into the InputFormatException if a variable was not set
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable that was not found (for error report only)
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable that was not found (for error report only)
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void variableNotSet(StreamTokenizer st, InputFormatException e, 
 				      String variableName, String fileName){
@@ -896,12 +896,12 @@ public class Token{
     }
 
     /** writes an error message into the InputFormatException if a variable was not set
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable that was not found (for error report only)
-     *@param keyWord keyword that is being tested (for error report only)
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable that was not found (for error report only)
+     * @param keyWord keyword that is being tested (for error report only)
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void variableNotSet(StreamTokenizer st, InputFormatException e, 
 				      String variableName, String keyWord, String fileName){
@@ -912,11 +912,11 @@ public class Token{
     }
 
     /** writes an error message into the InputFormatException if a variable was not empty
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable that was not empty (for error report only)
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable that was not empty (for error report only)
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void variableNotEmpty(StreamTokenizer st, InputFormatException e, 
 				      String variableName, String fileName) {
@@ -927,12 +927,12 @@ public class Token{
     }
 
     /** writes an error message into the InputFormatException if a variable was not empty
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable that was not empty (for error report only)
-     *@param keyWord keyword that is being tested (for error report only)
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable that was not empty (for error report only)
+     * @param keyWord keyword that is being tested (for error report only)
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void variableNotEmpty(StreamTokenizer st, InputFormatException e, 
 				      String variableName, String keyWord,
@@ -944,13 +944,13 @@ public class Token{
     }
 
     /** writes an error message into the InputFormatException if a variable was not set
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable (for error report only)
-     *@param receivedValue received value
-     *@param admissibleValue admissible value
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable (for error report only)
+     * @param receivedValue received value
+     * @param admissibleValue admissible value
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkAdmissableValue(StreamTokenizer st, InputFormatException e, 
 					    String variableName, String receivedValue,
@@ -965,14 +965,14 @@ public class Token{
     }
 
     /** writes an error message into the InputFormatException if a variable was not set
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param variableName name of the variable (for error report only)
-     *@param keyWord keyword that is being tested (for error report only)
-     *@param receivedValue received value
-     *@param admissibleValue admissible value
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param variableName name of the variable (for error report only)
+     * @param keyWord keyword that is being tested (for error report only)
+     * @param receivedValue received value
+     * @param admissibleValue admissible value
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
      */
     public static void checkAdmissableValue(StreamTokenizer st, InputFormatException e, 
 					    String variableName, String keyWord, 
@@ -989,9 +989,9 @@ public class Token{
 
 
     /** returns an error message if a String was not found
-     *@param st Reference to StreamTokenizer
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
-     *@exception IOException
+     * @param st Reference to StreamTokenizer
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @exception IOException
      */
     private static String stringNotFound(StreamTokenizer st, String fileName)
     {
@@ -1025,27 +1025,27 @@ public class Token{
 
     /** gets <I>various keyword values</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
-     *        <CODE>secondDelimiter</CODE><LI>
+     *        <CODE>secondDelimiter</CODE><p>
      * The StreamTokenizer is read until either all keywords are read, the end of 
-     * a section occurs or until end-of-file occurs.<LI>
-     * All found keywords are written into sk.<LI>
+     * a section occurs or until end-of-file occurs.<p>
+     * All found keywords are written into sk.<p>
      * Multiple occurences of a keyword leads to an error report 
-     *       whereas the last occured value is written into sk.</LI>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param sk String array with all keywords.
-     *@param sv Object array where all found values of the keyword will be written in
+     *       whereas the last occured value is written into sk.
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param sk String array with all keywords.
+     * @param sv Object array where all found values of the keyword will be written in
      *          (sk and sv must have the same length)
-     *@param e reference to InputFormatException. Error messages are written into 
+     * @param e reference to InputFormatException. Error messages are written into 
      *         this Object
-     *@param type Type specification of the object (either <CODE>String</CODE>,
+     * @param type Type specification of the object (either <CODE>String</CODE>,
      *                 <CODE>boolean</CODE>, <CODE>Double</CODE> or <CODE>Integer</CODE>
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@param flag flag whether necessarily all values must be set or not.<BR>
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @param flag flag whether necessarily all values must be set or not.<BR>
      *            (If all values must be set, pass the constant <CODE>Token.ALL</CODE>,
      *            therwise pass <CODE>Token.PART</CODE>)
-     *@exception IOException
+     * @exception IOException
      */
     private static void _getValue(StreamTokenizer st, char firstDelimiter, 
 				  char secondDelimiter, String[] sk, Object[] sv, 
@@ -1200,14 +1200,14 @@ public class Token{
     /** gets a <I>single Double value</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the Double between <CODE>firstDelimiter</CODE> and
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the Double between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
-     *@exception InputFormatException if the input is mal formatted
+     * @exception IOException
+     * @exception InputFormatException if the input is mal formatted
      */
     private static Double _getDoubleValue(StreamTokenizer st, char firstDelimiter,
 					 char secondDelimiter, String fn)
@@ -1218,14 +1218,14 @@ public class Token{
     /** gets a <I>single Integer value</I> from the current position in the stream.<BR>
      * The value must be enclosed between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@param st Reference to StreamTokenizer
-     *@param firstDelimiter first delimiter of the searched object
-     *@param secondDelimiter second delimiter of the searched object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the Integer between <CODE>firstDelimiter</CODE> and
+     * @param st Reference to StreamTokenizer
+     * @param firstDelimiter first delimiter of the searched object
+     * @param secondDelimiter second delimiter of the searched object
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the Integer between <CODE>firstDelimiter</CODE> and
      *        <CODE>secondDelimiter</CODE>
-     *@exception IOException
-     *@exception InputFormatException if the input is mal formatted
+     * @exception IOException
+     * @exception InputFormatException if the input is mal formatted
      */
     private static Integer _getIntegerValue(StreamTokenizer st, char firstDelimiter,
 					   char secondDelimiter, String fn)
@@ -1236,11 +1236,11 @@ public class Token{
 
 	
     /** checks whether we are at the end of the Stream
-     *@param st Reference to StreamTokenizer
-     *@param e reference to InputFormatException. Error message is written into 
+     * @param st Reference to StreamTokenizer
+     * @param e reference to InputFormatException. Error message is written into 
      *         this Object
-     *@param fn name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return <CODE>true</CODE> if end of Stream is reached, <CODE>false</CODE> 
+     * @param fn name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return <CODE>true</CODE> if end of Stream is reached, <CODE>false</CODE> 
      *        otherwise
      */
     public static boolean isEndOfStream(StreamTokenizer st, InputFormatException e, 

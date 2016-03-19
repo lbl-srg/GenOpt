@@ -127,7 +127,7 @@ public class ListSelector extends JPanel
 	}
 	
 	/** gets the selected items
-	  *@return the selected items
+	  * @return the selected items
 	  */
 	public String[] getSelectedItems()
 	{

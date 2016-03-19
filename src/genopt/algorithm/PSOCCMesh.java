@@ -81,15 +81,15 @@ public class PSOCCMesh extends PSOCC{
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public PSOCCMesh(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -132,18 +132,18 @@ public class PSOCCMesh extends PSOCC{
      * <LI>the simulation is launched
      * <LI>simulation errors are checked
      * <LI>the value of the objective function is returned</UL>
-     *@param x the points to be evaluated
-     *@param stopAtError set to false to continue with function evaluations even if there was an error
-     *@return a clone of the points with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the points to be evaluated
+     * @param stopAtError set to false to continue with function evaluations even if there was an error
+     * @return a clone of the points with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Point[] getF(Point[] x, boolean stopAtError)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -184,12 +184,12 @@ public class PSOCCMesh extends PSOCC{
 
 
     /** Gets the mesh size divider.
-     *@return the mesh size divider
+     * @return the mesh size divider
      */
     final protected int getMeshSizeDivider() { return MesSizDiv; }
 
     /** Gets the initial mesh size exponent.
-     *@return the initial mesh size exponent
+     * @return the initial mesh size exponent
      */
     final protected int getInitialMeshSizeExponent() { return IniMesSizExp; }
 

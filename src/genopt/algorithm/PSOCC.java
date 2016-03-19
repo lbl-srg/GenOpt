@@ -82,15 +82,15 @@ public class PSOCC extends genopt.algorithm.util.pso.ModelPSO
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public PSOCC(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -104,7 +104,7 @@ public class PSOCC extends genopt.algorithm.util.pso.ModelPSO
     }
 
     /** Sets the constriction coefficient parameter
-     *@param conGai gain for constriction factor
+     * @param conGai gain for constriction factor
      */
     protected final void setConstrictionCoefficientParameter(final double conGai){
 	final double phi = CogAcc + SocAcc;

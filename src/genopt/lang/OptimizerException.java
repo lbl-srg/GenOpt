@@ -76,7 +76,7 @@ public class OptimizerException extends Exception
 	/** System dependent line separator */
 	private final static String LS = System.getProperty("line.separator");
 
-	/** Constructs a OptimizerException Object with no detail message.<d>
+	/** Constructs a OptimizerException Object with no detail message.<br/>
 	  * The error counter is not set to <B>0</B> (which means no error occured.
 	  */
 	public OptimizerException()
@@ -86,7 +86,7 @@ public class OptimizerException extends Exception
 		errMes = new String("");
 	}
 
-	/** Constructs a OptimizerException with the specified detail message.<d>
+	/** Constructs a OptimizerException with the specified detail message.<br/>
 	  * The error counter is set to <B>1</B>.
 	  * @param s the detail message
 	  */

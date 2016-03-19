@@ -200,7 +200,7 @@ public class Perturber
 	}
 
 	/** gets the point with the lowest function value
-	  *@return the optimal point
+	  * @return the optimal point
 	  */
 	public Point getOptimalPoint()
 	{
@@ -208,7 +208,7 @@ public class Perturber
 	}
 
         /** checks whether we have an optimum point
-	  *@return <CODE>true</CODE> if the checked point is a local minimum point,<BR>
+	  * @return <CODE>true</CODE> if the checked point is a local minimum point,<BR>
 	  *        <CODE>false</CODE> otherwise
 	  */
 	public boolean gotOptimum() { return optimalPoint;}

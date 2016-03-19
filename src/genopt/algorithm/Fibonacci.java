@@ -89,7 +89,7 @@ public class Fibonacci extends ModelFiniteIntervalSearcher
       *              by this Class.
       * @exception OptimizerException if algorithm is used for problems
       *            with more than 1 independent variable
-      *@exception IOException if an I/O exception occurs
+      * @exception IOException if an I/O exception occurs
       * @exception Exception
       * @exception InputFormatException
       */

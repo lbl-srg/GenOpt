@@ -80,7 +80,7 @@ public class SimulationStarter implements Cloneable
     /** constructor
      * @param command the command line (with placeholder for the variables)
      * @param promptInputFileExtension flag for specifying whether the extension
-     *        of the inputfile must be written in the command or not.<d>
+     *        of the inputfile must be written in the command or not.<br/>
      *        (Set it <CODE>true</CODE> if the extension has to be written, 
      *        <CODE>false</CODE> otherwise.)
      * @param workingDirectory the working directory for the process.
@@ -103,8 +103,8 @@ public class SimulationStarter implements Cloneable
     /** Sets the maximum number of threads in the pool.
      * This method can only be called once.
      *
-     *@param maximumThreads The maximum number of threads in the pool
-     *@exception OptimizerException If the maximum number of processes has already been allocated
+     * @param maximumThreads The maximum number of threads in the pool
+     * @exception OptimizerException If the maximum number of processes has already been allocated
      */
     public void setMaximumNumberOfThreads(int maximumThreads) 
 	throws OptimizerException{
@@ -247,8 +247,8 @@ public class SimulationStarter implements Cloneable
     }
 
     /** Returns the thread number to be used by this process
-     *@return The thread number to be used by this process
-     *@exception OptimizerException If no thread is available. This condition should never occur.
+     * @return The thread number to be used by this process
+     * @exception OptimizerException If no thread is available. This condition should never occur.
      */
     private int _getThreadNumber()
 	throws OptimizerException{
@@ -416,7 +416,7 @@ public class SimulationStarter implements Cloneable
     }
     
     /** destroys the process if it exists
-     *@param iPro number of the process
+     * @param iPro number of the process
      */
     public void destroyProcess(int iPro){
 	lock.lock();

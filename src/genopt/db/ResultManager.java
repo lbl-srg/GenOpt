@@ -82,14 +82,14 @@ public class ResultManager
     private static final String OUTFILNAM[] =
     {"OutputListingMain.txt", "OutputListingAll.txt"};
 	
-    /**@param GenOptRef reference to GenOpt object
-	  *@param outputFilePath path of the output file
-	  *@param outputFileHeader header to be written to the output file
-	  *@param functionNames Array of String where each String holds the name of
+    /** @param GenOptRef reference to GenOpt object
+	  * @param outputFilePath path of the output file
+	  * @param outputFileHeader header to be written to the output file
+	  * @param functionNames Array of String where each String holds the name of
 	  *   a function value
-	  *@param cPar array containing the continuous parameters
-	  *@param dPar array containing the discrete parameters
-	  *@exception IOException
+	  * @param cPar array containing the continuous parameters
+	  * @param dPar array containing the discrete parameters
+	  * @exception IOException
 	  */
     public ResultManager(GenOpt GenOptRef, String outputFilePath,
 			 String outputFileHeader, String[] functionNames, 
@@ -157,8 +157,8 @@ public class ResultManager
     }
 
     /** appends a String to the output listing files
-     *@param s String to be appended to output listing files
-     *@exception IOException
+     * @param s String to be appended to output listing files
+     * @exception IOException
      */
     public void append(String s) throws IOException{
 	for (int i = 0; i < OUTFILNAM.length; i++)
@@ -275,7 +275,7 @@ public class ResultManager
     }    
 
     /** Prints a ResultPoint to the output file
-     *@param rp ResultPoint to be printed
+     * @param rp ResultPoint to be printed
      * @param runIde <CODE>0</CODE> if main iteration, <CODE>1</CODE> if
      *        sub iteration
      * @exception IOException
@@ -391,7 +391,7 @@ public class ResultManager
     }
     
     /** gets the names of the variables
-     *@return an array with all the names of the variables
+     * @return an array with all the names of the variables
      */
     public String[] getNameContinuousAndDiscrete(){
 	String[] r = new String[dimCon+dimDis];
@@ -403,7 +403,7 @@ public class ResultManager
     }
 
     /** gets the names of the function values
-	  *@return an array with all the names of the function values
+	  * @return an array with all the names of the function values
 	  */
     public String[] getNameF() {
 	String[] r = new String[dimF];
@@ -412,23 +412,23 @@ public class ResultManager
     }	
 	
     /** gets the number of continuous, free parameters
-     *@return the number of continuous, free parameters
+     * @return the number of continuous, free parameters
      */
     public int getDimensionContinuous() { return dimCon; }
 
     /** gets the number of discrete, free parameters
-     *@return the number of discrete, free parameters
+     * @return the number of discrete, free parameters
      */
     public int getDimensionDiscrete() { return dimDis; }
 
 
     /** gets the number of function values
-     *@return the number of function values
+     * @return the number of function values
      */
     public int getDimensionF() { return dimF; }	
 
     /** gets the run number
-     *@return the run number
+     * @return the run number
      */		
     public int getSimulationNumber() { return simNum;}
 
@@ -474,7 +474,7 @@ public class ResultManager
     protected class ResultPoint extends genopt.algorithm.util.math.Point
     {
 	/** Constructor
-	 *@param x a ResultPoint
+	 * @param x a ResultPoint
 	 */
 	public ResultPoint(ResultPoint x){
 	    super(x.getX(), x.getIndex(), x.getF(), x.getStepNumber(), x.getComment());
@@ -483,16 +483,16 @@ public class ResultManager
 	}		
 
 	/** Constructor
-	 *@param x a point
+	 * @param x a point
 	 */
 	public ResultPoint(Point x){
 	    super(x.getX(), x.getIndex(), x.getF(), x.getStepNumber(), x.getComment());
 	}
 					
 	/** Constructor
-	 *@param dimensionXContinuous the number of continuous independent variables
-	 *@param dimensionXDiscrete the number of discrete independent variables
-	 *@param dimensionF the number of function values
+	 * @param dimensionXContinuous the number of continuous independent variables
+	 * @param dimensionXDiscrete the number of discrete independent variables
+	 * @param dimensionF the number of function values
 	 */
 	public ResultPoint(int dimensionXContinuous, int dimensionXDiscrete, 
 			   int dimensionF){
@@ -500,9 +500,9 @@ public class ResultManager
 	}
 
 	/** sets the simulation number
-	 *@param simNumber the simulation number
-	 *@param mainIterationNumber the main iteration number
-	 *@param subIterationNumber the sub iteration number
+	 * @param simNumber the simulation number
+	 * @param mainIterationNumber the main iteration number
+	 * @param subIterationNumber the sub iteration number
 	*/		
 	public void setSimulationNumber(int simNumber, int mainIterationNumber,
 				 int subIterationNumber){
@@ -512,7 +512,7 @@ public class ResultManager
 	}
 	    
 	/** clones the ResultPoint
-	     *@return the clone of the ResultPoint
+	     * @return the clone of the ResultPoint
 	     */
 	public Object clone(){
 	    ResultPoint r = new ResultPoint((Point)super.clone());
@@ -523,7 +523,7 @@ public class ResultManager
 	/** Compares this object with the specified object for order. 
 	 *	Returns a negative integer, zero, or a
 	 *	positive integer as this object is less than, equal to, or greater than the specified object.
-	 *@param rp Object to be compared
+	 * @param rp Object to be compared
 	 */
 	public int compareTo(ResultPoint rp){
 //	    ResultPoint rp = (ResultPoint)o;
@@ -536,17 +536,17 @@ public class ResultManager
 	}
 
 	/** gets the run number
-	 *@return the run number
+	 * @return the run number
 	*/		
 	public int getSimulationNumber() { return rSimNum;}
 
 	/** gets the main iteration number
-	 *@return the main iteration number
+	 * @return the main iteration number
 	*/	
 	public int getMainIterationNumber() { return rMaiIteNum;}
 
 	/** gets the sub iteration number
-	 *@return the sub iteration number
+	 * @return the sub iteration number
 	*/	
 	public int getSubIterationNumber() { return rSubIteNum;}		
 	/** run number */

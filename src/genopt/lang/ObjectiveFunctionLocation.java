@@ -77,14 +77,14 @@ public class ObjectiveFunctionLocation
 	 *
 	 * Either <code>delimiter</code> or <code>function</code> must be
 	 * <code>null</code>, but not both.
-	 *@param name name of the function
-	 *@param delimiter objective function delimiter, or <code>null</code>
+	 * @param name name of the function
+	 * @param delimiter objective function delimiter, or <code>null</code>
 	 *                 pointer
-	 *@param firstCharacterAt one-based index for the position
+	 * @param firstCharacterAt one-based index for the position
          *          where the first character of the delimiter starts,
          *          or 0 if unspecified
 	 *
-	 *@param function string representation of the function, or <code>null</code>
+	 * @param function string representation of the function, or <code>null</code>
 	 *                 pointer
 	 */
     public ObjectiveFunctionLocation(String name,

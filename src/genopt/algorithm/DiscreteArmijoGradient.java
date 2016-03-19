@@ -82,15 +82,15 @@ public class DiscreteArmijoGradient extends Optimizer
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public DiscreteArmijoGradient(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -140,15 +140,15 @@ public class DiscreteArmijoGradient extends Optimizer
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -309,10 +309,10 @@ public class DiscreteArmijoGradient extends Optimizer
      *              you have to call this function twice, first with
      *              <CODE>MainIteration = false</CODE> and then with
      *              <CODE>MainIteration = true</CODE>
-     *@param x the point to be reported
-     *@exception IOException if an I/O error in the optimization output files
+     * @param x the point to be reported
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
-     *@exception OptimizerException thrown if the objective function value is the same
+     * @exception OptimizerException thrown if the objective function value is the same
      *    between two following main iterations
      */
     public void reportSuccessFullIterate(Point x)
@@ -337,19 +337,19 @@ public class DiscreteArmijoGradient extends Optimizer
      * <LI>the simulation is launched
      * <LI>simulation errors are checked
      * <LI>the value of the objective function is returned</UL>
-     *@param MainIteration <CODE>true</CODE> if step was a main iteration or
+     * @param MainIteration <CODE>true</CODE> if step was a main iteration or
      *       <CODE>false</CODE> if it was a sub iteration
-     *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Point[] getF(boolean MainIteration, Point x[])
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -403,19 +403,19 @@ public class DiscreteArmijoGradient extends Optimizer
      * This method simply calls the vectorized form {@link #getF(boolean, Point[])} 
      * and returns its value
      *
-     *@param MainIteration <CODE>true</CODE> if step was a main iteration or
+     * @param MainIteration <CODE>true</CODE> if step was a main iteration or
      *       <CODE>false</CODE> if it was a sub iteration
-     *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Point getF(boolean MainIteration, Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -431,17 +431,17 @@ public class DiscreteArmijoGradient extends Optimizer
      * 
      * This method calls {@link #getF(boolean, Point)} with the boolean flag set to
      * <tt>Optimizer.SUBITERATION</tt>
-     *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */     
     public Point getF(Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -452,8 +452,8 @@ public class DiscreteArmijoGradient extends Optimizer
 
     /** Converts the argument's independent parameters
       * to the units used in the simulation input.
-      *@param x the point being converted
-      *@return the point with the independent parameters converted to
+      * @param x the point being converted
+      * @return the point with the independent parameters converted to
       *        the units used in the simulation input
       */
     private Point _convertPointToUserUnits(Point x){

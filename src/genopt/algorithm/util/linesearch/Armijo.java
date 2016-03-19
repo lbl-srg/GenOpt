@@ -74,16 +74,16 @@ import genopt.algorithm.util.math.*;
 
 public class Armijo{
     /** Constructor
-     *@param optimizer a reference to the Optimizer object
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param optimizer a reference to the Optimizer object
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Armijo(DiscreteArmijoGradient optimizer, 
 		  final int kSta, 
@@ -103,15 +103,15 @@ public class Armijo{
     }
 
     /** Runs the line search.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public void run(final int i,
 		    final Point x, 
@@ -215,19 +215,19 @@ public class Armijo{
 	Opt.println("Ending line search with k = " + K[0] + ".");
     }
     /** Gets the exponent <CODE>k</CODE> of <CODE>Beta</CODE>.
-     *@return the value <CODE>k</CODE> of the point
+     * @return the value <CODE>k</CODE> of the point
      */
     public int getKWithLowestCost(){ return K[ getIndexWithLowestCost() ];  }
 
     /** Gets the point with lowest cost.
-     *@return the point with the lowest cost function value
+     * @return the point with the lowest cost function value
      */
     final public Point getPointWithLowestCost(){
 	return (Point)xLS[ getIndexWithLowestCost() ].clone();
     }
 
     /** Gets the index to the point with the lowest function value.
-     *@return the index of the point with the lowest cost function value
+     * @return the index of the point with the lowest cost function value
      */
     final public int getIndexWithLowestCost(){ 
 	if ( xLS[1] == null )

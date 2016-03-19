@@ -77,7 +77,7 @@ public class MessageManager
 	private final int ARRAYINCREMENT = 25;
 
 	/** Constructor
-	  *@param genOptRef reference to GenOpt object
+	  * @param genOptRef reference to GenOpt object
 	  */
 	public MessageManager(GenOpt genOptRef)
 	{
@@ -88,7 +88,7 @@ public class MessageManager
 	}
 	
 	/** sets a message
-	  *@param message the message
+	  * @param message the message
 	  */
 	public void setMessage(String message)
 	{
@@ -100,7 +100,7 @@ public class MessageManager
 	}
 	
 	/** gets a String with all messages
-	  *@return String with all messages
+	  * @return String with all messages
 	  */
 	public String getMessages()
 	{
@@ -111,7 +111,7 @@ public class MessageManager
 	}
 
 	/** gets a the number of messages
-	  *@return the number of messages
+	  * @return the number of messages
 	  */
 	public int getNumberOfMessages() { return numOfMes;	}
 

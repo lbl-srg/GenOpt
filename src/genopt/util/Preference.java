@@ -84,7 +84,7 @@ public class Preference
 
 
 	/** constructor
-	  *@param preferenceFile the Preference file
+	  * @param preferenceFile the Preference file
 	  */
 	public Preference(File preferenceFile)
 	{

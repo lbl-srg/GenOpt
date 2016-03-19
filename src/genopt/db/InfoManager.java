@@ -69,7 +69,7 @@ import genopt.GenOpt;
 public class InfoManager extends MessageManager
 {
     /** Constructor
-     *@param genOptRef reference to GenOpt object
+     * @param genOptRef reference to GenOpt object
      */
     public InfoManager(GenOpt genOptRef)
     {

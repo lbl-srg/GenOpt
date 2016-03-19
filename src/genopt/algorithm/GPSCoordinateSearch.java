@@ -80,15 +80,15 @@ public class GPSCoordinateSearch extends ModelGPS
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public GPSCoordinateSearch(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -104,16 +104,16 @@ public class GPSCoordinateSearch extends ModelGPS
     /** Constructor used to run the algorithm in a hybrid algorithm for the
      *  last iterations.
      *
-     *@param meshSizeDivider the mesh size divider. 
+     * @param meshSizeDivider the mesh size divider. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@param initialMeshSizeExponent the initial mesh size exponent. 
+     * @param initialMeshSizeExponent the initial mesh size exponent. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@exception OptimizerException
-     *@exception Exception
-     *@exception IOException if an I/O exception occurs
-     *@exception InputFormatException
+     * @exception OptimizerException
+     * @exception Exception
+     * @exception IOException if an I/O exception occurs
+     * @exception InputFormatException
      */
     public GPSCoordinateSearch(final int meshSizeDivider,
 			       final int initialMeshSizeExponent)
@@ -145,18 +145,18 @@ public class GPSCoordinateSearch extends ModelGPS
     }
 
     /** Method for the global search (this method returns always <code>null</code>.
-     *@param x Sequence of previous iterates
-     *@param delta current mesh size
-     *@return the <code>null</code> pointer
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x Sequence of previous iterates
+     * @param delta current mesh size
+     * @return the <code>null</code> pointer
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     protected Point[] globalSearch(Point[] x, double delta) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -165,18 +165,18 @@ public class GPSCoordinateSearch extends ModelGPS
     }
 
     /** Method for the local search.
-     *@param x Sequence of previous iterates
-     *@param delta current mesh size
-     *@return the sequence of points that have been evaluated in the local search.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x Sequence of previous iterates
+     * @param delta current mesh size
+     * @return the sequence of points that have been evaluated in the local search.
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     protected Point[] localSearch(Point[] x, double delta) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -216,20 +216,20 @@ public class GPSCoordinateSearch extends ModelGPS
     /** Perturbs a given point in one direction.<P>
      *  The value of <code>cooPoi</code> determines whether a point will first be
      *  perturbed along the negative or positive coordinate direction.
-     *@param xBes Point to be perturbed
-     *@param delta current mesh size
-     *@param i index of independent parameter that has to be perturbed
-     *@return the point with the lowest obtained function value. If the method
+     * @param xBes Point to be perturbed
+     * @param delta current mesh size
+     * @param i index of independent parameter that has to be perturbed
+     * @return the point with the lowest obtained function value. If the method
      *        could not reduce the cost, then a clone of <code>xBes</code> is returned.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     private Point perturb(Point xBes, double delta, int i) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,

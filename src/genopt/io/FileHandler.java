@@ -146,9 +146,9 @@ public class FileHandler implements Cloneable{
 
 
     /** Appends the text to a file and closes the file again
-	  *@param fileName file path and name where the text has to be appended
-	  *@param text text to be written in the file
-	  *@exception IOException
+	  * @param fileName file path and name where the text has to be appended
+	  * @param text text to be written in the file
+	  * @exception IOException
 	  */
     public static void appendToFile(String fileName, String text) throws IOException
     {
@@ -169,7 +169,7 @@ public class FileHandler implements Cloneable{
 
 
     /** adds an element to the object
-     *@param s String to be added
+     * @param s String to be added
      */
     private void addElement(final String s)
     {
@@ -185,8 +185,8 @@ public class FileHandler implements Cloneable{
     }
 
     /** checks if the byte is a line feed ('\n') or a carriage return ('\r')
-	  *@param b the byte value to be checked
-	  *@return <CODE>true</CODE> if <CODE>b</CODE> is a line feed or a carriage return
+	  * @param b the byte value to be checked
+	  * @return <CODE>true</CODE> if <CODE>b</CODE> is a line feed or a carriage return
 	  */ 
     public static final boolean isEndOfLine(int b)
     {
@@ -220,9 +220,9 @@ public class FileHandler implements Cloneable{
 
     /** Replaces all paths with their canonical paths
      *
-     *@param str The original string
-     *@return A copy of <tt>str</tt> with all paths replaced by their canonical path
-     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
+     * @param str The original string
+     * @return A copy of <tt>str</tt> with all paths replaced by their canonical path
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
     public static String[] replacePathsByCanonicalPaths(final String str[], final String userDir)
@@ -237,9 +237,9 @@ public class FileHandler implements Cloneable{
 
     /** Replaces all paths with their canonical paths
      *
-     *@param str The original string
-     *@return A copy of <tt>str</tt> with the path replaced by its canonical path
-     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
+     * @param str The original string
+     * @return A copy of <tt>str</tt> with the path replaced by its canonical path
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
     public static String replacePathsByCanonicalPaths(final String str, final String userDir)
@@ -264,10 +264,10 @@ public class FileHandler implements Cloneable{
     /** Adds the canonical path name to the string, unless the string is already a canonical path 
      *  or is an empty character sequence
      *
-     *@param str The original strings
-     *@return A copy of <tt>str</tt> that denotes a canonical path name that may not exist
+     * @param str The original strings
+     * @return A copy of <tt>str</tt> that denotes a canonical path name that may not exist
      *           on the file system
-     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
     public static String[] addCanonicalPaths(final String str[], final String userDir)
@@ -284,10 +284,10 @@ public class FileHandler implements Cloneable{
     /** Adds the canonical path name to the string, unless the string is already a canonical path
      *  or is an empty character sequence
      *
-     *@param str The original string
-     *@return A copy of <tt>str</tt> that denotes a canonical path name that may not exist
+     * @param str The original string
+     * @return A copy of <tt>str</tt> that denotes a canonical path name that may not exist
      *           on the file system
-     *@exception IOException If an I/O error occurs, which is possible because the construction of the 
+     * @exception IOException If an I/O error occurs, which is possible because the construction of the 
      *                        canonical pathname may require filesystem queries
      */
     public static String addCanonicalPaths(final String str, final String userDir)
@@ -359,9 +359,9 @@ public class FileHandler implements Cloneable{
 
     /** Deletes directories, even if they are not empty
      *
-     *@param path Name of the directory
-     *@return <tt>true</tt> if and only if the file or directory is successfully deleted; <tt>false</tt> otherwise 
-     *@exception SecurityException If a security manager exists and its SecurityManager.checkDelete(java.lang.String) method denies delete access to the file
+     * @param path Name of the directory
+     * @return <tt>true</tt> if and only if the file or directory is successfully deleted; <tt>false</tt> otherwise 
+     * @exception SecurityException If a security manager exists and its SecurityManager.checkDelete(java.lang.String) method denies delete access to the file
      */
     static public boolean deleteDirectory(File path)
 	throws SecurityException{
@@ -534,10 +534,10 @@ public class FileHandler implements Cloneable{
 	  * <b>Note:</b> the strings are cutted only once, that means a string of
 	  * the form <CODE>"""abc""</CODE> is returned as <CODE>""abc"</CODE> if the
 	  * prefix and suffix are specified as: <CODE>"</CODE>
-	  *@param s the string
-	  *@param prefix the leading string
-	  *@param suffix the last string
-	  *@return the cutted string
+	  * @param s the string
+	  * @param prefix the leading string
+	  * @param suffix the last string
+	  * @return the cutted string
 	  */
     public static String  cutBeginAndEnd(String s, String prefix, String suffix)
     {
@@ -549,9 +549,9 @@ public class FileHandler implements Cloneable{
     /** cuts a suffix from a string.
 	  * If the string is not beginning with the specified string, it is
 	  * returned unmodified.<br>
-	  *@param s the string
-	  *@param prefix the prefix
-	  *@return the cutted string
+	  * @param s the string
+	  * @param prefix the prefix
+	  * @return the cutted string
 	  */
     public static String  cutBegin(String s, String prefix)
     {
@@ -562,9 +562,9 @@ public class FileHandler implements Cloneable{
     /** cuts a suffix from a string.
 	  * If the string is not ending with the specified string, it is
 	  * returned unmodified.<br>
-	  *@param s the string
-	  *@param suffix the suffix
-	  *@return the cutted string
+	  * @param s the string
+	  * @param suffix the suffix
+	  * @return the cutted string
 	  */
     public static String  cutEnd(String s, String suffix)
     {
@@ -573,8 +573,8 @@ public class FileHandler implements Cloneable{
     }
 	
     /** cuts a line break ('\n' and/or '\r') from the end of the String
-	  *@param line the String to be cutted
-	  *@return the String without line break
+	  * @param line the String to be cutted
+	  * @return the String without line break
 	 */	
     public static final String cutEndLineBreak(String line)
     {

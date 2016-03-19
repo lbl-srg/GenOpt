@@ -117,10 +117,10 @@ public class ErrorChecker implements Cloneable
 	  * an empty Vector. Otherwise, a Vector with all
 	  * found errors and an additional error information as the first entry are returned.
           *
-	  *@param fileName Name of file that has to be checked for errors
-	  *@param AdditionalErrorInformation Additional string that is added at the beginning
+	  * @param fileName Name of file that has to be checked for errors
+	  * @param AdditionalErrorInformation Additional string that is added at the beginning
 	  *   of the returned the error message
-	  *@return A trimed empty Vector if no error message could be found, otherwise
+	  * @return A trimed empty Vector if no error message could be found, otherwise
 	  *   a trimed Vector with all the error messages that were found and the string
 	  *   'ErrorMessage' as the first entry.
 	  * @exception IOException if the file cannot be read

@@ -79,10 +79,10 @@ public class Binary{
 
     /** Gets the L2 norm.
      *
-     *@param i an integer array
-     *@param j an integer array
-     *@return the L2 norm
-     *@exception IllegalArgumentException if the arguments have different length
+     * @param i an integer array
+     * @param j an integer array
+     * @return the L2 norm
+     * @exception IllegalArgumentException if the arguments have different length
      */
     public static final long getL2Norm(int[] i, int[] j){
 	if ( i.length != j.length )
@@ -100,8 +100,8 @@ public class Binary{
 
     /** Returns a <CODE>char[]</CODE> representation of the long 
      * argument as an unsigned integer in base 2.
-     *@param i a <CODE>long</CODE> to be converted to a <CODE>char[]</CODE>.
-     *@return the <CODE>char[]</CODE> representation of the 
+     * @param i a <CODE>long</CODE> to be converted to a <CODE>char[]</CODE>.
+     * @return the <CODE>char[]</CODE> representation of the 
      * unsigned <CODE>long</CODE> value represented by the argument 
      * in binary (base 2).
      */
@@ -111,8 +111,8 @@ public class Binary{
 
     /** Returns an <CODE>int[]</CODE> representation of the long 
      * argument as an unsigned integer in base 2.
-     *@param i a <CODE>long</CODE> to be converted to an <CODE>int[]</CODE>.
-     *@return the <CODE>int[]</CODE> representation of the 
+     * @param i a <CODE>long</CODE> to be converted to an <CODE>int[]</CODE>.
+     * @return the <CODE>int[]</CODE> representation of the 
      * unsigned <CODE>long</CODE> value represented by the argument 
      * in binary (base 2).
      */
@@ -122,12 +122,12 @@ public class Binary{
 
     /** Returns an <CODE>int[]</CODE> representation of the long 
      * argument as an unsigned integer in base 2.
-     *@param i a <CODE>long</CODE> to be converted to an <CODE>int[]</CODE>.
-     *@param length number of elements of the returned array
-     *@return the <CODE>int[]</CODE> representation of the 
+     * @param i a <CODE>long</CODE> to be converted to an <CODE>int[]</CODE>.
+     * @param length number of elements of the returned array
+     * @return the <CODE>int[]</CODE> representation of the 
      * unsigned <CODE>long</CODE> value represented by the argument 
      * in binary (base 2).
-     *@exception IllegalArgumentException if <CODE>length</CODE> is
+     * @exception IllegalArgumentException if <CODE>length</CODE> is
      *  not long enough to represent the argument as a binary integer array
      */
     public static int[] toBinaryInt(long i, int length){
@@ -137,10 +137,10 @@ public class Binary{
     /** Gets the length of the binary string required to represent
      * the argument.
      *
-     *@param n argument whose required length will be computed.
-     *@return the length of the binary string required to represent
+     * @param n argument whose required length will be computed.
+     * @return the length of the binary string required to represent
      * the argument.
-     *@exception IllegalArgumentException  if <CODE>n < 0</CODE>
+     * @exception IllegalArgumentException  if <CODE>n &lt; 0</CODE>
      */
     public static int getStringLength(long n)
     throws IllegalArgumentException{
@@ -150,9 +150,9 @@ public class Binary{
     /* Returns a <CODE>String</CODE> representation of the argument
      * that contains <CODE>0</CODE> or <CODE>1</CODE>.
      *
-     *@param intArr an <CODE>int[]</CODE> array containing <CODE>0</CODE> or <CODE>1</CODE>
-     *@return the <CODE>String</CODE> representation of the argument
-     *@exception IllegalArgumentException if the argument contains non-binary
+     * @param intArr an <CODE>int[]</CODE> array containing <CODE>0</CODE> or <CODE>1</CODE>
+     * @return the <CODE>String</CODE> representation of the argument
+     * @exception IllegalArgumentException if the argument contains non-binary
      *           numbers
      
     static private final String binaryToString(final int[] intArr)
@@ -175,10 +175,10 @@ public class Binary{
     /** Returns a <CODE>String</CODE> representation of the argument
      * that contains <CODE>0</CODE> or <CODE>1</CODE>.
      *
-     *@param intArr an <CODE>int[]</CODE> array containing <CODE>0</CODE> or <CODE>1</CODE>
-     *@param length the length of the string array that will be returned
-     *@return the <CODE>String</CODE> representation of the argument
-     *@exception IllegalArgumentException if the argument contains non-binary
+     * @param intArr an <CODE>int[]</CODE> array containing <CODE>0</CODE> or <CODE>1</CODE>
+     * @param length the length of the string array that will be returned
+     * @return the <CODE>String</CODE> representation of the argument
+     * @exception IllegalArgumentException if the argument contains non-binary
      *           numbers
      */
     static private final String binaryToString(final int[] intArr,
@@ -201,9 +201,9 @@ public class Binary{
 
     /** Gets the Gray code.
      *
-     *@param n non-negative argument whose length will be computed
-     *@return the Gray code
-     *@exception IllegalArgumentException if <CODE>n < 0</CODE>
+     * @param n non-negative argument whose length will be computed
+     * @return the Gray code
+     * @exception IllegalArgumentException if <CODE>n &lt; 0</CODE>
      */
     static public long getGrayCode(final long n)
 	throws IllegalArgumentException{
@@ -216,10 +216,10 @@ public class Binary{
     /** Converts a <CODE>char</CODE> array with binary values to
      *  a binary <CODE>int</CODE> array.
      *
-     *@param c a <CODE>char</CODE> array with <CODE>0</CODE> and <CODE>1</CODE>
+     * @param c a <CODE>char</CODE> array with <CODE>0</CODE> and <CODE>1</CODE>
      *         elements
-     *@return <CODE>c</CODE> converted to an <CODE>int</CODE> array
-     *@exception IllegalArgumentException if <CODE>c</CODE> is not a binary array
+     * @return <CODE>c</CODE> converted to an <CODE>int</CODE> array
+     * @exception IllegalArgumentException if <CODE>c</CODE> is not a binary array
      */
     static private int[] toBinaryInt(char[] c){
 	int[] r = new int[c.length];
@@ -241,8 +241,8 @@ public class Binary{
     /** Converts a binary <CODE>int</CODE> array to 
      * the long number it presents.
      *
-     *@param intArray a binary <CODE>int</CODE> array
-     *@return the long number that is presented by the argument
+     * @param intArray a binary <CODE>int</CODE> array
+     * @return the long number that is presented by the argument
      */
     static private long binaryToLong(int[] intArray){
 	long r = 0;
@@ -259,9 +259,9 @@ public class Binary{
     /** Converts a binary <CODE>char</CODE> array to 
      * the long number it presents.
      *
-     *@param charArray a binary <CODE>int</CODE> array
-     *@return the long number that is presented by the argument
-     *@exception IllegalArgumentException if <CODE>c</CODE> is not a binary array
+     * @param charArray a binary <CODE>int</CODE> array
+     * @return the long number that is presented by the argument
+     * @exception IllegalArgumentException if <CODE>c</CODE> is not a binary array
      */
     static private long binaryToLong(char[] charArray)
 	throws IllegalArgumentException{
@@ -274,8 +274,8 @@ public class Binary{
      * and then the inverse Gray coding of the <CODE>long</CODE> is
      * computed and returned.
      *
-     *@param gray an <CODE>int[]</CODE> argument with binary numbers
-     *@return the inverse of <CODE>gray</CODE>, using inverse
+     * @param gray an <CODE>int[]</CODE> argument with binary numbers
+     * @return the inverse of <CODE>gray</CODE>, using inverse
      *        Gray coding
      */
     static public long getInverseGrayCode(final int[] gray){
@@ -284,8 +284,8 @@ public class Binary{
 
     /** Gets the inverse of the Gray code.
      *
-     *@param gray a number in Gray code
-     *@return the inverse of <CODE>gray</CODE>, using inverse
+     * @param gray a number in Gray code
+     * @return the inverse of <CODE>gray</CODE>, using inverse
      *        Gray coding
      */
     static public long getInverseGrayCode(final long gray){
@@ -304,14 +304,14 @@ public class Binary{
     /** Increases the length of a <CODE>char</CODE> array by
      *  setting additional elements with 0.
      * 
-     *  If <CODE> n=binStr.length < length </CODE>, then
+     *  If <CODE> n=binStr.length &le; length </CODE>, then
      *  the return argument has <CODE>0</CODE> at the 
      *  elements <CODE>0</CODE> to <CODE>lenth-n</CODE>.
      *
-     *@param binStr the binary string string to be extended
-     *@param length the length of the returned binary string
-     *@return <CODE>binStr</CODE> with increased length
-     *@exception IllegalArgumentException if <CODE>binStr.length > length</CODE>
+     * @param binStr the binary string string to be extended
+     * @param length the length of the returned binary string
+     * @return <CODE>binStr</CODE> with increased length
+     * @exception IllegalArgumentException if <CODE>binStr.length &gt; length</CODE>
      */
     static public final char[] increaseLength(final char[] binStr, 
 					      final int length)
@@ -337,9 +337,9 @@ public class Binary{
     
     /** Computes the value of a bitwise exclusive or between the arguments.
      *
-     *@param i first argument
-     *@param j second argument
-     *@return the value of a bitwise exclusive or between the arguments
+     * @param i first argument
+     * @param j second argument
+     * @return the value of a bitwise exclusive or between the arguments
      */
     static public final long ieor(final long i, final long j){
 	// make sure that bi is the longer char array than bj
@@ -364,9 +364,9 @@ public class Binary{
      * Bits shifted off the left or right are lost and zero bits are 
      * shifted in from the opposite end.
      *
-     *@param i value whose bits will be shifted
-     *@param shift number of positions that the bits will be shifted
-     *@return the value of <CODE>i</CODE> after shifting the bits
+     * @param i value whose bits will be shifted
+     * @param shift number of positions that the bits will be shifted
+     * @return the value of <CODE>i</CODE> after shifting the bits
      */
     static public final long ishft(final long i, final int shift){
 	char[] bs = increaseLength((Long.toBinaryString(i)).toCharArray(),

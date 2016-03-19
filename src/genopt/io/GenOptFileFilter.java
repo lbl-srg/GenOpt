@@ -80,8 +80,8 @@ public class GenOptFileFilter extends FileFilter
      }
 
      /** Constructor
-     *@param extension file extension
-     *@param description file description
+     * @param extension file extension
+     * @param description file description
      */
     public GenOptFileFilter(String extension, String description) {
 	// make an instance
@@ -92,8 +92,8 @@ public class GenOptFileFilter extends FileFilter
 
     /** returns <CODE>true</CODE> if a file is accepted for display,
      * or <CODE>false</CODE> otherwise
-     *@param f File to be checked
-     *@return <CODE>true</CODE> if it should be displayed,
+     * @param f File to be checked
+     * @return <CODE>true</CODE> if it should be displayed,
      *        <CODE>false</CODE> otherwise
      */    
     public boolean accept(File f)
@@ -125,7 +125,7 @@ public class GenOptFileFilter extends FileFilter
 	return ext;
     }
     /** adds an extension to this file filter
-     *@param ext extension to be added
+     * @param ext extension to be added
      */
     public void addExtension(String ext)
     {

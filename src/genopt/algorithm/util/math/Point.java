@@ -79,9 +79,9 @@ public class Point implements Comparable<Point>
 
     /** Constructor
      *
-     *@param nCon number of continuous variables
-     *@param nDis number of discrete variables
-     *@param nF   number of function values
+     * @param nCon number of continuous variables
+     * @param nDis number of discrete variables
+     * @param nF   number of function values
      */
     public Point(final int nCon, final int nDis, final int nF){
 	_initialize(nCon, nDis, nF);
@@ -89,9 +89,9 @@ public class Point implements Comparable<Point>
 
     /** Allocates all arrays.
      *
-     *@param nCon number of continuous variables
-     *@param nDis number of discrete variables
-     *@param nF   number of function values
+     * @param nCon number of continuous variables
+     * @param nDis number of discrete variables
+     * @param nF   number of function values
      */
     private void _initialize(final int nCon, final int nDis, final int nF){
 	dimCon = nCon;
@@ -112,10 +112,10 @@ public class Point implements Comparable<Point>
     }
     
     /** Constructor for a point with only discrete independent variables
-     *@param xDis the point's discrete coordinates
-     *@param f its function values
-     *@param stepNumber the step number
-     *@param comment a comment
+     * @param xDis the point's discrete coordinates
+     * @param f its function values
+     * @param stepNumber the step number
+     * @param comment a comment
      */
     public Point(int[] xDis, double[] f, int stepNumber, String comment){
 	final int nDis = ( xDis == null ) ? 0 : xDis.length;
@@ -126,10 +126,10 @@ public class Point implements Comparable<Point>
     }		
 
     /** Constructor for a point with only continuous independent variables
-     *@param xCon the point's continuous coordinates
-     *@param f its function values
-     *@param stepNumber the step number
-     *@param comment a comment
+     * @param xCon the point's continuous coordinates
+     * @param f its function values
+     * @param stepNumber the step number
+     * @param comment a comment
      */
     public Point(double[] xCon, double[] f, int stepNumber, String comment){ 
 	final int nCon = ( xCon == null ) ? 0 : xCon.length;
@@ -141,11 +141,11 @@ public class Point implements Comparable<Point>
 
     /** Constructor for a point with continuous and discrete 
      *  independent variables
-     *@param xCon the point's continuous coordinates
-     *@param xDis the point's discrete coordinates
-     *@param f its function values
-     *@param stepNumber the step number
-     *@param comment a comment
+     * @param xCon the point's continuous coordinates
+     * @param xDis the point's discrete coordinates
+     * @param f its function values
+     * @param stepNumber the step number
+     * @param comment a comment
      */
     public Point(double[] xCon, int[] xDis, double[] f, 
                  int stepNumber, String comment){
@@ -158,14 +158,14 @@ public class Point implements Comparable<Point>
 
     /** Constructor for a point with continuous and discrete 
      *  independent variables
-     *@param xCon the point's continuous coordinates
-     *@param xDis the point's discrete coordinates
-     *@param xDisMax the point's maximum value of the discrete coordinates
-     *@param f its function values
-     *@param stepNumber the step number
-     *@param comment a comment
-     *@param simulationNumber the number of the simulation
-     *@exception IllegalArgumentException if <code>xDis</code>
+     * @param xCon the point's continuous coordinates
+     * @param xDis the point's discrete coordinates
+     * @param xDisMax the point's maximum value of the discrete coordinates
+     * @param f its function values
+     * @param stepNumber the step number
+     * @param comment a comment
+     * @param simulationNumber the number of the simulation
+     * @exception IllegalArgumentException if <code>xDis</code>
      *           and <code>xDisMax</code> are not <code>null</code>
      *           but of different length
      */
@@ -188,7 +188,7 @@ public class Point implements Comparable<Point>
     }
     
     /** Clones the object.
-     *@return a copy of the object
+     * @return a copy of the object
      */
     public Object clone(){
 	return new Point(cooCon, cooDis, cooDisMax,
@@ -196,7 +196,7 @@ public class Point implements Comparable<Point>
     }
 
     /** Returns a string representation of the object.
-     *@return a string representation of the object
+     * @return a string representation of the object
      */
     public String toString(){
 	final String LS = System.getProperty("line.separator");
@@ -220,7 +220,7 @@ public class Point implements Comparable<Point>
     }
 
     /** Gets the point's function values
-      *@return the point's function values
+      * @return the point's function values
       */
     public double[] getF(){
     	if (dimF == 0) return null;
@@ -231,12 +231,12 @@ public class Point implements Comparable<Point>
 		
     /** Gets the point's function values
      * @param i the index of the function value
-     *@return the point's function values
+     * @return the point's function values
      */
     public double getF(int i) { return fun[i]; }
 
     /** Gets the point's continuous independent variables
-     *@return the point's continuous independent variables
+     * @return the point's continuous independent variables
     */		
     public double[] getX(){
 	if (dimCon == 0) return null;
@@ -246,7 +246,7 @@ public class Point implements Comparable<Point>
     }
 
     /** Gets the indices of the discrete point's
-     *@return the indices of the discrete point's
+     * @return the indices of the discrete point's
     */		
     public int[] getIndex(){
 	if (dimDis == 0) return null;
@@ -256,7 +256,7 @@ public class Point implements Comparable<Point>
     }
 
     /** Gets the maximum allowed value of the indices of the discrete point's
-     *@return the maximum allowed value of the indices of the discrete point's
+     * @return the maximum allowed value of the indices of the discrete point's
     */		
     public int[] getMaximumIndex(){
 	if (dimDis == 0) return null;
@@ -266,44 +266,44 @@ public class Point implements Comparable<Point>
     }
 
     /** Gets the point's i-th continuous coordinate
-     *@param i the index of the continuous coordinate
-     *@return the point's i-th continuous coordinate
+     * @param i the index of the continuous coordinate
+     * @return the point's i-th continuous coordinate
      */
     public double getX(int i) { return cooCon[i]; }
 
     /** Gets the i-th point's index
-     *@param i the number of the discrete variable
-     *@return the i-th point's index
+     * @param i the number of the discrete variable
+     * @return the i-th point's index
      */
     public int getIndex(int i) { return cooDis[i]; }
     
     /** Gets the number of continuous coordinates
-     *@return the number of continuous coordinates
+     * @return the number of continuous coordinates
      */
     public int getDimensionContinuous() {return dimCon;}
 
     /** Gets the number of discrete coordinates
-     *@return the number of discrete coordinates
+     * @return the number of discrete coordinates
      */
     public int getDimensionDiscrete() {return dimDis;}
 		
     /** Gets the dimension of the points function value vector
-     *@return the dimension of the points function value vector
+     * @return the dimension of the points function value vector
      */
     public int getDimensionF() {return dimF;}
 
     /** Gets the point's step number
-     *@return the point's step number
+     * @return the point's step number
      */
     public int getStepNumber() { return steNum; }
 
     /** Gets the point's comment
-     *@return the point's comment
+     * @return the point's comment
      */
     public String getComment() { return new String(com); }        
         
     /** Sets the point's continuous coordinates
-     *@param x the point's continuous coordinates
+     * @param x the point's continuous coordinates
      */
     public void setX(double[] x){
 	if (x == null){
@@ -318,8 +318,8 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets the indices of the point's discrete variables
-     *@param x the indices of the point's discrete variables
-     *@exception IllegalArgumentException if an element is negative, or
+     * @param x the indices of the point's discrete variables
+     * @exception IllegalArgumentException if an element is negative, or
      *       an element is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -344,9 +344,9 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets the indices of the point's discrete variables and its maximum allowed values
-     *@param xDis the indices of the point's discrete variables
-     *@param xDisMax the maximum allowed value for the indices of the point's discrete variables
-     *@exception IllegalArgumentException if an element is negative, or
+     * @param xDis the indices of the point's discrete variables
+     * @param xDisMax the maximum allowed value for the indices of the point's discrete variables
+     * @exception IllegalArgumentException if an element is negative, or
      *       an element is larger than the maximum allowed value, or
      *       the array lengths are different
      */
@@ -369,9 +369,9 @@ public class Point implements Comparable<Point>
 
 
     /** Sets the index of the point's i-th discrete variables
-     *@param i number of discrete variable
-     *@param ind index of the point's i-th discrete variables
-     *@exception IllegalArgumentException if the argument is negative or
+     * @param i number of discrete variable
+     * @param ind index of the point's i-th discrete variables
+     * @exception IllegalArgumentException if the argument is negative or
      *       larger than the maximum allowed value
      */
     public void setIndex(int i, int ind)
@@ -385,9 +385,9 @@ public class Point implements Comparable<Point>
 
     
     /** Sets the point's discrete and continuous coordinates
-     *@param xCon the point's continuous coordinates
-     *@param xDis the point's discrete coordinates
-     *@exception IllegalArgumentException if an element is negative, or
+     * @param xCon the point's continuous coordinates
+     * @param xDis the point's discrete coordinates
+     * @exception IllegalArgumentException if an element is negative, or
      *       an element is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -399,16 +399,16 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets the i-th continuous independent variable
-     *@param i the zero-based index of the continuous independent variable
-     *@param x value to be set
+     * @param i the zero-based index of the continuous independent variable
+     * @param x value to be set
      */
     public void setX(int i, double x) { cooCon[i] = x; }
 
     /** Sets the index of the point's i-th discrete independent variable
-     *@param variableNumber the zero-based index of the discrete independent 
+     * @param variableNumber the zero-based index of the discrete independent 
      *             variable
-     *@param index the index of the variable
-     *@exception IllegalArgumentException if the argument is negative or
+     * @param index the index of the variable
+     * @exception IllegalArgumentException if the argument is negative or
      *       larger than the maximum allowed value
      *@deprecated replaced by <CODE>setIndex(int, int)</CODE>
      */
@@ -417,8 +417,8 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets a point's function value
-     *@param i the index of the function value
-     *@param f points function value
+     * @param i the index of the function value
+     * @param f points function value
      */
     public void setF(int i, double f){
 	assert ( i >= 0 && i < fun.length ) : "Wrong value of i.";
@@ -426,7 +426,7 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets a point's function value
-     *@param f a points function value
+     * @param f a points function value
      */
     public void setF(double[] f){
 	if (f == null){
@@ -441,33 +441,33 @@ public class Point implements Comparable<Point>
     }		
 		
     /** Sets a the step number
-     *@param stepNumber the step number
+     * @param stepNumber the step number
      */
     public void setStepNumber(int stepNumber) { steNum = stepNumber;  }
 
     /** Sets a the simulation number
-     *@param simulationNumber the number of the simulation
+     * @param simulationNumber the number of the simulation
      */
     public void setSimulationNumber(int simulationNumber) { simNum = simulationNumber;  }
 
     /** Gets the simulation number
-     *@return simulationNumber the number of the simulation
+     * @return simulationNumber the number of the simulation
      */
     public int getSimulationNumber() { return simNum;  }
         
     /** Sets a comment
-     *@param comment the comment
+     * @param comment the comment
      */
     public void setComment(String comment){
 	com = (comment == null) ? null : new String(comment);
     }
         
     /** Sets a point with only continuous independent variables
-     *@param x the point's continuous coordinates
-     *@param f its function values
-     *@param stepNumber its step number
-     *@param comment its comment
-     *@exception IllegalArgumentException if an element of <CODE>x</CODE>
+     * @param x the point's continuous coordinates
+     * @param f its function values
+     * @param stepNumber its step number
+     * @param comment its comment
+     * @exception IllegalArgumentException if an element of <CODE>x</CODE>
      *       is negative, or is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -479,11 +479,11 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets a point with only discrete independent variables
-     *@param x the point's discrete coordinates
-     *@param f its function values
-     *@param stepNumber its step number
-     *@param comment its comment
-     *@exception IllegalArgumentException if an element of <CODE>x</CODE>
+     * @param x the point's discrete coordinates
+     * @param f its function values
+     * @param stepNumber its step number
+     * @param comment its comment
+     * @exception IllegalArgumentException if an element of <CODE>x</CODE>
      *       is negative, or is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -495,12 +495,12 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets a point with continuous and discrete independent variables
-     *@param xCon the point's continuous coordinates
-     *@param xDis the point's discrete coordinates
-     *@param f its function values
-     *@param stepNumber its step number
-     *@param comment its comment
-     *@exception IllegalArgumentException if an element of <CODE>xDis</CODE>
+     * @param xCon the point's continuous coordinates
+     * @param xDis the point's discrete coordinates
+     * @param f its function values
+     * @param stepNumber its step number
+     * @param comment its comment
+     * @exception IllegalArgumentException if an element of <CODE>xDis</CODE>
      *       is negative, or is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -513,13 +513,13 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets a point with continuous and discrete independent variables
-     *@param xCon the point's continuous coordinates
-     *@param xDis the point's discrete coordinates
-     *@param xDisMax the point's maximum value for the discrete coordinates
-     *@param f its function values
-     *@param stepNumber its step number
-     *@param comment its comment
-     *@exception IllegalArgumentException if an element of <CODE>xDis</CODE>
+     * @param xCon the point's continuous coordinates
+     * @param xDis the point's discrete coordinates
+     * @param xDisMax the point's maximum value for the discrete coordinates
+     * @param f its function values
+     * @param stepNumber its step number
+     * @param comment its comment
+     * @exception IllegalArgumentException if an element of <CODE>xDis</CODE>
      *       is negative, or is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -534,9 +534,9 @@ public class Point implements Comparable<Point>
 
 
     /** Sets a point with only continuous independent variables
-     *@param x the point's continuous coordinates
-     *@param stepNumber its step number
-     *@param comment its comment
+     * @param x the point's continuous coordinates
+     * @param stepNumber its step number
+     * @param comment its comment
      */
     public void set(double[] x, int stepNumber, String comment){
 	setX(x);
@@ -545,10 +545,10 @@ public class Point implements Comparable<Point>
     }
 
     /** Sets a point with only discrete independent variables
-     *@param x the point's discrete coordinates
-     *@param stepNumber its step number
-     *@param comment its comment
-     *@exception IllegalArgumentException if an element of <CODE>x</CODE>
+     * @param x the point's discrete coordinates
+     * @param stepNumber its step number
+     * @param comment its comment
+     * @exception IllegalArgumentException if an element of <CODE>x</CODE>
      *       is negative, or is larger than the maximum allowed value, or
      *       the length of the argument is different from the one allocated
      *       by this object
@@ -564,7 +564,7 @@ public class Point implements Comparable<Point>
       * whereas only the x-coordinates in (<CODE>float</CODE> precision),
       * the index of the discrete variables,
       * and the step number are compared.
-      *@return <CODE>0</CODE> if the objects are equal,
+      * @return <CODE>0</CODE> if the objects are equal,
       *        <CODE>-1</CODE> if the received object is the smaller one
       *        <CODE>+1</CODE> if the received object is the larger one
       */
@@ -606,9 +606,9 @@ public class Point implements Comparable<Point>
     }
 
     /** Compares two numbers for equality. Rounding errors are neglected.
-     *@param x1 first number
-     *@param x2 second number
-     *@return <code>true</code> if the numbers are equal except 
+     * @param x1 first number
+     * @param x2 second number
+     * @return <code>true</code> if the numbers are equal except 
      *         for rounding errors
      */
     protected static boolean areEqual(double x1, double x2){
@@ -622,8 +622,8 @@ public class Point implements Comparable<Point>
       * whereas only the x-coordinates in (<CODE>float</CODE> precision),
       * the index of the discrete variables,
       * and the step number are compared.
-     *@param o Object to be compared
-     *@return <CODE>true</CODE> if the objects are equal 
+     * @param o Object to be compared
+     * @return <CODE>true</CODE> if the objects are equal 
      *        in the sense of the <CODE>compareTo(Object)</CODE> method,
      *        <CODE>false</CODE> otherwise
      */
@@ -636,10 +636,10 @@ public class Point implements Comparable<Point>
       * whereas only the x-coordinates in (<CODE>float</CODE> precision),
       * the index of the discrete variables,
       * and the step number are compared.
-     *@param o1 Object to be compared
-     *@param o2 Object to be compared
-     *@return <CODE>0</CODE> if the objects are equal,
-     *        <CODE>-1</CODE> if o1 > o2,
+     * @param o1 Object to be compared
+     * @param o2 Object to be compared
+     * @return <CODE>0</CODE> if the objects are equal,
+     *        <CODE>-1</CODE> if o1 &lt; o2,
      *        <CODE>+1</CODE> if o1 < o2,
      *        in the sense of the <CODE>compareTo(Object)</CODE> method
      */
@@ -654,9 +654,9 @@ public class Point implements Comparable<Point>
      *  This function must be called before the value
      *  of the i-th discrete variable is requested as a binary string.
      *
-     *@param i index of discrete variable
-     *@param max maximum value of the point's i-th discrete variables
-     *@exception IllegalArgumentException if <CODE>max < 0</CODE>
+     * @param i index of discrete variable
+     * @param max maximum value of the point's i-th discrete variables
+     * @exception IllegalArgumentException if <CODE>max < 0</CODE>
      */
     public void setMaximumIndex(int i, int max)
     throws IllegalArgumentException{ 
@@ -669,9 +669,9 @@ public class Point implements Comparable<Point>
     /** Gets the string length used to represent the maximum value of the parameter
      *  as a Gray coded binary string.
      *
-     *@param index index of the discrete variable
-     *@return the string length used to represent the maximum value of the parameter
-     *@exception IllegalArgumentException if the maximum value has not been set for
+     * @param index index of the discrete variable
+     * @return the string length used to represent the maximum value of the parameter
+     * @exception IllegalArgumentException if the maximum value has not been set for
      *        this variable
      */
     public int getGrayBinaryStringLength(final int index)
@@ -685,8 +685,8 @@ public class Point implements Comparable<Point>
     /** Gets the value of a discrete variable encoded as a binary string
      *  using Gray encoding.
      *
-     *@param index index of the discrete variable
-     *@return the value of the discrete variable, Gray encoded, as a binary string
+     * @param index index of the discrete variable
+     * @return the value of the discrete variable, Gray encoded, as a binary string
      */
     public int[] getGrayBinaryString(int index){
 	if ( cooDisBitLength[index] < 0 )
@@ -703,9 +703,9 @@ public class Point implements Comparable<Point>
      * allowed value for this variable, then the variable value will be set
      * to its maximum value.
      *
-     *@param index index of the discrete variable
-     *@param graBinStr the value of the discrete variable as a Gray encoded binary string
-     *@exception IllegalArgumentException if no maximum is set for this variable
+     * @param index index of the discrete variable
+     * @param graBinStr the value of the discrete variable as a Gray encoded binary string
+     * @exception IllegalArgumentException if no maximum is set for this variable
      */
     public void setGrayBinaryString(int index, int[] graBinStr){
 	if ( cooDisBitLength[index] < 0 )

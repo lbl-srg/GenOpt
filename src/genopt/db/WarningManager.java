@@ -71,7 +71,7 @@ public class WarningManager extends MessageManager
 {
 
     /** Constructor
-     *@param genOptRef reference to GenOpt object
+     * @param genOptRef reference to GenOpt object
      */
     public WarningManager(GenOpt genOptRef)
     {

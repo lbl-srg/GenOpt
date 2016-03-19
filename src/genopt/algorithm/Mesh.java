@@ -154,7 +154,7 @@ public class Mesh extends Optimizer{
     }
 
     /** Perturbs the point and evaluates a simulation
-     *@param iPar number of continuous and discrete parameters that has to be perturbed
+     * @param iPar number of continuous and discrete parameters that has to be perturbed
      * @exception Exception	  
      * @exception OptimizerException
      */
@@ -231,13 +231,13 @@ public class Mesh extends Optimizer{
 
     
     /** Evaluates a simulation and reports result
-     *@param pt point to be evaluated 
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param pt point to be evaluated 
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
      public Point getF(final Point pt)
 	throws SimulationInputException, OptimizerException, Exception{

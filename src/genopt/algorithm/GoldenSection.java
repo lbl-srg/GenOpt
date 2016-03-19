@@ -91,7 +91,7 @@ public class GoldenSection extends ModelFiniteIntervalSearcher
       * @exception OptimizerException if algorithm is used for problems
       *            with more than 1 independent variable
       * @exception Exception
-      *@exception IOException if an I/O exception occurs
+      * @exception IOException if an I/O exception occurs
       * @exception InputFormatException
       */
     public GoldenSection(GenOpt genOptData)
