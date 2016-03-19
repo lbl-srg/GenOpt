@@ -1,0 +1,255 @@
+Simulation Number	Main Iteration	Sub Iteration	Step Number	f(x)	x1	x2
+1	1	1	1	1.62	0.9	0.9	Initial point.
+2	2	1	1	1.7125	0.95	0.9	Cost not reduced at x1+dx1.
+3	2	2	1	1.5325	0.85	0.9	Cost reduced     at x1-dx1.
+4	2	3	1	1.625	0.85	0.95	Cost not reduced at x2+dx2.
+5	2	4	1	1.445	0.85	0.85	Cost reduced     at x2-dx2.
+5	2	5	1	1.445	0.85	0.85	Local search reduced cost.
+6	3	1	1	1.3625	0.8	0.85	Cost reduced     at x1-dx1.
+7	3	2	1	1.28	0.8	0.8	Cost reduced     at x2-dx2.
+7	3	3	1	1.28	0.8	0.8	Local search reduced cost.
+8	4	1	1	1.2025	0.75	0.8	Cost reduced     at x1-dx1.
+9	4	2	1	1.125	0.75	0.75	Cost reduced     at x2-dx2.
+9	4	3	1	1.125	0.75	0.75	Local search reduced cost.
+10	5	1	1	1.0525	0.7	0.75	Cost reduced     at x1-dx1.
+11	5	2	1	0.98	0.7	0.7	Cost reduced     at x2-dx2.
+11	5	3	1	0.98	0.7	0.7	Local search reduced cost.
+12	6	1	1	0.9125	0.65	0.7	Cost reduced     at x1-dx1.
+13	6	2	1	0.845	0.65	0.65	Cost reduced     at x2-dx2.
+13	6	3	1	0.845	0.65	0.65	Local search reduced cost.
+14	7	1	1	0.7825	0.6	0.65	Cost reduced     at x1-dx1.
+15	7	2	1	0.72	0.6	0.6	Cost reduced     at x2-dx2.
+15	7	3	1	0.72	0.6	0.6	Local search reduced cost.
+16	8	1	1	0.6625	0.55	0.6	Cost reduced     at x1-dx1.
+17	8	2	1	0.605	0.55	0.55	Cost reduced     at x2-dx2.
+17	8	3	1	0.605	0.55	0.55	Local search reduced cost.
+18	9	1	1	0.5525	0.5	0.55	Cost reduced     at x1-dx1.
+19	9	2	1	0.5	0.5	0.5	Cost reduced     at x2-dx2.
+19	9	3	1	0.5	0.5	0.5	Local search reduced cost.
+20	10	1	1	0.4525	0.45	0.5	Cost reduced     at x1-dx1.
+21	10	2	1	0.405	0.45	0.45	Cost reduced     at x2-dx2.
+21	10	3	1	0.405	0.45	0.45	Local search reduced cost.
+22	11	1	1	0.3625	0.4	0.45	Cost reduced     at x1-dx1.
+23	11	2	1	0.32	0.4	0.4	Cost reduced     at x2-dx2.
+23	11	3	1	0.32	0.4	0.4	Local search reduced cost.
+24	12	1	1	0.2825	0.35	0.4	Cost reduced     at x1-dx1.
+25	12	2	1	0.245	0.35	0.35	Cost reduced     at x2-dx2.
+25	12	3	1	0.245	0.35	0.35	Local search reduced cost.
+26	13	1	1	0.2125	0.3	0.35	Cost reduced     at x1-dx1.
+27	13	2	1	0.18	0.3	0.3	Cost reduced     at x2-dx2.
+27	13	3	1	0.18	0.3	0.3	Local search reduced cost.
+28	14	1	1	0.1525	0.25	0.3	Cost reduced     at x1-dx1.
+29	14	2	1	0.125	0.25	0.25	Cost reduced     at x2-dx2.
+29	14	3	1	0.125	0.25	0.25	Local search reduced cost.
+30	15	1	1	0.1025	0.2	0.25	Cost reduced     at x1-dx1.
+31	15	2	1	0.08	0.2	0.2	Cost reduced     at x2-dx2.
+31	15	3	1	0.08	0.2	0.2	Local search reduced cost.
+32	16	1	1	0.0625	0.15	0.2	Cost reduced     at x1-dx1.
+33	16	2	1	0.045	0.15	0.15	Cost reduced     at x2-dx2.
+33	16	3	1	0.045	0.15	0.15	Local search reduced cost.
+34	17	1	1	0.0325	0.1	0.15	Cost reduced     at x1-dx1.
+35	17	2	1	0.02	0.1	0.1	Cost reduced     at x2-dx2.
+35	17	3	1	0.02	0.1	0.1	Local search reduced cost.
+36	18	1	1	0.0125	0.05	0.1	Cost reduced     at x1-dx1.
+37	18	2	1	0.005	0.05	0.05	Cost reduced     at x2-dx2.
+37	18	3	1	0.005	0.05	0.05	Local search reduced cost.
+38	19	1	1	0.0025	0.0	0.05	Cost reduced     at x1-dx1.
+39	19	2	1	0.0	0.0	0.0	Cost reduced     at x2-dx2.
+39	19	3	1	0.0	0.0	0.0	Local search reduced cost.
+40	20	1	1	0.0025	-0.05	0.0	Cost not reduced at x1-dx1.
+41	20	2	1	0.0025	0.05	0.0	Cost not reduced at x1+dx1.
+42	20	3	1	0.0025	0.0	-0.05	Cost not reduced at x2-dx2.
+42	20	4	1	0.0025	0.0	0.05	Cost not reduced at x2+dx2.
+39	20	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.5'.
+43	21	1	1	6.25E-4	-0.025	0.0	Cost not reduced at x1-dx1.
+44	21	2	1	6.25E-4	0.025	0.0	Cost not reduced at x1+dx1.
+45	21	3	1	6.25E-4	0.0	-0.025	Cost not reduced at x2-dx2.
+46	21	4	1	6.25E-4	0.0	0.025	Cost not reduced at x2+dx2.
+39	21	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.25'.
+47	22	1	1	1.5625E-4	-0.0125	0.0	Cost not reduced at x1-dx1.
+48	22	2	1	1.5625E-4	0.0125	0.0	Cost not reduced at x1+dx1.
+49	22	3	1	1.5625E-4	0.0	-0.0125	Cost not reduced at x2-dx2.
+50	22	4	1	1.5625E-4	0.0	0.0125	Cost not reduced at x2+dx2.
+39	22	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.125'.
+51	23	1	1	3.90625E-5	-0.00625	0.0	Cost not reduced at x1-dx1.
+52	23	2	1	3.90625E-5	0.00625	0.0	Cost not reduced at x1+dx1.
+53	23	3	1	3.90625E-5	0.0	-0.00625	Cost not reduced at x2-dx2.
+54	23	4	1	3.90625E-5	0.0	0.00625	Cost not reduced at x2+dx2.
+39	23	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.0625'.
+55	24	1	1	9.765625E-6	-0.003125	0.0	Cost not reduced at x1-dx1.
+56	24	2	1	9.765625E-6	0.003125	0.0	Cost not reduced at x1+dx1.
+57	24	3	1	9.765625E-6	0.0	-0.003125	Cost not reduced at x2-dx2.
+58	24	4	1	9.765625E-6	0.0	0.003125	Cost not reduced at x2+dx2.
+39	24	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Maximum number of step reductions reached.
+39	25	1	1	0.0	0.0	0.0	Best iterate of current search.
+59	26	1	1	0.4	-0.2	-0.6	Initial point.
+60	27	1	1	0.4225	-0.25	-0.6	Cost not reduced at x1-dx1.
+61	27	2	1	0.3825	-0.15	-0.6	Cost reduced     at x1+dx1.
+62	27	3	1	0.445	-0.15	-0.65	Cost not reduced at x2-dx2.
+63	27	4	1	0.325	-0.15	-0.55	Cost reduced     at x2+dx2.
+63	27	5	1	0.325	-0.15	-0.55	Local search reduced cost.
+64	28	1	1	0.3125	-0.1	-0.55	Cost reduced     at x1+dx1.
+65	28	2	1	0.26	-0.1	-0.5	Cost reduced     at x2+dx2.
+65	28	3	1	0.26	-0.1	-0.5	Local search reduced cost.
+66	29	1	1	0.2525	-0.05	-0.5	Cost reduced     at x1+dx1.
+67	29	2	1	0.205	-0.05	-0.45	Cost reduced     at x2+dx2.
+67	29	3	1	0.205	-0.05	-0.45	Local search reduced cost.
+68	30	1	1	0.2025	0.0	-0.45	Cost reduced     at x1+dx1.
+69	30	2	1	0.16	0.0	-0.4	Cost reduced     at x2+dx2.
+69	30	3	1	0.16	0.0	-0.4	Local search reduced cost.
+70	31	1	1	0.1625	0.05	-0.4	Cost not reduced at x1+dx1.
+71	31	2	1	0.1625	-0.05	-0.4	Cost not reduced at x1-dx1.
+72	31	3	1	0.1225	0.0	-0.35	Cost reduced     at x2+dx2.
+72	31	4	1	0.1225	0.0	-0.35	Local search reduced cost.
+73	32	1	1	0.125	0.05	-0.35	Cost not reduced at x1+dx1.
+74	32	2	1	0.125	-0.05	-0.35	Cost not reduced at x1-dx1.
+75	32	3	1	0.09	0.0	-0.3	Cost reduced     at x2+dx2.
+75	32	4	1	0.09	0.0	-0.3	Local search reduced cost.
+76	33	1	1	0.0925	0.05	-0.3	Cost not reduced at x1+dx1.
+77	33	2	1	0.0925	-0.05	-0.3	Cost not reduced at x1-dx1.
+78	33	3	1	0.0625	0.0	-0.25	Cost reduced     at x2+dx2.
+78	33	4	1	0.0625	0.0	-0.25	Local search reduced cost.
+79	34	1	1	0.065	0.05	-0.25	Cost not reduced at x1+dx1.
+80	34	2	1	0.065	-0.05	-0.25	Cost not reduced at x1-dx1.
+81	34	3	1	0.04	0.0	-0.2	Cost reduced     at x2+dx2.
+81	34	4	1	0.04	0.0	-0.2	Local search reduced cost.
+82	35	1	1	0.0425	0.05	-0.2	Cost not reduced at x1+dx1.
+83	35	2	1	0.0425	-0.05	-0.2	Cost not reduced at x1-dx1.
+84	35	3	1	0.0225	0.0	-0.15	Cost reduced     at x2+dx2.
+84	35	4	1	0.0225	0.0	-0.15	Local search reduced cost.
+85	36	1	1	0.025	0.05	-0.15	Cost not reduced at x1+dx1.
+86	36	2	1	0.025	-0.05	-0.15	Cost not reduced at x1-dx1.
+87	36	3	1	0.01	0.0	-0.1	Cost reduced     at x2+dx2.
+87	36	4	1	0.01	0.0	-0.1	Local search reduced cost.
+88	37	1	1	0.0125	0.05	-0.1	Cost not reduced at x1+dx1.
+89	37	2	1	0.0125	-0.05	-0.1	Cost not reduced at x1-dx1.
+89	37	3	1	0.0025	0.0	-0.05	Cost reduced     at x2+dx2.
+89	37	4	1	0.0025	0.0	-0.05	Local search reduced cost.
+90	38	1	1	0.005	0.05	-0.05	Cost not reduced at x1+dx1.
+91	38	2	1	0.005	-0.05	-0.05	Cost not reduced at x1-dx1.
+91	38	3	1	0.0	0.0	0.0	Cost reduced     at x2+dx2.
+91	38	4	1	0.0	0.0	0.0	Local search reduced cost.
+91	39	1	1	0.0025	0.05	0.0	Cost not reduced at x1+dx1.
+91	39	2	1	0.0025	-0.05	0.0	Cost not reduced at x1-dx1.
+91	39	3	1	0.0025	0.0	0.05	Cost not reduced at x2+dx2.
+91	39	4	1	0.0025	0.0	-0.05	Cost not reduced at x2-dx2.
+91	39	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.5'.
+91	40	1	1	6.25E-4	0.025	0.0	Cost not reduced at x1+dx1.
+91	40	2	1	6.25E-4	-0.025	0.0	Cost not reduced at x1-dx1.
+91	40	3	1	6.25E-4	0.0	0.025	Cost not reduced at x2+dx2.
+91	40	4	1	6.25E-4	0.0	-0.025	Cost not reduced at x2-dx2.
+91	40	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.25'.
+91	41	1	1	1.5625E-4	0.0125	0.0	Cost not reduced at x1+dx1.
+91	41	2	1	1.5625E-4	-0.0125	0.0	Cost not reduced at x1-dx1.
+91	41	3	1	1.5625E-4	0.0	0.0125	Cost not reduced at x2+dx2.
+91	41	4	1	1.5625E-4	0.0	-0.0125	Cost not reduced at x2-dx2.
+91	41	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.125'.
+91	42	1	1	3.90625E-5	0.00625	0.0	Cost not reduced at x1+dx1.
+91	42	2	1	3.90625E-5	-0.00625	0.0	Cost not reduced at x1-dx1.
+91	42	3	1	3.90625E-5	0.0	0.00625	Cost not reduced at x2+dx2.
+91	42	4	1	3.90625E-5	0.0	-0.00625	Cost not reduced at x2-dx2.
+91	42	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.0625'.
+91	43	1	1	9.765625E-6	0.003125	0.0	Cost not reduced at x1+dx1.
+91	43	2	1	9.765625E-6	-0.003125	0.0	Cost not reduced at x1-dx1.
+91	43	3	1	9.765625E-6	0.0	0.003125	Cost not reduced at x2+dx2.
+91	43	4	1	9.765625E-6	0.0	-0.003125	Cost not reduced at x2-dx2.
+91	43	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Maximum number of step reductions reached.
+91	44	1	1	0.0	0.0	0.0	Best iterate of current search.
+92	45	1	1	1.025	-0.35	0.95	Initial point.
+93	46	1	1	0.9925	-0.3	0.95	Cost reduced     at x1+dx1.
+94	46	2	1	1.09	-0.3	1.0	Cost not reduced at x2+dx2.
+95	46	3	1	0.9	-0.3	0.9	Cost reduced     at x2-dx2.
+95	46	4	1	0.9	-0.3	0.9	Local search reduced cost.
+96	47	1	1	0.8725	-0.25	0.9	Cost reduced     at x1+dx1.
+97	47	2	1	0.785	-0.25	0.85	Cost reduced     at x2-dx2.
+97	47	3	1	0.785	-0.25	0.85	Local search reduced cost.
+98	48	1	1	0.7625	-0.2	0.85	Cost reduced     at x1+dx1.
+99	48	2	1	0.68	-0.2	0.8	Cost reduced     at x2-dx2.
+99	48	3	1	0.68	-0.2	0.8	Local search reduced cost.
+100	49	1	1	0.6625	-0.15	0.8	Cost reduced     at x1+dx1.
+101	49	2	1	0.585	-0.15	0.75	Cost reduced     at x2-dx2.
+101	49	3	1	0.585	-0.15	0.75	Local search reduced cost.
+102	50	1	1	0.5725	-0.1	0.75	Cost reduced     at x1+dx1.
+103	50	2	1	0.5	-0.1	0.7	Cost reduced     at x2-dx2.
+103	50	3	1	0.5	-0.1	0.7	Local search reduced cost.
+104	51	1	1	0.4925	-0.05	0.7	Cost reduced     at x1+dx1.
+105	51	2	1	0.425	-0.05	0.65	Cost reduced     at x2-dx2.
+105	51	3	1	0.425	-0.05	0.65	Local search reduced cost.
+106	52	1	1	0.4225	0.0	0.65	Cost reduced     at x1+dx1.
+107	52	2	1	0.36	0.0	0.6	Cost reduced     at x2-dx2.
+107	52	3	1	0.36	0.0	0.6	Local search reduced cost.
+108	53	1	1	0.3625	0.05	0.6	Cost not reduced at x1+dx1.
+109	53	2	1	0.3625	-0.05	0.6	Cost not reduced at x1-dx1.
+110	53	3	1	0.3025	0.0	0.55	Cost reduced     at x2-dx2.
+110	53	4	1	0.3025	0.0	0.55	Local search reduced cost.
+111	54	1	1	0.305	0.05	0.55	Cost not reduced at x1+dx1.
+112	54	2	1	0.305	-0.05	0.55	Cost not reduced at x1-dx1.
+113	54	3	1	0.25	0.0	0.5	Cost reduced     at x2-dx2.
+113	54	4	1	0.25	0.0	0.5	Local search reduced cost.
+114	55	1	1	0.2525	0.05	0.5	Cost not reduced at x1+dx1.
+115	55	2	1	0.2525	-0.05	0.5	Cost not reduced at x1-dx1.
+116	55	3	1	0.2025	0.0	0.45	Cost reduced     at x2-dx2.
+116	55	4	1	0.2025	0.0	0.45	Local search reduced cost.
+117	56	1	1	0.205	0.05	0.45	Cost not reduced at x1+dx1.
+118	56	2	1	0.205	-0.05	0.45	Cost not reduced at x1-dx1.
+119	56	3	1	0.16	0.0	0.4	Cost reduced     at x2-dx2.
+119	56	4	1	0.16	0.0	0.4	Local search reduced cost.
+120	57	1	1	0.1625	0.05	0.4	Cost not reduced at x1+dx1.
+121	57	2	1	0.1625	-0.05	0.4	Cost not reduced at x1-dx1.
+122	57	3	1	0.1225	0.0	0.35	Cost reduced     at x2-dx2.
+122	57	4	1	0.1225	0.0	0.35	Local search reduced cost.
+123	58	1	1	0.125	0.05	0.35	Cost not reduced at x1+dx1.
+124	58	2	1	0.125	-0.05	0.35	Cost not reduced at x1-dx1.
+125	58	3	1	0.09	0.0	0.3	Cost reduced     at x2-dx2.
+125	58	4	1	0.09	0.0	0.3	Local search reduced cost.
+126	59	1	1	0.0925	0.05	0.3	Cost not reduced at x1+dx1.
+127	59	2	1	0.0925	-0.05	0.3	Cost not reduced at x1-dx1.
+128	59	3	1	0.0625	0.0	0.25	Cost reduced     at x2-dx2.
+128	59	4	1	0.0625	0.0	0.25	Local search reduced cost.
+129	60	1	1	0.065	0.05	0.25	Cost not reduced at x1+dx1.
+130	60	2	1	0.065	-0.05	0.25	Cost not reduced at x1-dx1.
+131	60	3	1	0.04	0.0	0.2	Cost reduced     at x2-dx2.
+131	60	4	1	0.04	0.0	0.2	Local search reduced cost.
+132	61	1	1	0.0425	0.05	0.2	Cost not reduced at x1+dx1.
+133	61	2	1	0.0425	-0.05	0.2	Cost not reduced at x1-dx1.
+134	61	3	1	0.0225	0.0	0.15	Cost reduced     at x2-dx2.
+134	61	4	1	0.0225	0.0	0.15	Local search reduced cost.
+135	62	1	1	0.025	0.05	0.15	Cost not reduced at x1+dx1.
+136	62	2	1	0.025	-0.05	0.15	Cost not reduced at x1-dx1.
+137	62	3	1	0.01	0.0	0.1	Cost reduced     at x2-dx2.
+137	62	4	1	0.01	0.0	0.1	Local search reduced cost.
+137	63	1	1	0.0125	0.05	0.1	Cost not reduced at x1+dx1.
+138	63	2	1	0.0125	-0.05	0.1	Cost not reduced at x1-dx1.
+138	63	3	1	0.0025	0.0	0.05	Cost reduced     at x2-dx2.
+138	63	4	1	0.0025	0.0	0.05	Local search reduced cost.
+138	64	1	1	0.005	0.05	0.05	Cost not reduced at x1+dx1.
+139	64	2	1	0.005	-0.05	0.05	Cost not reduced at x1-dx1.
+139	64	3	1	0.0	0.0	0.0	Cost reduced     at x2-dx2.
+139	64	4	1	0.0	0.0	0.0	Local search reduced cost.
+139	65	1	1	0.0025	0.05	0.0	Cost not reduced at x1+dx1.
+139	65	2	1	0.0025	-0.05	0.0	Cost not reduced at x1-dx1.
+139	65	3	1	0.0025	0.0	-0.05	Cost not reduced at x2-dx2.
+139	65	4	1	0.0025	0.0	0.05	Cost not reduced at x2+dx2.
+139	65	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.5'.
+139	66	1	1	6.25E-4	0.025	0.0	Cost not reduced at x1+dx1.
+139	66	2	1	6.25E-4	-0.025	0.0	Cost not reduced at x1-dx1.
+139	66	3	1	6.25E-4	0.0	-0.025	Cost not reduced at x2-dx2.
+139	66	4	1	6.25E-4	0.0	0.025	Cost not reduced at x2+dx2.
+139	66	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.25'.
+139	67	1	1	1.5625E-4	0.0125	0.0	Cost not reduced at x1+dx1.
+139	67	2	1	1.5625E-4	-0.0125	0.0	Cost not reduced at x1-dx1.
+139	67	3	1	1.5625E-4	0.0	-0.0125	Cost not reduced at x2-dx2.
+139	67	4	1	1.5625E-4	0.0	0.0125	Cost not reduced at x2+dx2.
+139	67	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.125'.
+139	68	1	1	3.90625E-5	0.00625	0.0	Cost not reduced at x1+dx1.
+139	68	2	1	3.90625E-5	-0.00625	0.0	Cost not reduced at x1-dx1.
+139	68	3	1	3.90625E-5	0.0	-0.00625	Cost not reduced at x2-dx2.
+139	68	4	1	3.90625E-5	0.0	0.00625	Cost not reduced at x2+dx2.
+139	68	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.0625'.
+139	69	1	1	9.765625E-6	0.003125	0.0	Cost not reduced at x1+dx1.
+139	69	2	1	9.765625E-6	-0.003125	0.0	Cost not reduced at x1-dx1.
+139	69	3	1	9.765625E-6	0.0	-0.003125	Cost not reduced at x2-dx2.
+139	69	4	1	9.765625E-6	0.0	0.003125	Cost not reduced at x2+dx2.
+139	69	5	1	0.0	0.0	0.0	Iteration step did not reduce cost. Maximum number of step reductions reached.
+139	70	1	1	0.0	0.0	0.0	Best iterate of current search.
+139	70	2	1	0.0	0.0	0.0	Minimum point.

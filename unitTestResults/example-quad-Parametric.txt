@@ -1,0 +1,11 @@
+Simulation Number	Main Iteration	Sub Iteration	Step Number	f(x)	x1	x2
+1	1	1	1	1.0	-1.0	 0.0	Initial point.
+2	2	1	1	0.25	-0.5	 0.0	Function evaluation successful.
+3	3	1	1	0.0	0.0	 0.0	Function evaluation successful.
+4	4	1	1	0.25	0.5	 0.0	Function evaluation successful.
+5	5	1	1	1.0	1.0	 0.0	Function evaluation successful.
+6	6	1	1	1.0	0.0	-1.0	Function evaluation successful.
+7	7	1	1	0.25	0.0	 -0.5	Function evaluation successful.
+3	8	1	1	0.0	0.0	 0.0	Function evaluation successful.
+8	9	1	1	0.25	0.0	 0.5	Function evaluation successful.
+9	10	1	1	1.0	0.0	 1.0	Function evaluation successful.
