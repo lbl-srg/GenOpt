@@ -90,7 +90,7 @@ clean:
 doc:
 	rm -f documentation/jdoc/*.html documentation/jdoc/package-list
 	rm -rf documentation/jdoc/genopt/*
-	(cd src; javadoc -breakiterator -private -author -version \
+	(cd src; javadoc -Xdoclint:none -breakiterator -private -author -version \
 	-windowtitle "GenOpt Code Documentation" \
 	-stylesheetfile ../documentation/jdoc/jstyle.css \
 	-bottom "<DIV CLASS="FOOTER"> <P> <CENTER> <A HREF="http://simulationresearch.lbl.gov/GO" \
