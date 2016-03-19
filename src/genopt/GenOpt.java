@@ -2744,11 +2744,11 @@ public class GenOpt extends Thread
 	       InvocationTargetException, InputFormatException, IOException {
 	final String maiAlg = this.getMainAlgorithm();
 
-	final Class cl = Class.forName("genopt.algorithm." + maiAlg);
-	Class[] arg = new Class[1];
+	final Class<?> cl = Class.forName("genopt.algorithm." + maiAlg);
+	Class<?>[] arg = new Class[1];
 	arg[0] = Class.forName("genopt.GenOpt");
 	try{
-	    final Constructor co = cl.getConstructor( arg );
+	    final Constructor<?> co = cl.getConstructor( arg );
 	    Object[] ob = new Object[1];
 	    ob[0] = this;
 	    final Optimizer o = (Optimizer)co.newInstance(ob);

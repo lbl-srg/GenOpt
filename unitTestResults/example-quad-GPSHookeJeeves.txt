@@ -1,0 +1,86 @@
+Simulation Number	Main Iteration	Sub Iteration	Step Number	f(x)	x1	x2
+1	1	1	1	1.62	0.9	0.9	Initial point.
+2	2	1	1	1.7125	0.95	0.9	Cost not reduced at x1+dx1.
+3	2	2	1	1.5325	0.85	0.9	Cost reduced     at x1-dx1.
+4	2	3	1	1.625	0.85	0.95	Cost not reduced at x2+dx2.
+5	2	4	1	1.445	0.85	0.85	Cost reduced     at x2-dx2.
+5	2	5	1	1.445	0.85	0.85	Global search reduced cost.
+6	3	1	1	1.28	0.8	0.8	Exploration base, Delta = 1.0.
+7	3	2	1	1.2025	0.75	0.8	Cost reduced     at x1-dx1.
+8	3	3	1	1.125	0.75	0.75	Cost reduced     at x2-dx2.
+8	3	4	1	1.125	0.75	0.75	Global search reduced cost.
+9	4	1	1	0.845	0.65	0.65	Exploration base, Delta = 1.0.
+10	4	2	1	0.7825	0.6	0.65	Cost reduced     at x1-dx1.
+11	4	3	1	0.72	0.6	0.6	Cost reduced     at x2-dx2.
+11	4	4	1	0.72	0.6	0.6	Global search reduced cost.
+12	5	1	1	0.405	0.45	0.45	Exploration base, Delta = 1.0.
+13	5	2	1	0.3625	0.4	0.45	Cost reduced     at x1-dx1.
+14	5	3	1	0.32	0.4	0.4	Cost reduced     at x2-dx2.
+14	5	4	1	0.32	0.4	0.4	Global search reduced cost.
+15	6	1	1	0.08	0.2	0.2	Exploration base, Delta = 1.0.
+16	6	2	1	0.0625	0.15	0.2	Cost reduced     at x1-dx1.
+17	6	3	1	0.045	0.15	0.15	Cost reduced     at x2-dx2.
+17	6	4	1	0.045	0.15	0.15	Global search reduced cost.
+18	7	1	1	0.02	-0.1	-0.1	Exploration base, Delta = 1.0.
+19	7	2	1	0.0325	-0.15	-0.1	Cost not reduced at x1-dx1.
+20	7	3	1	0.0125	-0.05	-0.1	Cost reduced     at x1+dx1.
+21	7	4	1	0.025	-0.05	-0.15	Cost not reduced at x2-dx2.
+22	7	5	1	0.005	-0.05	-0.05	Cost reduced     at x2+dx2.
+22	7	6	1	0.005	-0.05	-0.05	Global search reduced cost.
+23	8	1	1	0.125	-0.25	-0.25	Exploration base, Delta = 1.0.
+24	8	2	1	0.1025	-0.2	-0.25	Cost reduced     at x1+dx1.
+25	8	3	1	0.08	-0.2	-0.2	Cost reduced     at x2+dx2.
+26	8	4	1	0.0025	0.0	-0.05	Cost reduced     at x1+dx1.
+27	8	5	1	0.0	0.0	0.0	Cost reduced     at x2+dx2.
+27	8	6	1	0.0	0.0	0.0	Local search reduced cost.
+28	9	1	1	0.005	0.05	0.05	Exploration base, Delta = 1.0.
+29	9	2	1	0.0125	0.1	0.05	Cost not reduced at x1+dx1.
+30	9	3	1	0.0025	0.0	0.05	Cost reduced     at x1-dx1.
+31	9	4	1	0.01	0.0	0.1	Cost not reduced at x2+dx2.
+31	9	5	1	0.0	0.0	0.0	Cost reduced     at x2-dx2.
+32	9	6	1	0.0025	-0.05	0.0	Cost not reduced at x1-dx1.
+33	9	7	1	0.0025	0.05	0.0	Cost not reduced at x1+dx1.
+33	9	8	1	0.0025	0.0	-0.05	Cost not reduced at x2-dx2.
+33	9	9	1	0.0025	0.0	0.05	Cost not reduced at x2+dx2.
+27	9	10	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.5'.
+33	10	1	1	0.0	0.0	0.0	Exploration base, Delta = 0.5.
+34	10	2	1	6.25E-4	-0.025	0.0	Cost not reduced at x1-dx1.
+35	10	3	1	6.25E-4	0.025	0.0	Cost not reduced at x1+dx1.
+36	10	4	1	6.25E-4	0.0	-0.025	Cost not reduced at x2-dx2.
+37	10	5	1	6.25E-4	0.0	0.025	Cost not reduced at x2+dx2.
+37	10	6	1	6.25E-4	-0.025	0.0	Cost not reduced at x1-dx1.
+37	10	7	1	6.25E-4	0.025	0.0	Cost not reduced at x1+dx1.
+37	10	8	1	6.25E-4	0.0	-0.025	Cost not reduced at x2-dx2.
+37	10	9	1	6.25E-4	0.0	0.025	Cost not reduced at x2+dx2.
+27	10	10	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.25'.
+37	11	1	1	0.0	0.0	0.0	Exploration base, Delta = 0.25.
+38	11	2	1	1.5625E-4	-0.0125	0.0	Cost not reduced at x1-dx1.
+39	11	3	1	1.5625E-4	0.0125	0.0	Cost not reduced at x1+dx1.
+40	11	4	1	1.5625E-4	0.0	-0.0125	Cost not reduced at x2-dx2.
+41	11	5	1	1.5625E-4	0.0	0.0125	Cost not reduced at x2+dx2.
+41	11	6	1	1.5625E-4	-0.0125	0.0	Cost not reduced at x1-dx1.
+41	11	7	1	1.5625E-4	0.0125	0.0	Cost not reduced at x1+dx1.
+41	11	8	1	1.5625E-4	0.0	-0.0125	Cost not reduced at x2-dx2.
+41	11	9	1	1.5625E-4	0.0	0.0125	Cost not reduced at x2+dx2.
+27	11	10	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.125'.
+41	12	1	1	0.0	0.0	0.0	Exploration base, Delta = 0.125.
+42	12	2	1	3.90625E-5	-0.00625	0.0	Cost not reduced at x1-dx1.
+43	12	3	1	3.90625E-5	0.00625	0.0	Cost not reduced at x1+dx1.
+44	12	4	1	3.90625E-5	0.0	-0.00625	Cost not reduced at x2-dx2.
+45	12	5	1	3.90625E-5	0.0	0.00625	Cost not reduced at x2+dx2.
+45	12	6	1	3.90625E-5	-0.00625	0.0	Cost not reduced at x1-dx1.
+45	12	7	1	3.90625E-5	0.00625	0.0	Cost not reduced at x1+dx1.
+45	12	8	1	3.90625E-5	0.0	-0.00625	Cost not reduced at x2-dx2.
+45	12	9	1	3.90625E-5	0.0	0.00625	Cost not reduced at x2+dx2.
+27	12	10	1	0.0	0.0	0.0	Iteration step did not reduce cost. Reduce step size to '0.0625'.
+45	13	1	1	0.0	0.0	0.0	Exploration base, Delta = 0.0625.
+46	13	2	1	9.765625E-6	-0.003125	0.0	Cost not reduced at x1-dx1.
+47	13	3	1	9.765625E-6	0.003125	0.0	Cost not reduced at x1+dx1.
+48	13	4	1	9.765625E-6	0.0	-0.003125	Cost not reduced at x2-dx2.
+49	13	5	1	9.765625E-6	0.0	0.003125	Cost not reduced at x2+dx2.
+49	13	6	1	9.765625E-6	-0.003125	0.0	Cost not reduced at x1-dx1.
+49	13	7	1	9.765625E-6	0.003125	0.0	Cost not reduced at x1+dx1.
+49	13	8	1	9.765625E-6	0.0	-0.003125	Cost not reduced at x2-dx2.
+49	13	9	1	9.765625E-6	0.0	0.003125	Cost not reduced at x2+dx2.
+27	13	10	1	0.0	0.0	0.0	Iteration step did not reduce cost. Maximum number of step reductions reached.
+27	13	11	1	0.0	0.0	0.0	Minimum point.
