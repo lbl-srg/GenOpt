@@ -6,7 +6,7 @@ package genopt.algorithm.util.math;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -14,7 +14,7 @@ package genopt.algorithm.util.math;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -72,11 +72,11 @@ public class Fun
     private static final double LN10 = StrictMath.log(10.);
 
     /** Gets an array containing spacing between <CODE>x0</CODE> and <CODE>x1</CODE>.
-     *@param nStep number of intervals. If negative, spacing will be 
+     * @param nStep number of intervals. If negative, spacing will be 
      *             logarithmic, otherwise it will be linear
-     *@param x0 first point of spacing
-     *@param x1 last point of spacing
-     *@return array with all coordinate values
+     * @param x0 first point of spacing
+     * @param x1 last point of spacing
+     * @return array with all coordinate values
      */
     final public static double[] getSpacing(final int nStep, 
 					    final double x0, 
@@ -106,8 +106,8 @@ public class Fun
      * <LI> If the argument is positive zero or negative zero, 
      *      then the result is negative infinity.</UL>
      *
-     *@param x0 - a number greater than 0
-     *@return the logarithm of x.
+     * @param x0 - a number greater than 0
+     * @return the logarithm of x.
      */
     final public static double log10(final double x0){ return StrictMath.log(x0) / LN10; }
 

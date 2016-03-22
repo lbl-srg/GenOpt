@@ -15,7 +15,7 @@ import genopt.io.InputFormatException;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -23,7 +23,7 @@ import genopt.io.InputFormatException;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -82,15 +82,15 @@ public class PSOIW extends genopt.algorithm.util.pso.ModelPSO
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public PSOIW(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {

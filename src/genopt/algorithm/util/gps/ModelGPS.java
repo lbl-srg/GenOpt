@@ -16,7 +16,7 @@ import java.lang.reflect.*;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -24,7 +24,7 @@ import java.lang.reflect.*;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -85,13 +85,13 @@ abstract public class ModelGPS extends Optimizer
 
     /** Constructor used to run it as a single algorithm.
      *
-     *@param genOptData a reference to the GenOpt object.<BR>
+     * @param genOptData a reference to the GenOpt object.<BR>
      * <B>Note:</B> The object is used as a reference.
      *              Hence, its data are modified by this Class.
-     *@exception OptimizerException
-     *@exception Exception
-     *@exception IOException if an I/O exception occurs
-     *@exception InputFormatException
+     * @exception OptimizerException
+     * @exception Exception
+     * @exception IOException if an I/O exception occurs
+     * @exception InputFormatException
      */
     public ModelGPS(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -108,16 +108,16 @@ abstract public class ModelGPS extends Optimizer
     /** Constructor used to run the algorithm in a hybrid algorithm for the
      *  last iterations.
      *
-     *@param meshSizeDivider the mesh size divider. 
+     * @param meshSizeDivider the mesh size divider. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@param initialMeshSizeExponent the initial mesh size exponent. 
+     * @param initialMeshSizeExponent the initial mesh size exponent. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@exception OptimizerException
-     *@exception Exception
-     *@exception IOException if an I/O exception occurs
-     *@exception InputFormatException
+     * @exception OptimizerException
+     * @exception Exception
+     * @exception IOException if an I/O exception occurs
+     * @exception InputFormatException
      */
     public ModelGPS(final int meshSizeDivider,
 		    final int initialMeshSizeExponent)
@@ -137,16 +137,16 @@ abstract public class ModelGPS extends Optimizer
 
     /** Parses the command file.
      *
-     *@param meshSizeDivider the mesh size divider. 
+     * @param meshSizeDivider the mesh size divider. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@param initialMeshSizeExponent the initial mesh size exponent. 
+     * @param initialMeshSizeExponent the initial mesh size exponent. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@exception OptimizerException
-     *@exception Exception
-     *@exception IOException if an I/O exception occurs
-     *@exception InputFormatException
+     * @exception OptimizerException
+     * @exception Exception
+     * @exception IOException if an I/O exception occurs
+     * @exception InputFormatException
      */
     private void parseCommandFile(final int meshSizeDivider,
 				  final int initialMeshSizeExponent)
@@ -256,13 +256,13 @@ abstract public class ModelGPS extends Optimizer
     }
 
     /** Makes an instance of the function that is used for a sufficient decrease condition.
-     *@param funNam the keyword of the function
-     *@param include flag that specifies if zero is includes as a function value or not
-     *@return the function that is used for a sufficient decrease condition
-     *@exception OptimizerException
-     *@exception Exception
-     *@exception IOException
-     *@exception InputFormatException
+     * @param funNam the keyword of the function
+     * @param include flag that specifies if zero is includes as a function value or not
+     * @return the function that is used for a sufficient decrease condition
+     * @exception OptimizerException
+     * @exception Exception
+     * @exception IOException
+     * @exception InputFormatException
      */
     private final FunctionEvaluator _getPrecisionControlFunction(final String funNam,
 								 final int include)
@@ -307,13 +307,13 @@ abstract public class ModelGPS extends Optimizer
     /** Method that initializes the base direction matrix.<P>
      *  Each column vector is a direction, and the set of column vectors
      *  must be a positive span for the domain of independent parameters.
-     *@return baseDireMat the base direction matrix
+     * @return baseDireMat the base direction matrix
      */
     abstract protected double[][] initializeBaseDirectionMatrix();
 
     /** Initializes the iterates for the multi-start algorithm.
-     *@param numPoi number of initial points
-     *@return the initial iterates
+     * @param numPoi number of initial points
+     * @return the initial iterates
      */
     private Point[] getRandomPoints(int numPoi){
 	final int dimCon = getDimensionContinuous();
@@ -392,19 +392,19 @@ abstract public class ModelGPS extends Optimizer
 
     /** Runs the optimization process until a termination criteria
      * is satisfied
-     *@param x0 Initial iterate
-     *@return <CODE>-1</CODE> if the maximum number of iteration
+     * @param x0 Initial iterate
+     * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -449,15 +449,15 @@ abstract public class ModelGPS extends Optimizer
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     private int _run(final Point xIni) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -742,9 +742,9 @@ abstract public class ModelGPS extends Optimizer
     }
 
     /** Adds two vectors of points
-     *@param x0 first vector of points
-     *@param x1 second vector of points
-     *@return the new vector of points
+     * @param x0 first vector of points
+     * @param x1 second vector of points
+     * @return the new vector of points
      */
     protected final Point[] add(Point[] x0, Point[] x1){
 	Point[] r = new Point[x0.length + x1.length];
@@ -754,19 +754,19 @@ abstract public class ModelGPS extends Optimizer
     }
 
     /** Gets the initial mesh size divider
-     *@return the initial mesh size divider
+     * @return the initial mesh size divider
      */
     protected final double getInitialDelta(){
 	return 1. / StrictMath.pow(mesSizDiv, iniMesSizExp);
     }
 
     /** Gets the current mesh size factor
-     *@return the current mesh size factor
+     * @return the current mesh size factor
      */
     protected final double getDelta() { return Delta; }
 
     /** Gets the iteration number
-     *@return the iteration number
+     * @return the iteration number
      */
     protected final int getIterationNumber() { return k; }
 
@@ -793,7 +793,7 @@ abstract public class ModelGPS extends Optimizer
      * This is used by algorithms that run ModelGPS multiple times, such as
      * multi-start methods,
      * and need to prevent it from reporting the minimum.
-     *@param doReport
+     * @param doReport
      */
     protected void reportMinimum(boolean doReport){
 	RepMin = doReport;
@@ -805,7 +805,7 @@ abstract public class ModelGPS extends Optimizer
      * calls the function report with an
      * corresponding comment and reports the minimum
      * point to the output device.
-     *@exception IOException if an I/O error in the optimization output files
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
      */
     protected void reportMinimum() throws IOException{
@@ -821,7 +821,7 @@ abstract public class ModelGPS extends Optimizer
     }
 
     /** Gets the minimum point.<BR>
-     *@return the point with the lowest function value
+     * @return the point with the lowest function value
      */
     public Point getMinimumPoint(){
 	if ( NumIniPoi == 1 )
@@ -837,39 +837,39 @@ abstract public class ModelGPS extends Optimizer
     }    
 
     /** Abstract method for the global search.
-     *@param x Sequence of previous iterates
-     *@param delta current mesh size
-     *@return the sequence of points that have been evaluated in the global search.
+     * @param x Sequence of previous iterates
+     * @param delta current mesh size
+     * @return the sequence of points that have been evaluated in the global search.
      *        Each point must be a mesh point. 
      *        If no point has been evaluated, then this method must return <code>EMPTY_SEARCH_SET</code>.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     protected abstract Point[] globalSearch(Point[] x, double delta) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
 	IllegalAccessException, Exception;
 
     /** Abstract method for the local search.
-     *@param x Sequence of previous iterates
-     *@param delta current mesh size
-     *@return the sequence of points that have been evaluated in the local search, regardless
+     * @param x Sequence of previous iterates
+     * @param delta current mesh size
+     * @return the sequence of points that have been evaluated in the local search, regardless
      *        whether they reduced the cost function value or not.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     protected abstract Point[] localSearch(Point[] x, double delta) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -880,8 +880,8 @@ abstract public class ModelGPS extends Optimizer
      * If it has been obtained previously, an information message is reported.
      * If the maximum number of matching function value is obtained, an exception
      * is thrown.
-     *@param x the point to be checked
-     *@exception OptimizerException thrown if the maximum number of matching
+     * @param x the point to be checked
+     * @exception OptimizerException thrown if the maximum number of matching
      *           function value is obtained
      */
     public void checkObjectiveFunctionValue(final Point x)
@@ -891,10 +891,10 @@ abstract public class ModelGPS extends Optimizer
     
     
     /** Reports the new trial
-     *@param x the point to be reported
-     *@param MainIteration <CODE>true</CODE> if step was a main iteration or
+     * @param x the point to be reported
+     * @param MainIteration <CODE>true</CODE> if step was a main iteration or
      *       <CODE>false</CODE> if it was a sub iteration
-     *@exception IOException if an I/O error in the optimization output files
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
      */
     public void report(Point x, boolean MainIteration)
@@ -910,18 +910,18 @@ abstract public class ModelGPS extends Optimizer
 
     /** Gets the cost function value and registers it into
      * the data base
-     *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
-     *@return a clone of the point with the new function values stored
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
+     * @return a clone of the point with the new function values stored
      */
     public Point getF(Point x) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -948,17 +948,17 @@ abstract public class ModelGPS extends Optimizer
     
     /** Gets the number of step reductions done up to now.
 	The return value is a zero-based counter.
-     *@return the number of step reductions done up to now
+     * @return the number of step reductions done up to now
      */
     protected int getNumberOfStepReduction(){ return nSteRed; }
 
     /** Gets the maximum number of step reductions.
-     *@return the maximum number of step reductions
+     * @return the maximum number of step reductions
      */
     protected int getMaximumNumberOfStepReduction(){ return nMaxSteRed; }
 
     /** Sets the maximum number of step reductions.
-     *@param maxNumberOfStepReductions the maximum number of step reductions
+     * @param maxNumberOfStepReductions the maximum number of step reductions
      */
 protected void setMaximumNumberOfStepReduction(int maxNumberOfStepReductions){ 
 	assert ( maxNumberOfStepReductions >= 0 ) : "Number of step reductions must be non-negative.";
@@ -968,10 +968,10 @@ protected void setMaximumNumberOfStepReduction(int maxNumberOfStepReductions){
 
     /** Gets the mesh point, on a rectangular mesh, that is closest to the argument.
      *
-     *@param x independent parameter
-     *@param xMes any point on the mesh
-     *@param delta mesh size factor times the step size of the variable
-     *@return the mesh point that is closest to <code>x</code> in the Euclidean norm.
+     * @param x independent parameter
+     * @param xMes any point on the mesh
+     * @param delta mesh size factor times the step size of the variable
+     * @return the mesh point that is closest to <code>x</code> in the Euclidean norm.
      */
     public static double[] getClosestEuclideanMeshPoint(double[] x,
 							double[] xMes,

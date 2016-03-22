@@ -19,7 +19,7 @@ import java.lang.reflect.*;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -27,7 +27,7 @@ import java.lang.reflect.*;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * The version numbering format is M.m.P.s, where M is the major version
   * number, m is the minor version number, P is the patch level, and 
@@ -113,6 +113,9 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2016, Mar. 18 wm In genopt.algorithm.Optimizer, corrected bug in error reporting
+                  which lead to an Exception if all independent parameters are discrete.
+                  This is for https://github.com/lbl-srg/GenOpt/issues/2
  2013, Jul.  3 wm In genopt.io.Token, prevented a NullPointerException that can be 
                   caused by input such as "Min = ;"
  2011, Dec.  8 wm Updated to 3.1.0
@@ -556,7 +559,7 @@ public class GenOpt extends Thread
 
 
     /** gets the initialization startup file
-     *@return the initialization file startup file
+     * @return the initialization file startup file
      */
     protected File getIniStartUpFile()
     {
@@ -2099,14 +2102,14 @@ public class GenOpt extends Thread
     ///////////////////////////////////////////////////////////////////////
     /** gets a new instance of a ContinuousParameter Object based on the value in 'val'.
      *
-     *@param val String array with following elements:<CODE>
+     * @param val String array with following elements:<CODE>
      *           val[0] = Name; val[1] = Min ; val[2] = Ini;
      *           val[3] = Max ; val[4] = Step;
-     *@param e reference to InputFormatException. Error messages are written into
+     * @param e reference to InputFormatException. Error messages are written into
      *         this Object
-     *@param lineNumber line number to which the error report will be referred to
-     *@param fileName name of file (for error report only) or <CODE>null</CODE> pointer
-     *@return the ContinuousParameter Object
+     * @param lineNumber line number to which the error report will be referred to
+     * @param fileName name of file (for error report only) or <CODE>null</CODE> pointer
+     * @return the ContinuousParameter Object
      */
     private static ContinuousParameter parseContinuousPar(String[] val, InputFormatException e,
 					int lineNumber, String fileName)
@@ -2213,16 +2216,16 @@ public class GenOpt extends Thread
     ///////////////////////////////////////////////////////////////////////
     /** gets a new instance of a DiscreteParameter Object.
      *
-     *@param optComStrTok StreamTokenizer of the optimization command file
-     *@param key String array with the keywords:<CODE>
+     * @param optComStrTok StreamTokenizer of the optimization command file
+     * @param key String array with the keywords:<CODE>
      *           key[0] = Name; key[1] = Min ; key[2] = Ini;
      *           key[3] = Max ; key[4] = Step; key[5] = Type;
      *           key[6] = Values;
-     *@param val String array the values for <CODE>key</CODE>
-     *@param inpForExc reference to InputFormatException. Error messages are written into
+     * @param val String array the values for <CODE>key</CODE>
+     * @param inpForExc reference to InputFormatException. Error messages are written into
      *         this Object
-     *@param fileName name of file (for error report only)
-     *@return the ContinuousParameter Object
+     * @param fileName name of file (for error report only)
+     * @return the ContinuousParameter Object
      */
     private static DiscreteParameter parseDiscretePar(StreamTokenizer optComStrTok,
 						      String[] key, 
@@ -2486,7 +2489,7 @@ public class GenOpt extends Thread
     }
 
     /** gets the optimization ini file
-	  *@return the optimization ini file
+	  * @return the optimization ini file
 	  */
     public File getOptimizationIniFile()
     {
@@ -2547,7 +2550,7 @@ public class GenOpt extends Thread
 
     ///////////////////////////////////////////////////////////////////////
     /** gets the start date of the optimization
-     *@return the date when the optimization started
+     * @return the date when the optimization started
      */
     public Date getStartDate() { return startDate; }
 
@@ -2705,7 +2708,7 @@ public class GenOpt extends Thread
     public void sleepGenOpt(boolean susp) { suspend = susp; }
 
     /** returns a flag whether GenOpt must be stopped after the current simulation
-	  *@return <CODE>true</CODE> if GenOpt has to be stopped, <CODE>false</CODE>
+	  * @return <CODE>true</CODE> if GenOpt has to be stopped, <CODE>false</CODE>
 	  *        otherwise
 	  */
     public synchronized boolean mustStopOptimization()
@@ -2724,12 +2727,12 @@ public class GenOpt extends Thread
 
     ///////////////////////////////////////////////////////////////////////
     /** gets the number of the continuous parameters
-     *@return the number of continuous parameters
+     * @return the number of continuous parameters
      */
     public int getDimensionContinuous() { return dimCon; }
 
     /** gets the number of discrete parameters
-     *@return the number of discrete parameters
+     * @return the number of discrete parameters
      */
     public int getDimensionDiscrete() { return dimDis; }
 
@@ -2741,11 +2744,11 @@ public class GenOpt extends Thread
 	       InvocationTargetException, InputFormatException, IOException {
 	final String maiAlg = this.getMainAlgorithm();
 
-	final Class cl = Class.forName("genopt.algorithm." + maiAlg);
-	Class[] arg = new Class[1];
+	final Class<?> cl = Class.forName("genopt.algorithm." + maiAlg);
+	Class<?>[] arg = new Class[1];
 	arg[0] = Class.forName("genopt.GenOpt");
 	try{
-	    final Constructor co = cl.getConstructor( arg );
+	    final Constructor<?> co = cl.getConstructor( arg );
 	    Object[] ob = new Object[1];
 	    ob[0] = this;
 	    final Optimizer o = (Optimizer)co.newInstance(ob);
@@ -2763,13 +2766,13 @@ public class GenOpt extends Thread
 
     ///////////////////////////////////////////////////////////////////////
     /** gets the exit flag of the optimization run
-     *@return the exit flag of the optimization run
+     * @return the exit flag of the optimization run
      */
     public int getExitFlag() { return exiFla; }
 
     ///////////////////////////////////////////////////////////////////////
     /** prints a stackTrace to the output and error stream
-     *@param t Throwable
+     * @param t Throwable
      */
     public static void printStackTrace(Throwable t)
     {
@@ -2789,7 +2792,7 @@ public class GenOpt extends Thread
     }
 
     /** gets the separator, as specified in properties.txt
-     *@return the separator
+     * @return the separator
      */
     public String getSeparator(){
 	if (wgo == null){
@@ -2801,7 +2804,7 @@ public class GenOpt extends Thread
     }
 
     /** checks whether we should run in debug mode
-     *@return <CODE>true</CODE> if we run in debug mode, <CODE>false</CODE> otherwise
+     * @return <CODE>true</CODE> if we run in debug mode, <CODE>false</CODE> otherwise
      */
     public boolean isDebug(){
 	if (wgo == null){
@@ -2867,7 +2870,7 @@ public class GenOpt extends Thread
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     /** Main routine
-     *@param args optional parameter for optimization initialization file
+     * @param args optional parameter for optimization initialization file
      */
     public static void main(String[] args){
 	System.out.println(DIVIDER);

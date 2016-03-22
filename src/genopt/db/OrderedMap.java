@@ -6,7 +6,7 @@ package genopt.db;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -14,7 +14,7 @@ package genopt.db;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -78,8 +78,8 @@ public class OrderedMap
 
 
     /** puts a pair (key,value) in the map
-     *@param key key of the pair
-     *@param value value of the pair
+     * @param key key of the pair
+     * @param value value of the pair
      */
     public void put(Object key, Object value)
     {
@@ -101,8 +101,8 @@ public class OrderedMap
 
     /** returns <CODE>true</CODE> if the Object is a key in the Map, 
      ** <CODE>false</CODE> otherwise
-     *@param o Object to be compared against the keys
-     *@return <CODE>true</CODE> if Object is already in Map, 
+     * @param o Object to be compared against the keys
+     * @return <CODE>true</CODE> if Object is already in Map, 
      *        <CODE>false</CODE> otherwise
      */
     public boolean containsKey(Object o)
@@ -115,8 +115,8 @@ public class OrderedMap
 
     /** returns <CODE>true</CODE> if the Object is a value in the Map, 
      ** <CODE>false</CODE> otherwise
-     *@param o Object to be compared against the values
-     *@return <CODE>true</CODE> if Object is already in Map, 
+     * @param o Object to be compared against the values
+     * @return <CODE>true</CODE> if Object is already in Map, 
      *        <CODE>false</CODE> otherwise
      */
     public boolean containsValue(Object o)
@@ -128,7 +128,7 @@ public class OrderedMap
     }
 
     /** get the keys
-     *@return the keys of the Map
+     * @return the keys of the Map
      */
     public Object[] getKeys()
     {
@@ -136,7 +136,7 @@ public class OrderedMap
     }
 
     /** get the values
-     *@return the values of the Map
+     * @return the values of the Map
      */
     public Object[] getValues()
     {
@@ -144,15 +144,15 @@ public class OrderedMap
     }
 
     /** get the <code>i</code>-th value
-     *@return the <code>i</code>-th value
+     * @return the <code>i</code>-th value
      */
     public Object getValue(int i)
     {
 	return map[1][i];
     }
     /** get the value of the key
-     *@param key the key for which the value will be returned
-     *@return the value of the key
+     * @param key the key for which the value will be returned
+     * @return the value of the key
      */
     public Object get(Object key)
     {
@@ -163,8 +163,8 @@ public class OrderedMap
     }
 
     /** sets the value of the <code>i</code>-th entry
-     *@param i the number of the value
-     *@return value the value of the <code>i</code>-th entry
+     * @param i the number of the value
+     * @return value the value of the <code>i</code>-th entry
      */
     public Object setValue(int i, Object value){
 	return map[1][i] = value;
@@ -172,11 +172,11 @@ public class OrderedMap
 
 
     /** returns the number of keys in this Map
-     *@return he number of keys in this Map
+     * @return he number of keys in this Map
      */
     public int size() { return nK; }
 
-    /** mapping key -> value */
+    /** mapping key to value */
     protected Object[][] map;
     /** the number of keys in the map */
     protected int nK;

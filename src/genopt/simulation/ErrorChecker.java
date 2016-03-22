@@ -15,7 +15,7 @@ import java.io.IOException;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -23,7 +23,7 @@ import java.io.IOException;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -117,10 +117,10 @@ public class ErrorChecker implements Cloneable
 	  * an empty Vector. Otherwise, a Vector with all
 	  * found errors and an additional error information as the first entry are returned.
           *
-	  *@param fileName Name of file that has to be checked for errors
-	  *@param AdditionalErrorInformation Additional string that is added at the beginning
+	  * @param fileName Name of file that has to be checked for errors
+	  * @param AdditionalErrorInformation Additional string that is added at the beginning
 	  *   of the returned the error message
-	  *@return A trimed empty Vector if no error message could be found, otherwise
+	  * @return A trimed empty Vector if no error message could be found, otherwise
 	  *   a trimed Vector with all the error messages that were found and the string
 	  *   'ErrorMessage' as the first entry.
 	  * @exception IOException if the file cannot be read

@@ -6,7 +6,7 @@ package genopt.lang;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -14,7 +14,7 @@ package genopt.lang;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -77,14 +77,14 @@ public class ObjectiveFunctionLocation
 	 *
 	 * Either <code>delimiter</code> or <code>function</code> must be
 	 * <code>null</code>, but not both.
-	 *@param name name of the function
-	 *@param delimiter objective function delimiter, or <code>null</code>
+	 * @param name name of the function
+	 * @param delimiter objective function delimiter, or <code>null</code>
 	 *                 pointer
-	 *@param firstCharacterAt one-based index for the position
+	 * @param firstCharacterAt one-based index for the position
          *          where the first character of the delimiter starts,
          *          or 0 if unspecified
 	 *
-	 *@param function string representation of the function, or <code>null</code>
+	 * @param function string representation of the function, or <code>null</code>
 	 *                 pointer
 	 */
     public ObjectiveFunctionLocation(String name,

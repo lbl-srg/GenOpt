@@ -10,7 +10,7 @@ import javax.swing.JComponent;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -18,7 +18,7 @@ import javax.swing.JComponent;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -108,7 +108,7 @@ public class LineChart extends JComponent{
     }
 
     /** sets the number format for the x-axis label
-     *@param format the number format
+     * @param format the number format
      */
     public final void setXNumberFormat(final int format)
     {
@@ -123,7 +123,7 @@ public class LineChart extends JComponent{
     }
 
     /** sets the title
-     *@param title the title of the chart
+     * @param title the title of the chart
      */
     public final void setTitle(final String title)
     {
@@ -131,7 +131,7 @@ public class LineChart extends JComponent{
     }
 
     /** sets the x-axis label
-     *@param label the x-axis label
+     * @param label the x-axis label
      */
     public final void setXAxisLabel(final String label)
     {
@@ -146,8 +146,8 @@ public class LineChart extends JComponent{
     }
         
     /** adds a data serie to the chart
-     *@param ds the data serie
-     *@exception if the name of the serie is not unique
+     * @param ds the data serie
+     * @exception if the name of the serie is not unique
      */
     public final void add(final DataSerie ds)
 	throws IllegalArgumentException {
@@ -223,9 +223,9 @@ public class LineChart extends JComponent{
     }
 
     /** sets new values of a serie. The serie is identified by its name
-     *@param ds the data serie
+     * @param ds the data serie
 
-     *@exception IllegalArgumentException if the serie is not registered yet
+     * @exception IllegalArgumentException if the serie is not registered yet
      */
     public final void setSerie(final DataSerie ds)
 	throws IllegalArgumentException
@@ -254,7 +254,7 @@ public class LineChart extends JComponent{
     }
 
     /** gets an axis label
-     *@param x the number to be parsed
+     * @param x the number to be parsed
      */
     protected final String getAxisLabel(final double x)
     {
@@ -273,8 +273,8 @@ public class LineChart extends JComponent{
     }
     
     /** gets the label ticks
-     *@param xMin the minimum data point of the axis
-     *@param xMax the maximum data point of the axis
+     * @param xMin the minimum data point of the axis
+     * @param xMax the maximum data point of the axis
      */
     public final static double[] getTicks(final double xMin, 
 					  final double xMax)
@@ -460,14 +460,14 @@ public class LineChart extends JComponent{
 	insChaNorth = insChaNorth + (int)(0.25 * ins);
     }
     /** checks whether argument is an even number or an odd number
-     *@param i the argument to be tested
-     *@return <CODE>true</CODE> if i is even, <CODE>false</CODE> otherwise
+     * @param i the argument to be tested
+     * @return <CODE>true</CODE> if i is even, <CODE>false</CODE> otherwise
      */
     protected final static boolean isEven(final int i) { return ((i / 2) * 2 == i); }
 
 
     /** gets the maximal number of data in all series
-     *@return the maximal number of data in all series
+     * @return the maximal number of data in all series
      */
     protected final int getMaxPoints(){
 	int maxVal = -1;
@@ -479,7 +479,7 @@ public class LineChart extends JComponent{
     }
 
     /** paints the chart (or the message if chart cannot be initialize yet)
-     *@param g the Graphics Object
+     * @param g the Graphics Object
      */
     public void paint(Graphics g)
     {
@@ -497,7 +497,7 @@ public class LineChart extends JComponent{
 	    initialize(g2);
     }
     /** checks if the chart requires a rescaling
-     *@return <CODE>true</CODE> if the chart requires a rescaling
+     * @return <CODE>true</CODE> if the chart requires a rescaling
      *        <CODE>false</CODE> otherwise
      */
     private final boolean requireRescale()
@@ -540,7 +540,7 @@ public class LineChart extends JComponent{
     }
 
     /** draws the lines of the chart
-     *@param g reference to graphics object
+     * @param g reference to graphics object
      */
     private void safeDrawChartLines(Graphics g){
 	g.translate(insChaWest, insChaNorth);
@@ -580,7 +580,7 @@ public class LineChart extends JComponent{
     }
 
     /** draws the chart title
-     *@param g the Graphics Object
+     * @param g the Graphics Object
      */
     protected void drawTitle(Graphics2D g)
     {
@@ -591,7 +591,7 @@ public class LineChart extends JComponent{
     }
         
     /** draws the chart label
-     *@param g the Graphics Object
+     * @param g the Graphics Object
      */
     protected final void drawLegend(Graphics g){
 	final Font f = g.getFont();
@@ -632,7 +632,7 @@ public class LineChart extends JComponent{
     }
         
     /** draws the box around the chart
-     *@param g the Graphics Object
+     * @param g the Graphics Object
      */    
     protected final void drawBox(Graphics g)
     {
@@ -702,8 +702,8 @@ public class LineChart extends JComponent{
 
     /** gets the offset of an x-value, measured in pixels
      * from the west border of the chart surrounding box
-     *@param x the x-value (not in pixels)
-     *@return the offset
+     * @param x the x-value (not in pixels)
+     * @return the offset
      */    
     protected final int getXPointOffset(final double x)
     {
@@ -712,10 +712,10 @@ public class LineChart extends JComponent{
 
     /** gets the offset of an y-value, measured in pixels
      * from the north border of the chart surrounding box
-     *@param y the function value f(x)
+     * @param y the function value f(x)
 
-     *@param i the number of the data serie to which the point belongs to
-     *@return the offset
+     * @param i the number of the data serie to which the point belongs to
+     * @return the offset
      */
     protected final int getYPointOffset(final double y, final int i)
     {
@@ -734,7 +734,7 @@ public class LineChart extends JComponent{
 	System.arraycopy(y1, 0, y1Last, 0, nSer);
     }
     /** draws the whole chart
-     *@param g the Graphics Object
+     * @param g the Graphics Object
      */
     protected final void drawWholeChart(Graphics2D g){
 	setSubTitle();
@@ -768,7 +768,7 @@ public class LineChart extends JComponent{
     }
 
     /** initializes the space of the chart (used if no data are available yet)
-     *@param g the Graphics Object
+     * @param g the Graphics Object
      */
     protected void initialize(Graphics g)
     {

@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -114,10 +114,10 @@ abstract public class Optimizer
      * @param constraintMode a flag indicating how constraints are treated<PRE>
      * 0: optimization is in original space (constraints are not taken into account)
      * 1: optimization is in transformed space</PRE>
-     *@exception InputFormatException if an error occurs while searching for <CODE>Main</CODE>
+     * @exception InputFormatException if an error occurs while searching for <CODE>Main</CODE>
      *           in the <CODE>Algorithm</CODE> section
-     *@exception IOException if an I/O exception occurs
-     *@exception Exception in an exception occurs
+     * @exception IOException if an I/O exception occurs
+     * @exception Exception in an exception occurs
      */
     protected Optimizer(final GenOpt genOptData, final int constraintMode)
 	throws InputFormatException, OptimizerException, IOException, Exception
@@ -213,7 +213,7 @@ abstract public class Optimizer
     /** Sets the step number.
      * This method is used by multi-start algorithms. 
      * This method must not be used to decrease the step number
-     *@param sN
+     * @param sN
      */
     static protected void resetStepNumber(final int sN){
 	assert ( sN <= stepNumber ) : "Method can only be used to decrease the step number.";
@@ -236,7 +236,7 @@ abstract public class Optimizer
      * If any independent parameter is not continuous, then an
      * <CODE>OptimizerException</CODE> is thrown (with an 
      * descriptive information)
-     *@exception OptimizerException if some independent parameters are not continuous
+     * @exception OptimizerException if some independent parameters are not continuous
      */
     protected void ensureOnlyContinuousParameters()
 	throws OptimizerException{
@@ -265,7 +265,7 @@ abstract public class Optimizer
      * If any independent parameter is not discrete, then an
      * <CODE>OptimizerException</CODE> is thrown (with an 
      * descriptive information)
-     *@exception OptimizerException if some independent parameters are not discrete
+     * @exception OptimizerException if some independent parameters are not discrete
      */
     protected void ensureOnlyDiscreteParameters()
 	throws OptimizerException{
@@ -322,7 +322,7 @@ abstract public class Optimizer
      *  If it does not exist, it will be created.
      * @param path source path of the files
      * @param name name of the files
-     *@param simNum The number of the simulation
+     * @param simNum The number of the simulation
      * @exception SecurityException if a SecurityException occured
      * @exception Exception if the directory could not be made
      */
@@ -446,8 +446,8 @@ abstract public class Optimizer
      * <B>Note:</B> This method is called from the GenOpt kernel to ensure
      *         that all the information in the command file is parsed
      *         properly
-     *@exception InputFormatException if either of the checks fails
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception InputFormatException if either of the checks fails
+     * @exception IOException if the optimization command file cannot be accessed
      */
     public void goToEndOfCommandFile() throws InputFormatException, IOException{
 	InputFormatException e = new InputFormatException();
@@ -458,10 +458,10 @@ abstract public class Optimizer
     }
 
     /** Checks whether the next Token is equal to the passed String.<br>
-     *@param keyWord the keyword that has to be searched for
-     *@return <CODE>true</CODE> if the next Token equals the value of <CODE>keyWord</CODE>,
+     * @param keyWord the keyword that has to be searched for
+     * @return <CODE>true</CODE> if the next Token equals the value of <CODE>keyWord</CODE>,
      *        <CODE>false</CODE> otherwise
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     public final boolean isNextToken(final String keyWord) throws IOException{
 	assert keyWord != null : "Received 'null' as argument";
@@ -472,11 +472,11 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final String getInputValueString(final String keyWord)
 	throws InputFormatException, IOException{
@@ -486,12 +486,12 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@param admVal the admissible values
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @param admVal the admissible values
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final String getInputValueString(final String keyWord,
 					       final String[] admVal)
@@ -525,11 +525,11 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final boolean getInputValueBoolean(final String keyWord)
 	throws InputFormatException, IOException{
@@ -544,11 +544,11 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final int getInputValueInteger(final String keyWord)
 	throws InputFormatException, IOException{
@@ -560,19 +560,19 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@param min the minimum allowed value
-     *@param minEqu flag whether the minimum equality is strict or weak,
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @param min the minimum allowed value
+     * @param minEqu flag whether the minimum equality is strict or weak,
      *              as defined by <CODE>Optimizer.EXCLUDING</CODE> and 
      *              <CODE>Optimizer.INCLUDING</CODE>
-     *@param max the maximum allowed value
-     *@param maxEqu flag whether the maximum equality is strict or weak,
+     * @param max the maximum allowed value
+     * @param maxEqu flag whether the maximum equality is strict or weak,
      *              as defined by <CODE>Optimizer.EXCLUDING</CODE> and 
      *              <CODE>Optimizer.INCLUDING</CODE>
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final int getInputValueInteger(final String keyWord,
 					     final int min,
@@ -613,11 +613,11 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final double getInputValueDouble(final String keyWord)
 	throws InputFormatException, IOException{
@@ -629,19 +629,19 @@ abstract public class Optimizer
     /** Gets the value of <CODE>keyWord</CODE> from the <CODE>algorithmEntry</CODE>
      * If another String than <CODE>keyWord</CODE> is at the current position
      * of the <CODE>algorithmEntry</CODE>, an InputFormatException is thrown
-     *@param keyWord the expected <CODE>keyWord</CODE>
-     *@param min the minimum allowed value
-     *@param minEqu flag whether the minimum equality is strict or weak,
+     * @param keyWord the expected <CODE>keyWord</CODE>
+     * @param min the minimum allowed value
+     * @param minEqu flag whether the minimum equality is strict or weak,
      *              as defined by <CODE>Optimizer.EXCLUDING</CODE> and 
      *              <CODE>Optimizer.INCLUDING</CODE>
-     *@param max the maximum allowed value
-     *@param maxEqu flag whether the maximum equality is strict or weak,
+     * @param max the maximum allowed value
+     * @param maxEqu flag whether the maximum equality is strict or weak,
      *              as defined by <CODE>Optimizer.EXCLUDING</CODE> and 
      *              <CODE>Optimizer.INCLUDING</CODE>
-     *@return the value of <CODE>keyWord</CODE>
-     *@exception InputFormatException if another String than <CODE>keyWord</CODE>
+     * @return the value of <CODE>keyWord</CODE>
+     * @exception InputFormatException if another String than <CODE>keyWord</CODE>
      *           is read or if it is a invalid type
-     *@exception IOException if the optimization command file cannot be accessed
+     * @exception IOException if the optimization command file cannot be accessed
      */
     protected final double getInputValueDouble(final String keyWord,
 					       final double min,
@@ -694,8 +694,8 @@ abstract public class Optimizer
      * <B>Note:</B> You have to call this
      * method immediately after getting the value so that the error message
      * points to the right line number
-     *@param expectedValue a String that specifies the value you expected
-     *@exception InputFormatException the thrown exception with the error message
+     * @param expectedValue a String that specifies the value you expected
+     * @exception InputFormatException the thrown exception with the error message
      */
     protected final void throwInputError(final String expectedValue)
 	throws InputFormatException{
@@ -711,23 +711,23 @@ abstract public class Optimizer
 
 
     /** Gets the number of independent variables (sum of continuous and discrete)
-     *@return the number of independent variables (sum of continuous and discrete)
+     * @return the number of independent variables (sum of continuous and discrete)
      */
     public final int getDimensionX() { return dimX; }
 
     /** Gets the number of independent, continuous variables
-     *@return the number of independent, continuous variables
+     * @return the number of independent, continuous variables
      */
     public final int getDimensionContinuous() { return dimCon; }
 
     /** Gets the number of independent, continuous variables
-     *@return the number of independent, continuous variables
+     * @return the number of independent, continuous variables
      */
     public final int getDimensionDiscrete() { return dimDis; }
 
 
     /** Gets the number of function values
-     *@return the number of function values
+     * @return the number of function values
      */
     public final int getDimensionF() { return dimF; }
 
@@ -766,7 +766,7 @@ abstract public class Optimizer
      * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
      * @exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an Exception occurs
+     * @exception Exception if an Exception occurs
      */
     abstract public int run(Point x0)
 	throws OptimizerException, SimulationInputException, 
@@ -809,18 +809,18 @@ abstract public class Optimizer
      * are treated. The return value contains the same point but with its function value
      * as determined by the simulation.
      *
-     *@param x the points to be evaluated
-     *@param stopAtError set to false to continue with function evaluations even if there was an error
-     *@return a clone of the points with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the points to be evaluated
+     * @param stopAtError set to false to continue with function evaluations even if there was an error
+     * @return a clone of the points with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Point[] getF(Point[] x, boolean stopAtError)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -882,13 +882,17 @@ abstract public class Optimizer
 		    String em = "Exception in evaluating x = ( ";
 		    for (int i=0; i < dimCon-1; i++)
 		        em += x[iT].getX(i) + ", ";
-		    if (dimDis == 0)
+		    if (dimDis == 0){ // no discrete variables, close bracket
 			em += x[iT].getX(dimCon-1) + ")." + LS;
-		    else{
-			em += x[iT].getX(dimCon-1) + "; ";
+                    }
+		    else{ // have discrete vars
+                        if (dimCon > 0)
+                            em += x[iT].getX(dimCon-1) + "; ";
+                        // Write the discrete variables
 			for (int i=0; i < dimDis-1; i++)
 			    em += x[iT].getIndex(i) + ", ";
-			em += x[iT].getIndex(dimDis-1) + ")." + LS;
+                        if (dimDis > 0)
+                            em += x[iT].getIndex(dimDis-1) + ")." + LS;
 		    }
 		    setWarning( em + e.getMessage(), x[iT].getSimulationNumber() );
 		    double[] f = new double[dimF];
@@ -924,17 +928,17 @@ abstract public class Optimizer
      * are treated. The return value contains the same point but with its function value
      * as determined by the simulation.
      *
-     *@param x the point being evaluated
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public Point getF(Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -957,10 +961,10 @@ abstract public class Optimizer
     }
 
     /** Sets the function values in these points that are already known.
-     *@param x the points for which the function values are needed
-     *@return a vectors with elements set to <code>true</code> if a simulation is needed
+     * @param x the points for which the function values are needed
+     * @return a vectors with elements set to <code>true</code> if a simulation is needed
      *        for a particular point
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
      */
     private boolean[] setKnownFunctionValues(Point[] x)
@@ -1004,10 +1008,10 @@ abstract public class Optimizer
      * If a element is non-negative, then its value is the index of the point that has
      * is equal. For such a point, no simulation is required.
      *
-     *@param x the points for which the function values are needed
-     *@return a vectors with elements set to <code>true</code> if a simulation is needed
+     * @param x the points for which the function values are needed
+     * @return a vectors with elements set to <code>true</code> if a simulation is needed
      *        for a particular point
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
      */
     public static int[] getPointerToEqualPoints(final Point[] x){
@@ -1030,16 +1034,16 @@ abstract public class Optimizer
     }
     
     /** Evaluates the simulation based on the parameter set x<BR>
-     *@param x the point being evaluated
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public void simulate(Point x)
 	throws SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -1087,18 +1091,18 @@ abstract public class Optimizer
 
     /** Tries to evaluate the simulation a second time if an exception has been
      * thrown
-     *@param x the point being evaluated
-     *@param t the caught Throwable
-     *@return a clone of the point with the new function values stored
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x the point being evaluated
+     * @param t the caught Throwable
+     * @return a clone of the point with the new function values stored
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                   control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an exception occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an exception occurs
      */
     private Point _retryEvaluateSimulation(final Point x, final Throwable t)
 	throws SimulationInputException, OptimizerException, 
@@ -1121,8 +1125,8 @@ abstract public class Optimizer
 
 
     /** appends a String to the output listing files
-     *@param s String to be appended to output listing files
-     *@exception IOException
+     * @param s String to be appended to output listing files
+     * @exception IOException
      */
     public final void appendToOutputListing(final String s) throws IOException{
 	assert s != null : "Received 'null' as argument";
@@ -1136,7 +1140,7 @@ abstract public class Optimizer
      * This method calls the function report with a
      * corresponding comment and reports the minimum
      * point to the output device
-     *@exception IOException if an I/O error in the optimization output files
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
      */
     protected void reportCurrentLowestPoint() throws IOException{
@@ -1452,10 +1456,10 @@ abstract public class Optimizer
     }
 
     /** Replaces <code>text</code> with <code>value</code> in <code>simulationInput</code>.
-     *@param text text to be searched for
-     *@param value value that will replace <code>text</code>
-     *@param simulationInput file handler in which search will take place
-     *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
+     * @param text text to be searched for
+     * @param value value that will replace <code>text</code>
+     * @param simulationInput file handler in which search will take place
+     * @return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
      */
     private static boolean _replaceInInputFile(final String text, final String value,
 					final FileHandler[] simulationInput){
@@ -1467,10 +1471,10 @@ abstract public class Optimizer
     }
 
     /** Replaces <code>text</code> with <code>value</code> in input functions.
-     *@param strArr array of strings that will be searched
-     *@param text text to be searched for
-     *@param value value that will replace <code>text</code>
-     *@return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
+     * @param strArr array of strings that will be searched
+     * @param text text to be searched for
+     * @param value value that will replace <code>text</code>
+     * @return <code>true</code> if <code>text</code> was found, <code>false</code> otherwise
      */
     protected static boolean replace(String[] strArr, final String text, final String value){
 	boolean found = false;
@@ -1485,8 +1489,8 @@ abstract public class Optimizer
 
     /** Throws a <code>SimulationInputException</code> that says that the variable
      *  could not be found.
-     *@param variableName name of the variable that was not found.
-     *@exception SimulationInputException
+     * @param variableName name of the variable that was not found.
+     * @exception SimulationInputException
      */
     private static void _variableNotFound(final String variableName) throws SimulationInputException{
 	final String ErrMes = "Variable was not found in any simulation input template file," +
@@ -1545,8 +1549,8 @@ abstract public class Optimizer
      * If it has been obtained previously, an information message is reported.<BR>
      * If the maximum number of matching function value is obtained, an exception
      * is thrown.
-     *@param x the point to be checked
-     *@exception OptimizerException thrown if the maximum number of matching
+     * @param x the point to be checked
+     * @exception OptimizerException thrown if the maximum number of matching
      * function value is obtained
      */
     public void checkObjectiveFunctionValue(Point x)
@@ -1569,8 +1573,8 @@ abstract public class Optimizer
      * The message will be displayed in the output stream
      * (GUI in WinGenOpt, command shell otherwise) and in
      * the log file
-     *@param s the message
-     *@param simNum The number of the simulation
+     * @param s the message
+     * @param simNum The number of the simulation
      *@see #setWarning(java.lang.String, int)
      */
     protected void setInfo(final String s, int simNum) {
@@ -1585,8 +1589,8 @@ abstract public class Optimizer
      * The message will be displayed in the output stream
      * (GUI in WinGenOpt, command shell otherwise) and in
      * the log file
-     *@param s the message
-     *@param simNum The number of the simulation
+     * @param s the message
+     * @param simNum The number of the simulation
      *@see #setInfo(java.lang.String, int)
      */
     protected void setWarning(final String s, int simNum) {
@@ -1598,7 +1602,7 @@ abstract public class Optimizer
     }
 
     /** Sets the maximal allowed number of matching results
-     *@param maxNumberOfMatchingResults the number how many results can be
+     * @param maxNumberOfMatchingResults the number how many results can be
      *       equal before an OptimizerException is thrown
      */
     protected void setNumberOfMatchingResults(final int maxNumberOfMatchingResults)
@@ -1823,7 +1827,7 @@ abstract public class Optimizer
      * calls the function report with an
      * corresponding comment and reports the minimum
      * point to the output device.
-     *@exception IOException if an I/O error in the optimization output files
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
      */
     protected void reportMinimum() throws IOException{
@@ -1837,8 +1841,8 @@ abstract public class Optimizer
 
     /** Gets the minimum point.<BR>
      * This method gets the minimum point from the data base.
-     *@return the point with the lowest function value
-     *@exception IOException if an I/O error in the optimization output files
+     * @return the point with the lowest function value
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
      */
     public Point getMinimumPoint(){
@@ -1858,10 +1862,10 @@ abstract public class Optimizer
      *              you have to call this function twice, first with
      *              <CODE>MainIteration = false</CODE> and then with
      *              <CODE>MainIteration = true</CODE>
-     *@param x the point to be reported
-     *@param MainIteration <CODE>true</CODE> if step was a main iteration or
+     * @param x the point to be reported
+     * @param MainIteration <CODE>true</CODE> if step was a main iteration or
      *       <CODE>false</CODE> if it was a sub iteration
-     *@exception IOException if an I/O error in the optimization output files
+     * @exception IOException if an I/O error in the optimization output files
      *               occurs
      */
     public void report(final Point x, final boolean MainIteration)
@@ -1950,7 +1954,7 @@ abstract public class Optimizer
     /** Returns a flag that indicates whether GenOpt must be stopped after 
      * the current simulation
      * (due to a user request).
-     *@return <CODE>true</CODE> if GenOpt has to be stopped, <CODE>false</CODE>
+     * @return <CODE>true</CODE> if GenOpt has to be stopped, <CODE>false</CODE>
      *        otherwise
      */
     public final boolean mustStopOptimization(){
@@ -1972,8 +1976,8 @@ abstract public class Optimizer
     }
 
     /** Checks whether a point is feasible.
-     *@param x the point to be checked
-     *@return <CODE>true</CODE> if point is feasible,
+     * @param x the point to be checked
+     * @return <CODE>true</CODE> if point is feasible,
      *        <CODE>false</CODE> otherwise
      */
     protected boolean isFeasible(final Point x) {
@@ -1991,16 +1995,16 @@ abstract public class Optimizer
 	return true;
     }
     
-    /** Restricts the value of <code>x</code> such that <code>l <= x <= u</code>.
+    /** Restricts the value of <code>x</code> such that <code>l &le; x &le; u</code>.
      * 
      *  This method recursively reassigning 
-     *  <code>x := 2 * l - x</code> if <code>x < l</code>,
-     *  or <code>x := 2 * u - x</code> if <code>x < u</code>.
+     *  <code>x := 2 * l - x</code> if <code>x &lt; l</code>,
+     *  or <code>x := 2 * u - x</code> if <code>x &lt; u</code>.
      *  If <code>x</code> is feasible, then it returns <code>x</code> unmodified.
-     *@param x the independent paramter
-     *@param l the lower bound
-     *@param u the upper bound
-     *@return a feasible value of <code>x</code>, such that <code>l <= x <= u</code>
+     * @param x the independent paramter
+     * @param l the lower bound
+     * @param u the upper bound
+     * @return a feasible value of <code>x</code>, such that <code>l &le; x &le; u</code>
      */
     static public double setToFeasibleCoordinate(double x, double l, double u){
 	assert ( l < u );
@@ -2013,13 +2017,13 @@ abstract public class Optimizer
 	return xPre;
     }
 
-    /** Computes <code>x := 2 * l - x</code> if <code>x < l</code>,
-     *  or <code>x := 2 * u - x</code> if <code>x < u</code>.
+    /** Computes <code>x := 2 * l - x</code> if <code>x &lt; l</code>,
+     *  or <code>x := 2 * u - x</code> if <code>x &lt; u</code>.
      *  If <code>x</code> is feasible, then it returns <code>x</code> unmodified.
-     *@param x the independent paramter
-     *@param l the lower bound
-     *@param u the upper bound
-     *@return a feasible value of <code>x</code>, such that <code>l <= x <= u</code>
+     * @param x the independent paramter
+     * @param l the lower bound
+     * @param u the upper bound
+     * @return a feasible value of <code>x</code>, such that <code>l &le; x &le; u</code>
      */
     static private double _setToFeasibleCoordinate(double x, double l, double u){
 	if ( x < l )
@@ -2030,16 +2034,16 @@ abstract public class Optimizer
 	    return x;
     }
 
-    /** Restricts the value of <code>x</code> such that <code>l <= x <= u</code>.
+    /** Restricts the value of <code>x</code> such that <code>l &le; x &le; u</code>.
      * 
      *  This method recursively reassigning 
-     *  <code>x := 2 * l - x</code> if <code>x < l</code>,
-     *  or <code>x := 2 * u - x</code> if <code>x < u</code>.
+     *  <code>x := 2 * l - x</code> if <code>x &lt; l</code>,
+     *  or <code>x := 2 * u - x</code> if <code>x &lt; u</code>.
      *  If <code>x</code> is feasible, then it returns <code>x</code> unmodified.
-     *@param x the independent paramter
-     *@param l the lower bound
-     *@param u the upper bound
-     *@return a feasible value of <code>x</code>, such that <code>l <= x <= u</code>
+     * @param x the independent paramter
+     * @param l the lower bound
+     * @param u the upper bound
+     * @return a feasible value of <code>x</code>, such that <code>l &le; x &le; u</code>
      */
     static public int setToFeasibleCoordinate(int x, int l, int u){
 	assert ( l < u );
@@ -2052,13 +2056,13 @@ abstract public class Optimizer
 	return xPre;
     }
 
-    /** Computes <code>x := 2 * l - x</code> if <code>x < l</code>,
-     *  or <code>x := 2 * u - x</code> if <code>x < u</code>.
+    /** Computes <code>x := 2 * l - x</code> if <code>x &lt; l</code>,
+     *  or <code>x := 2 * u - x</code> if <code>x &lt; u</code>.
      *  If <code>x</code> is feasible, then it returns <code>x</code> unmodified.
-     *@param x the independent paramter
-     *@param l the lower bound
-     *@param u the upper bound
-     *@return a feasible value of <code>x</code>, such that <code>l <= x <= u</code>
+     * @param x the independent paramter
+     * @param l the lower bound
+     * @param u the upper bound
+     * @return a feasible value of <code>x</code>, such that <code>l &le; x &le; u</code>
      */
     static private int _setToFeasibleCoordinate(int x, int l, int u){
 	if ( x < l )

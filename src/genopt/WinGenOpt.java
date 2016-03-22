@@ -22,7 +22,7 @@ import java.net.URL;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -30,7 +30,7 @@ import java.net.URL;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * <h3>Copyright Notice</h3>
   *
@@ -449,7 +449,7 @@ public class WinGenOpt extends JFrame
     }
 
     /** initializes the DataSerie
-	  *@param res reference to the result manager
+	  * @param res reference to the result manager
 	  */
     public void initializeSeries(ResultManager res) {
 	int i;
@@ -652,7 +652,7 @@ public class WinGenOpt extends JFrame
     }
 
     /** handles an exception which was thrown by GenOpt
-     *@param t the thrown exception
+     * @param t the thrown exception
      */
     private void handleThrowable(Throwable t) {
 	if (go == null){
@@ -701,7 +701,7 @@ public class WinGenOpt extends JFrame
     
     /** displays a message box to stop GenOpt, and if the user selects <CODE>OK</CODE>, tells
      * <CODE>GenOpt</CODE> to stop the optimization
-     *@return <CODE>0</CODE> if OK has been selected, <CODE>1</CODE> otherwise
+     * @return <CODE>0</CODE> if OK has been selected, <CODE>1</CODE> otherwise
      */
     protected int stopOptimization() {
 	go.sleepGenOpt(true);
@@ -783,14 +783,14 @@ public class WinGenOpt extends JFrame
     }
     
     /** gets the initialization startup file
-     *@return the initialization file startup file
+     * @return the initialization file startup file
      */
     protected File getIniStartUpFile() {
 	return new File((String)pref.get("file.ini.startUp"));
     }
     
     /** gets the separator, as specified in properties.txt
-     *@return the separator
+     * @return the separator
      */
     public String getSeparator(){
 	return (String)pref.get("simulation.result.separator");
@@ -798,7 +798,7 @@ public class WinGenOpt extends JFrame
 
 
    /** checks whether we should run in debug mode
-     *@return <CODE>true</CODE> if we run in debug mode, <CODE>false</CODE> otherwise
+     * @return <CODE>true</CODE> if we run in debug mode, <CODE>false</CODE> otherwise
      */
     public boolean isDebug(){
 	String deb = (String)pref.get("debug");
@@ -826,9 +826,9 @@ public class WinGenOpt extends JFrame
     protected JViewport taVp;
     /** File menu */
     protected JMenu fileMenu;
-    /** File menu -> Start */
+    /** File menu &rarr; Start */
     protected JMenuItem fileMenu_Start;
-    /** File menu -> Stop */
+    /** File menu &rarr; Stop */
     protected JMenuItem fileMenu_Stop;
     /** Toolbar */
     protected JToolBar toolBar;
@@ -836,7 +836,7 @@ public class WinGenOpt extends JFrame
     protected JButton[] button;
     /** Chart menu */
     protected JMenu chartMenu;
-    /** Chart menu -> Change */
+    /** Chart menu &rarr; Change */
     protected JMenuItem chartMenu_Change;
     /** Windows menu */
     protected JMenu windowMenu;

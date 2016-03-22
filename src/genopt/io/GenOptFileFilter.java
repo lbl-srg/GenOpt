@@ -11,7 +11,7 @@ import javax.swing.filechooser.*;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -19,7 +19,7 @@ import javax.swing.filechooser.*;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -80,8 +80,8 @@ public class GenOptFileFilter extends FileFilter
      }
 
      /** Constructor
-     *@param extension file extension
-     *@param description file description
+     * @param extension file extension
+     * @param description file description
      */
     public GenOptFileFilter(String extension, String description) {
 	// make an instance
@@ -92,8 +92,8 @@ public class GenOptFileFilter extends FileFilter
 
     /** returns <CODE>true</CODE> if a file is accepted for display,
      * or <CODE>false</CODE> otherwise
-     *@param f File to be checked
-     *@return <CODE>true</CODE> if it should be displayed,
+     * @param f File to be checked
+     * @return <CODE>true</CODE> if it should be displayed,
      *        <CODE>false</CODE> otherwise
      */    
     public boolean accept(File f)
@@ -125,7 +125,7 @@ public class GenOptFileFilter extends FileFilter
 	return ext;
     }
     /** adds an extension to this file filter
-     *@param ext extension to be added
+     * @param ext extension to be added
      */
     public void addExtension(String ext)
     {

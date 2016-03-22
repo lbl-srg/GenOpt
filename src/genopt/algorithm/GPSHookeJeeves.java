@@ -13,7 +13,7 @@ import genopt.io.InputFormatException;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -21,7 +21,7 @@ import genopt.io.InputFormatException;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -81,15 +81,15 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public GPSHookeJeeves(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -99,16 +99,16 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
     /** Constructor used to run the algorithm in a hybrid algorithm for the
      *  last iterations.
      *
-     *@param meshSizeDivider the mesh size divider. 
+     * @param meshSizeDivider the mesh size divider. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@param initialMeshSizeExponent the initial mesh size exponent. 
+     * @param initialMeshSizeExponent the initial mesh size exponent. 
      *                       If set to <code>Integer.MAX_VALUE</code>, then
      *                       the value will be read from the command file
-     *@exception OptimizerException
-     *@exception Exception
-     *@exception IOException if an I/O exception occurs
-     *@exception InputFormatException
+     * @exception OptimizerException
+     * @exception Exception
+     * @exception IOException if an I/O exception occurs
+     * @exception InputFormatException
      */
     public GPSHookeJeeves(final int meshSizeDivider,
 			  final int initialMeshSizeExponent)
@@ -118,18 +118,18 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
     }
 
      /** Method for the global search (this method returns always <code>null</code>.
-     *@param x Sequence of previous iterates
-     *@param delta current mesh size
-     *@return the <code>null</code> pointer
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param x Sequence of previous iterates
+     * @param delta current mesh size
+     * @return the <code>null</code> pointer
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     protected Point[] globalSearch(Point[] x, double delta) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -151,18 +151,18 @@ public class GPSHookeJeeves extends GPSCoordinateSearch
     }
 
     /** Makes the exploration search
-     *@param xBas base point for the exploration search
-     *@param delta current mesh size
-     *@return the sequence of points that have been evaluated in the local search.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @param xBas base point for the exploration search
+     * @param delta current mesh size
+     * @return the sequence of points that have been evaluated in the local search.
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     private final Point[] explore(Point xBas, double delta) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,

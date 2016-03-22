@@ -6,7 +6,7 @@ package genopt.lang;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -14,7 +14,7 @@ package genopt.lang;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -69,9 +69,9 @@ package genopt.lang;
 public class ScientificFormat
 {
 	/** constructor
-	 *@param number the number to be parsed
-	 *@param fieldWidth the width of the field
-	 *@param digits the number of digits following the decimal point
+	 * @param number the number to be parsed
+	 * @param fieldWidth the width of the field
+	 * @param digits the number of digits following the decimal point
 	  */
 	public ScientificFormat(double number, int fieldWidth, int digits)
 	{
@@ -81,32 +81,32 @@ public class ScientificFormat
 	}
 		
 	/** sets the number of digits following the decimal point
-	  *@param n the number of digits following the decimal point
+	  * @param n the number of digits following the decimal point
 	  */
 	public void setDigits(int n) { dig = n; }
 		
 	/** gets the number of digits following the decimal point
-	  *@return the number of digits following the decimal point
+	  * @return the number of digits following the decimal point
 	  */
 	public int getDigits() { return dig; }		
 
 	/** sets the width of the field (including minus sign, excluding <CODE>E</CODE>)
-	  *@param n the width of the field
+	  * @param n the width of the field
 	  */
 	public void setFieldWidth(int n) { fieWidth = n; }
 		
 	/** gets the width of the field (including minus sign, excluding <CODE>E</CODE>)
-	  *@return the width of the field
+	  * @return the width of the field
 	  */
 	public int getFieldWidth() { return fieWidth; }	
 
 	/** gets the <CODE>double</CODE> representation of the Object
-	  *@return the <CODE>double</CODE> representation of the Object
+	  * @return the <CODE>double</CODE> representation of the Object
 	  */
 	public double doubleValue() { return num; }	
 
 	/** gets the <CODE>String</CODE> representation of the Object
-	  *@return the <CODE>String</CODE> representation of the Object
+	  * @return the <CODE>String</CODE> representation of the Object
 	  */
 	public String toString()
 	{
@@ -114,7 +114,7 @@ public class ScientificFormat
 	}
 	
 	/** parses the the Object to a <CODE>String</CODE>
-	  *@return the <CODE>String</CODE> representation of the Object
+	  * @return the <CODE>String</CODE> representation of the Object
 	  */
 	protected String parseToString()
 	{

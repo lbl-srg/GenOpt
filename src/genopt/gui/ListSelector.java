@@ -9,7 +9,7 @@ import java.awt.event.*;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -17,7 +17,7 @@ import java.awt.event.*;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -77,16 +77,16 @@ public class ListSelector extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public ListSelector(Object[] choose, Object[] selected)
+	public ListSelector(String[] choose, String[] selected)
 	{
 		// the lists
-		choIte = new JList();
-		selIte = new JList();
+		choIte = new JList<String>();
+		selIte = new JList<String>();
 		choIte.setPrototypeCellValue("00000000000000000");
 		selIte.setPrototypeCellValue("00000000000000000");
 
-		choEnt = new DefaultListModel();
-		selEnt = new DefaultListModel();
+		choEnt = new DefaultListModel<String>();
+		selEnt = new DefaultListModel<String>();
 		for (int i = 0; i < choose.length; i++)
 			choEnt.addElement(choose[i]);
 		for (int i = 0; i < selected.length; i++)
@@ -127,15 +127,15 @@ public class ListSelector extends JPanel
 	}
 	
 	/** gets the selected items
-	  *@return the selected items
+	  * @return the selected items
 	  */
-	public Object[] getSelectedItems()
+	public String[] getSelectedItems()
 	{
 		ListModel lm = selIte.getModel();
 		int n = lm.getSize();
-		Object[] r = new Object[n];
+		String[] r = new String[n];
 		for (int i = 0; i < n; i++)
-			r[i] = lm.getElementAt(i);
+			r[i] = (String)lm.getElementAt(i);
 		return r;
 	}
 	/** updates the list after the "add" or release button was pressed
@@ -158,7 +158,9 @@ public class ListSelector extends JPanel
 
 	/** updates the list after the "add" or release button was pressed
 	  */
-	protected void addOrRemovePressed(DefaultListModel source, DefaultListModel sink, JList markedList)
+	protected void addOrRemovePressed(DefaultListModel<String> source,
+                                      DefaultListModel<String> sink,
+                                      JList markedList)
 	{
 		int[] selInd = markedList.getSelectedIndices();
 		int nCha = selInd.length; // number of changes
@@ -168,13 +170,13 @@ public class ListSelector extends JPanel
 	}
 	
 	/** list with choose entries */
-	private JList choIte;
+	private JList<String> choIte;
 	/** list with select entries */
-	private JList selIte;
+	private JList<String> selIte;
 	/** the choose entries */
-	private DefaultListModel choEnt;
+	private DefaultListModel<String> choEnt;
 	/** the selected entries */
-	private DefaultListModel selEnt;	
+	private DefaultListModel<String> selEnt;
 	/** add button */
 	private JButton addBut;
 	/** remove button */

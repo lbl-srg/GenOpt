@@ -15,7 +15,7 @@ import genopt.io.InputFormatException;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -23,7 +23,7 @@ import genopt.io.InputFormatException;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -90,15 +90,15 @@ abstract public class ModelPSO extends Optimizer
      * <B>Note:</B> the object is used as a reference.
      *              Hence, the data of GenOpt are modified
      *              by this Class.
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public ModelPSO(GenOpt genOptData)
         throws OptimizerException, IOException, Exception, InputFormatException {
@@ -201,15 +201,15 @@ abstract public class ModelPSO extends Optimizer
      * @return <CODE>-1</CODE> if the maximum number of iteration
      *                         is exceeded
      *     <BR><CODE>+1</CODE> if the required accuracy is reached
-     *@exception OptimizerException if an OptimizerException occurs or
+     * @exception OptimizerException if an OptimizerException occurs or
      *           if the user required to stop GenOpt
-     *@exception SimulationInputException if an error in writing the
+     * @exception SimulationInputException if an error in writing the
      *           simulation input file occurs
-     *@exception NoSuchMethodException if a method that should be invoked could not be found
-     *@exception IllegalAccessException  if an invoked method enforces Java language access 
+     * @exception NoSuchMethodException if a method that should be invoked could not be found
+     * @exception IllegalAccessException  if an invoked method enforces Java language access 
      *                                    control and the underlying method is inaccessible
-     *@exception InvocationTargetException if an invoked method throws an exception
-     *@exception Exception if an I/O error in the simulation input file occurs
+     * @exception InvocationTargetException if an invoked method throws an exception
+     * @exception Exception if an I/O error in the simulation input file occurs
      */
     public int run(Point x0) throws
 	SimulationInputException, OptimizerException, NoSuchMethodException,
@@ -335,10 +335,10 @@ abstract public class ModelPSO extends Optimizer
 
     /** Clamps the velocity
      *
-     *@param velocity particle velocity
-     *@param max maximum absolute value of the velocity. If <code>max <= 0</code>
+     * @param velocity particle velocity
+     * @param max maximum absolute value of the velocity. If <code>max &le; 0</code>
      *           then the value of <code>velocity</code> is returned.
-     *@return velocity clamp to admissible interval
+     * @return velocity clamp to admissible interval
      */
     protected static final double clampVelocity(final double velocity, final double max){
 	if ( max > 0 ){
@@ -377,7 +377,7 @@ abstract public class ModelPSO extends Optimizer
     
     
     /** Initializes the current population
-     *@param x0 Initial point
+     * @param x0 Initial point
      */
     private void initializeCurrentPopulation(Point x0){
 	CurPop = new Point[NumPar];
@@ -476,10 +476,10 @@ abstract public class ModelPSO extends Optimizer
 
     /** Computes the index of a point used in the von Neumann neighborhood
      *
-     *@param i zero-based row index
-     *@param j zero-based column index
-     *@param offSet off set of index
-     *@return the zero-based particle index
+     * @param i zero-based row index
+     * @param j zero-based column index
+     * @param offSet off set of index
+     * @return the zero-based particle index
      */
     private final int _getVonNeumannIndex(final int i, final int j, final int offSet){
 	int k = i;

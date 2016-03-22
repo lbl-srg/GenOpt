@@ -14,7 +14,7 @@ import java.io.File;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -22,7 +22,7 @@ import java.io.File;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -250,12 +250,12 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the number of simulation input files
-     *@return the number of simulation input files
+     * @return the number of simulation input files
      */
     public final int getNumberOfInputFiles() { return nInpFil; }
 
     /**gets the number of function objects for the objective function
-     *@return the number of function objects for the objective function
+     * @return the number of function objects for the objective function
      */
     public final int getNumberOfFunctionObjects() {
 	int nFun = 0;
@@ -267,7 +267,7 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the function objects for the objective function
-     *@return the function objects for the objective function
+     * @return the function objects for the objective function
      */
     public final ObjectiveFunctionLocation[] getFunctionObjects() {
 	ObjectiveFunctionLocation[] r = new ObjectiveFunctionLocation[objFunMap.size()];
@@ -277,35 +277,35 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the number of simulation output files
-     *@return the number of simulation output files
+     * @return the number of simulation output files
      */
     public final int getNumberOfOutputFiles() { return nOutFil; }
 
     /**gets the number of simulation log files
-     *@return the number of simulation log files
+     * @return the number of simulation log files
      */
     public final int getNumberOfLogFiles() { return nLogFil; }
 
     /**gets the simulation input template file name
-     *@param i the number of the file
-     *@return the simulation input template file name
+     * @param i the number of the file
+     * @return the simulation input template file name
      */
     public final String getSimInpTemFilNam(int i)  {return new String(SimInpTemFilNam[i]);}
 
     /**gets the simulation input template path
-     *@param i the number of the file
-     *@return the simulation input template path
+     * @param i the number of the file
+     * @return the simulation input template path
      */
     public final String getSimInpTemPat(int i)  {return new String(SimInpTemPat[i]);}
 
     /**gets the simulation input file name
-     *@param i the number of the file
-     *@return the simulation input file name
+     * @param i the number of the file
+     * @return the simulation input file name
      */
     public final String getSimInpFilNam(int i)  {return new String(SimInpFilNam[i]);}
     
     /**gets the simulation input file names
-     *@return the simulation input file names
+     * @return the simulation input file names
      */
     public final String[] getSimInpFilNam()
     {
@@ -315,13 +315,13 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation input path
-     *@param i the number of the file
-     *@return the simulation input path
+     * @param i the number of the file
+     * @return the simulation input path
      */
     public final String getSimInpPat(int i)  {return new String(SimInpPat[i]);}
 
     /**gets the simulation input path names
-     *@return the simulation input path names
+     * @return the simulation input path names
      */
     public final String[] getSimInpPat()
     {
@@ -331,8 +331,8 @@ public class OptimizationIni implements Cloneable
     }    
 
    /**gets the path where the simulation input file has to be saved
-     *@param i the number of the file
-     *@return the path where the simulation input file has to be saved, or <CODE>null</CODE>
+     * @param i the number of the file
+     * @return the path where the simulation input file has to be saved, or <CODE>null</CODE>
      *        if no save is required
      */
     public final String getSimInpSavPat(int i)
@@ -341,7 +341,7 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation output file names
-     *@return the simulation output file names
+     * @return the simulation output file names
      */
     public final String[] getSimOutFilNam()
     {
@@ -351,13 +351,13 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation output file name
-     *@param i the number of the file
-     *@return the simulation output file name
+     * @param i the number of the file
+     * @return the simulation output file name
      */
     public final String getSimOutFilNam(int i){ return new String(SimOutFilNam[i]); }
 	
     /**gets the simulation output paths
-     *@return the simulation output paths
+     * @return the simulation output paths
      */
     public final String[] getSimOutPat()
     {
@@ -367,13 +367,13 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation output path
-     *@param i the number of the file
-     *@return the simulation output path
+     * @param i the number of the file
+     * @return the simulation output path
      */
     public final String getSimOutPat(int i)  {return new String(SimOutPat[i]) ;}
 
     /**gets the simulation input save paths
-     *@return the simulation input save paths. 
+     * @return the simulation input save paths. 
      *        If a path has not been specified, then
      *        this element contains the String '""'
      */
@@ -385,7 +385,7 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation output save paths
-     *@return the simulation output save paths. 
+     * @return the simulation output save paths. 
      *        If a path has not been specified, then
      *        this element contains the String '""'
      */
@@ -397,8 +397,8 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the path where the simulation output file has to be saved
-     *@param i the number of the file
-     *@return the path where the simulation output file has to be saved, or <CODE>null</CODE>
+     * @param i the number of the file
+     * @return the path where the simulation output file has to be saved, or <CODE>null</CODE>
      *        if no save is required
      */
     public final String getSimOutSavPat(int i)
@@ -407,13 +407,13 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation log file name
-     *@param i the number of the file
-     *@return the simulation log file name
+     * @param i the number of the file
+     * @return the simulation log file name
      */
     public final String getSimLogFilNam(int i)  {return new String(SimLogFilNam[i]) ;}
 
     /**gets the simulation log file names
-     *@return the simulation log file names
+     * @return the simulation log file names
      */
     public final String[] getSimLogFilNam()
     {
@@ -424,7 +424,7 @@ public class OptimizationIni implements Cloneable
 
 
     /**gets the simulation log paths
-     *@return the simulation log paths
+     * @return the simulation log paths
      */
     public final String[] getSimLogPat()
     {
@@ -434,13 +434,13 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation log path
-     *@param i the number of the file
-     *@return the simulation log path
+     * @param i the number of the file
+     * @return the simulation log path
      */
     public final String getSimLogPat(int i)  {return new String(SimLogPat[i]) ;}
 
     /**gets the simulation log save paths
-     *@return the simulation log save paths.
+     * @return the simulation log save paths.
      *        If a path has not been specified, then
      *        this element contains the String '""'
      */
@@ -452,8 +452,8 @@ public class OptimizationIni implements Cloneable
     }
 
    /**gets the path where the simulation log file has to be saved
-     *@param i the number of the file
-     *@return the path where the simulation log file has to be saved, or <CODE>null</CODE>
+     * @param i the number of the file
+     * @return the path where the simulation log file has to be saved, or <CODE>null</CODE>
      *        if no save is required
      */
     public final String getSimLogSavPat(int i)
@@ -462,34 +462,34 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation configuration file name
-     *@return the simulation configuration file name
+     * @return the simulation configuration file name
      */
     public final String getSimConFilNam()  {return new String(SimConFilNam) ;}
 
     /**gets the simulation configuration path
-     *@return the simulation configuration path
+     * @return the simulation configuration path
      */
     public final String getSimConPat()  {return new String(SimConPat) ;}
 
     /**gets the optimization initialization path
-     *@return Optimization initialization path
+     * @return Optimization initialization path
      */
     public final String getOptIniPat()  {return new String(OptIniPat) ;}
 
     /**gets the optimization command file name
-     *@return Optimization command file name
+     * @return Optimization command file name
      */
     public final String getOptComFilNam()  {return new String(OptComFilNam) ;}
 
     /**gets the optimization command path
-     *@return Optimization command path
+     * @return Optimization command path
      */
     public final String getOptComPat() {return new String(OptComPat) ;}
 
 
     /**gets the delimiter of the objective function in the simulation output file
-     *@param name name of the objective function
-     *@return delimiter of the objective function in the simulation output file
+     * @param name name of the objective function
+     * @return delimiter of the objective function in the simulation output file
      */
     public final String getObjFunDel(String name) {
 	ObjectiveFunctionLocation ol = (ObjectiveFunctionLocation)
@@ -498,8 +498,8 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the function definining the objective function
-     *@param name name of the objective function
-     *@return string representing the objective function
+     * @param name name of the objective function
+     * @return string representing the objective function
      */
     public final String getObjFunFun(String name) {
 	ObjectiveFunctionLocation ol = (ObjectiveFunctionLocation)
@@ -510,8 +510,8 @@ public class OptimizationIni implements Cloneable
     /** returns <code>true</code> if <code>name</code> is the name
      * of an objective function that is defined by a function object,
      * rather than by a direct simulation output
-     *@param name name of the objective function
-     *@return returns <code>true</code> if <code>name</code> is the name
+     * @param name name of the objective function
+     * @return returns <code>true</code> if <code>name</code> is the name
      * of an objective function that is defined by a function object,
      * <code>false</code> otherwise
      */
@@ -522,25 +522,25 @@ public class OptimizationIni implements Cloneable
     }
 
     /**gets the simulation call prefix
-     *@return simulation call prefix
+     * @return simulation call prefix
      */
     public final String getSimCalPre()  {return new String(SimCalPre) ;}
 
     /**gets the simulation call suffix
-     *@return simulation call suffix
+     * @return simulation call suffix
      */
     public final String getSimCalSuf()  {return new String(SimCalSuf) ;}
 	
     /** checks whether the objective function delimiter is set or not
-     *@return <CODE>true</CODE> if it is set, <CODE>false</CODE> otherwise
+     * @return <CODE>true</CODE> if it is set, <CODE>false</CODE> otherwise
      */
     public final boolean isObjectiveFunctionDelimiterSet() { return objFunMapIsSet; }
 
     /** converts the argument <code>path</code> to the temporary path that will be used
      *  for the simulation
-     *@param path the original path as specified in GenOpt's files
-     *@param dirName the name of the temporary directory (without the full path name)
-     *@return the path name
+     * @param path the original path as specified in GenOpt's files
+     * @param dirName the name of the temporary directory (without the full path name)
+     * @return the path name
     */
     public final String convertToTemporaryPath(final String path, final String dirName){
 	final String ori = this.getOptIniPat();

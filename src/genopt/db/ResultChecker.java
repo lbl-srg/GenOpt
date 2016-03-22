@@ -9,7 +9,7 @@ import genopt.lang.OptimizerException;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -17,7 +17,7 @@ import genopt.lang.OptimizerException;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -79,7 +79,7 @@ public class ResultChecker
 	private final int ARRAYINCREMENT = 5;
 
 	/** Constructor
-	  *@param maxNumberOfMatchingResults number how many results can be
+	  * @param maxNumberOfMatchingResults number how many results can be
 	  *       equal without an OptimizerException is thrown
 	  */
 	public ResultChecker(int maxNumberOfMatchingResults)
@@ -101,8 +101,8 @@ public class ResultChecker
 	}
 	
 	/** sets a new trial
-	  *@param functionValue value of the objective function
-	  *@param runNumber the number of the optimization run
+	  * @param functionValue value of the objective function
+	  * @param runNumber the number of the optimization run
 	  */
 	public void setNewTrial(double functionValue, int runNumber)
 	{
@@ -114,7 +114,7 @@ public class ResultChecker
 	
 	/** checks whether the maximum number of matching results is reached.
 	  * If so, an OptimizerException is thrown.
-	  *@exception OptimizerException thrown if the maximum number
+	  * @exception OptimizerException thrown if the maximum number
 	  *    of equal results is reached
 	  */
 	public void check() throws OptimizerException
@@ -134,7 +134,7 @@ public class ResultChecker
 	}
 
 	/** sets the maximal allowed number of matching results
-	  *@param maxNumberOfMatchingResults number how many results can be
+	  * @param maxNumberOfMatchingResults number how many results can be
 	  *       equal without an OptimizerException is thrown
 	  */
 	public void setNumberOfMatchingResults(int maxNumberOfMatchingResults)
@@ -143,12 +143,12 @@ public class ResultChecker
 			maxMatVal = maxNumberOfMatchingResults;
 	}	
 	/** gets the total number of matching results
-	  *@return the total number of matching results
+	  * @return the total number of matching results
 	  */
 	public int getNumberOfMatchingResults() { return numMatVal; }
 	 
 	/** gets an array with the indices of all matching numbers
-	  *@return array with the indices of all matching numbers
+	  * @return array with the indices of all matching numbers
 	  */
 	private int[] getMatchingNumbers()
 	{
@@ -189,8 +189,8 @@ public class ResultChecker
 	}
 	
 	/** sets the new trial
-	  *@param functionValue value of the objective function
-	  *@param runNumber the number of the optimization run	
+	  * @param functionValue value of the objective function
+	  * @param runNumber the number of the optimization run	
 	  */
 	private void setRun(double functionValue, int runNumber)
 	{

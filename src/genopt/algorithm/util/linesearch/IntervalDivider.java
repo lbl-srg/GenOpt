@@ -11,7 +11,7 @@ import genopt.algorithm.util.math.Point;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -19,7 +19,7 @@ import genopt.algorithm.util.math.Point;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -99,7 +99,7 @@ public abstract class IntervalDivider
     }
 
     /** Gets the point with the lowest function value
-      *@return the point with the lowest function value
+      * @return the point with the lowest function value
       */
     public Point getXMin()
     {
@@ -107,7 +107,7 @@ public abstract class IntervalDivider
     }
 
     /** Gets the reduction factor q = I(n+1)/I(n)
-      *@return the reduction factor q = I(n+1)/I(n)
+      * @return the reduction factor q = I(n+1)/I(n)
       */
     protected abstract double getReductionFactor();
 
@@ -211,18 +211,18 @@ public abstract class IntervalDivider
     }
 
     /** Sets the fraction of the desired uncertainty interval (0..1)
-      *@param dx the normalized fraction of the uncertainty interval
+      * @param dx the normalized fraction of the uncertainty interval
       */
     public abstract void setUncertaintyInterval(double dx);
 
     /** Sets the minimal absolut difference between the lowest
       * function values as the stopping criteria
-      *@param dFMinimal the minimal difference between the lowest
+      * @param dFMinimal the minimal difference between the lowest
       *       function values that has to be obtained before the search stops
-      *@param nMax the maximum number of iteration before the
+      * @param nMax the maximum number of iteration before the
       *       search stops (in case that <CODE>dFMinimal</CODE>
       *       cannot be obtained within a reasonable number of trials)
-      *@exception OptimizerException
+      * @exception OptimizerException
       */
     public void setAbsDFMin(double dFMinimal, int nMax) throws OptimizerException
     {
@@ -232,7 +232,7 @@ public abstract class IntervalDivider
     }   
    
     /** Sets the maximum number of interval reductions
-      *@param n the maximum number of interval reductions
+      * @param n the maximum number of interval reductions
       */
     public void setMaxIntRed(int n)
     {
@@ -243,7 +243,7 @@ public abstract class IntervalDivider
     }
     
     /** gets the lower bound of the uncertainty interval
-      *@return the lower bound of the uncertainty interval
+      * @return the lower bound of the uncertainty interval
       */
     public Point getXLower()
     {
@@ -251,7 +251,7 @@ public abstract class IntervalDivider
     }
 
         /** gets the upper bound of the uncertainty interval
-      *@return the upper bound of the uncertainty interval
+      * @return the upper bound of the uncertainty interval
       */
     public Point getXUpper()
     {
@@ -259,7 +259,7 @@ public abstract class IntervalDivider
     }
 
     /** Checks whether the iteration has to be continued.
-      *@return <CODE>true</CODE> if iteration has to be continued,
+      * @return <CODE>true</CODE> if iteration has to be continued,
       *        <CODE>false</CODE> if tolerance has been achieved, or
       *        the required number of interval reductions has been achieved.
       */
@@ -278,7 +278,7 @@ public abstract class IntervalDivider
     /** Checks whether the difference between the lower of either <CODE>f1</CODE>
       * or <CODE>f2</CODE> and the lower of either <CODE>f0</CODE> or <CODE>f3</CODE>
       * is smaller than the prescribed <CODE>dFMin</CODE>
-      *@return <CODE>true</CODE> if difference is smaller, <CODE>false</CODE> otherwise
+      * @return <CODE>true</CODE> if difference is smaller, <CODE>false</CODE> otherwise
       */
     private boolean isDFltdFMin()
     {
@@ -289,9 +289,9 @@ public abstract class IntervalDivider
 
     /** Evaluates the objective function and reports the results
       * 
-      *@param x the point being evaluated
-      *@exception OptimizerException if an OptimizerException occurs
-      *@exception Exception if an Exception occurs
+      * @param x the point being evaluated
+      * @exception OptimizerException if an OptimizerException occurs
+      * @exception Exception if an Exception occurs
       */
     private Point getF(Point x) throws OptimizerException, Exception
     {
@@ -303,9 +303,9 @@ public abstract class IntervalDivider
 
     /** Evaluates the objective function and reports the results
      * 
-     *@param x the point being evaluated
-     *@exception OptimizerException if an OptimizerException occurs
-     *@exception Exception if an Exception occurs
+     * @param x the point being evaluated
+     * @exception OptimizerException if an OptimizerException occurs
+     * @exception Exception if an Exception occurs
      */
    private Point[] getF(Point x[]) throws OptimizerException, Exception
    {
@@ -343,7 +343,7 @@ public abstract class IntervalDivider
     protected Point xUpp;
  
     /** The lower function value of the 2 border
-      * (<CODE>x0<CODE> or <CODE>x3</CODE>) that limit the interval
+      * (<CODE>x0</CODE> or <CODE>x3</CODE>) that limit the interval
       * of uncertainty */
     private double fLowBor;
 

@@ -9,7 +9,7 @@ import genopt.algorithm.Optimizer;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -17,7 +17,7 @@ import genopt.algorithm.Optimizer;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -73,7 +73,7 @@ public class FibonacciDivision extends IntervalDivider
 {
 
     /** Constructor
-      *@param opt a reference to the Optimizer object
+      * @param opt a reference to the Optimizer object
       */
     public FibonacciDivision(Optimizer opt)
     {
@@ -82,7 +82,7 @@ public class FibonacciDivision extends IntervalDivider
     }
 
 	/** Gets the reduction factor q = I(n+1)/I(n)
-	  *@return the reduction factor q = I(n+1)/I(n)
+	  * @return the reduction factor q = I(n+1)/I(n)
 	  */
 	protected double getReductionFactor()
 	{
@@ -92,8 +92,8 @@ public class FibonacciDivision extends IntervalDivider
 
 
 	/** Gets the Fibonacci numbers
-	  *@param N the number of elements in the Fibonacci serie
-	  *@return an array containing the Fibonacci numbers
+	  * @param N the number of elements in the Fibonacci serie
+	  * @return an array containing the Fibonacci numbers
 	  */
 	public static int[] getFibonacci(int N)
 	{
@@ -109,7 +109,7 @@ public class FibonacciDivision extends IntervalDivider
 	}
  
     /** Sets the fraction of the desired uncertainty interval (0..1)
-      *@param dx the normalized fraction of the uncertainty interval
+      * @param dx the normalized fraction of the uncertainty interval
       */
     public void setUncertaintyInterval(double dx)
     {
@@ -129,12 +129,12 @@ public class FibonacciDivision extends IntervalDivider
 	
 	/** Set the minimal absolut difference between the lowest
 	  * 3 function values as the stopping criteria
-	  *@param dFMinimal the minimal difference between the lowest
+	  * @param dFMinimal the minimal difference between the lowest
 	  *       3 function values that has to be obtained before the search stops
-	  *@param nMax the maximum number of iteration before the
+	  * @param nMax the maximum number of iteration before the
 	  *       search stops (in case that <CODE>dFMinimal</CODE>
 	  *       cannot be obtained within a reasonable number of trials)
-	  *@exception OptimizerException if method is used for Fibonacci algorithm
+	  * @exception OptimizerException if method is used for Fibonacci algorithm
 	  */
 	public void setAbsDFMin(double dFMinimal, int nMax) throws OptimizerException
 	{
@@ -143,7 +143,7 @@ public class FibonacciDivision extends IntervalDivider
 	}
     
     /** Sets the maximum number of interval reductions
-      *@param n the maximum number of interval reductions
+      * @param n the maximum number of interval reductions
       */
     public void setMaxIntRed(int n)
     {

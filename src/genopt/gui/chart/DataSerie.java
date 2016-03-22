@@ -8,7 +8,7 @@ import java.awt.Color;
   * <UL><LI><A HREF="http://www.lbl.gov">
   * Lawrence Berkeley National Laboratory (LBNL)</A>,
   * <A HREF="http://simulationresearch.lbl.gov">
-  * Simulation Research Group</A>,</UL></LI>
+  * Simulation Research Group</A>,</LI></UL>
   * <I>and supported by</I><UL>
   * <LI>the <A HREF="http://www.energy.gov">
   * U.S. Department of Energy (DOE)</A>,
@@ -16,7 +16,7 @@ import java.awt.Color;
   * Swiss Academy of Engineering Sciences (SATW)</A>,
   * <LI>the Swiss National Energy Fund (NEFF), and
   * <LI>the <A HREF="http://www.snf.ch">
-  * Swiss National Science Foundation (SNSF)</A></UL></LI><P>
+  * Swiss National Science Foundation (SNSF)</A></LI></UL><P>
   *
   * GenOpt Copyright (c) 1998-2011, The Regents of the University of
   * California, through Lawrence Berkeley National Laboratory (subject 
@@ -70,8 +70,8 @@ import java.awt.Color;
 
 public class DataSerie
 {
-    /**@param serieLabel the titel label
-     *@param yAxisLabel the y-axis label
+    /** @param serieLabel the titel label
+     * @param yAxisLabel the y-axis label
      */
     public DataSerie(String serieLabel, String yAxisLabel)
     {
@@ -86,14 +86,14 @@ public class DataSerie
     }
 
     /** sets the color of the serie
-     *@param c color of the serie
+     * @param c color of the serie
      */
     public final void setColor(final Color c) { color = c; }
 
     /** verifies the validity of x and y
-     *@param x the x-values
-     *@param y the y-values
-     *@exception IllegalArgumentException if x and y have different field width
+     * @param x the x-values
+     * @param y the y-values
+     * @exception IllegalArgumentException if x and y have different field width
      */
     protected final void verify(final double[] x, final double[] y)
 	throws IllegalArgumentException
@@ -105,9 +105,9 @@ public class DataSerie
     }
 	
     /** sets new data for x and y
-     *@param x the x-values
-     *@param y the y-values
-     *@exception IllegalArgumentException if x and y have different field width
+     * @param x the x-values
+     * @param y the y-values
+     * @exception IllegalArgumentException if x and y have different field width
      */
     public final void setPoints(final double[] x, 
 				final double[] y)
@@ -129,27 +129,27 @@ public class DataSerie
     }
 
     /** gets x minimum
-     *@return x minimum
+     * @return x minimum
      */
     public final double getXMin() { return xMin; }
 
     /** gets x maximum
-     *@return x maximum
+     * @return x maximum
      */
     public final double getXMax() { return xMax; }
 
     /** gets y minimum
-     *@return y minimum
+     * @return y minimum
      */
     public final double getYMin() { return yMin; }
 
     /** gets y maximum
-     *@return y maximum
+     * @return y maximum
      */
     public final double getYMax() { return yMax; }
 
     /** gets the y axis length
-     *@return the y axis length
+     * @return the y axis length
      */
     public final double getYAxisLength() { return yAxiLen; }
 
@@ -183,12 +183,12 @@ public class DataSerie
     }
 
     /** gets the name of the serie
-     *@return the name of the serie
+     * @return the name of the serie
      */
     public final String getName() { return name; }
 
     /** gets the y-axis label
-     *@return the y-axis label
+     * @return the y-axis label
      */
     public final String getYLabel() { return yLab; }
 
@@ -197,7 +197,7 @@ public class DataSerie
     public final int getNumberOfValues() { return nVal; }
 	
     /** gets the x values
-     *@return the x values (not as a reference)
+     * @return the x values (not as a reference)
      */
     public final double[] getX()
     {
@@ -207,7 +207,7 @@ public class DataSerie
     }
 
     /** gets the y values
-     *@return the y values (not as a reference)
+     * @return the y values (not as a reference)
      */
     public final double[] getY(){
 	double[] r = new double[nVal];
@@ -216,24 +216,24 @@ public class DataSerie
     }
 
     /** gets the x[i] value
-     *@return the x[i] value
+     * @return the x[i] value
      */
     public final double getX(final int i)	{ return xVal[i]; }
 
     /** gets the y[i] value
-     *@return the y[i] value
+     * @return the y[i] value
      */
     public final double getY(final int i) { return yVal[i]; }
 
     /** gets the color of the serie
-     *@return the color of the serie
+     * @return the color of the serie
      */
     public final Color getColor() { return new Color(color.getRGB()); }
 
 
     /** sets the y-axis length
-     *@param yMin the minimum x-value
-     *@param yMax the maximum x-value
+     * @param yMin the minimum x-value
+     * @param yMax the maximum x-value
      */
     protected final void setYAxisLength(final double yMin, 
 					final double yMax){
