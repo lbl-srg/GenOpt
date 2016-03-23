@@ -26,7 +26,7 @@
 !           Overhang depth also design parameter (for West and East window separately)
 !           Solar, visible, and thermal transmittance of shading device also design parameter
 
-  Version,7.0;
+  Version,8.4;
 
   HeatBalanceAlgorithm,ConductionTransferFunction;
  
@@ -1279,31 +1279,10 @@
     NODE_1;                  !- Node 1 Name
  
 ! ===============================================================
-!report variable,,outdoor dry bulb,hourly;
-!report variable,,mean air temperature,hourly;
-!report variable,,zone latent load,hourly;
-!report variable,,lights return air load,hourly;
-!report variable,,electric load,hourly;
-!report variable,,Electric Load,hourly;
-!report variable,,Mean Radiant Temperature,hourly;
-!report variable,,Surface Inside Temperature,hourly;
-!report variable,,Surface Outside Temperature,hourly;
-!report variable,,Zone/Sys Sensible Heating Energy,hourly;
-!report variable,,Zone/Sys Sensible Cooling Energy,hourly;
-!report variable,,Zone/Sys Sensible Heating Rate,hourly;
-!report variable,,Zone/Sys Sensible Cooling Rate,hourly;
-!report variable,,Zone/Sys Air Temp,hourly;
-!report variable,,Zone Air Humidity Ratio,hourly;
-!report variable,,System Node Temp,hourly;
-!report variable,,System Node MassFlowRate,hourly;
-!report variable,,System Node Humidity Ratio,hourly;
-!report variable,,SimAir Iterations,hourly;
 
-  Output:Variable,*,Ideal Loads Total Cooling Energy,Environment;
-
-  Output:Variable,*,Ideal Loads Total Heating Energy,Environment;
-
-  Output:Variable,*,Lights Electric Consumption,Environment;
+Output:Variable,*,Zone Air System Sensible Heating Energy,Environment;
+Output:Variable,*,Zone Air System Sensible Cooling Energy,Environment;
+Output:Variable,*,Zone Lights Electric Energy,Environment;
 
 !report variable dictionary;
 !report,surfaces,dxf;
