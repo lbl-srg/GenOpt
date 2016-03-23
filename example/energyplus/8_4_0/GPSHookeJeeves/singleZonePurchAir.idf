@@ -1,3 +1,4 @@
+! !!! xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ! singleZonePurchAir.idf
 ! Basic file description: Office room with east and west facade,
 !                         based on BESTEST High-Mass building loads test (Case 930).
@@ -26,17 +27,17 @@
 !           Overhang depth also design parameter (for West and East window separately)
 !           Solar, visible, and thermal transmittance of shading device also design parameter
 
-  Version,7.0;
+  Version,8.4;
 
   HeatBalanceAlgorithm,ConductionTransferFunction;
-
+ 
   Site:Location,
     CHICAGO ILLINOIS,        !- Name
     41.78,                   !- Latitude {deg}
     -87.75,                  !- Longitude {deg}
     -6,                      !- Time Zone {hr}
     190.0;                   !- Elevation {m}
-
+ 
   RunPeriod,
     ,                        !- Name
     1,                       !- Begin Month
@@ -49,7 +50,7 @@
     no,                      !- Apply Weekend Holiday Rule
     yes,                     !- Use Weather File Rain Indicators
     yes;                     !- Use Weather File Snow Indicators
-
+ 
   Material,
     CONCRETE BLOCK,          !- Name
     Rough,                   !- Roughness
@@ -60,7 +61,7 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
   Material,
     FOAM INSULATION,         !- Name
     Rough,                   !- Roughness
@@ -71,7 +72,7 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
   Material:NoMass,
     WOOD SIDING-1,           !- Name
     Rough,                   !- Roughness
@@ -79,17 +80,17 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
               ! Material layer names follow:
-
+ 
   Construction,
     HWWALL,                  !- Name
     WOOD SIDING-1,           !- Outside Layer
     FOAM INSULATION,         !- Layer 2
     CONCRETE BLOCK;          !- Layer 3
-
+ 
 ! ------------------------------------------------------------------
-
+ 
   Material,
     CONCRETE SLAB050,        !- Name
     Rough,                   !- Roughness
@@ -100,7 +101,7 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
   Material,
     CONCRETE SLAB180,        !- Name
     Rough,                   !- Roughness
@@ -111,7 +112,7 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
   Material:NoMass,
     R-1 INSULATION,          !- Name
     Rough,                   !- Roughness
@@ -119,7 +120,7 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
   Material:NoMass,
     CARPET,                  !- Name
     Rough,                   !- Roughness
@@ -127,28 +128,28 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
              ! Material layer names follow:
-
+ 
   Construction,
     HWFLOOR,                 !- Name
     CONCRETE SLAB180,        !- Outside Layer
     R-1 INSULATION,          !- Layer 2
     CONCRETE SLAB050,        !- Layer 3
     CARPET;                  !- Layer 4
-
+ 
              ! Material layer names follow:
-
+ 
   Construction,
     HWCEILING,               !- Name
     CARPET,                  !- Outside Layer
     CONCRETE SLAB050,        !- Layer 2
     R-1 INSULATION,          !- Layer 3
     CONCRETE SLAB180;        !- Layer 4
-
+ 
 ! ------------------------------------------------------------------
 ! Thermal mass (wall within zone)
-
+ 
   Material,
     BRICK120,                !- Name
     Rough,                   !- Roughness
@@ -159,24 +160,24 @@
     0.9000000,               !- Thermal Absorptance
     0.600000,                !- Solar Absorptance
     0.600000;                !- Visible Absorptance
-
+ 
              ! Material layer names follow:
-
+ 
   Construction,
     INTWALL,                 !- Name
     BRICK120;                !- Outside Layer
-
+ 
 ! ------------------------------------------------------------------
 ! Interior walls between zones
              ! Material layer names follow:
-
+ 
   Construction,
     PARWALL,                 !- Name
     BRICK120;                !- Outside Layer
-
+ 
 ! ------------------------------------------------------------------
 ! ID 501
-
+ 
   WindowMaterial:Glazing,
     LoE SPEC SEL CLEAR 6MM,  !- Name
     SpectralAverage,         !- Optical Data Type
@@ -192,9 +193,9 @@
     .84,                     !- Front Side Infrared Hemispherical Emissivity
     .03,                     !- Back Side Infrared Hemispherical Emissivity
     .9;                      !- Conductivity {W/m-K}
-
+ 
 ! Window ID 2
-
+ 
   WindowMaterial:Glazing,
     CLEAR 3MM,               !- Name
     SpectralAverage,         !- Optical Data Type
@@ -210,20 +211,20 @@
     .84,                     !- Front Side Infrared Hemispherical Emissivity
     .84,                     !- Back Side Infrared Hemispherical Emissivity
     .9;                      !- Conductivity {W/m-K}
-
+ 
   WindowMaterial:Gas,
     KRYPTON 8MM,             !- Name
     Krypton,                 !- Gas Type
     .0079;                   !- Thickness {m}
-
+ 
   WindowMaterial:Shade,
     ExtShade,                !- Name
-    0.30625,                 !- Solar Transmittance
+    0.3125,                   !- Solar Transmittance
     0.1,                     !- Solar Reflectance
-    0.30625,                 !- Visible Transmittance
+    0.3125,                   !- Visible Transmittance
     0.1,                     !- Visible Reflectance
     0.1,                     !- Thermal Hemispherical Emissivity
-    0.30625,                 !- Thermal Transmittance {W/k}
+    0.3125,                   !- Thermal Transmittance
     0.02,                    !- Thickness {m}
     0.1,                     !- Conductivity {W/m-K}
     0.05,                    !- Shade to Glass Distance {m}
@@ -232,10 +233,10 @@
     0.5,                     !- Left-Side Opening Multiplier
     0.5,                     !- Right-Side Opening Multiplier
     0;                       !- Airflow Permeability
-
+ 
 ! =====================================================================
 ! Window shading control
-
+ 
   WindowProperty:ShadingControl,
     WinShadingControl,       !- Name
     ExteriorShade,           !- Shading Type
@@ -248,25 +249,25 @@
     ,                        !- Shading Device Material Name
     FixedSlatAngle,          !- Type of Slat Angle Control for Blinds
     ;                        !- Slat Angle Schedule Name
-
+ 
 ! =====================================================================
                ! Material layer names follow: (from outside surface to zone side surface)
-
+ 
   Construction,
     Double Pane Window Shaded,  !- Name
     ExtShade,                !- Outside Layer
     LoE SPEC SEL CLEAR 6MM,  !- Layer 2
     KRYPTON 8MM,             !- Layer 3
     CLEAR 3MM;               !- Layer 4
-
+ 
                ! Material layer names follow: (from outside surface to zone side surface)
-
+ 
   Construction,
     Double Pane Window,      !- Name
     LoE SPEC SEL CLEAR 6MM,  !- Outside Layer
     KRYPTON 8MM,             !- Layer 2
     CLEAR 3MM;               !- Layer 3
-
+ 
   WindowProperty:FrameAndDivider,
     WinFrameAndDivider,      !- Name
     0.05,                    !- Frame Width {m}
@@ -288,29 +289,29 @@
     0.8,                     !- Divider Solar Absorptance
     0.8,                     !- Divider Visible Absorptance
     0.9;                     !- Divider Thermal Hemispherical Emissivity
-
+ 
  End Lead Input;
 ! ========================================================================
  Simulation Data;
-
+ 
   Timestep,4;
 
   SurfaceConvectionAlgorithm:Inside,TARP;
 
   SurfaceConvectionAlgorithm:Outside,TARP;
-
+ 
 ! -----------------------------------------------------------------------
-
+ 
   Building,
     office zone,             !- Name
-    87.5,                    !- North Axis {deg}
+    85.625,               !- North Axis {deg}
     1,                       !- Terrain
     4.0000000E-02,           !- Loads Convergence Tolerance Value
     4.0000002E-03,           !- Temperature Convergence Tolerance Value {deltaC}
     1;                       !- Solar Distribution
 
 ! -----------------------------------------------------------------------
-
+ 
   Zone,
     ZONE ONE,                !- Name
     0.0000000E+00,           !- Direction of Relative North {deg}
@@ -321,19 +322,19 @@
     1,                       !- Multiplier
     2.7000,                  !- Ceiling Height {m}
     259.2;                   !- Volume {m3}
-
+ 
   ZoneCapacitanceMultiplier:ResearchSpecial,
     1.2,                     !- Temperature Capacity Multiplier
     1.2,                     !- Humidity Capacity Multiplier
     1.2;                     !- Carbon Dioxide Capacity Multiplier
-
+ 
 ! -----------------------------------------------------------------------
-
+ 
   GlobalGeometryRules,
     UpperLeftCorner,         !- Starting Vertex Position
     Counterclockwise,        !- Vertex Entry Direction
     Relative;                !- Coordinate System
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE NORTH,      !- Name
     Wall,                    !- Surface Type
@@ -349,7 +350,7 @@
     16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     0.0000000E+00,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE EAST,       !- Name
     Wall,                    !- Surface Type
@@ -365,7 +366,7 @@
     16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 1 EAST WINDOW,  !- Name
     Window,                  !- Surface Type
@@ -381,7 +382,7 @@
     16.000000,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,5.9,0.2000000,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,5.9,2.200000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   Shading:Zone:Detailed,
     EAST WINDOW OVERHANG,    !- Name
     ZONE SURFACE EAST,       !- Base Surface Name
@@ -391,7 +392,7 @@
     17.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
     17.0,5.9,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,5.9,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE SOUTH,      !- Name
     Wall,                    !- Surface Type
@@ -407,7 +408,7 @@
     0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE WEST,       !- Name
     Wall,                    !- Surface Type
@@ -423,7 +424,7 @@
     0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     0.0000000E+00,0.0000000E+00,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     0.0000000E+00,0.0000000E+00,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   FenestrationSurface:Detailed,
     ZONE SUBSURFACE 2 WEST WINDOW,  !- Name
     Window,                  !- Surface Type
@@ -435,21 +436,21 @@
     WinFrameAndDivider,      !- Frame and Divider Name
     1,                       !- Multiplier
     4,                       !- Number of Vertices
-    0.0000000E+00,4.2,2.200000,  !- X,Y,Z ==> Vertex 1 {m}
-    0.0000000E+00,4.2,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,4.1625,2.200000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.0000000E+00,4.1625,0.2000000,  !- X,Y,Z ==> Vertex 2 {m}
     0.0000000E+00,0.000000,0.2000000,  !- X,Y,Z ==> Vertex 3 {m}
     0.0000000E+00,0.000000,2.200000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   Shading:Zone:Detailed,
     WEST WINDOW OVERHANG,    !- Name
     ZONE SURFACE WEST,       !- Base Surface Name
     ,                        !- Transmittance Schedule Name
     4,                       !- Number of Vertices
-    0.0000000E+00,4.2,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
-    -1.0,4.2,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.0000000E+00,4.1625,2.700000,  !- X,Y,Z ==> Vertex 1 {m}
+    -1.0,4.1625,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
     -1.0,0.000000,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
     0.0000000E+00,0.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE FLOOR,      !- Name
     Floor,                   !- Surface Type
@@ -465,7 +466,7 @@
     0.0000000E+00,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,6.000000,0.0000000E+00,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,0.0000000E+00,0.0000000E+00;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
   BuildingSurface:Detailed,
     ZONE SURFACE CEILING,    !- Name
     Roof,                    !- Surface Type
@@ -481,19 +482,19 @@
     0.0000000E+00,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 2 {m}
     16.000000,0.0000000E+00,2.700000,  !- X,Y,Z ==> Vertex 3 {m}
     16.000000,6.000000,2.700000;  !- X,Y,Z ==> Vertex 4 {m}
-
+ 
 ! ----------------------------------------------------------
 ! Surface for internal mass, seperating the two office and hallway
-
+ 
   InternalMass,
     HALLWAY WALL,            !- Name
     INTWALL,                 !- Construction Name
     ZONE ONE,                !- Zone Name
     54.24;                   !- Surface Area {m2}
-
+ 
               ! 54.24 = 4 * ( 2.7 * 6 - 2.2 * 1.2 )
 ! ===========================================================
-
+ 
   ElectricEquipment,
     ROOM ELE EQU,            !- Name
     ZONE ONE,                !- Zone or ZoneList Name
@@ -506,7 +507,7 @@
     0.3,                     !- Fraction Radiant
     0,                       !- Fraction Lost
     Room Equi;               !- End-Use Subcategory
-
+ 
   Lights,
     ROOM LIGHTS,             !- Name
     ZONE ONE,                !- Zone or ZoneList Name
@@ -520,7 +521,7 @@
     0.200,                   !- Fraction Visible
     1,                       !- Fraction Replaceable
     GeneralLights;           !- End-Use Subcategory
-
+ 
   People,
     ROOM PEOPLE,             !- Name
     ZONE ONE,                !- Zone or ZoneList Name
@@ -532,10 +533,10 @@
     0.6,                     !- Fraction Radiant
     Autocalculate,           !- Sensible Heat Fraction
     Sch Act;                 !- Activity Level Schedule Name
-
+ 
   ScheduleTypeLimits,
     Any Number;              !- Name
-
+ 
   Schedule:Day:Hourly,
     Day Sch Act,             !- Name
     Any Number,              !- Schedule Type Limits Name
@@ -563,7 +564,7 @@
     130,                     !- Hour 22
     130,                     !- Hour 23
     130;                     !- Hour 24
-
+ 
   Schedule:Week:Daily,
     Wee Sch Act,             !- Name
     Day Sch Act,             !- Sunday Schedule:Day Name
@@ -578,7 +579,7 @@
     Day Sch Act,             !- WinterDesignDay Schedule:Day Name
     Day Sch Act,             !- CustomDay1 Schedule:Day Name
     Day Sch Act;             !- CustomDay2 Schedule:Day Name
-
+ 
   Schedule:Year,
     Sch Act,                 !- Name
     Any Number,              !- Schedule Type Limits Name
@@ -587,21 +588,21 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
   ScheduleTypeLimits,
     Cont Sch,                !- Name
     0.0,                     !- Lower Limit Value
     1.0,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
-
+ 
   ScheduleTypeLimits,
     Disc Sch,                !- Name
     0.0,                     !- Lower Limit Value
     1.0,                     !- Upper Limit Value
     Discrete;                !- Numeric Type
-
+ 
 ! ------------------------------------------------------------------
-
+ 
   Schedule:Day:Hourly,
     Day Sch 0,               !- Name
     Disc Sch,                !- Schedule Type Limits Name
@@ -629,7 +630,7 @@
     0,                       !- Hour 22
     0,                       !- Hour 23
     0;                       !- Hour 24
-
+ 
   Schedule:Day:Hourly,
     Day Sch 1,               !- Name
     Disc Sch,                !- Schedule Type Limits Name
@@ -657,10 +658,10 @@
     1,                       !- Hour 22
     1,                       !- Hour 23
     1;                       !- Hour 24
-
+ 
 ! ------------------------------------------------------------------
 ! People, weekdays
-
+ 
   Schedule:Day:Hourly,
     Day Sch Peo WD,          !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -688,9 +689,9 @@
     0,                       !- Hour 22
     0,                       !- Hour 23
     0;                       !- Hour 24
-
+ 
 ! People, weekend and holiday
-
+ 
   Schedule:Day:Hourly,
     Day Sch Peo WEH,         !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -718,10 +719,10 @@
     0,                       !- Hour 22
     0,                       !- Hour 23
     0;                       !- Hour 24
-
+ 
 ! ------------------------------------------------------------------
 ! Lights, weekdays
-
+ 
   Schedule:Day:Hourly,
     Day Sch Lig WD,          !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -749,9 +750,9 @@
     0.2,                     !- Hour 22
     0.2,                     !- Hour 23
     0.2;                     !- Hour 24
-
+ 
 ! Lights, weekend and holiday
-
+ 
   Schedule:Day:Hourly,
     Day Sch Lig WEH,         !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -783,7 +784,7 @@
 
 ! ------------------------------------------------------------------
 ! Equipment, weekdays
-
+ 
   Schedule:Day:Hourly,
     Day Sch Equ WD,          !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -811,9 +812,9 @@
     0.17,                    !- Hour 22
     0.17,                    !- Hour 23
     0.17;                    !- Hour 24
-
+ 
 ! Equipment, weekend and holiday
-
+ 
   Schedule:Day:Hourly,
     Day Sch Equ WEH,         !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -841,9 +842,9 @@
     0.17,                    !- Hour 22
     0.17,                    !- Hour 23
     0.17;                    !- Hour 24
-
+ 
 ! ------------------------------------------------------------------
-
+ 
   Schedule:Week:Daily,
     Week Sch 0,              !- Name
     Day Sch 0,               !- Sunday Schedule:Day Name
@@ -858,7 +859,7 @@
     Day Sch 0,               !- WinterDesignDay Schedule:Day Name
     Day Sch 0,               !- CustomDay1 Schedule:Day Name
     Day Sch 0;               !- CustomDay2 Schedule:Day Name
-
+ 
   Schedule:Week:Daily,
     Week Sch 1,              !- Name
     Day Sch 1,               !- Sunday Schedule:Day Name
@@ -873,7 +874,7 @@
     Day Sch 1,               !- WinterDesignDay Schedule:Day Name
     Day Sch 1,               !- CustomDay1 Schedule:Day Name
     Day Sch 1;               !- CustomDay2 Schedule:Day Name
-
+ 
   Schedule:Week:Daily,
     Week Sch Lig,            !- Name
     Day Sch Lig WEH,         !- Sunday Schedule:Day Name
@@ -903,7 +904,7 @@
     Day Sch Peo WEH,         !- WinterDesignDay Schedule:Day Name
     Day Sch Peo WD,          !- CustomDay1 Schedule:Day Name
     Day Sch Peo WD;          !- CustomDay2 Schedule:Day Name
-
+ 
   Schedule:Week:Daily,
     Week Sch Equ,            !- Name
     Day Sch Equ WEH,         !- Sunday Schedule:Day Name
@@ -918,9 +919,9 @@
     Day Sch Equ WEH,         !- WinterDesignDay Schedule:Day Name
     Day Sch Equ WD,          !- CustomDay1 Schedule:Day Name
     Day Sch Equ WD;          !- CustomDay2 Schedule:Day Name
-
+ 
 ! ------------------------------------------------------------------
-
+ 
   Schedule:Year,
     Sch 1,                   !- Name
     Disc Sch,                !- Schedule Type Limits Name
@@ -929,7 +930,7 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
   Schedule:Year,
     Sch Summer,              !- Name
     Disc Sch,                !- Schedule Type Limits Name
@@ -948,7 +949,7 @@
     1,                       !- Start Day 3
     12,                      !- End Month 3
     31;                      !- End Day 3
-
+ 
   Schedule:Year,
     Sch Lig,                 !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -966,7 +967,7 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
   Schedule:Year,
     Sch Equ,                 !- Name
     Cont Sch,                !- Schedule Type Limits Name
@@ -975,9 +976,9 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
 ! ------------------------------------------------------------------
-
+ 
   ZoneInfiltration:DesignFlowRate,
     INFILTRATION 1,          !- Name
     ZONE ONE,                !- Zone or ZoneList Name
@@ -991,11 +992,11 @@
     0,                       !- Temperature Term Coefficient
     0,                       !- Velocity Term Coefficient
     0;                       !- Velocity Squared Term Coefficient
-
+ 
 ! =====================================================================
 ! Daylighting
 !
-
+ 
   Daylighting:Controls,
     ZONE ONE,                !- Zone Name
     2,                       !- Total Daylighting Reference Points
@@ -1016,32 +1017,32 @@
     0.2,                     !- Minimum Light Output Fraction for Continuous Dimming Control
     0,                       !- Number of Stepped Control Steps
     1.0;                     !- Probability Lighting will be Reset When Needed in Manual Stepped Control
-
+ 
 ! =====================================================================
 !     What follows is RHH model for BESTEST
-
+ 
   ZoneControl:Thermostat,
     Zone 1 Thermostat,       !- Name
     ZONE ONE,                !- Zone or ZoneList Name
     Zone Control Type Sched, !- Control Type Schedule Name
     ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
     Heating Cooling Setpoints;  !- Control 1 Name
-
+ 
   ThermostatSetpoint:DualSetpoint,
     Heating Cooling Setpoints,  !- Name
     Heating Setpoints,       !- Heating Setpoint Temperature Schedule Name
     Cooling Setpoints;       !- Cooling Setpoint Temperature Schedule Name
-
+ 
   ScheduleTypeLimits,
     Temperature,             !- Name
     -60,                     !- Lower Limit Value
     200,                     !- Upper Limit Value
     Continuous;              !- Numeric Type
-
+ 
           ! Next Arguments represent each hour of day
 ! starting at time
 !        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23
-
+ 
   Schedule:Day:Hourly,
     Zone Heating Setpoint All Days,  !- Name
     Temperature,             !- Schedule Type Limits Name
@@ -1069,10 +1070,10 @@
     20.,                     !- Hour 22
     20.,                     !- Hour 23
     18.;                     !- Hour 24
-
+ 
 !         20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.,20.;
           ! Next arguments are names (DaySchedules) for the days
-
+ 
   Schedule:Week:Daily,
     Zone Heating Setpoint All Weeks,  !- Name
     Zone Heating Setpoint All Days,  !- Sunday Schedule:Day Name
@@ -1087,10 +1088,10 @@
     Zone Heating Setpoint All Days,  !- WinterDesignDay Schedule:Day Name
     Zone Heating Setpoint All Days,  !- CustomDay1 Schedule:Day Name
     Zone Heating Setpoint All Days;  !- CustomDay2 Schedule:Day Name
-
+ 
           ! remaining arguments are grouped [Name (WeekSchedules),startmonth,startday,endmonth,endday]
           ! 18 periods allowed
-
+ 
   Schedule:Year,
     Heating Setpoints,       !- Name
     Temperature,             !- Schedule Type Limits Name
@@ -1099,9 +1100,9 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
           ! Next Arguments represent each hour of day
-
+ 
   Schedule:Day:Hourly,
     Zone Cooling Setpoint All Days,  !- Name
     Temperature,             !- Schedule Type Limits Name
@@ -1129,9 +1130,9 @@
     25.,                     !- Hour 22
     25.,                     !- Hour 23
     25.;                     !- Hour 24
-
+ 
           ! Next arguments are names (DaySchedules) for the days
-
+ 
   Schedule:Week:Daily,
     Zone Cooling Setpoint All Weeks,  !- Name
     Zone Cooling Setpoint All Days,  !- Sunday Schedule:Day Name
@@ -1146,10 +1147,10 @@
     Zone Cooling Setpoint All Days,  !- WinterDesignDay Schedule:Day Name
     Zone Cooling Setpoint All Days,  !- CustomDay1 Schedule:Day Name
     Zone Cooling Setpoint All Days;  !- CustomDay2 Schedule:Day Name
-
+ 
           ! remaining arguments are grouped [Name (WeekSchedules),startmonth,startday,endmonth,endday]
           ! 18 periods allowed
-
+ 
   Schedule:Year,
     Cooling Setpoints,       !- Name
     Temperature,             !- Schedule Type Limits Name
@@ -1158,15 +1159,15 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
   ScheduleTypeLimits,
     Control Type,            !- Name
     0,                       !- Lower Limit Value
     4,                       !- Upper Limit Value
     Discrete;                !- Numeric Type
-
+ 
           ! Next Arguments represent each hour of day
-
+ 
   Schedule:Day:Hourly,
     Control Type All Days,   !- Name
     Control Type,            !- Schedule Type Limits Name
@@ -1194,9 +1195,9 @@
     4,                       !- Hour 22
     4,                       !- Hour 23
     4;                       !- Hour 24
-
+ 
           ! Next arguments are names (DaySchedules) for the days
-
+ 
   Schedule:Week:Daily,
     Control Type All Weeks,  !- Name
     Control Type All Days,   !- Sunday Schedule:Day Name
@@ -1211,10 +1212,10 @@
     Control Type All Days,   !- WinterDesignDay Schedule:Day Name
     Control Type All Days,   !- CustomDay1 Schedule:Day Name
     Control Type All Days;   !- CustomDay2 Schedule:Day Name
-
+ 
           ! remaining arguments are grouped [Name (WeekSchedules),startmonth,startday,endmonth,endday]
           ! 18 periods allowed
-
+ 
   Schedule:Year,
     Zone Control Type Sched, !- Name
     Control Type,            !- Schedule Type Limits Name
@@ -1223,10 +1224,10 @@
     1,                       !- Start Day 1
     12,                      !- End Month 1
     31;                      !- End Day 1
-
+ 
     !*****************ZONE EQUIPMENT SPECIFICATION*********************
     !Zone Heating and Cooling Equipment are attached to zones by the following statements:
-
+ 
   ZoneHVAC:EquipmentConnections,
     ZONE ONE,                !- Zone Name
     Zone1Equipment,          !- Zone Conditioning Equipment List Name
@@ -1234,18 +1235,18 @@
     ,                        !- Zone Air Exhaust Node or NodeList Name
     NODE_2,                  !- Zone Air Node Name
     NODE_3;                  !- Zone Return Air Node Name
-
+ 
         !List equipment in simulation order
-
+ 
   ZoneHVAC:EquipmentList,
     Zone1Equipment,          !- Name
     ZoneHVAC:IdealLoadsAirSystem,  !- Zone Equipment 1 Object Type
     Zone1Air,                !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1;                       !- Zone Equipment 1 Heating or No-Load Sequence
-
+ 
 ! PURCHASED AIR, (unlimited heating/cooling capacity)
-
+ 
   ZoneHVAC:IdealLoadsAirSystem,
     Zone1Air,                !- Name
     ,                        !- Availability Schedule Name
@@ -1265,7 +1266,7 @@
     ,                        !- Cooling Availability Schedule Name
     ConstantSupplyHumidityRatio,  !- Dehumidification Control Type
     ,                        !- Cooling Sensible Heat Ratio {dimensionless}
-    ConstantSupplyHumidityRatio,  !- Humidification Control Type
+    None,                    !- Humidification Control Type
     ,                        !- Design Specification Outdoor Air Object Name
     ,                        !- Outdoor Air Inlet Node Name
     ,                        !- Demand Controlled Ventilation Type
@@ -1277,33 +1278,12 @@
   NodeList,
     Zone1Inlets,             !- Name
     NODE_1;                  !- Node 1 Name
-
+ 
 ! ===============================================================
-!report variable,,outdoor dry bulb,hourly;
-!report variable,,mean air temperature,hourly;
-!report variable,,zone latent load,hourly;
-!report variable,,lights return air load,hourly;
-!report variable,,electric load,hourly;
-!report variable,,Electric Load,hourly;
-!report variable,,Mean Radiant Temperature,hourly;
-!report variable,,Surface Inside Temperature,hourly;
-!report variable,,Surface Outside Temperature,hourly;
-!report variable,,Zone/Sys Sensible Heating Energy,hourly;
-!report variable,,Zone/Sys Sensible Cooling Energy,hourly;
-!report variable,,Zone/Sys Sensible Heating Rate,hourly;
-!report variable,,Zone/Sys Sensible Cooling Rate,hourly;
-!report variable,,Zone/Sys Air Temp,hourly;
-!report variable,,Zone Air Humidity Ratio,hourly;
-!report variable,,System Node Temp,hourly;
-!report variable,,System Node MassFlowRate,hourly;
-!report variable,,System Node Humidity Ratio,hourly;
-!report variable,,SimAir Iterations,hourly;
 
-  Output:Variable,*,Ideal Loads Total Cooling Energy,Environment;
-
-  Output:Variable,*,Ideal Loads Total Heating Energy,Environment;
-
-  Output:Variable,*,Lights Electric Consumption,Environment;
+Output:Variable,*,Zone Air System Sensible Heating Energy,Environment;
+Output:Variable,*,Zone Air System Sensible Cooling Energy,Environment;
+Output:Variable,*,Zone Lights Electric Energy,Environment;
 
 !report variable dictionary;
 !report,surfaces,dxf;
