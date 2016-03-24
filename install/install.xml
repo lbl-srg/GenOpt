@@ -15,7 +15,7 @@
     -->
     <info>
         <appname>GenOpt</appname>
-        <appversion>3.1.0</appversion>
+        <appversion>3.1.1</appversion>
 	<appsubpath>genopt</appsubpath>
 	<javaversion>1.6</javaversion>
         <authors>
