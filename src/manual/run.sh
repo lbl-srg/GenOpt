@@ -15,3 +15,4 @@ rm *.aux
 rm $FIL.log
 rm $FIL.blg
 rm $FIL.bbl
+rm $FIL.out
