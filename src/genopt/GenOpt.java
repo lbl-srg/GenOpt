@@ -113,6 +113,7 @@ import java.lang.reflect.*;
 
 /* Revision history:
  *******************
+ 2016, Mar. 29 wm Updated to 3.1.1
  2016, Mar. 18 wm In genopt.algorithm.Optimizer, corrected bug in error reporting
                   which lead to an Exception if all independent parameters are discrete.
                   This is for https://github.com/lbl-srg/GenOpt/issues/2
@@ -339,7 +340,7 @@ public class GenOpt extends Thread
      * Describe constant <code>VERSION_NUMBER</code> here.
      *
      */
-    public final static String VERSION_NUMBER = "3.1.0";
+    public final static String VERSION_NUMBER = "3.1.1";
     /**
      * Describe constant <code>VERSION_ID</code> here.
      *
