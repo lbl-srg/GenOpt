@@ -104,13 +104,18 @@
         <pack name="Base" required="yes">
             <description>Binary and example files.</description>
             <file src="../legal.html" targetdir="$INSTALL_PATH"/>
-            <file src="../readme.html" targetdir="$INSTALL_PATH"/>
+            <file src="../README.md" targetdir="$INSTALL_PATH"/>
 	    <!-- Manual -->
             <file src="../documentation/manual.pdf"  
                   targetdir="$INSTALL_PATH/documentation"/>
 	    <!-- Javadoc -->
 	    <fileset dir="../documentation/jdoc" targetdir="$INSTALL_PATH/documentation/jdoc">
 	      <exclude name="**/.svn"/>
+	      <exclude name="**/*.aux"/>
+	      <exclude name="**/manual.log"/>
+	      <exclude name="**/manual.toc"/>
+	      <exclude name="**/manual.bbl"/>
+	      <exclude name="**/manual.blg"/>
 	    </fileset>
 	    <!-- Configuration -->
 	    <fileset dir="../cfg" targetdir="$INSTALL_PATH/cfg">
