@@ -1,5 +1,5 @@
 *.aux
-src/manual/manual.log
+src/manual/manual.pdf
 documentation/jdoc/**
 src/genopt/**/*.class
 dist
