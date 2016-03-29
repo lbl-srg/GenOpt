@@ -102,7 +102,6 @@ doc-java:
 	rm -rf documentation/jdoc/genopt/*
 	(cd src; javadoc -Xdoclint:none -breakiterator -private -author -version \
 	-windowtitle "GenOpt Code Documentation" \
-	-stylesheetfile ../documentation/jdoc/jstyle.css \
 	-bottom "<DIV CLASS="FOOTER"> <P> <CENTER> <A HREF="http://simulationresearch.lbl.gov/GO" \
 	TARGET=_top>GenOpt</A> | <A HREF="http://simulationresearch.lbl.gov" \
 	TARGET=_top>LBL SRG</A> | <A HREF="http://www.lbl.gov" \
