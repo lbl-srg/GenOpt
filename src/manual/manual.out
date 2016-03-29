@@ -1,126 +1,126 @@
-\BOOKMARK [0][-]{chapter.1}{Abstract}{}
-\BOOKMARK [0][-]{chapter.2}{Notation}{}
-\BOOKMARK [0][-]{chapter.3}{Introduction}{}
-\BOOKMARK [0][-]{chapter.4}{Optimization Problems}{}
-\BOOKMARK [1][-]{section.4.1}{Classification of Optimization Problems}{chapter.4}
-\BOOKMARK [2][-]{subsection.4.1.1}{Problems with Continuous Variables}{section.4.1}
-\BOOKMARK [2][-]{subsection.4.1.2}{Problems with Discrete Variables}{section.4.1}
-\BOOKMARK [2][-]{subsection.4.1.3}{Problems with Continuous and Discrete Variables}{section.4.1}
-\BOOKMARK [2][-]{subsection.4.1.4}{Problems that use a Building Simulation Program}{section.4.1}
-\BOOKMARK [1][-]{section.4.2}{Algorithm Selection}{chapter.4}
-\BOOKMARK [2][-]{subsection.4.2.1}{Problem Pc with n>1}{section.4.2}
-\BOOKMARK [2][-]{subsection.4.2.2}{Problem Pcg with n>1}{section.4.2}
-\BOOKMARK [2][-]{subsection.4.2.3}{Problem Pc with n=1}{section.4.2}
-\BOOKMARK [2][-]{subsection.4.2.4}{Problem Pcg with n=1}{section.4.2}
-\BOOKMARK [2][-]{subsection.4.2.5}{Problem Pd}{section.4.2}
-\BOOKMARK [2][-]{subsection.4.2.6}{Problem Pcd and Pcdg}{section.4.2}
-\BOOKMARK [2][-]{subsection.4.2.7}{Functions with Several Local Minima}{section.4.2}
-\BOOKMARK [0][-]{chapter.5}{Algorithms for Multi-Dimensional Optimization}{}
-\BOOKMARK [1][-]{section.5.1}{Generalized Pattern Search Methods \(Analysis\)}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.1.1}{Assumptions}{section.5.1}
-\BOOKMARK [2][-]{subsection.5.1.2}{Characterization of GPS Algorithms}{section.5.1}
-\BOOKMARK [2][-]{subsection.5.1.3}{Model Adaptive Precision GPS Algorithm}{section.5.1}
-\BOOKMARK [2][-]{subsection.5.1.4}{Convergence Results}{section.5.1}
-\BOOKMARK [3][-]{subsubsection.5.1.4.1}{Unconstrained Minimization}{subsection.5.1.4}
-\BOOKMARK [3][-]{subsubsection.5.1.4.2}{Box-Constrained Minimization}{subsection.5.1.4}
-\BOOKMARK [1][-]{section.5.2}{Generalized Pattern Search Methods \(Implementations\)}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.2.1}{Coordinate Search Algorithm}{section.5.2}
-\BOOKMARK [3][-]{subsubsection.5.2.1.1}{Algorithm Parameters}{subsection.5.2.1}
-\BOOKMARK [3][-]{subsubsection.5.2.1.2}{Global Search}{subsection.5.2.1}
-\BOOKMARK [3][-]{subsubsection.5.2.1.3}{Local Search}{subsection.5.2.1}
-\BOOKMARK [3][-]{subsubsection.5.2.1.4}{Parameter Update}{subsection.5.2.1}
-\BOOKMARK [3][-]{subsubsection.5.2.1.5}{Keywords}{subsection.5.2.1}
-\BOOKMARK [2][-]{subsection.5.2.2}{Hooke-Jeeves Algorithm}{section.5.2}
-\BOOKMARK [3][-]{subsubsection.5.2.2.1}{Algorithm Parameters}{subsection.5.2.2}
-\BOOKMARK [3][-]{subsubsection.5.2.2.2}{Map for Exploratory Moves}{subsection.5.2.2}
-\BOOKMARK [3][-]{subsubsection.5.2.2.3}{Global Search Set Map}{subsection.5.2.2}
-\BOOKMARK [3][-]{subsubsection.5.2.2.4}{Local Search Direction Map}{subsection.5.2.2}
-\BOOKMARK [3][-]{subsubsection.5.2.2.5}{Parameter Update}{subsection.5.2.2}
-\BOOKMARK [3][-]{subsubsection.5.2.2.6}{Keywords}{subsection.5.2.2}
-\BOOKMARK [2][-]{subsection.5.2.3}{Multi-Start GPS Algorithms}{section.5.2}
-\BOOKMARK [1][-]{section.5.3}{Discrete Armijo Gradient}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.3.1}{Keywords}{section.5.3}
-\BOOKMARK [1][-]{section.5.4}{Particle Swarm Optimization}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.4.1}{PSO for Continuous Variables}{section.5.4}
-\BOOKMARK [3][-]{subsubsection.5.4.1.1}{Neighborhood Topology}{subsection.5.4.1}
-\BOOKMARK [3][-]{subsubsection.5.4.1.2}{Model PSO Algorithm}{subsection.5.4.1}
-\BOOKMARK [3][-]{subsubsection.5.4.1.3}{Particle Update Equation}{subsection.5.4.1}
-\BOOKMARK [4][-]{paragraph.5.4.1.3.1}{Inertia Weight}{subsubsection.5.4.1.3}
-\BOOKMARK [4][-]{paragraph.5.4.1.3.2}{Constriction Coefficient}{subsubsection.5.4.1.3}
-\BOOKMARK [2][-]{subsection.5.4.2}{PSO for Discrete Variables}{section.5.4}
-\BOOKMARK [2][-]{subsection.5.4.3}{PSO for Continuous and Discrete Variables}{section.5.4}
-\BOOKMARK [2][-]{subsection.5.4.4}{PSO on a Mesh}{section.5.4}
-\BOOKMARK [2][-]{subsection.5.4.5}{Population Size and Number of Generations}{section.5.4}
-\BOOKMARK [2][-]{subsection.5.4.6}{Keywords}{section.5.4}
-\BOOKMARK [1][-]{section.5.5}{Hybrid GPS Algorithm with PSO Algorithm}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.5.1}{For Continuous Variables}{section.5.5}
-\BOOKMARK [2][-]{subsection.5.5.2}{For Continuous and Discrete Variables}{section.5.5}
-\BOOKMARK [2][-]{subsection.5.5.3}{Keywords}{section.5.5}
-\BOOKMARK [1][-]{section.5.6}{Simplex Algorithm of Nelder and Mead}{chapter.5}
-\BOOKMARK [2][-]{subsection.5.6.1}{Main Operations}{section.5.6}
-\BOOKMARK [2][-]{subsection.5.6.2}{Basic Algorithm}{section.5.6}
-\BOOKMARK [2][-]{subsection.5.6.3}{Stopping Criteria}{section.5.6}
-\BOOKMARK [2][-]{subsection.5.6.4}{O'Neill's Modification}{section.5.6}
-\BOOKMARK [2][-]{subsection.5.6.5}{Modification of Stopping Criteria}{section.5.6}
-\BOOKMARK [2][-]{subsection.5.6.6}{Benchmark Tests}{section.5.6}
-\BOOKMARK [2][-]{subsection.5.6.7}{Keywords}{section.5.6}
-\BOOKMARK [0][-]{chapter.6}{Algorithms for One-Dimensional Optimization}{}
-\BOOKMARK [1][-]{section.6.1}{Interval Division Algorithms}{chapter.6}
-\BOOKMARK [2][-]{subsection.6.1.1}{General Interval Division}{section.6.1}
-\BOOKMARK [2][-]{subsection.6.1.2}{Golden Section Interval Division}{section.6.1}
-\BOOKMARK [2][-]{subsection.6.1.3}{Fibonacci Division}{section.6.1}
-\BOOKMARK [2][-]{subsection.6.1.4}{Comparison of Efficiency}{section.6.1}
-\BOOKMARK [2][-]{subsection.6.1.5}{Master Algorithm for Interval Division}{section.6.1}
-\BOOKMARK [2][-]{subsection.6.1.6}{Keywords}{section.6.1}
-\BOOKMARK [0][-]{chapter.7}{Algorithms for Parametric Runs}{}
-\BOOKMARK [1][-]{section.7.1}{Parametric Runs by Single Variation}{chapter.7}
-\BOOKMARK [2][-]{subsection.7.1.1}{Algorithm Description}{section.7.1}
-\BOOKMARK [2][-]{subsection.7.1.2}{Keywords}{section.7.1}
-\BOOKMARK [1][-]{section.7.2}{Parametric Runs on a Mesh}{chapter.7}
-\BOOKMARK [2][-]{subsection.7.2.1}{Algorithm Description}{section.7.2}
-\BOOKMARK [2][-]{subsection.7.2.2}{Keywords}{section.7.2}
-\BOOKMARK [0][-]{chapter.8}{Constraints}{}
-\BOOKMARK [1][-]{section.8.1}{Constraints on Independent Variables}{chapter.8}
-\BOOKMARK [2][-]{subsection.8.1.1}{Box Constraints}{section.8.1}
-\BOOKMARK [2][-]{subsection.8.1.2}{Coupled Linear Constraints}{section.8.1}
-\BOOKMARK [1][-]{section.8.2}{Constraints on Dependent Variables}{chapter.8}
-\BOOKMARK [2][-]{subsection.8.2.1}{Barrier Functions}{section.8.2}
-\BOOKMARK [2][-]{subsection.8.2.2}{Penalty Functions}{section.8.2}
-\BOOKMARK [2][-]{subsection.8.2.3}{Implementation of Barrier and Penalty Functions}{section.8.2}
-\BOOKMARK [0][-]{chapter.9}{Program}{}
-\BOOKMARK [1][-]{section.9.1}{Interface to the Simulation Program}{chapter.9}
-\BOOKMARK [1][-]{section.9.2}{Interface to the Optimization Algorithm}{chapter.9}
-\BOOKMARK [1][-]{section.9.3}{Package genopt.algorithm}{chapter.9}
-\BOOKMARK [1][-]{section.9.4}{Implementing a New Optimization Algorithm}{chapter.9}
-\BOOKMARK [0][-]{chapter.10}{Installing and Running GenOpt}{}
-\BOOKMARK [1][-]{section.10.1}{System Requirements}{chapter.10}
-\BOOKMARK [1][-]{section.10.2}{Installing and uninstalling GenOpt}{chapter.10}
-\BOOKMARK [1][-]{section.10.3}{Running GenOpt}{chapter.10}
-\BOOKMARK [2][-]{subsection.10.3.1}{Running GenOpt from the file explorer}{section.10.3}
-\BOOKMARK [2][-]{subsection.10.3.2}{Running GenOpt from the command line}{section.10.3}
-\BOOKMARK [0][-]{chapter.11}{Setting Up an Optimization Problem}{}
-\BOOKMARK [1][-]{section.11.1}{File Specification}{chapter.11}
-\BOOKMARK [2][-]{subsection.11.1.1}{Initialization File}{section.11.1}
-\BOOKMARK [2][-]{subsection.11.1.2}{Configuration File}{section.11.1}
-\BOOKMARK [2][-]{subsection.11.1.3}{Command File}{section.11.1}
-\BOOKMARK [3][-]{subsubsection.11.1.3.1}{Specification of a Continuous Parameter}{subsection.11.1.3}
-\BOOKMARK [3][-]{subsubsection.11.1.3.2}{Specification of a Discrete Parameter}{subsection.11.1.3}
-\BOOKMARK [3][-]{subsubsection.11.1.3.3}{Specification of Input Function Objects}{subsection.11.1.3}
-\BOOKMARK [3][-]{subsubsection.11.1.3.4}{Structure of the Command File}{subsection.11.1.3}
-\BOOKMARK [2][-]{subsection.11.1.4}{Log File}{section.11.1}
-\BOOKMARK [2][-]{subsection.11.1.5}{Output Files}{section.11.1}
-\BOOKMARK [1][-]{section.11.2}{Resolving Directory Names for Parallel Computing}{chapter.11}
-\BOOKMARK [1][-]{section.11.3}{Pre-Processing and Post-Processing}{chapter.11}
-\BOOKMARK [2][-]{subsubsection.11.3.0.1}{Function Objects}{section.11.3}
-\BOOKMARK [3][-]{subsubsection.11.3.0.2}{Pre-Processing}{subsubsection.11.3.0.1}
-\BOOKMARK [3][-]{subsubsection.11.3.0.3}{Post-Processing}{subsubsection.11.3.0.1}
-\BOOKMARK [1][-]{section.11.4}{Truncation of Digits of the Cost Function Value}{chapter.11}
-\BOOKMARK [0][-]{chapter.12}{Conclusions}{}
-\BOOKMARK [0][-]{chapter.13}{Acknowledgments}{}
-\BOOKMARK [0][-]{chapter.14}{Legal}{}
-\BOOKMARK [1][-]{section.14.1}{Copyright Notice}{chapter.14}
-\BOOKMARK [1][-]{section.14.2}{License agreement}{chapter.14}
-\BOOKMARK [0][-]{appendix.A}{Benchmark Tests}{}
-\BOOKMARK [1][-]{section.A.1}{Rosenbrock}{appendix.A}
-\BOOKMARK [1][-]{section.A.2}{Function 2D1}{appendix.A}
-\BOOKMARK [1][-]{section.A.3}{Function Quad}{appendix.A}
+\BOOKMARK [0][-]{chapter.1}{Abstract}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Notation}{}% 2
+\BOOKMARK [0][-]{chapter.3}{Introduction}{}% 3
+\BOOKMARK [0][-]{chapter.4}{Optimization Problems}{}% 4
+\BOOKMARK [1][-]{section.4.1}{Classification of Optimization Problems}{chapter.4}% 5
+\BOOKMARK [2][-]{subsection.4.1.1}{Problems with Continuous Variables}{section.4.1}% 6
+\BOOKMARK [2][-]{subsection.4.1.2}{Problems with Discrete Variables}{section.4.1}% 7
+\BOOKMARK [2][-]{subsection.4.1.3}{Problems with Continuous and Discrete Variables}{section.4.1}% 8
+\BOOKMARK [2][-]{subsection.4.1.4}{Problems that use a Building Simulation Program}{section.4.1}% 9
+\BOOKMARK [1][-]{section.4.2}{Algorithm Selection}{chapter.4}% 10
+\BOOKMARK [2][-]{subsection.4.2.1}{Problem Pc with n>1}{section.4.2}% 11
+\BOOKMARK [2][-]{subsection.4.2.2}{Problem Pcg with n>1}{section.4.2}% 12
+\BOOKMARK [2][-]{subsection.4.2.3}{Problem Pc with n=1}{section.4.2}% 13
+\BOOKMARK [2][-]{subsection.4.2.4}{Problem Pcg with n=1}{section.4.2}% 14
+\BOOKMARK [2][-]{subsection.4.2.5}{Problem Pd}{section.4.2}% 15
+\BOOKMARK [2][-]{subsection.4.2.6}{Problem Pcd and Pcdg}{section.4.2}% 16
+\BOOKMARK [2][-]{subsection.4.2.7}{Functions with Several Local Minima}{section.4.2}% 17
+\BOOKMARK [0][-]{chapter.5}{Algorithms for Multi-Dimensional Optimization}{}% 18
+\BOOKMARK [1][-]{section.5.1}{Generalized Pattern Search Methods \(Analysis\)}{chapter.5}% 19
+\BOOKMARK [2][-]{subsection.5.1.1}{Assumptions}{section.5.1}% 20
+\BOOKMARK [2][-]{subsection.5.1.2}{Characterization of GPS Algorithms}{section.5.1}% 21
+\BOOKMARK [2][-]{subsection.5.1.3}{Model Adaptive Precision GPS Algorithm}{section.5.1}% 22
+\BOOKMARK [2][-]{subsection.5.1.4}{Convergence Results}{section.5.1}% 23
+\BOOKMARK [3][-]{subsubsection.5.1.4.1}{Unconstrained Minimization}{subsection.5.1.4}% 24
+\BOOKMARK [3][-]{subsubsection.5.1.4.2}{Box-Constrained Minimization}{subsection.5.1.4}% 25
+\BOOKMARK [1][-]{section.5.2}{Generalized Pattern Search Methods \(Implementations\)}{chapter.5}% 26
+\BOOKMARK [2][-]{subsection.5.2.1}{Coordinate Search Algorithm}{section.5.2}% 27
+\BOOKMARK [3][-]{subsubsection.5.2.1.1}{Algorithm Parameters}{subsection.5.2.1}% 28
+\BOOKMARK [3][-]{subsubsection.5.2.1.2}{Global Search}{subsection.5.2.1}% 29
+\BOOKMARK [3][-]{subsubsection.5.2.1.3}{Local Search}{subsection.5.2.1}% 30
+\BOOKMARK [3][-]{subsubsection.5.2.1.4}{Parameter Update}{subsection.5.2.1}% 31
+\BOOKMARK [3][-]{subsubsection.5.2.1.5}{Keywords}{subsection.5.2.1}% 32
+\BOOKMARK [2][-]{subsection.5.2.2}{Hooke-Jeeves Algorithm}{section.5.2}% 33
+\BOOKMARK [3][-]{subsubsection.5.2.2.1}{Algorithm Parameters}{subsection.5.2.2}% 34
+\BOOKMARK [3][-]{subsubsection.5.2.2.2}{Map for Exploratory Moves}{subsection.5.2.2}% 35
+\BOOKMARK [3][-]{subsubsection.5.2.2.3}{Global Search Set Map}{subsection.5.2.2}% 36
+\BOOKMARK [3][-]{subsubsection.5.2.2.4}{Local Search Direction Map}{subsection.5.2.2}% 37
+\BOOKMARK [3][-]{subsubsection.5.2.2.5}{Parameter Update}{subsection.5.2.2}% 38
+\BOOKMARK [3][-]{subsubsection.5.2.2.6}{Keywords}{subsection.5.2.2}% 39
+\BOOKMARK [2][-]{subsection.5.2.3}{Multi-Start GPS Algorithms}{section.5.2}% 40
+\BOOKMARK [1][-]{section.5.3}{Discrete Armijo Gradient}{chapter.5}% 41
+\BOOKMARK [2][-]{subsection.5.3.1}{Keywords}{section.5.3}% 42
+\BOOKMARK [1][-]{section.5.4}{Particle Swarm Optimization}{chapter.5}% 43
+\BOOKMARK [2][-]{subsection.5.4.1}{PSO for Continuous Variables}{section.5.4}% 44
+\BOOKMARK [3][-]{subsubsection.5.4.1.1}{Neighborhood Topology}{subsection.5.4.1}% 45
+\BOOKMARK [3][-]{subsubsection.5.4.1.2}{Model PSO Algorithm}{subsection.5.4.1}% 46
+\BOOKMARK [3][-]{subsubsection.5.4.1.3}{Particle Update Equation}{subsection.5.4.1}% 47
+\BOOKMARK [4][-]{paragraph.5.4.1.3.1}{Inertia Weight}{subsubsection.5.4.1.3}% 48
+\BOOKMARK [4][-]{paragraph.5.4.1.3.2}{Constriction Coefficient}{subsubsection.5.4.1.3}% 49
+\BOOKMARK [2][-]{subsection.5.4.2}{PSO for Discrete Variables}{section.5.4}% 50
+\BOOKMARK [2][-]{subsection.5.4.3}{PSO for Continuous and Discrete Variables}{section.5.4}% 51
+\BOOKMARK [2][-]{subsection.5.4.4}{PSO on a Mesh}{section.5.4}% 52
+\BOOKMARK [2][-]{subsection.5.4.5}{Population Size and Number of Generations}{section.5.4}% 53
+\BOOKMARK [2][-]{subsection.5.4.6}{Keywords}{section.5.4}% 54
+\BOOKMARK [1][-]{section.5.5}{Hybrid GPS Algorithm with PSO Algorithm}{chapter.5}% 55
+\BOOKMARK [2][-]{subsection.5.5.1}{For Continuous Variables}{section.5.5}% 56
+\BOOKMARK [2][-]{subsection.5.5.2}{For Continuous and Discrete Variables}{section.5.5}% 57
+\BOOKMARK [2][-]{subsection.5.5.3}{Keywords}{section.5.5}% 58
+\BOOKMARK [1][-]{section.5.6}{Simplex Algorithm of Nelder and Mead}{chapter.5}% 59
+\BOOKMARK [2][-]{subsection.5.6.1}{Main Operations}{section.5.6}% 60
+\BOOKMARK [2][-]{subsection.5.6.2}{Basic Algorithm}{section.5.6}% 61
+\BOOKMARK [2][-]{subsection.5.6.3}{Stopping Criteria}{section.5.6}% 62
+\BOOKMARK [2][-]{subsection.5.6.4}{O'Neill's Modification}{section.5.6}% 63
+\BOOKMARK [2][-]{subsection.5.6.5}{Modification of Stopping Criteria}{section.5.6}% 64
+\BOOKMARK [2][-]{subsection.5.6.6}{Benchmark Tests}{section.5.6}% 65
+\BOOKMARK [2][-]{subsection.5.6.7}{Keywords}{section.5.6}% 66
+\BOOKMARK [0][-]{chapter.6}{Algorithms for One-Dimensional Optimization}{}% 67
+\BOOKMARK [1][-]{section.6.1}{Interval Division Algorithms}{chapter.6}% 68
+\BOOKMARK [2][-]{subsection.6.1.1}{General Interval Division}{section.6.1}% 69
+\BOOKMARK [2][-]{subsection.6.1.2}{Golden Section Interval Division}{section.6.1}% 70
+\BOOKMARK [2][-]{subsection.6.1.3}{Fibonacci Division}{section.6.1}% 71
+\BOOKMARK [2][-]{subsection.6.1.4}{Comparison of Efficiency}{section.6.1}% 72
+\BOOKMARK [2][-]{subsection.6.1.5}{Master Algorithm for Interval Division}{section.6.1}% 73
+\BOOKMARK [2][-]{subsection.6.1.6}{Keywords}{section.6.1}% 74
+\BOOKMARK [0][-]{chapter.7}{Algorithms for Parametric Runs}{}% 75
+\BOOKMARK [1][-]{section.7.1}{Parametric Runs by Single Variation}{chapter.7}% 76
+\BOOKMARK [2][-]{subsection.7.1.1}{Algorithm Description}{section.7.1}% 77
+\BOOKMARK [2][-]{subsection.7.1.2}{Keywords}{section.7.1}% 78
+\BOOKMARK [1][-]{section.7.2}{Parametric Runs on a Mesh}{chapter.7}% 79
+\BOOKMARK [2][-]{subsection.7.2.1}{Algorithm Description}{section.7.2}% 80
+\BOOKMARK [2][-]{subsection.7.2.2}{Keywords}{section.7.2}% 81
+\BOOKMARK [0][-]{chapter.8}{Constraints}{}% 82
+\BOOKMARK [1][-]{section.8.1}{Constraints on Independent Variables}{chapter.8}% 83
+\BOOKMARK [2][-]{subsection.8.1.1}{Box Constraints}{section.8.1}% 84
+\BOOKMARK [2][-]{subsection.8.1.2}{Coupled Linear Constraints}{section.8.1}% 85
+\BOOKMARK [1][-]{section.8.2}{Constraints on Dependent Variables}{chapter.8}% 86
+\BOOKMARK [2][-]{subsection.8.2.1}{Barrier Functions}{section.8.2}% 87
+\BOOKMARK [2][-]{subsection.8.2.2}{Penalty Functions}{section.8.2}% 88
+\BOOKMARK [2][-]{subsection.8.2.3}{Implementation of Barrier and Penalty Functions}{section.8.2}% 89
+\BOOKMARK [0][-]{chapter.9}{Program}{}% 90
+\BOOKMARK [1][-]{section.9.1}{Interface to the Simulation Program}{chapter.9}% 91
+\BOOKMARK [1][-]{section.9.2}{Interface to the Optimization Algorithm}{chapter.9}% 92
+\BOOKMARK [1][-]{section.9.3}{Package genopt.algorithm}{chapter.9}% 93
+\BOOKMARK [1][-]{section.9.4}{Implementing a New Optimization Algorithm}{chapter.9}% 94
+\BOOKMARK [0][-]{chapter.10}{Installing and Running GenOpt}{}% 95
+\BOOKMARK [1][-]{section.10.1}{System Requirements}{chapter.10}% 96
+\BOOKMARK [1][-]{section.10.2}{Installing and uninstalling GenOpt}{chapter.10}% 97
+\BOOKMARK [1][-]{section.10.3}{Running GenOpt}{chapter.10}% 98
+\BOOKMARK [2][-]{subsection.10.3.1}{Running GenOpt from the file explorer}{section.10.3}% 99
+\BOOKMARK [2][-]{subsection.10.3.2}{Running GenOpt from the command line}{section.10.3}% 100
+\BOOKMARK [0][-]{chapter.11}{Setting Up an Optimization Problem}{}% 101
+\BOOKMARK [1][-]{section.11.1}{File Specification}{chapter.11}% 102
+\BOOKMARK [2][-]{subsection.11.1.1}{Initialization File}{section.11.1}% 103
+\BOOKMARK [2][-]{subsection.11.1.2}{Configuration File}{section.11.1}% 104
+\BOOKMARK [2][-]{subsection.11.1.3}{Command File}{section.11.1}% 105
+\BOOKMARK [3][-]{subsubsection.11.1.3.1}{Specification of a Continuous Parameter}{subsection.11.1.3}% 106
+\BOOKMARK [3][-]{subsubsection.11.1.3.2}{Specification of a Discrete Parameter}{subsection.11.1.3}% 107
+\BOOKMARK [3][-]{subsubsection.11.1.3.3}{Specification of Input Function Objects}{subsection.11.1.3}% 108
+\BOOKMARK [3][-]{subsubsection.11.1.3.4}{Structure of the Command File}{subsection.11.1.3}% 109
+\BOOKMARK [2][-]{subsection.11.1.4}{Log File}{section.11.1}% 110
+\BOOKMARK [2][-]{subsection.11.1.5}{Output Files}{section.11.1}% 111
+\BOOKMARK [1][-]{section.11.2}{Resolving Directory Names for Parallel Computing}{chapter.11}% 112
+\BOOKMARK [1][-]{section.11.3}{Pre-Processing and Post-Processing}{chapter.11}% 113
+\BOOKMARK [2][-]{subsubsection.11.3.0.1}{Function Objects}{section.11.3}% 114
+\BOOKMARK [3][-]{subsubsection.11.3.0.2}{Pre-Processing}{subsubsection.11.3.0.1}% 115
+\BOOKMARK [3][-]{subsubsection.11.3.0.3}{Post-Processing}{subsubsection.11.3.0.1}% 116
+\BOOKMARK [1][-]{section.11.4}{Truncation of Digits of the Cost Function Value}{chapter.11}% 117
+\BOOKMARK [0][-]{chapter.12}{Conclusions}{}% 118
+\BOOKMARK [0][-]{chapter.13}{Acknowledgments}{}% 119
+\BOOKMARK [0][-]{chapter.14}{Legal}{}% 120
+\BOOKMARK [1][-]{section.14.1}{Copyright Notice}{chapter.14}% 121
+\BOOKMARK [1][-]{section.14.2}{License agreement}{chapter.14}% 122
+\BOOKMARK [0][-]{appendix.A}{Benchmark Tests}{}% 123
+\BOOKMARK [1][-]{section.A.1}{Rosenbrock}{appendix.A}% 124
+\BOOKMARK [1][-]{section.A.2}{Function 2D1}{appendix.A}% 125
+\BOOKMARK [1][-]{section.A.3}{Function Quad}{appendix.A}% 126
