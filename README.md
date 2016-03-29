@@ -159,5 +159,4 @@ derivative works thereof, in binary and source code form.
 For more information, visit the GenOpt [web
 pages](http://simulationresearch.lbl.gov/GO).
 
-Please send comments or questions to Michael Wetter, LBNL,
-[MWetter@lbl.gov](mailto:MWetter@lbl.gov) May 4, 2009.
+Please send comments or questions to https://unmethours.com
