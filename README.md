@@ -90,7 +90,7 @@ documentation is only needed by developers.
 Copyright Notice
 ----------------
 
-GenOpt Copyright (c) 1998-2011, The Regents of the University of
+GenOpt Copyright (c) 1998-2016, The Regents of the University of
 California, through Lawrence Berkeley National Laboratory (subject to
 receipt of any required approvals from the U.S. Dept. of Energy). All
 rights reserved.
