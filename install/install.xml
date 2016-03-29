@@ -111,11 +111,6 @@
 	    <!-- Javadoc -->
 	    <fileset dir="../documentation/jdoc" targetdir="$INSTALL_PATH/documentation/jdoc">
 	      <exclude name="**/.svn"/>
-	      <exclude name="**/*.aux"/>
-	      <exclude name="**/manual.log"/>
-	      <exclude name="**/manual.toc"/>
-	      <exclude name="**/manual.bbl"/>
-	      <exclude name="**/manual.blg"/>
 	    </fileset>
 	    <!-- Configuration -->
 	    <fileset dir="../cfg" targetdir="$INSTALL_PATH/cfg">
@@ -124,6 +119,7 @@
 	    <!-- Source -->
 	    <fileset dir="../src" targetdir="$INSTALL_PATH/src">
 	      <exclude name="**/.svn"/>
+	      <exclude name="**/*.class"/>
 	    </fileset>
             <file src="../Makefile"  targetdir="$INSTALL_PATH"/>
 	    <!-- Binary -->
