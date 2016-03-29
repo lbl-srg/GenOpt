@@ -23,6 +23,6 @@ Run cleanfilesystem
 Run make dist
 ----
 To make tag, run 
-cd tags/releases
-svn cp ../../trunk 3.0.1 [ update version number]
-svn commit -m "Created release 3.0.1"
+
+git tag -a v3.1.0 -m "Tagged version 3.1.0"
+git push origin --tags
