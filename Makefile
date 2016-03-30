@@ -118,7 +118,6 @@ www:
 	cp documentation/jdoc/*.html ~/proj/www/genopt/GO/jdoc/
 	cp documentation/jdoc/package-list ~/proj/www/genopt/GO/jdoc/
 	cp -r documentation/jdoc/genopt ~/proj/www/genopt/GO/jdoc/
-	cp -r documentation/jdoc/jstyle.css ~/proj/www/genopt/GO/jdoc/
 	@echo "==== Copied files to web directory ~/proj/www/genopt/GO"
 
 ### unit tests
