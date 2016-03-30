@@ -22,6 +22,8 @@ Run cleanfilesystem
 
 Run make dist
 ----
+Commit the generated manual and genopt.jar file
+
 To make tag, run 
 
 git tag -a v3.1.0 -m "Tagged version 3.1.0"
