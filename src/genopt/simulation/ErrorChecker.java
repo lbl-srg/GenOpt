@@ -149,6 +149,7 @@ public class ErrorChecker implements Cloneable
 		curLin = reader.readLine();
 		i++;
 	    }
+            reader.close();
 	}
 	catch(IOException e){
 	    final String em =  "IOException while reading " + fileName + "': Message '" + e.getMessage() + "'." + LS;
